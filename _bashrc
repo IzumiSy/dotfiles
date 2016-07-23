@@ -17,7 +17,7 @@ export HISTIGNORE="ls:ll:cd .."
 export HISTSIZE=5000
 
 # Command existence detector
-## Need to be defined here
+# Need to be defined here
 function detect_command() {
   type "$1" &> /dev/null ;
 }
