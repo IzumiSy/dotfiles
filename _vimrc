@@ -164,12 +164,11 @@ nmap <silent><C-h> b
 nmap <silent><C-l> w
 vmap <silent><C-h> b
 vmap <silent><C-l> w
-nnoremap <C-left> <C-w>h
-nnoremap <C-up> <C-w>k
-nnoremap <C-down> <C-w>j
-nnoremap <C-right> <C-w>l
+
+" Closes window
 nnoremap <C-x> :q<CR>
 
+" Disables arrow keys
 noremap <Up> <Nop>
 noremap <Down> <Nop>
 noremap <Left> <Nop>
@@ -321,30 +320,6 @@ elseif executable('ag')
 endif
 
 let g:unite_source_grep_recursive_opt=''
-
-" Settings for Unite menus
-let g:unite_source_menu_menus = {
-\   "shortcuts": {
-\     "description": "Frequent in-use shortcuts",
-\     "command_candidates": [
-\       [ "edit _vimrc", "edit $MYVIMRC" ],
-\       [ "edit .bashrc", "e ~/.bashrc" ],
-\       [ "reopen in UTF-8", "e ++enc=utf-8" ],
-\       [ "save as root", "w !sudo tee % > /dev/null" ],
-\     ],
-\   },
-\   "rails": {
-\     "description": "Rails project helper commands",
-\     "command_candidates": [
-\       [ "rails/controller", "Unite rails/controller" ],
-\       [ "rails/model", "Unite rails/model" ],
-\       [ "rails/view", "Unite rails/view" ],
-\       [ "rails/db", "Unite rails/db" ],
-\       [ "rails/config", "Unite rails/config" ],
-\       [ "rails/route", "Unite rails/unite" ],
-\     ],
-\   },
-\ }
 
 " ========================== "
 "     Lightline settings     "
