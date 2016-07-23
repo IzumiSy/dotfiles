@@ -1,0 +1,257 @@
+# --------------------
+#    custom .bashrc
+# --------------------
+
+# Workaround to prevent problem with Byobu that occurs in connecting with Teraterm
+export VTE_CJK_WIDTH=1
+
+# Bash shell settings
+# - Allow fuzzy directory change
+# - Omit `cd` to change the current directory
+shopt -s cdspell
+shopt -s autocd
+
+# Settings for history
+export HISTCONTROL=ignoreboth:erasedups
+export HISTIGNORE="ls:ll:cd .."
+export HISTSIZE=5000
+
+# Command existence detector
+## Need to be defined here
+function detect_command() {
+  type "$1" &> /dev/null ;
+}
+
+# Show welcome message
+if detect_command figlet ; then
+  echo 'Terminal' | figlet -m $0
+  echo ' Welcome to main control system!'
+  echo ''
+fi
+
+# Exports user binary files
+export PATH=$PATH:~/bin/
+
+# ------------------
+#   MacOS settings
+# ------------------
+if [[ "$OSTYPE" == "darwin"* ]] ; then
+  alias pg.start='postgres -D /usr/local/var/postgres'
+  alias mongo.start='mongod --verbose --config /usr/local/etc/mongod.conf'
+  alias updatedb='sudo /usr/libexec/locate.updatedb'
+
+  # Resolve file path change caused by CommandLineTools or Xcode
+  git_prompt_path=''
+  git_completion_path=''
+  if [[ -d "/Applications/Xcode.app" ]] ; then
+    git_prompt_path='/Applications/Xcode.app/Contents/Developer/'
+    git_completion_path='/Applications/Xcode.app/Contents/Developer/'
+  else
+    git_prompt_path='/Library/Developer/CommandLineTools/'
+    git_completion_path='/Library/Developer/CommandLineTools/'
+  fi
+  source "$git_completion_path/usr/share/git-core/git-completion.bash"
+  source "$git_prompt_path/usr/share/git-core/git-prompt.sh"
+
+  GIT_PROMPT_SHOWDIRTY_STYLE=true
+
+# -----------------------------------
+#   Othe unix distribution settings
+# -----------------------------------
+else
+  # ls commands modification
+  export LS_OPTIONS='--color=auto'
+  alias ls='ls $LS_OPTIONS'
+fi
+
+# ---------------
+#   Set $GOPATH
+# ---------------
+export GOPATH=$HOME/.go/library
+export PATH=$PATH:$GOPATH/bin
+
+# ---------------
+#    Loads NVM
+# ---------------
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
+# -----------------------------------
+#   Setting for command line prompt
+# -----------------------------------
+function base_line() {
+  echo '\[\e[1;32m\]\u@\h:\w\[\e[00m\]';
+}
+export PS1="$(base_line)\n ${text}$ "
+export CLICOLOR=1
+
+# --------------------
+#   Settings for Git
+# --------------------
+if detect_command git ; then
+  # https://github.com/jcgoble3/gitstuff/blob/master/gitprompt.sh
+  function __git_status() {
+    local status="$(git status --porcelain 2>/dev/null)"
+    local output=''
+    [[ -n $(egrep '^[MADRC]' <<<"$status") ]] && output="[+]"
+    [[ -n $(egrep '^.[MD]' <<<"$status") ]] && output="[!]"
+    [[ -n $(egrep '^\?\?' <<<"$status") ]] && output="[?]"
+    [[ $output ]] && echo " "$output
+  }
+
+  function branch_name() {
+    if detect_command __git_ps1 ; then
+      echo '\[\e[0;36m\]$(__git_ps1)\[\e[00m\]';
+    fi
+  }
+
+  function git_status() {
+    if detect_command __git_status ; then
+      echo '\[\e[0;94m\]$(__git_status)\[\e[00m\]';
+    fi
+  }
+
+  function __get_branch_name() {
+    git branch | grep "*" | cut -d ' ' -f 2
+  }
+
+  # Show branch name and repo status
+  export PS1="$(base_line)\n$(branch_name)$(git_status) ${text}$ "
+
+  # Git command aliases
+  alias gad='git add .'
+  alias gadi='git add -i'
+  alias gd='git diff --cached'
+  alias gdt='git difftool --cached'
+  alias gc='git commit'
+  alias gcm='git commit -m'
+  alias gb='git branch'
+  alias gmas='git checkout master'
+  alias gdev='git checkout develop'
+  alias gcb='git checkout -b'
+  alias gcbk='git checkout -'
+  alias gl='git log --stat'
+  alias glo='git log --oneline --decorate --graph'
+  alias gpl='git pull origin $(__get_branch_name)'
+  alias gpo='git push origin $(__get_branch_name)'
+  alias gs='git status'
+  alias gsw='git show'
+  alias gclean='git fetch --prune'
+  alias gremote='git branch -a'
+  alias mmerge='git merge origin/master'
+  alias mdev='git merge origin/develop'
+  alias gcmb="git branch --merged | grep -vE '^\*|master$|develop$' | xargs -I % git branch -d %"
+
+  if detect_command peco ; then
+    alias pco='git branch | peco | xargs git checkout'
+  fi
+
+  alias g='git'
+
+  # Alias for Hub
+  if detect_command hub ; then
+    alias git='hub'
+  fi
+fi
+
+# Gist alias
+if detect_command gist ; then
+  alias update_vimrc='gist ~/_vimrc --update https://gist.github.com/IzumiSy/f6a9c92122eda13ed889'
+  alias update_bashrc='gist ~/.bashrc --update https://gist.github.com/IzumiSy/140e2e20484ccf682567'
+fi
+
+# ls
+alias l='ls'
+alias la='ls -a'
+alias ll='ls -l'
+alias lla='ls -la'
+
+# other
+alias x='exit'
+alias v='vim'
+alias c='clear'
+
+# Always show prompt
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+
+# ----------------------
+#   Functions for peco
+# ----------------------
+if detect_command peco ; then
+  function pssh {
+    local target="$(awk '{ if ($1 == "Host" ) print $2 }' ~/.ssh/config | peco)"
+    if [ ! -z "$target" ] ; then
+      echo "Connecting to $target with SSH"
+      ssh "$target"
+    fi
+  }
+fi
+
+# ----------------------
+#   Functions for fasd
+# ----------------------
+if detect_command fasd ; then
+  eval "$(fasd --init auto)"
+
+  if detect_command peco ; then
+    function dpco {
+      local dir="$( d | awk '{ print $2 }' | peco )"
+      if [ ! -z "$dir" ] ; then
+        cd "$dir"
+      fi
+    }
+  fi
+fi
+
+# ---------------------------
+#   Miscellaneous functions
+# ---------------------------
+
+# file counter
+fcount() {
+  if [[ -n $1 ]] ; then
+    find $1 -type f | wc -l
+  fi
+}
+
+# file list diff in two directory
+fdiff() {
+  if [[ -n $1 ]] && [[ -n $2 ]] ; then
+    diff <(ls -1 $1) <(ls -1 $2)
+  fi
+}
+
+# find files with fullpath
+fpfind() {
+  if [[ -n $1 ]] ; then
+    find "`pwd`" -name $1
+  fi
+}
+
+# find-grep combination function with colors
+gfind() {
+  if [[ -n $1 ]] && [[ -n $2 ]] ; then
+    find . -type f -name $1 | xargs grep $2 --color=always | less -R
+  fi
+}
+
+# Simple ps & grep comibination
+psgrep() {
+  ps aux | grep $1 | grep -v grep
+}
+
+# --------------------------------
+#   Launch GNU screen at startup
+# --------------------------------
+# if detect_command screen ; then
+#   if [[ $TERM != "screen" ]] && [[ $TERM != "dumb" ]] ; then
+#     screen -xR ^z^z
+#   fi
+# fi
+
+# Source global definitions (For DigitalOcean)
+# if [ -f /etc/bashrc ]; then
+#   . /etc/bashrc
+# fi
