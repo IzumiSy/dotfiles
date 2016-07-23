@@ -5,3 +5,8 @@
 ```sh
 $ ./install.sh
 ```
+
+## Uninstall
+````sh
+$ ./uninstall.sh
+```
