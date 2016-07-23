@@ -1,5 +1,5 @@
 #!/bin/sh
 
-ln -sf ./_vimrc ~/_vimrc
-ln -sf ./_screenrc ~/.screenrc
-ln -sf ./_bashrc ~/.bashrc
+ln -sf "$(pwd)/_vimrc" ~/_vimrc
+ln -sf "$(pwd)/_screenrc" ~/.screenrc
+ln -sf "$(pwd)/_bashrc" ~/.bashrc
