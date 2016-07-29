@@ -176,6 +176,10 @@ noremap <Right> <Nop>
 inoremap <C-k> <Nop>
 inoremap <C-l> <Nop>
 
+" Visual mode key-mappings for multiple indents
+vnoremap > >gv
+vnoremap < <gv
+
 " Resets highlighting
 nnoremap <silent> <Esc><Esc> :noh<CR> :call clearmatches()<CR>
 
