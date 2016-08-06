@@ -29,6 +29,9 @@ Bundle "surround.vim"
 " Asynchronous processing support
 Bundle "https://github.com/Shougo/vimproc"
 
+" Auto complete popup
+Bundle "https://github.com/Shougo/neocomplcache"
+
 " Status line customizing plugin
 Bundle "https://github.com/itchyny/lightline.vim"
 
@@ -118,7 +121,7 @@ set showcmd
 set splitright
 set laststatus=2
 set encoding=utf-8
-set fileencodings=iso-2022-jp,euc-jp,sjis,utf-8
+set fileencodings=utf-8,iso-2022-jp,euc-jp,sjis
 set fileformats=unix,dos,mac
 set backspace=indent,eol,start
 syntax on
@@ -360,4 +363,19 @@ let g:go_highlight_structs=1
 let g:go_highlight_fields=1
 let g:go_highlight_types=1
 let g:go_highlight_operators=1
+
+" ============================== "
+"   Settings for NeoComplCache   "
+" ============================== "
+let g:neocomplcache_enable_at_startup=1
+let g:neocomplcache_enable_ignore_case=1
+let g:neocomplcache_smart_case=1
+let g:neocomplcache_enable_auto_select=1
+let g:neocomplcache_min_syntax_length=1
+let g:neocomplcache_lock_buffer_name_pattern="\*ku\*"
+let g:neocomplcache_enable_camel_case_completion=1
+let g:neocomplcache_enable_underbar_completon=1
+inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
+inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 
