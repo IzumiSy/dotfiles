@@ -87,6 +87,9 @@ Bundle "open-browser.vim"
 " The Silver Searcher
 Bundle "rking/ag.vim"
 
+" Vim motion on speed
+Bundle "easymotion/vim-easymotion"
+
 " Theme
 Bundle "desert256.vim"
 
@@ -142,9 +145,9 @@ autocmd BufRead,BufNewFile *.gs set filetype=javascript
 autocmd BufRead,BufNewFile *.scss set filetype=scss.css
 autocmd BufRead,BufNewFile *.erb set filetype=html
 
-nnoremap <silent>,tr :<C-u>NERDTree<CR>
-nnoremap <silent>,ms :<C-u>VimShell<CR>
-nnoremap <silent>,mr :<C-u>MRU<CR>
+nnoremap <silent>,tr :NERDTree<CR>
+nnoremap <silent>,ms :VimShell<CR>
+nnoremap <silent>,mr :MRU<CR>
 nnoremap <F7> :Errors<CR>
 nnoremap <F8> :make<CR>
 
@@ -164,6 +167,9 @@ nmap <silent><C-h> b
 nmap <silent><C-l> w
 vmap <silent><C-h> b
 vmap <silent><C-l> w
+
+" Fix strange behavior of Backspace
+inoremap <expr><BS> "\<C-h>"
 
 " Closes window
 nnoremap <C-x> :q<CR>
@@ -336,8 +342,8 @@ let g:lightline = {
 "      Git plugin settings      "
 " ============================= "
 let g:git_command_edit = 'rightbelow vnew'
-nnoremap <silent>,gg :<C-u>GitGutterToggle<CR>
-nnoremap <silent>,gh :<C-u>GitGutterLineHighlightsToggle<CR>
+nnoremap <silent>,gg :GitGutterToggle<CR>
+nnoremap <silent>,gh :GitGutterLineHighlightsToggle<CR>
 nnoremap <silent>,gl :GV!<CR>
 
 " ============================== "
@@ -364,13 +370,20 @@ let g:go_highlight_fields=1
 let g:go_highlight_types=1
 let g:go_highlight_operators=1
 
+" =========================== "
+"   Settings for easymotion   "
+" =========================== "
+let g:EasyMotion_do_mapping=0
+nmap <C-j><C-j> <Plug>(easymotion-s2)
+nmap <C-k><C-k> <Plug>(easymotion-s2)
+
 " ============================== "
 "   Settings for NeoComplCache   "
 " ============================== "
 let g:neocomplcache_enable_at_startup=1
 let g:neocomplcache_enable_ignore_case=1
 let g:neocomplcache_smart_case=1
-let g:neocomplcache_enable_auto_select=1
+" let g:neocomplcache_enable_auto_select=1
 let g:neocomplcache_min_syntax_length=1
 let g:neocomplcache_lock_buffer_name_pattern="\*ku\*"
 let g:neocomplcache_enable_camel_case_completion=1
@@ -378,7 +391,14 @@ let g:neocomplcache_enable_underbar_completon=1
 let g:neocomplcache_dictionary_filetype_lists = {
     \ 'default': ''
     \ }
-inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function()
+    return neocomplcache#smart_close_popup()."\<CR>"
+endfunction
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
-
+inoremap <expr><C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
+inoremap <expr><C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
+" inoremap <expr><C-u> pumvisible() : "\<C-p>\<C-p>\<C-p>\<C-p>" : "\<C-u>"
+" inoremap <expr><C-d> pumvisible() ? "\<C-n>\<C-n>\<C-n>\<C-n>" : "\<C-d>"
+inoremap <expr><C-l> pumvisible() ? neocomplcache#smart_close_popup() : "\<C-l>"
+inoremap <expr><C-h> pumvisible() ? neocomplcache#undo_completion()."\<C-h>" : "\<C-h>"
