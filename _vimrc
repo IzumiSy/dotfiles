@@ -302,7 +302,8 @@ command Rroutes :Unite rails/route
 
 " Set ignore directories
 call unite#custom#source('file_rec,file_rec/async', 'ignore_pattern',
-\   'node_modules/\|jspm_packages/\|bower_components/\|tmp/\|cache/\|.git/\|.DS_Store\|png\|jpg')
+\   'node_modules/\|jspm_packages/\|bower_components/\|'.
+\   'tmp/\|cache/\|.git/\|.DS_Store\|png\|jpg')
 
 " Set matchers
 " call unite#filters#matcher_default#use(['matcher_fuzzy'])
