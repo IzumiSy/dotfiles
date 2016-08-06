@@ -23,9 +23,6 @@ Bundle "sudo.vim"
 " Syntax checking plugin
 Bundle "Syntastic"
 
-" Automatic word completion plugin
-Bundle "vim-scripts/AutoComplPop"
-
 " Word bracket handling plugin
 Bundle "surround.vim"
 
@@ -244,19 +241,6 @@ function! s:vg_interactive()
   redraw
   call s:vg_execute(queries)
 endfunction
-
-" ===================================== "
-"     Autocompletion popup settigns     "
-" ===================================== "
-let g:acp_enableAtStartup=0
-autocmd BufWinEnter * call acp#disable()
-hi PmenuSel ctermbg=darkgreen
-hi LineNr ctermfg=darkgray
-hi StatusLine ctermbg=darkgray ctermfg=lightgray
-autocmd FileType c,cpp :call acp#enable()
-autocmd FileType html,jade,css,scss :call acp#enable()
-autocmd FileType javascript,coffeescript :call acp#enable()
-autocmd FileType ruby :call acp#enable()
 
 " ========================= "
 "     Quickrun settings     "
