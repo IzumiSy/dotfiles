@@ -375,6 +375,9 @@ let g:neocomplcache_min_syntax_length=1
 let g:neocomplcache_lock_buffer_name_pattern="\*ku\*"
 let g:neocomplcache_enable_camel_case_completion=1
 let g:neocomplcache_enable_underbar_completon=1
+let g:neocomplcache_dictionary_filetype_lists = {
+    \ 'default': ''
+    \ }
 inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
