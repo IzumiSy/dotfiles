@@ -192,21 +192,19 @@ if detect_command peco ; then
       ssh "$target"
     fi
   }
-fi
 
-# ----------------------
-#   Functions for fasd
-# ----------------------
-if detect_command fasd ; then
-  eval "$(fasd --init auto)"
+  # Commands with fasd
+  if detect_command fasd ; then
+    eval "$(fasd --init auto)"
 
-  if detect_command peco ; then
     function dpco {
       local dir="$( d | awk '{ print $2 }' | peco )"
       if [ ! -z "$dir" ] ; then
         cd "$dir"
       fi
     }
+
+    alias hpco='eval $(history | cut -c 8-|peco)'
   fi
 fi
 
