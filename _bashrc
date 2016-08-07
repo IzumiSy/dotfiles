@@ -67,8 +67,13 @@ fi
 # ---------------
 #   Set $GOPATH
 # ---------------
-export GOPATH=$HOME/.go/library
-export PATH=$PATH:$GOPATH/bin
+if detect_command go ; then
+  if [ ! -e "$HOME/.go/library" ] ; then
+    mkdir -p "$HOME/.go/library"
+  fi
+  export GOPATH=$HOME/.go/library
+  export PATH=$PATH:$GOPATH/bin
+fi
 
 # ---------------
 #    Loads NVM
