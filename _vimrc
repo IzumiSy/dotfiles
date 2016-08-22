@@ -136,14 +136,15 @@ set synmaxcol=200
 " ========================== "
 "     Filetype detection     "
 " ========================== "
+autocmd BufRead,BufNewFile *.gs set filetype=javascript
+autocmd BufRead,BufNewFile *.ts set filetype=typescript
+autocmd BufRead,BufNewFile *.scss set filetype=scss.css
+autocmd BufRead,BufNewFile *.erb set filetype=html
 autocmd FileType c,cpp,perl,python set cindent
 autocmd FileType perl,cgi :compiler perl
 autocmd FileType html,jade,css,scss,php set tabstop=2 shiftwidth=2 softtabstop=2
-autocmd FileType javascript,coffeescript set tabstop=2 shiftwidth=2 softtabstop=2
+autocmd FileType javascript,coffeescript,typescript set tabstop=2 shiftwidth=2 softtabstop=2
 autocmd FileType ruby,python set tabstop=2 shiftwidth=2 softtabstop=2
-autocmd BufRead,BufNewFile *.gs set filetype=javascript
-autocmd BufRead,BufNewFile *.scss set filetype=scss.css
-autocmd BufRead,BufNewFile *.erb set filetype=html
 
 nnoremap <silent>,tr :NERDTree<CR>
 nnoremap <silent>,ms :VimShell<CR>
