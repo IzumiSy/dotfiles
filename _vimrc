@@ -136,10 +136,11 @@ set synmaxcol=200
 " ========================== "
 "     Filetype detection     "
 " ========================== "
-autocmd BufRead,BufNewFile *.gs set filetype=javascript
-autocmd BufRead,BufNewFile *.ts set filetype=typescript
-autocmd BufRead,BufNewFile *.scss set filetype=scss.css
-autocmd BufRead,BufNewFile *.erb set filetype=html
+autocmd BufRead,BufNewFile,BufReadPost *.gs set filetype=javascript
+autocmd BufRead,BufNewFile,BufReadPost *.ts set filetype=typescript
+autocmd BufRead,BufNewFile,BufReadPost *.scss set filetype=scss.css
+autocmd BufRead,BufNewFile,BufReadPost *.erb set filetype=html
+autocmd BufRead,BufNewFile,BufReadPost *.json set syntax=json
 autocmd FileType c,cpp,perl,python set cindent
 autocmd FileType perl,cgi :compiler perl
 autocmd FileType html,jade,css,scss,php set tabstop=2 shiftwidth=2 softtabstop=2
