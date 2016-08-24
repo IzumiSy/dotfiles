@@ -393,10 +393,12 @@ let g:neocomplcache_enable_underbar_completon=1
 let g:neocomplcache_dictionary_filetype_lists = {
     \ 'default': ''
     \ }
+
 inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
 function! s:my_cr_function()
     return neocomplcache#smart_close_popup()."\<CR>"
 endfunction
+
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
 inoremap <expr><C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
@@ -404,3 +406,9 @@ inoremap <expr><C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
 inoremap <expr><C-d> pumvisible() ? "\<C-n>\<C-n>\<C-n>\<C-n>" : "\<C-d>"
 inoremap <expr><C-l> pumvisible() ? neocomplcache#smart_close_popup() : "\<C-l>"
 inoremap <expr><C-h> pumvisible() ? neocomplcache#undo_completion()."\<C-h>" : "\<C-h>"
+
+" Define keyword.
+if !exists('g:neocomplcache_keyword_patterns')
+  let g:neocomplcache_keyword_patterns = {}
+endif
+let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
