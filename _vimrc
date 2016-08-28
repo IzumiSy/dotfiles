@@ -69,9 +69,9 @@ Bundle "digitaltoad/vim-jade"
 
 " HTML5, CSS3, SCSS, JavaScript
 Bundle "othree/html5.vim"
+Bundle "othree/yajs.vim"
 Bundle "JulesWang/css.vim"
 Bundle "hail2u/vim-css3-syntax"
-Bundle "pangloss/vim-javascript"
 Bundle "cakebaker/scss-syntax.vim"
 
 " Vue file support
