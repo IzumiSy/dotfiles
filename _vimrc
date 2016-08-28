@@ -74,6 +74,9 @@ Bundle "hail2u/vim-css3-syntax"
 Bundle "pangloss/vim-javascript"
 Bundle "cakebaker/scss-syntax.vim"
 
+" Vue file support
+Bundle "posva/vim-vue"
+
 " Golang
 Bundle "vim-jp/vim-go-extra"
 Bundle "fatih/vim-go"
@@ -137,7 +140,7 @@ set synmaxcol=200
 "     Filetype detection     "
 " ========================== "
 autocmd BufRead,BufNewFile,BufReadPost *.{gs,ts} set filetype=javascript
-autocmd BufRead,BufNewFile,BufReadPost *.{erb,vue*} set filetype=html
+autocmd BufRead,BufNewFile,BufReadPost *.erb set filetype=html
 autocmd BufRead,BufNewFile,BufReadPost *.scss set filetype=scss.css
 autocmd BufRead,BufNewFile,BufReadPost *.json set syntax=json
 autocmd FileType c,cpp,perl,python set cindent
