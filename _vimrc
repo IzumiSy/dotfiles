@@ -146,7 +146,7 @@ autocmd BufRead,BufNewFile,BufReadPost *.json set syntax=json
 autocmd FileType c,cpp,perl,python set cindent
 autocmd FileType perl,cgi :compiler perl
 autocmd FileType html,jade,css,scss,php set tabstop=2 shiftwidth=2 softtabstop=2
-autocmd FileType javascript,coffeescript,typescript,json set tabstop=2 shiftwidth=2 softtabstop=2
+autocmd FileType javascript,coffeescript,typescript,json,vue set tabstop=2 shiftwidth=2 softtabstop=2
 autocmd FileType ruby,python set tabstop=2 shiftwidth=2 softtabstop=2
 
 nnoremap <silent>,tr :NERDTree<CR>
