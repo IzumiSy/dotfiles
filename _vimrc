@@ -280,6 +280,7 @@ let g:unite_source_history_yank_enable=1
 let g:unite_source_file_mru_limit=200
 let g:unite_source_rec_min_cache_files=500
 let g:unite_source_rec_max_cache_files=99999
+let g:unite_redraw_hold_candidates = 50000
 let g:unite_prompt=">> "
 
 " Key mappings for Unite commands
@@ -308,7 +309,7 @@ call unite#custom#source('file_rec,file_rec/async', 'ignore_pattern',
 
 " Set matchers
 " call unite#filters#matcher_default#use(['matcher_fuzzy'])
-" call unite#filters#sorter_default#use(['sorter_rank'])
+call unite#filters#sorter_default#use(['sorter_rank'])
 
 " Use highway/ag for full-text document search
 if executable('hw')
