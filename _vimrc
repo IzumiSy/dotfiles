@@ -139,7 +139,7 @@ set synmaxcol=200
 " ========================== "
 "     Filetype detection     "
 " ========================== "
-autocmd BufRead,BufNewFile,BufReadPost *.{gs,ts} set filetype=javascript
+autocmd BufRead,BufNewFile,BufReadPost *.gs set filetype=javascript
 autocmd BufRead,BufNewFile,BufReadPost *.erb set filetype=html
 autocmd BufRead,BufNewFile,BufReadPost *.scss set filetype=scss.css
 autocmd BufRead,BufNewFile,BufReadPost *.json set syntax=json
