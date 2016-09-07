@@ -1,13 +1,14 @@
-// 既定値を上書きするには、このファイル内にキー バインドを挿入します
-[{
-  "key": "ctrl+h",
-  "command": "deleteLeft",
-  "when": "editorTextFocus"
-},{
-  "key": "ctrl+x",
-  "command": "workbench.action.closeActiveEditor"
-},{
-  "key": "ctrl+j",
-  "command": "editor.action.insertLineAfter", 
-  "when": "editorTextFocus"
-}]
+[
+  {
+    "key": "ctrl+h",
+    "command": "deleteLeft",
+    "when": "editorTextFocus"
+  },{
+    "key": "ctrl+x",
+    "command": "workbench.action.closeActiveEditor"
+  },{
+    "key": "ctrl+j",
+    "command": "editor.action.insertLineAfter", 
+    "when": "editorTextFocus"
+  }
+]
