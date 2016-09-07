@@ -17,6 +17,8 @@ call vundle#begin()
 "     Load VIM plugins
 " ========================
 
+Plugin 'VundleVim/Vundle.vim'
+
 " Sudo wrapper plugin
 Plugin 'sudo.vim'
 
