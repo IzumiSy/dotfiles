@@ -225,41 +225,6 @@ augroup END
 " Trim whitespace before saving a file
 autocmd BufWritePre * :FixWhitespace
 
-" ================================== "
-"     Alias comamnds for vimgrep     "
-" ================================== "
-command! -nargs=? Vgrep call s:vg_check_args(<f-args>)
-command! LaunchInteractiveVgrep call s:vg_interactive()
-command! -range LaunchSelectedVgrep call s:vg_execute(s:get_selected_text())
-nnoremap <silent><C-f> :LaunchInteractiveVgrep<CR>
-vmap <silent>,gv :LaunchSelectedVgrep<CR>
-
-function! s:get_selected_text()
-  normal gv"xy
-  let result = getreg("x")
-  normal gv
-  return result
-endfunction
-
-function! s:vg_execute(query)
-  echo "Processing vimgrep: ".a:query
-  execute "vimgrep ".a:query." **/* | cw"
-endfunction
-
-function! s:vg_check_args(...)
-  if a:0 >= 1
-    call s:vg_execute(a:1)
-  else
-    echo "Needs more than one argument at least."
-  end
-endfunction
-
-function! s:vg_interactive()
-  let queries = inputdialog("Queries: ")
-  redraw
-  call s:vg_execute(queries)
-endfunction
-
 " ========================= "
 "     Quickrun settings     "
 " ========================= "
@@ -387,7 +352,7 @@ let g:neocomplcache_enable_at_startup=1
 let g:neocomplcache_enable_ignore_case=1
 let g:neocomplcache_smart_case=1
 " let g:neocomplcache_enable_auto_select=1
-let g:neocomplcache_min_syntax_length=1
+let g:neocomplcache_min_syntax_length=2
 let g:neocomplcache_lock_buffer_name_pattern="\*ku\*"
 let g:neocomplcache_enable_camel_case_completion=1
 let g:neocomplcache_enable_underbar_completon=1
@@ -404,9 +369,9 @@ inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
 inoremap <expr><C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
 " inoremap <expr><C-u> pumvisible() : "\<C-p>\<C-p>\<C-p>\<C-p>" : "\<C-u>"
-inoremap <expr><C-d> pumvisible() ? "\<C-n>\<C-n>\<C-n>\<C-n>" : "\<C-d>"
+" inoremap <expr><C-d> pumvisible() ? "\<C-n>\<C-n>\<C-n>\<C-n>" : "\<C-d>"
 inoremap <expr><C-l> pumvisible() ? neocomplcache#smart_close_popup() : "\<C-l>"
-inoremap <expr><C-h> pumvisible() ? neocomplcache#undo_completion()."\<C-h>" : "\<C-h>"
+inoremap <expr><C-h> pumvisible() ? neocomplcache#cancel_popup()."\<C-h>" : "\<C-h>"
 
 " Define keyword.
 if !exists('g:neocomplcache_keyword_patterns')
