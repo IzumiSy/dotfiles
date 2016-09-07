@@ -3,12 +3,20 @@
     "key": "ctrl+h",
     "command": "deleteLeft",
     "when": "editorTextFocus"
-  },{
+  }, {
     "key": "ctrl+x",
     "command": "workbench.action.closeActiveEditor"
-  },{
-    "key": "ctrl+j",
-    "command": "editor.action.insertLineAfter", 
+  }, {
+    "key": "ctrl+z",
+    "command": "undo",
+    "when": "editorTextFocus"
+  }, {
+    "key": "ctrl+w ctrl+h",
+    "command": "workbench.action.focusPreviousGroup",
+    "when": "editorTextFocus"
+  }, {
+    "key": "ctrl+w ctrl+l",
+    "command": "workbench.action.focusNextGroup",
     "when": "editorTextFocus"
   }
 ]
