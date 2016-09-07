@@ -8,94 +8,95 @@ if has('vim_starting')
   if &compatible
     set nocompatible
   endif
-  set rtp+=~/.vim/vundle.git/
+  set rtp+=~/.vim/bundle/Vundle.vim/
 endif
 
-call vundle#rc()
+call vundle#begin()
 
 " ========================
 "     Load VIM plugins
 " ========================
 
 " Sudo wrapper plugin
-Bundle "sudo.vim"
+Plugin 'sudo.vim'
 
 " Syntax checking plugin
-Bundle "Syntastic"
+Plugin 'Syntastic'
 
 " Word bracket handling plugin
-Bundle "surround.vim"
+Plugin 'surround.vim'
 
 " Asynchronous processing support
-Bundle "https://github.com/Shougo/vimproc"
+Plugin 'https://github.com/Shougo/vimproc'
 
 " Auto complete popup
-Bundle "https://github.com/Shougo/neocomplcache"
+Plugin 'https://github.com/Shougo/neocomplcache'
 
 " Status line customizing plugin
-Bundle "https://github.com/itchyny/lightline.vim"
+Plugin 'https://github.com/itchyny/lightline.vim'
 
 " Interactive shell wrapper
-Bundle "https://github.com/Shougo/vimshell.git"
+Plugin 'https://github.com/Shougo/vimshell.git'
 
 " Plugins for compile sources without leaving VIM
-Bundle "quickrun.vim"
-Bundle "SingleCompile"
+Plugin 'quickrun.vim'
+Plugin 'SingleCompile'
 
 " Interactive fuzzy-wording finder over multiple
 " sources like files, buffers, and file histories.
-Bundle "https://github.com/Shougo/unite.vim"
-Bundle "https://github.com/Shougo/neomru.vim"
-Bundle "unite-colorscheme"
-Bundle "basyura/unite-rails"
+Plugin 'https://github.com/Shougo/unite.vim'
+Plugin 'https://github.com/Shougo/neomru.vim'
+Plugin 'unite-colorscheme'
+Plugin 'basyura/unite-rails'
 
 " File viewer plugins
-Bundle "The-NERD-tree"
-Bundle "mru.vim"
+Plugin 'The-NERD-tree'
+Plugin 'mru.vim'
 
 " Git plugins
-Bundle "https://github.com/airblade/vim-gitgutter"
-Bundle 'tpope/vim-fugitive'
-Bundle 'motemen/git-vim'
-Bundle 'https://github.com/kmnk/vim-unite-giti'
-Bundle 'https://github.com/junegunn/gv.vim'
+Plugin 'https://github.com/airblade/vim-gitgutter'
+Plugin 'tpope/vim-fugitive'
+Plugin 'motemen/git-vim'
+Plugin 'https://github.com/kmnk/vim-unite-giti'
+Plugin 'https://github.com/junegunn/gv.vim'
 
 " Rails, CoffeeScript, TypeScript, JSON, Jade supports for Vim
-Bundle "leafgarland/typescript-vim"
-Bundle "kchmck/vim-coffee-script"
-Bundle "rails.vim"
-Bundle "leshill/vim-json"
-Bundle "digitaltoad/vim-jade"
+Plugin 'leafgarland/typescript-vim'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'rails.vim'
+Plugin 'leshill/vim-json'
+Plugin 'digitaltoad/vim-jade'
 
 " HTML5, CSS3, SCSS, JavaScript
-Bundle "othree/html5.vim"
-Bundle "othree/yajs.vim"
-Bundle "JulesWang/css.vim"
-Bundle "hail2u/vim-css3-syntax"
-Bundle "cakebaker/scss-syntax.vim"
+Plugin 'othree/html5.vim'
+Plugin 'othree/yajs.vim'
+Plugin 'JulesWang/css.vim'
+Plugin 'hail2u/vim-css3-syntax'
+Plugin 'cakebaker/scss-syntax.vim'
 
 " Vue file support
-Bundle "posva/vim-vue"
+Plugin 'posva/vim-vue'
 
 " Golang
-Bundle "vim-jp/vim-go-extra"
-Bundle "fatih/vim-go"
+Plugin 'vim-jp/vim-go-extra'
+Plugin 'fatih/vim-go'
 
 " Whitespace trailer
-Bundle "bronson/vim-trailing-whitespace"
+Plugin 'bronson/vim-trailing-whitespace'
 
 " Open URL with default browser
-Bundle "open-browser.vim"
+Plugin 'open-browser.vim'
 
 " The Silver Searcher
-Bundle "rking/ag.vim"
+Plugin 'rking/ag.vim'
 
 " Vim motion on speed
-Bundle "easymotion/vim-easymotion"
+Plugin 'easymotion/vim-easymotion'
 
 " Theme
-Bundle "desert256.vim"
+Plugin 'desert256.vim'
 
+call vundle#end()
 filetype plugin indent on
 
 " ========================= "
