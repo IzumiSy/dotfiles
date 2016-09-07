@@ -1,0 +1,10 @@
+// 既定の設定を上書きするには、このファイル内に設定を挿入します
+{
+    "editor.fontSize": 12,
+    "editor.tabSize": 2,
+
+    "vim.useCtrlKeys": true,
+    "vim.useSystemClipboard": true,
+
+    "vim.insertModeKeyBindings": []
+}
