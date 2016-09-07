@@ -49,7 +49,6 @@ Plugin 'SingleCompile'
 Plugin 'https://github.com/Shougo/unite.vim'
 Plugin 'https://github.com/Shougo/neomru.vim'
 Plugin 'unite-colorscheme'
-Plugin 'basyura/unite-rails'
 
 " File viewer plugins
 Plugin 'The-NERD-tree'
@@ -299,14 +298,6 @@ nnoremap <silent>,fb :Unite -start-insert buffer<CR>
 nnoremap <silent>,ff :Unite grep:. -buffer-name=search-buffer -no-quit<CR>
 nnoremap <silent>,gb :Unite giti/branch<CR>
 nnoremap <silent>,gs :Unite giti/status -horizontal<CR>
-
-" Command bindings for unite-rails
-command Rctrl :Unite rails/controller
-command Rmodel :Unite rails/model
-command Rview :Unite rails/view
-command Rdb :Unite rails/db
-command Rconfig :Unite rails/config
-command Rroutes :Unite rails/route
 
 " Set ignore directories
 call unite#custom#source('file_rec,file_rec/async', 'ignore_pattern',
