@@ -175,6 +175,7 @@ alias lla='ls -la'
 alias x='exit'
 alias v='vim'
 alias c='clear'
+alias bl="byobu -l"
 
 # Always show prompt
 alias rm='rm -i'
