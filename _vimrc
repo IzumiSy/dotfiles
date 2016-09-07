@@ -61,12 +61,12 @@ Plugin 'motemen/git-vim'
 Plugin 'https://github.com/kmnk/vim-unite-giti'
 Plugin 'https://github.com/junegunn/gv.vim'
 
-" Rails, CoffeeScript, TypeScript, JSON, Jade supports for Vim
+" Rails, CoffeeScript, TypeScript, JSON, Pug supports for Vim
 Plugin 'leafgarland/typescript-vim'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'rails.vim'
 Plugin 'leshill/vim-json'
-Plugin 'digitaltoad/vim-jade'
+Plugin 'digitaltoad/vim-pug'
 
 " HTML5, CSS3, SCSS, JavaScript
 Plugin 'othree/html5.vim'
