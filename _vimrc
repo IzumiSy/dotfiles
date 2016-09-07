@@ -149,6 +149,9 @@ autocmd FileType html,jade,css,scss,php set tabstop=2 shiftwidth=2 softtabstop=2
 autocmd FileType javascript,coffeescript,typescript,json,vue set tabstop=2 shiftwidth=2 softtabstop=2
 autocmd FileType ruby,python set tabstop=2 shiftwidth=2 softtabstop=2
 
+" wanna use vim-vue, but for now this is the best
+autocmd BufRead,BufNewFile,BufReadPost *.vue set filetype=html
+
 nnoremap <silent>,tr :NERDTree<CR>
 nnoremap <silent>,ms :VimShell<CR>
 nnoremap <silent>,mr :MRU<CR>
