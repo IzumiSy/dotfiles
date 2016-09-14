@@ -25,8 +25,9 @@ Plugin 'sudo.vim'
 " Syntax checking plugin
 Plugin 'Syntastic'
 
-" Word bracket handling plugin
+" Word bracket, commenting plugins
 Plugin 'surround.vim'
+Plugin 'scrooloose/nerdcommenter'
 
 " Asynchronous processing support
 Plugin 'https://github.com/Shougo/vimproc'
