@@ -139,6 +139,10 @@ colorscheme desert256
 " Prevent performance slow-down with long line
 set synmaxcol=200
 
+" Enable background transparency on Ubuntu
+highlight Normal ctermbg=none
+highlight NonText ctermbg=none
+
 " ========================== "
 "     Filetype detection     "
 " ========================== "
