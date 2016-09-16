@@ -139,10 +139,6 @@ colorscheme desert256
 " Prevent performance slow-down with long line
 set synmaxcol=200
 
-" Enable background transparency on Ubuntu
-highlight Normal ctermbg=none
-highlight NonText ctermbg=none
-
 " ========================== "
 "     Filetype detection     "
 " ========================== "
@@ -383,3 +379,8 @@ if !exists('g:neocomplcache_keyword_patterns')
   let g:neocomplcache_keyword_patterns = {}
 endif
 let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
+
+" Enable background transparency on Ubuntu
+" these highlight settings needs to be here.
+highlight Normal ctermbg=none
+highlight NonText ctermbg=none
