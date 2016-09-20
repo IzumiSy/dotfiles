@@ -235,8 +235,8 @@ autocmd BufWritePre * :FixWhitespace
 "     Quickrun settings     "
 " ========================= "
 autocmd FileType perl,cgi :nnoremap <silent>,rr :QuickRun perl<CR>
-autocmd FileType cpp :nnoremap <silent>,rr :QuickRun cpp/g++<CR>
-autocmd FileType c :nnoremap <silent>,rr :QuickRun cpp/C<CR>
+autocmd FileType cpp :nnoremap <silent>,rr :QuickRun g++<CR>
+autocmd FileType c :nnoremap <silent>,rr :QuickRun c<CR>
 autocmd FileType python :nnoremap <silent>,rr :QuickRun python<CR>
 autocmd FileType ruby :nnoremap <silent>,rr :QuickRun ruby<CR>
 autocmd FileType go :nnoremap <silent>,rr :QuickRun go<CR>
