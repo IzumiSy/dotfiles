@@ -51,6 +51,10 @@ Plugin 'https://github.com/Shougo/unite.vim'
 Plugin 'https://github.com/Shougo/neomru.vim'
 Plugin 'unite-colorscheme'
 
+" Plugins for quickfix
+Plugin 'osyo-manga/unite-quickfix'
+Plugin 'osyo-manga/shabadou.vim'
+
 " File viewer plugins
 Plugin 'The-NERD-tree'
 Plugin 'mru.vim'
