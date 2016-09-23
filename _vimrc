@@ -240,6 +240,7 @@ autocmd FileType c :nnoremap <silent>,rr :QuickRun c<CR>
 autocmd FileType python :nnoremap <silent>,rr :QuickRun python<CR>
 autocmd FileType ruby :nnoremap <silent>,rr :QuickRun ruby<CR>
 autocmd FileType go :nnoremap <silent>,rr :QuickRun go<CR>
+autocmd FileType sh :noremap <silent>,rr :QuickRun sh<CR>
 if !exists("g:quickrun_config")
     let g:quickrun_config={}
 endif
