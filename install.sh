@@ -37,6 +37,6 @@ if [ ! -e "$HOME/.vim/bundle" ] ; then
 fi
 
 ln -sf "$(pwd)/_vimrc" ~/_vimrc
-vim -i NONE -c PluginInstall -c qall
+vim -c "set shortmess+=I" +PluginInstall +qall
 
 (cd ~/.vim/bundle/vimproc/; make)
