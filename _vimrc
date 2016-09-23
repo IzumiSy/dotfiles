@@ -279,15 +279,6 @@ nnoremap <silent>,fl :UniteWithCursorWord grep:. -buffer-name=search-buffer -no-
 nnoremap <silent>,gb :Unite giti/branch<CR>
 nnoremap <silent>,gs :Unite giti/status -horizontal<CR>
 
-" Set ignore directories
-call unite#custom#source('file_rec,file_rec/async', 'ignore_pattern',
-\   'node_modules/\|jspm_packages/\|bower_components/\|'.
-\   'tmp/\|cache/\|.git/\|.DS_Store\|png\|jpg')
-
-" Set matchers
-" call unite#filters#matcher_default#use(['matcher_fuzzy'])
-call unite#filters#sorter_default#use(['sorter_rank'])
-
 " Use highway/ag for full-text document search
 if executable('hw')
   let g:unite_source_grep_command='hw'
@@ -300,6 +291,17 @@ elseif executable('ag')
 endif
 
 let g:unite_source_grep_recursive_opt=''
+
+if exists("*Unite")
+  " Set ignore directories
+  call unite#custom#source('file_rec,file_rec/async', 'ignore_pattern',
+  \   'node_modules/\|jspm_packages/\|bower_components/\|'.
+  \   'tmp/\|cache/\|.git/\|.DS_Store\|png\|jpg')
+
+  " Set matchers
+  " call unite#filters#matcher_default#use(['matcher_fuzzy'])
+  call unite#filters#sorter_default#use(['sorter_rank'])
+endif
 
 " ========================== "
 "     Lightline settings     "
