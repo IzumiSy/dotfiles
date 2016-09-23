@@ -39,4 +39,6 @@ fi
 ln -sf "$(pwd)/_vimrc" ~/_vimrc
 vim +PluginInstall +qall
 
+print_for_log "Build vimproc"
 (cd ~/.vim/bundle/vimproc/; make)
+
