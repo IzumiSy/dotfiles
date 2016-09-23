@@ -1,20 +1,40 @@
 #!/bin/sh
 
-# Clone Vundle to use vundle in Vim
-if [ ! -e "$HOME/.vim/bundle" ] ; then
-    git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-fi
+WHITE='\033[1;37m'
+NC='\033[0m'
+
+print_for_log() {
+    echo -e "${WHITE}${$1}${NC}"
+}
+
+#
+# Install _bashrc
+#
+print_for_log "Linking _bashrc..."
+
+ln -sf "$(pwd)/_bashrc" ~/.bashrc
 
 if [ ! -e "$HOME/.bash_profile" ] ; then
     ln -sf "$(pwd)/_bash_profile" ~/.bash_profile
 fi
 
-ln -sf "$(pwd)/_vimrc" ~/_vimrc
-ln -sf "$(pwd)/_screenrc" ~/.screenrc
-ln -sf "$(pwd)/_bashrc" ~/.bashrc
+#
+# Install _screenrc
+#
+print_for_log "Linking _screenrc"
 
-# Install plugins
+ln -sf "$(pwd)/_screenrc" ~/.screenrc
+
+#
+# Install _vimrc
+#
+print_for_log "Linking _vimrc"
+
+if [ ! -e "$HOME/.vim/bundle" ] ; then
+    git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+fi
+
+ln -sf "$(pwd)/_vimrc" ~/_vimrc
 vim -i NONE -c PluginInstall -c qall
 
-# Build vimproc
 (cd ~/.vim/bundle/vimproc/; make)
