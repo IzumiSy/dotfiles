@@ -7,11 +7,11 @@ WHITE='\033[1;37m'
 NC='\033[0m'
 
 print_for_log() {
-    echo -e "${WHITE}$1${NC}"
+    printf "${WHITE}$1${NC}\n"
 }
 
 print_for_log2() {
-    echo -e "${GREEN}$1${NC}"
+    printf "${GREEN}$1${NC}\n"
 }
 
 print_for_log2 "Start installing dotfiles"
