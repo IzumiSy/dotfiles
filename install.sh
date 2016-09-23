@@ -6,7 +6,7 @@ WHITE='\033[1;37m'
 NC='\033[0m'
 
 print_for_log() {
-    echo -e "${WHITE}${$1}${NC}"
+    echo -e "${WHITE}$1${NC}"
 }
 
 #

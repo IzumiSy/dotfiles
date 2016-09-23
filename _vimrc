@@ -253,6 +253,9 @@ let g:quickrun_config["_"] = {
 let g:quickrun_config["go"] = {
 \   'command': 'go run'
 \ }
+let g:quickrun_config["sh"] = {
+\   'command': 'bash'
+\ }
 
 " ======================== "
 "      Unite settings      "
