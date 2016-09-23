@@ -14,7 +14,7 @@ ln -sf "$(pwd)/_screenrc" ~/.screenrc
 ln -sf "$(pwd)/_bashrc" ~/.bashrc
 
 # Install plugins
-vim +PluginInstall +qall 2&> /dev/null
+vim +PluginInstall +qall
 
 # Build vimproc
 (cd ~/.vim/bundle/vimproc/; make)
