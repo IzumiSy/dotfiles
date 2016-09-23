@@ -10,7 +10,11 @@ print_for_log() {
     echo -e "${WHITE}$1${NC}"
 }
 
-print_for_log "Start installing dotfiles"
+print_for_log2() {
+    echo -e "${GREEN}$1${NC}"
+}
+
+print_for_log2 "Start installing dotfiles"
 
 #
 # Install _bashrc
@@ -46,4 +50,5 @@ vim +PluginInstall +qall
 print_for_log "Build vimproc"
 (cd ~/.vim/bundle/vimproc/; make)
 
-print_for_log "Finish installing dotfiles"
+print_for_log2 "Finish installing dotfiles"
+
