@@ -138,7 +138,7 @@ set fileencodings=utf-8,iso-2022-jp,euc-jp,sjis
 set fileformats=unix,dos,mac
 set backspace=indent,eol,start
 syntax on
-colorscheme desert256
+silent! colorscheme desert256
 
 " Prevent performance slow-down with long line
 set synmaxcol=200
