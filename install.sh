@@ -35,8 +35,9 @@ print_for_log "Linking _vimrc"
 if [ ! -e "$HOME/.vim/bundle" ] ; then
     git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 fi
-
 ln -sf "$(pwd)/_vimrc" ~/_vimrc
+
+print_for_log "Install vim plugins"
 vim +PluginInstall +qall
 
 print_for_log "Build vimproc"
