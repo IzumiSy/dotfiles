@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+
 unlink ~/_vimrc
 unlink ~/.screenrc
 unlink ~/.bashrc
