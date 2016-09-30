@@ -292,16 +292,19 @@ endif
 
 let g:unite_source_grep_recursive_opt=''
 
-if exists("*Unite")
-  " Set ignore directories
-  call unite#custom#source('file_rec,file_rec/async', 'ignore_pattern',
-  \   'node_modules/\|jspm_packages/\|bower_components/\|'.
-  \   'tmp/\|cache/\|.git/\|.DS_Store\|png\|jpg')
+function! SetupUniteOptions()
+  if exists(':Unite')
+    " Set ignore directories
+    call unite#custom#source('file_rec,file_rec/async', 'ignore_pattern',
+    \   'node_modules/\|jspm_packages/\|bower_components/\|'.
+    \   'tmp/\|cache/\|.git/\|.DS_Store\|png\|jpg')
 
-  " Set matchers
-  " call unite#filters#matcher_default#use(['matcher_fuzzy'])
-  call unite#filters#sorter_default#use(['sorter_rank'])
-endif
+    " Set matchers
+    " call unite#filters#matcher_default#use(['matcher_fuzzy'])
+    call unite#filters#sorter_default#use(['sorter_rank'])
+  endif
+endfunction
+autocmd VimEnter * call SetupUniteOptions()
 
 " ========================== "
 "     Lightline settings     "
