@@ -147,7 +147,7 @@ set synmaxcol=200
 "     Filetype detection     "
 " ========================== "
 autocmd BufRead,BufNewFile,BufReadPost *.gs set filetype=javascript
-autocmd BufRead,BufNewFile,BufReadPost *.erb set filetype=html
+autocmd BufRead,BufNewFile,BufReadPost *.erb set filetype=eruby.html
 autocmd BufRead,BufNewFile,BufReadPost *.scss set filetype=scss.css
 autocmd BufRead,BufNewFile,BufReadPost *.coffee set filetype=coffee
 autocmd BufRead,BufNewFile,BufReadPost *.json set syntax=json
