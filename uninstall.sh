@@ -2,10 +2,10 @@
 
 set -e
 
-unlink -v ~/_vimrc
-unlink -v ~/.screenrc
-unlink -v ~/.bashrc
-unlink -v ~/.bash_profile
+unlink ~/_vimrc
+unlink ~/.screenrc
+unlink ~/.bashrc
+unlink ~/.bash_profile
 
 rm -rf $HOME/.vim
 
@@ -15,5 +15,5 @@ else
     vscode_config_path="$HOME/.config/Code/User/"
 fi
 
-unlink -v "${vscode_config_path}/settings.json"
-unlink -v "${vscode_config_path}/keybindings.json"
+unlink "${vscode_config_path}/settings.json"
+unlink "${vscode_config_path}/keybindings.json"
