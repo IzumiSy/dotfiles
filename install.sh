@@ -19,8 +19,6 @@ print_for_log2 "Start installing dotfiles"
 #
 # Install _bashrc
 #
-print_for_log "Linking _bashrc..."
-
 ln -snvf "$(pwd)/_bashrc" ~/.bashrc
 
 if [ ! -e "$HOME/.bash_profile" ] ; then
@@ -30,15 +28,11 @@ fi
 #
 # Install _screenrc
 #
-print_for_log "Linking _screenrc"
-
 ln -snvf "$(pwd)/_screenrc" ~/.screenrc
 
 #
 # Install _vimrc
 #
-print_for_log "Linking _vimrc"
-
 if [ ! -e "$HOME/.vim/bundle" ] ; then
     git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 fi
@@ -53,8 +47,6 @@ print_for_log "Build vimproc"
 #
 # Link setting/keybindings of VS Code
 #
-print_for_log "Linking VSCode settings/keybindings"
-
 if [[ "$OSTYPE" = "darwin"* ]] ; then
     vscode_config_path="$HOME/Library/Application Support/Code/User"
 else
