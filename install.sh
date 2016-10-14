@@ -55,7 +55,7 @@ print_for_log "Build vimproc"
 #
 print_for_log "Linking VSCode settings/keybindings"
 
-if [ "$OSTYPE" = "darwin"* ] ; then
+if [[ "$OSTYPE" = "darwin"* ]] ; then
     vscode_config_path="$HOME/Library/Application Support/Code/User"
 else
     vscode_config_path="$HOME/.config/Code/User/"
