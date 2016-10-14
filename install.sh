@@ -50,5 +50,19 @@ vim +PluginInstall +qall
 print_for_log "Build vimproc"
 (cd ~/.vim/bundle/vimproc/; make)
 
+#
+# Link setting/keybindings of VS Code
+#
+print_for_log "Linking VSCode settings/keybindings"
+
+if [ "$OSTYPE" = "darwin"* ] ; then
+    vscode_config_path="$HOME/Library/Application Support/Code/User"
+else
+    vscode_config_path="$HOME/.config/Code/User/"
+fi
+
+ln -sf "$(pwd)/Code/settings.json" "${vscode_config_path}/settings.json"
+ln -sf "$(pwd)/Code/keybindings.json" "${vscode_config_path}/keybindings.json"
+
 print_for_log2 "Finish installing dotfiles"
 
