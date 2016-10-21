@@ -146,11 +146,13 @@ set synmaxcol=200
 " ========================== "
 "     Filetype detection     "
 " ========================== "
-autocmd BufRead,BufNewFile,BufReadPost *.gs set filetype=javascript
-autocmd BufRead,BufNewFile,BufReadPost *.erb set filetype=eruby.html
-autocmd BufRead,BufNewFile,BufReadPost *.scss set filetype=scss.css
-autocmd BufRead,BufNewFile,BufReadPost *.coffee set filetype=coffee
-autocmd BufRead,BufNewFile,BufReadPost *.json set syntax=json
+au BufRead,BufNewFile,BufReadPost *.gs set filetype=javascript
+au BufRead,BufNewFile,BufReadPost *.erb set filetype=eruby.html
+au BufRead,BufNewFile,BufReadPost *.scss set filetype=scss.css
+au BufRead,BufNewFile,BufReadPost *.coffee set filetype=coffee
+au BufRead,BufNewFile,BufReadPost *.json set syntax=json
+au BufRead,BufNewFile {*.md} set filetype=markdown
+au BufRead,BufNewFile {COMMIT_EDITMSG} set filetype=gitcommit
 autocmd FileType c,cpp,perl,python set cindent
 autocmd FileType perl,cgi :compiler perl
 autocmd FileType html,jade,css,scss,php,eruby set tabstop=2 shiftwidth=2 softtabstop=2
