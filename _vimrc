@@ -320,12 +320,13 @@ let g:lightline = {
 \   'colorscheme': 'powerline',
 \   'active': {
 \     'left': [
-\       [ 'mode', 'paste' ],
-\       [ 'fugitive', 'readonly', 'filename', 'modified' ]
+\       ['mode', 'paste'],
+\       ['fugitive', 'readonly', 'filename', 'modified']
 \     ]
 \   },
 \   'component': {
-\     'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}'
+\     'fugitive': '%{exists("*fugitive#head") ? fugitive#head() : ""}',
+\     'readonly': '%{&readonly ? "🔒" : ""}'
 \   }
 \ }
 
