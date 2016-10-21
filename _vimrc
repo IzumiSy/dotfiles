@@ -109,7 +109,7 @@ filetype plugin indent on
 "      General settings     "
 " ========================= "
 scriptencoding utf-8
-set tabstop=4 shiftwidth=4 softtabstop=4
+set tabstop=2 shiftwidth=2 softtabstop=2
 set fencs=utf-8,euc-jp,iso-2022-jp,cp932
 set matchpairs+=<:>
 set whichwrap+=h,l,<,>,[,],b,s,~
@@ -157,10 +157,7 @@ au BufRead,BufNewFile {COMMIT_EDITMSG} set filetype=gitcommit
 " wanna use vim-vue, but for now this is the best
 autocmd BufRead,BufNewFile,BufReadPost *.vue set filetype=html
 
-autocmd FileType
-\   html,jade,css,scss,php,eruby,ruby,python
-\   javascript,typescript,coffee,json,vue
-\   set tabstop=2 shiftwidth=2 softtabstop=2
+au FileType c,golang set tabstop=4 shiftwidth=4 softtabstop=4
 autocmd FileType c,cpp,perl,python set cindent
 autocmd FileType perl,cgi :compiler perl
 
