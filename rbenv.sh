@@ -1,4 +1,6 @@
-#!/bin/sh
+#!/bin/bash
+
+set -e
 
 git clone https://github.com/rbenv/rbenv.git
 git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
