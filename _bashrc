@@ -2,6 +2,9 @@
 #    custom .bashrc
 # --------------------
 
+# http://www.itmedia.co.jp/help/tips/linux/l0612.html
+stty stop undef
+
 # Workaround to prevent problem with Byobu that occurs in connecting with Teraterm
 export VTE_CJK_WIDTH=1
 

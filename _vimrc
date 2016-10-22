@@ -109,7 +109,7 @@ filetype plugin indent on
 "      General settings     "
 " ========================= "
 scriptencoding utf-8
-set tabstop=4 shiftwidth=4 softtabstop=4
+set tabstop=2 shiftwidth=2 softtabstop=2
 set fencs=utf-8,euc-jp,iso-2022-jp,cp932
 set matchpairs+=<:>
 set whichwrap+=h,l,<,>,[,],b,s,~
@@ -146,19 +146,20 @@ set synmaxcol=200
 " ========================== "
 "     Filetype detection     "
 " ========================== "
-autocmd BufRead,BufNewFile,BufReadPost *.gs set filetype=javascript
-autocmd BufRead,BufNewFile,BufReadPost *.erb set filetype=eruby.html
-autocmd BufRead,BufNewFile,BufReadPost *.scss set filetype=scss.css
-autocmd BufRead,BufNewFile,BufReadPost *.coffee set filetype=coffee
-autocmd BufRead,BufNewFile,BufReadPost *.json set syntax=json
-autocmd FileType c,cpp,perl,python set cindent
-autocmd FileType perl,cgi :compiler perl
-autocmd FileType html,jade,css,scss,php set tabstop=2 shiftwidth=2 softtabstop=2
-autocmd FileType javascript,typescript,coffee,json,vue set tabstop=2 shiftwidth=2 softtabstop=2
-autocmd FileType ruby,python set tabstop=2 shiftwidth=2 softtabstop=2
+au BufRead,BufNewFile,BufReadPost *.gs set filetype=javascript
+au BufRead,BufNewFile,BufReadPost *.erb set filetype=eruby.html
+au BufRead,BufNewFile,BufReadPost *.scss set filetype=scss.css
+au BufRead,BufNewFile,BufReadPost *.coffee set filetype=coffee
+au BufRead,BufNewFile,BufReadPost *.json set syntax=json
+au BufRead,BufNewFile {*.md} set filetype=markdown
+au BufRead,BufNewFile {COMMIT_EDITMSG} set filetype=gitcommit
 
 " wanna use vim-vue, but for now this is the best
 autocmd BufRead,BufNewFile,BufReadPost *.vue set filetype=html
+
+au FileType c,golang set tabstop=4 shiftwidth=4 softtabstop=4
+autocmd FileType c,cpp,perl,python set cindent
+autocmd FileType perl,cgi :compiler perl
 
 nnoremap <silent>,tr :NERDTree<CR>
 nnoremap <silent>,ms :VimShell<CR>
@@ -316,12 +317,13 @@ let g:lightline = {
 \   'colorscheme': 'powerline',
 \   'active': {
 \     'left': [
-\       [ 'mode', 'paste' ],
-\       [ 'fugitive', 'readonly', 'filename', 'modified' ]
+\       ['mode', 'paste'],
+\       ['fugitive', 'readonly', 'filename', 'modified']
 \     ]
 \   },
 \   'component': {
-\     'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}'
+\     'fugitive': '%{exists("*fugitive#head") ? fugitive#head() : ""}',
+\     'readonly': '%{&readonly ? "🔒" : ""}'
 \   }
 \ }
 
