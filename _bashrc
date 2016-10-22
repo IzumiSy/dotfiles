@@ -56,8 +56,6 @@ if [[ "$OSTYPE" = "darwin"* ]] ; then
   source "$git_completion_path/usr/share/git-core/git-completion.bash"
   source "$git_prompt_path/usr/share/git-core/git-prompt.sh"
 
-  GIT_PROMPT_SHOWDIRTY_STYLE=true
-
 # -----------------------------------
 #   Othe unix distribution settings
 # -----------------------------------
