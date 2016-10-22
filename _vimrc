@@ -136,6 +136,9 @@ silent! colorscheme desert256
 " Prevent performance slow-down with long line
 set synmaxcol=200
 
+" Remove 'thank you for flying vim'
+let &titleold=getcwd()
+
 " ========================== "
 "     Filetype detection     "
 " ========================== "
