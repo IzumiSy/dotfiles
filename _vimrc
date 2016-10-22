@@ -38,9 +38,6 @@ Plugin 'https://github.com/Shougo/neocomplcache'
 " Status line customizing plugin
 Plugin 'https://github.com/itchyny/lightline.vim'
 
-" Interactive shell wrapper
-Plugin 'https://github.com/Shougo/vimshell.git'
-
 " Plugins for compile sources without leaving VIM
 Plugin 'quickrun.vim'
 Plugin 'SingleCompile'
@@ -57,7 +54,6 @@ Plugin 'osyo-manga/shabadou.vim'
 
 " File viewer plugins
 Plugin 'The-NERD-tree'
-Plugin 'mru.vim'
 
 " Git plugins
 Plugin 'https://github.com/airblade/vim-gitgutter'
@@ -89,9 +85,6 @@ Plugin 'fatih/vim-go'
 
 " Whitespace trailer
 Plugin 'bronson/vim-trailing-whitespace'
-
-" Open URL with default browser
-Plugin 'open-browser.vim'
 
 " The Silver Searcher
 Plugin 'rking/ag.vim'
@@ -162,8 +155,6 @@ autocmd FileType c,cpp,perl,python set cindent
 autocmd FileType perl,cgi :compiler perl
 
 nnoremap <silent>,tr :NERDTree<CR>
-nnoremap <silent>,ms :VimShell<CR>
-nnoremap <silent>,mr :MRU<CR>
 nnoremap <F7> :Errors<CR>
 nnoremap <F8> :make<CR>
 
@@ -334,12 +325,6 @@ let g:git_command_edit = 'rightbelow vnew'
 nnoremap <silent>,gg :GitGutterToggle<CR>
 nnoremap <silent>,gh :GitGutterLineHighlightsToggle<CR>
 nnoremap <silent>,gl :GV!<CR>
-
-" ============================== "
-"      Openbrowser settings      "
-" ============================== "
-nmap <silent>,gx <Plug>(openbrowser-smart-search)
-vmap <silent>,gx <Plug>(openbrowser-smart-search)
 
 " ========================== "
 "     Syntastic settings     "
