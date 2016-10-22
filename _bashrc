@@ -78,6 +78,12 @@ if detect_command go ; then
   export PATH=$PATH:$GOPATH/bin
 fi
 
+# ----------------
+#    Loads NVM
+# ----------------
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
 # -----------------------------------
 #   Setting for command line prompt
 # -----------------------------------
