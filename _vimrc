@@ -351,9 +351,12 @@ let g:go_def_mapping_enabled=0
 " =========================== "
 "   Settings for easymotion   "
 " =========================== "
+let g:EasyMotion_keys='hjklasdfgyuiopqwertnmzxcvbHJKLASDFGYUIOPQWERTNMZXCVB'
 let g:EasyMotion_do_mapping=0
+let g:EastMotion_grouping=1
 nmap <C-j><C-j> <Plug>(easymotion-s2)
 nmap <C-k><C-k> <Plug>(easymotion-s2)
+hi EasyMotionShade  ctermbg=none ctermfg=blue
 
 " ============================== "
 "   Settings for NeoComplCache   "
