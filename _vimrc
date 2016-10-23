@@ -121,6 +121,7 @@ set noswapfile
 set nowrap
 set confirm
 set title
+set ttyfast
 set cursorline
 set showmatch
 set showcmd
