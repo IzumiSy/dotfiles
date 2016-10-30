@@ -2,7 +2,7 @@
 
 set -e
 
-source ~/_misc.sh
+source ./_misc.sh
 
 unlink ~/_vimrc
 unlink ~/.screenrc
