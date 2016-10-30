@@ -53,8 +53,8 @@ else
     vscode_config_path="$HOME/.config/Code/User/"
 fi
 if [ -e "${vscode_config_path}" ] ; then
-  ln -snvf "$(pwd)/Code/settings.json" "${vscode_config_path}/settings.json"
-  ln -snvf "$(pwd)/Code/keybindings.json" "${vscode_config_path}/keybindings.json"
+    ln -snvf "$(pwd)/Code/settings.json" "${vscode_config_path}/settings.json"
+    ln -snvf "$(pwd)/Code/keybindings.json" "${vscode_config_path}/keybindings.json"
 fi
 
 print_for_log2 "Finish installing dotfiles"
