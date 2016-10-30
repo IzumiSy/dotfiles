@@ -59,3 +59,5 @@ fi
 
 print_for_log2 "Finish installing dotfiles"
 
+# Loads .bashrc
+source ~/.bashrc
