@@ -15,6 +15,6 @@ else
     vscode_config_path="$HOME/.config/Code/User/"
 fi
 if [ -e "${vscode_config_path}" ] ; then
-  unlink "${vscode_config_path}/settings.json"
-  unlink "${vscode_config_path}/keybindings.json"
+    unlink "${vscode_config_path}/settings.json"
+    unlink "${vscode_config_path}/keybindings.json"
 fi
