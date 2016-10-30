@@ -1,6 +1,4 @@
-#!/bin/bash
-
-set -e
+# This file is only for inclusion from install.sh and uninstall.sh
 
 GREEN='\033[0;32m'
 WHITE='\033[1;37m'
