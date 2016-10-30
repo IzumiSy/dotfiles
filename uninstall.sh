@@ -14,6 +14,7 @@ if [[ "$OSTYPE" = "darwin"* ]] ; then
 else
     vscode_config_path="$HOME/.config/Code/User/"
 fi
-
-unlink "${vscode_config_path}/settings.json"
-unlink "${vscode_config_path}/keybindings.json"
+if [ -e "${vscode_config_path}" ] ; then
+  unlink "${vscode_config_path}/settings.json"
+  unlink "${vscode_config_path}/keybindings.json"
+fi
