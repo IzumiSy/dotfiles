@@ -1,6 +1,3 @@
-#!/bin/bash
-set -e
-
 # This file is only for inclusion from install.sh and uninstall.sh
 
 GREEN='\033[0;32m'
@@ -14,9 +11,3 @@ print_for_log() {
 print_for_log2() {
     printf "${GREEN}$1${NC}\n"
 }
-
-if [[ "$OSTYPE" = "darwin"* ]] ; then
-    vscode_config_path="$HOME/Library/Application Support/Code/User"
-else
-    vscode_config_path="$HOME/.config/Code/User/"
-fi
