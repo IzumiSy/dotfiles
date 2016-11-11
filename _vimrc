@@ -29,18 +29,15 @@ Plugin 'Syntastic'
 Plugin 'surround.vim'
 Plugin 'scrooloose/nerdcommenter'
 
-" Asynchronous processing support
+" Instant run & asynchronous processing support
 Plugin 'https://github.com/Shougo/vimproc'
+Plugin 'quickrun.vim'
 
-" Auto complete popup
+" Autocomplete popup
 Plugin 'https://github.com/Shougo/neocomplcache'
 
 " Status line customizing plugin
 Plugin 'https://github.com/itchyny/lightline.vim'
-
-" Plugins for compile sources without leaving VIM
-Plugin 'quickrun.vim'
-Plugin 'SingleCompile'
 
 " Interactive fuzzy-wording finder over multiple
 " sources like files, buffers, and file histories.

@@ -1,18 +1,7 @@
 #!/bin/bash
-
 set -e
 
-GREEN='\033[0;32m'
-WHITE='\033[1;37m'
-NC='\033[0m'
-
-print_for_log() {
-    printf "${WHITE}$1${NC}\n"
-}
-
-print_for_log2() {
-    printf "${GREEN}$1${NC}\n"
-}
+source ./_misc.sh
 
 print_for_log2 "Start installing dotfiles"
 
@@ -44,17 +33,7 @@ vim +PluginInstall +qall
 print_for_log "Build vimproc"
 (cd ~/.vim/bundle/vimproc/; make)
 
-#
-# Link setting/keybindings of VS Code
-#
-if [[ "$OSTYPE" = "darwin"* ]] ; then
-    vscode_config_path="$HOME/Library/Application Support/Code/User"
-else
-    vscode_config_path="$HOME/.config/Code/User/"
-fi
-
-ln -snvf "$(pwd)/Code/settings.json" "${vscode_config_path}/settings.json"
-ln -snvf "$(pwd)/Code/keybindings.json" "${vscode_config_path}/keybindings.json"
-
 print_for_log2 "Finish installing dotfiles"
 
+# Loads .bashrc
+source ~/.bashrc
