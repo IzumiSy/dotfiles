@@ -63,6 +63,8 @@ else
   # ls commands modification
   export LS_OPTIONS='--color=auto'
   alias ls='ls $LS_OPTIONS'
+
+  source /etc/bash_completion.d/git-prompt
 fi
 
 # ---------------
