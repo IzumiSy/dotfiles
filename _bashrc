@@ -71,13 +71,15 @@ fi
 #   Set $GOPATH
 # ---------------
 if detect_command go ; then
-  if [ ! -e "$HOME/.go/library" ] ; then
-    mkdir -p "$HOME/.go/library"
-  fi
+  GO_PATH_LIB="$HOME/.go/library"
+  GO_PATH_SRC="$HOME/Devs/gocodes"
+
+  [ ! -e "${GO_PATH_LIB}" ] && mkdir -p "${GO_PATH_LIB}"
+  [ ! -e "${GO_PATH_SRC}" ] && mkdir -p "${GO_PATH_SRC}"
 
   # Expects existence of ~/devs/gosrc
-  export GOPATH=$HOME/.go/library:$HOME/devs/gosrc
-  export PATH=$PATH:$HOME/.go/library/bin:$HOME/devs/gosrc/bin
+  export GOPATH="${GO_PATH_LIB}:${GO_PATH_SRC}"
+  export PATH="$PATH:${GO_PATH_LIB}/bin:${GO_PATH_SRC}/bin"
 fi
 
 # ----------------
