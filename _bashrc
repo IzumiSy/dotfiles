@@ -74,8 +74,10 @@ if detect_command go ; then
   if [ ! -e "$HOME/.go/library" ] ; then
     mkdir -p "$HOME/.go/library"
   fi
-  export GOPATH=$HOME/.go/library
-  export PATH=$PATH:$GOPATH/bin
+
+  # Expects existence of ~/devs/gosrc
+  export GOPATH=$HOME/.go/library:$HOME/devs/gosrc
+  export PATH=$PATH:$HOME/.go/library/bin:$HOME/devs/gosrc/bin
 fi
 
 # ----------------
