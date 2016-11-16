@@ -1,0 +1,20 @@
+[user]
+  email = beetle-noise@gmx.com
+  name = IzumiSy
+[core]
+  editor = vim -c \"set fenc=utf8\"
+  exculudesfile = ~/.gitignore_global
+[merge]
+  tool = vimdiff2
+[push]
+  default = tracking
+[github]
+  user = IzumiSy
+[ghi]
+  token = !security find-internet-password -a IzumiSy -s github.com -l 'ghi token' -w
+[diff]
+  tool = vimdiff
+[difftool]
+  prompt = false
+[color]
+  ui = true
