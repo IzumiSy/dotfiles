@@ -44,8 +44,6 @@ if [[ "$OSTYPE" = "darwin"* ]] ; then
   alias updatedb='sudo /usr/libexec/locate.updatedb'
 
   # Resolve file path change caused by CommandLineTools or Xcode
-  git_prompt_path=''
-  git_completion_path=''
   if [[ -d "/Applications/Xcode.app" ]] ; then
     git_prompt_path='/Applications/Xcode.app/Contents/Developer/'
     git_completion_path='/Applications/Xcode.app/Contents/Developer/'
@@ -65,17 +63,23 @@ else
   # ls commands modification
   export LS_OPTIONS='--color=auto'
   alias ls='ls $LS_OPTIONS'
+
+  source /etc/bash_completion.d/git-prompt
 fi
 
 # ---------------
 #   Set $GOPATH
 # ---------------
 if detect_command go ; then
-  if [ ! -e "$HOME/.go/library" ] ; then
-    mkdir -p "$HOME/.go/library"
-  fi
-  export GOPATH=$HOME/.go/library
-  export PATH=$PATH:$GOPATH/bin
+  GO_PATH_LIB="$HOME/.go/library"
+  GO_PATH_SRC="$HOME/Devs/gocodes"
+
+  [ ! -e "${GO_PATH_LIB}" ] && mkdir -p "${GO_PATH_LIB}"
+  [ ! -e "${GO_PATH_SRC}" ] && mkdir -p "${GO_PATH_SRC}"
+
+  # Expects existence of ~/devs/gosrc
+  export GOPATH="${GO_PATH_LIB}:${GO_PATH_SRC}"
+  export PATH="$PATH:${GO_PATH_LIB}/bin:${GO_PATH_SRC}/bin"
 fi
 
 # ----------------
