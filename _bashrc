@@ -58,8 +58,6 @@ if [[ "$OSTYPE" = "darwin"* ]] ; then
 #   Othe unix distribution settings
 # -----------------------------------
 else
-  alias mongo.start='sudo mongod --verbose --config /etc/mongodb.conf'
-
   # ls commands modification
   export LS_OPTIONS='--color=auto'
   alias ls='ls $LS_OPTIONS'
