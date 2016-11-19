@@ -2,6 +2,7 @@ tap 'caskroom/cask'
 tap 'homebrew/brewdler'
 tap 'homebrew/bundle'
 tap 'homebrew/core'
+tap 'homebrew/services'
 tap 'homebrew/versions'
 tap 'tkengo/highway'
 cask 'xquartz'
@@ -64,7 +65,9 @@ brew 'imagemagick'
 brew 'jq'
 brew 'lha'
 brew 'libev'
+brew 'mas'
 brew 'maven'
+brew 'memcached'
 brew 'sqlite'
 brew 'python'
 brew 'mercurial'
@@ -100,3 +103,22 @@ brew 'homebrew/versions/gcc49'
 brew 'homebrew/versions/mysql56'
 brew 'tkengo/highway/highway'
 cask 'libreoffice'
+mas 'GarageBand', id: 682658836
+mas 'Table Tool', id: 1122008420
+mas 'The Unarchiver', id: 425424353
+mas 'Keynote', id: 409183694
+mas 'Twitter', id: 409789998
+mas 'PicGIF Lite', id: 844918735
+mas 'VOX', id: 461369673
+mas 'Skitch', id: 425955336
+mas 'Slack', id: 803453959
+mas 'Sync', id: 1076860635
+mas 'Pages', id: 409201541
+mas 'CotEditor', id: 1024640650
+mas 'Tag Editor Free', id: 984278082
+mas 'Display Menu', id: 549083868
+mas 'Kobito', id: 896624060
+mas 'LadioCast', id: 411213048
+mas 'Numbers', id: 409203825
+mas 'LINE', id: 539883307
+mas 'TogglDesktop', id: 957734279
