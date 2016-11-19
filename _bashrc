@@ -39,9 +39,10 @@ export PATH=$PATH:~/bin/
 #   MacOS settings
 # ------------------
 if [[ "$OSTYPE" = "darwin"* ]] ; then
-  alias pg.start='postgres -D /usr/local/var/postgres'
-  alias mongo.start='mongod --verbose --config /usr/local/etc/mongod.conf'
   alias updatedb='sudo /usr/libexec/locate.updatedb'
+  alias pg.start='pg_ctl -D /usr/local/var/postgres start'
+  alias pg.stop='pg_ctl -D/ /usr/local/var/postgres stop -s -m fast'
+  alias mongo.start='mongod --verbose --config /usr/local/etc/mongod.conf'
 
   # Resolve file path change caused by CommandLineTools or Xcode
   if [[ -d "/Applications/Xcode.app" ]] ; then
