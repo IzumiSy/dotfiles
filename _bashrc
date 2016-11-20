@@ -147,6 +147,7 @@ if detect_command git ; then
   alias gs='git status'
   alias gsw='git show'
   alias gclean='git fetch --prune'
+  alias gre='git reset'
   alias gremote='git branch -a'
   alias mmerge='git merge origin/master'
   alias mdev='git merge origin/develop'
