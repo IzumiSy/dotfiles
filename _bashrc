@@ -35,6 +35,12 @@ fi
 # Exports user binary files
 export PATH=$PATH:~/bin/
 
+# Load direnv
+if detect_command direnv ; then
+  export EDITOR=vim
+  eval "$(direnv hook bash)"
+fi
+
 # ------------------
 #   MacOS settings
 # ------------------
