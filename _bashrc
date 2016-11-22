@@ -153,6 +153,9 @@ if detect_command git ; then
   alias glo='git log --oneline --decorate --graph'
   alias gs='git status'
 
+  alias hreset='git reset --hard'
+  alias sreset='git reset'
+
   alias mmerge='git merge origin/master'
   alias mdev='git merge origin/develop'
   alias gpl='git pull origin $(__get_branch_name)'
