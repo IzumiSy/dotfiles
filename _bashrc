@@ -136,34 +136,37 @@ if detect_command git ; then
   export PS1="$(base_line)\n$(branch_name)$(git_status) ${text}$ "
 
   # Git command aliases
+  alias g='git'
+
   alias gad='git add .'
   alias gadi='git add -i'
   alias gd='git diff --cached'
-  alias gdt='git difftool --cached'
-  alias gc='git commit'
+
+  alias gco='git commit'
   alias gcm='git commit -m'
-  alias gb='git branch'
+
   alias gmas='git checkout master'
   alias gdev='git checkout develop'
-  alias gcb='git checkout -b'
-  alias gcbk='git checkout -'
+  alias gch='git checkout'
+
   alias gl='git log --stat'
   alias glo='git log --oneline --decorate --graph'
-  alias gpl='git pull origin $(__get_branch_name)'
-  alias gpo='git push origin $(__get_branch_name)'
   alias gs='git status'
-  alias gsw='git show'
-  alias gclean='git fetch --prune'
-  alias gremote='git branch -a'
+
   alias mmerge='git merge origin/master'
   alias mdev='git merge origin/develop'
+  alias gpl='git pull origin $(__get_branch_name)'
+  alias gpo='git push origin $(__get_branch_name)'
+
+  alias gb='git branch'
+  alias gremote='git branch -a'
+
+  # Delete merged branches
   alias gcmb="git branch --merged | grep -vE '^\*|master$|develop$' | xargs -I % git branch -d %"
 
   if detect_command peco ; then
     alias pco='git branch | peco | xargs git checkout'
   fi
-
-  alias g='git'
 
   # Alias for Hub
   if detect_command hub ; then
