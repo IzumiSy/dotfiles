@@ -159,7 +159,6 @@ if detect_command git ; then
   alias gpo='git push origin $(__get_branch_name)'
 
   alias gb='git branch'
-  alias gremote='git branch -a'
 
   # Delete merged branches
   alias gcmb="git branch --merged | grep -vE '^\*|master$|develop$' | xargs -I % git branch -d %"
