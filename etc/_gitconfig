@@ -3,7 +3,7 @@
   name = IzumiSy
 [core]
   editor = vim -c \"set fenc=utf8\"
-  exculudesfile = ~/.gitignore_global
+  excludesfile = ~/.gitignore_global
 [merge]
   tool = vimdiff2
 [push]
