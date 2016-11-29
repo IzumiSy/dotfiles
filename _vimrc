@@ -147,6 +147,7 @@ au BufRead,BufNewFile,BufReadPost *.coffee set filetype=coffee
 au BufRead,BufNewFile,BufReadPost *.json set syntax=json
 au BufRead,BufNewFile {*.md} set filetype=markdown
 au BufRead,BufNewFile {COMMIT_EDITMSG} set filetype=gitcommit
+au BufRead,BufNewFile {.envrc,_bash*} set filetype=sh
 
 " wanna use vim-vue, but for now this is the best
 autocmd BufRead,BufNewFile,BufReadPost *.vue set filetype=html
