@@ -73,8 +73,13 @@ Plugin 'JulesWang/css.vim'
 Plugin 'hail2u/vim-css3-syntax'
 Plugin 'cakebaker/scss-syntax.vim'
 
+" Markdown and realtime preview
+Plugin 'plasticboy/vim-markdown'
+Plugin 'kannokanno/previm'
+Plugin 'tyru/open-browser.vim'
+
 " Vue file support
-Plugin 'posva/vim-vue'
+" Plugin 'posva/vim-vue'
 
 " Golang
 Plugin 'vim-jp/vim-go-extra'
