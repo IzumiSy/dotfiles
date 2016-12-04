@@ -199,17 +199,9 @@ alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
 
-# ----------------------
-#   Functions for peco
-# ----------------------
+# fasd customized
 if detect_command peco ; then
-  function pssh {
-    local target="$(awk '{ if ($1 == "Host" ) print $2 }' ~/.ssh/config | peco)"
-    if [ ! -z "$target" ] ; then
-      echo "Connecting to $target with SSH"
-      ssh "$target"
-    fi
-  }
+  alias hpco='eval $(history | cut -c 8-|peco)'
 
   # Commands with fasd
   if detect_command fasd ; then
@@ -221,47 +213,8 @@ if detect_command peco ; then
         cd "$dir"
       fi
     }
-
-    alias hpco='eval $(history | cut -c 8-|peco)'
   fi
 fi
-
-# ---------------------------
-#   Miscellaneous functions
-# ---------------------------
-
-# file counter
-fcount() {
-  if [[ -n $1 ]] ; then
-    find $1 -type f | wc -l
-  fi
-}
-
-# file list diff in two directory
-fdiff() {
-  if [[ -n $1 ]] && [[ -n $2 ]] ; then
-    diff <(ls -1 $1) <(ls -1 $2)
-  fi
-}
-
-# find files with fullpath
-fpfind() {
-  if [[ -n $1 ]] ; then
-    find "`pwd`" -name $1
-  fi
-}
-
-# find-grep combination function with colors
-gfind() {
-  if [[ -n $1 ]] && [[ -n $2 ]] ; then
-    find . -type f -name $1 | xargs grep $2 --color=always | less -R
-  fi
-}
-
-# Simple ps & grep comibination
-psgrep() {
-  ps aux | grep $1 | grep -v grep
-}
 
 # --------------------------------
 #   Launch GNU screen at startup
