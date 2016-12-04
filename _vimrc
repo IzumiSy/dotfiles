@@ -73,8 +73,13 @@ Plugin 'JulesWang/css.vim'
 Plugin 'hail2u/vim-css3-syntax'
 Plugin 'cakebaker/scss-syntax.vim'
 
+" Markdown and realtime preview
+Plugin 'plasticboy/vim-markdown'
+Plugin 'kannokanno/previm'
+Plugin 'tyru/open-browser.vim'
+
 " Vue file support
-Plugin 'posva/vim-vue'
+" Plugin 'posva/vim-vue'
 
 " Golang
 Plugin 'vim-jp/vim-go-extra'
@@ -150,11 +155,20 @@ au BufRead,BufNewFile {COMMIT_EDITMSG} set filetype=gitcommit
 au BufRead,BufNewFile {.envrc,_bash*} set filetype=sh
 
 " wanna use vim-vue, but for now this is the best
-autocmd BufRead,BufNewFile,BufReadPost *.vue set filetype=html
+au BufRead,BufNewFile,BufReadPost *.vue set filetype=html
 
 au FileType c,golang set tabstop=4 shiftwidth=4 softtabstop=4
-autocmd FileType c,cpp,perl,python set cindent
-autocmd FileType perl,cgi :compiler perl
+au FileType c,cpp,perl,python set cindent
+au FileType perl,cgi :compiler perl
+
+" Check files' modifiction more frequently
+augroup checktime
+  autocmd!
+  autocmd WinEnter * checktime
+augroup END
+
+" Trim whitespace before saving a file except markdown
+au BufWritePre *\({*.md}\)\@<! :FixWhitespace
 
 nnoremap <silent>,tr :NERDTree<CR>
 nnoremap <F7> :Errors<CR>
@@ -215,15 +229,6 @@ nnoremap <silent><C-z> :undo<CR>
 " Stop opening split windows with Ctrl+w+n
 " to block bumping with GNU screen keybinding to change windows
 nnoremap <C-w><C-n> <NOP>
-
-" Check files' modifiction more frequently
-augroup checktime
-  autocmd!
-  autocmd WinEnter * checktime
-augroup END
-
-" Trim whitespace before saving a file
-autocmd BufWritePre * :FixWhitespace
 
 " ========================= "
 "     Quickrun settings     "
