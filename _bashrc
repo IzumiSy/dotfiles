@@ -69,7 +69,9 @@ else
   export LS_OPTIONS='--color=auto'
   alias ls='ls $LS_OPTIONS'
 
-  source /etc/bash_completion.d/git-prompt
+  if [[ -d "/etc/bash_completion.d/git-prompt" ]] ; then
+    source /etc/bash_completion.d/git-prompt
+  fi
 fi
 
 # ---------------
