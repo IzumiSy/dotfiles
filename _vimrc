@@ -161,6 +161,15 @@ au FileType c,golang set tabstop=4 shiftwidth=4 softtabstop=4
 au FileType c,cpp,perl,python set cindent
 au FileType perl,cgi :compiler perl
 
+" Check files' modifiction more frequently
+augroup checktime
+  autocmd!
+  autocmd WinEnter * checktime
+augroup END
+
+" Trim whitespace before saving a file except markdown
+au BufWritePre *\({*.md}\)\@<! :FixWhitespace
+
 nnoremap <silent>,tr :NERDTree<CR>
 nnoremap <F7> :Errors<CR>
 nnoremap <F8> :make<CR>
@@ -220,15 +229,6 @@ nnoremap <silent><C-z> :undo<CR>
 " Stop opening split windows with Ctrl+w+n
 " to block bumping with GNU screen keybinding to change windows
 nnoremap <C-w><C-n> <NOP>
-
-" Check files' modifiction more frequently
-augroup checktime
-  autocmd!
-  autocmd WinEnter * checktime
-augroup END
-
-" Trim whitespace before saving a file
-autocmd BufWritePre * :FixWhitespace
 
 " ========================= "
 "     Quickrun settings     "
