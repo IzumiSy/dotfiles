@@ -175,6 +175,7 @@ if detect_command git ; then
   # Alias for Hub
   if detect_command hub ; then
     alias git='hub'
+    alias gbw='git browse --'
   fi
 fi
 
