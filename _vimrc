@@ -155,11 +155,11 @@ au BufRead,BufNewFile {COMMIT_EDITMSG} set filetype=gitcommit
 au BufRead,BufNewFile {.envrc,_bash*} set filetype=sh
 
 " wanna use vim-vue, but for now this is the best
-autocmd BufRead,BufNewFile,BufReadPost *.vue set filetype=html
+au BufRead,BufNewFile,BufReadPost *.vue set filetype=html
 
 au FileType c,golang set tabstop=4 shiftwidth=4 softtabstop=4
-autocmd FileType c,cpp,perl,python set cindent
-autocmd FileType perl,cgi :compiler perl
+au FileType c,cpp,perl,python set cindent
+au FileType perl,cgi :compiler perl
 
 nnoremap <silent>,tr :NERDTree<CR>
 nnoremap <F7> :Errors<CR>
