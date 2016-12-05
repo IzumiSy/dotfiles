@@ -259,38 +259,6 @@ let g:quickrun_config["sh"] = {
 " ======================== "
 "      Unite settings      "
 " ======================== "
-let g:unite_source_history_yank_enable=1
-let g:unite_source_file_mru_limit=200
-let g:unite_source_rec_min_cache_files=500
-let g:unite_source_rec_max_cache_files=99999
-let g:unite_redraw_hold_candidates = 50000
-let g:unite_prompt=">> "
-
-" Key mappings for Unite commands
-nnoremap <silent>,fo :Unite -start-insert file<CR>
-nnoremap <silent>,ro :Unite -start-insert file_rec/async:.<CR>
-nnoremap <silent>,fg :Unite -start-insert file_rec/git<CR>
-nnoremap <silent>,fm :Unite -start-insert file_mru<CR>
-nnoremap <silent>,fh :Unite -start-insert history/yank<CR>
-nnoremap <silent>,fb :Unite -start-insert buffer<CR>
-nnoremap <silent>,ff :Unite grep:. -buffer-name=search-buffer -no-quit<CR>
-nnoremap <silent>,fl :UniteWithCursorWord grep:. -buffer-name=search-buffer -no-quit<CR>
-nnoremap <silent>,gb :Unite giti/branch<CR>
-nnoremap <silent>,gs :Unite giti/status -horizontal<CR>
-
-" Use highway/ag for full-text document search
-if executable('hw')
-  let g:unite_source_grep_command='hw'
-  let g:unite_source_grep_default_opts='--follow-link --line-number --no-group --no-color'
-  let g:unite_source_rec_async_command='hw --follow-link --line-number --no-group --no-color'
-elseif executable('ag')
-  let g:unite_source_grep_command='ag'
-  let g:unite_source_grep_default_opts='--follow --nogroup --nocolor'
-  let g:unite_source_rec_async_command='ag --follow --nogroup --nocolor'
-endif
-
-let g:unite_source_grep_recursive_opt=''
-
 function! SetupUniteOptions()
   if exists(':Unite')
     " Set ignore directories
@@ -301,6 +269,41 @@ function! SetupUniteOptions()
     " Set matchers
     call unite#filters#matcher_default#use(['matcher_glob'])
     call unite#filters#sorter_default#use(['sorter_rank'])
+
+    " Use highway/ag for full-text document search
+    if executable('ag')
+      let g:unite_source_rec_async_command='ag --follow --nogroup --nocolor'
+      let g:unite_source_grep_command='ag'
+      let g:unite_source_grep_default_opts='--follow --nogroup --nocolor'.
+      \   ' --ignore "node_modules"'.
+      \   ' --ignore "bower_components"'
+    elseif executable('hw')
+      let g:unite_source_rec_async_command='hw --follow-link --line-number --no-group --no-color'
+      let g:unite_source_grep_command='hw'
+      let g:unite_source_grep_default_opts='--follow-link --line-number --no-group --no-color'
+      " TODO use any options to ignore node_modules and bower_components
+    endif
+
+    let g:unite_source_history_yank_enable=1
+    let g:unite_source_file_mru_limit=200
+    let g:unite_source_rec_min_cache_files=500
+    let g:unite_source_rec_max_cache_files=99999
+    let g:unite_redraw_hold_candidates = 50000
+    let g:unite_prompt=">> "
+
+    " Key mappings for Unite commands
+    nnoremap <silent>,fo :Unite -start-insert file<CR>
+    nnoremap <silent>,ro :Unite -start-insert file_rec/async:.<CR>
+    nnoremap <silent>,fg :Unite -start-insert file_rec/git<CR>
+    nnoremap <silent>,fm :Unite -start-insert file_mru<CR>
+    nnoremap <silent>,fh :Unite -start-insert history/yank<CR>
+    nnoremap <silent>,fb :Unite -start-insert buffer<CR>
+    nnoremap <silent>,ff :Unite grep:. -buffer-name=search-buffer -no-quit<CR>
+    nnoremap <silent>,fl :UniteWithCursorWord grep:. -buffer-name=search-buffer -no-quit<CR>
+    nnoremap <silent>,gb :Unite giti/branch<CR>
+    nnoremap <silent>,gs :Unite giti/status -horizontal<CR>
+
+    let g:unite_source_grep_recursive_opt=''
   endif
 endfunction
 autocmd VimEnter * call SetupUniteOptions()
