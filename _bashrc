@@ -28,8 +28,6 @@ function detect_command() {
 # Show welcome message
 if detect_command figlet ; then
   echo 'Terminal' | figlet -m $0
-  echo ' Welcome to main control system!'
-  echo ''
 fi
 
 # Exports user binary files
