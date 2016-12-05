@@ -299,7 +299,7 @@ function! SetupUniteOptions()
     \   'tmp/\|cache/\|.git/\|.DS_Store\|png\|jpg')
 
     " Set matchers
-    " call unite#filters#matcher_default#use(['matcher_fuzzy'])
+    call unite#filters#matcher_default#use(['matcher_glob'])
     call unite#filters#sorter_default#use(['sorter_rank'])
   endif
 endfunction
