@@ -23,8 +23,12 @@ if [ ! -e "$HOME/.vim/bundle" ] ; then
 fi
 ln -snvf "$(pwd)/_vimrc" ~/_vimrc
 
-(set -x ; vim +PluginInstall +qall)
-(set -x ; cd ~/.vim/bundle/vimproc/; make)
+set -x
+
+vim +PluginInstall +qall
+(cd ~/.vim/bundle/vimproc/; make)
 
 # Loads .bashrc
-(set -x ; exec bash --login )
+exec bash --login
+
+set +x
