@@ -24,11 +24,10 @@ fi
 ln -snvf "$(pwd)/_vimrc" ~/_vimrc
 
 set -x
-
 vim +PluginInstall +qall
 (cd ~/.vim/bundle/vimproc/; make)
 
 # Loads .bashrc
 exec bash --login
 
-set +x
+set +xe
