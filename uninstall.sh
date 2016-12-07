@@ -1,9 +1,11 @@
 #!/bin/bash
-set -e
+set -ex
 
 unlink ~/_vimrc
 unlink ~/.screenrc
 unlink ~/.bashrc
 unlink ~/.bash_profile
 
-(set -x ; rm -rf $HOME/.vim)
+rm -rf $HOME/.vim
+
+set +ex
