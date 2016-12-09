@@ -1,10 +1,6 @@
 #!/bin/bash
 set -e
 
-source ./_misc.sh
-
-print_for_log2 "Start installing dotfiles"
-
 #
 # Install _bashrc
 #
@@ -27,13 +23,11 @@ if [ ! -e "$HOME/.vim/bundle" ] ; then
 fi
 ln -snvf "$(pwd)/_vimrc" ~/_vimrc
 
-print_for_log "Install vim plugins"
+set -x
 vim +PluginInstall +qall
-
-print_for_log "Build vimproc"
 (cd ~/.vim/bundle/vimproc/; make)
 
-print_for_log2 "Finish installing dotfiles"
-
 # Loads .bashrc
-source ~/.bashrc
+exec bash --login
+
+set +xe
