@@ -27,6 +27,12 @@ set -x
 vim +PluginInstall +qall
 (cd "$HOME/.vim/bundle/vimproc/"; make)
 
+#
+# Install nvm and rbenv
+#
+[ ! -e "$HOME/.nvm" ] && ./installers/nvm.sh
+[ ! -e "$HOME/.rbenv" ] && ./installers/rbenv.sh
+
 # Loads .bashrc
 clear
 exec bash --login
