@@ -23,10 +23,8 @@ if [ ! -e "$HOME/.vim/bundle" ] ; then
 fi
 ln -snvf "$(pwd)/_vimrc" "$HOME/_vimrc"
 
-set -x
-vim +PluginInstall +qall
-(cd "$HOME/.vim/bundle/vimproc/"; make)
-set +x
+(set -x; vim +PluginInstall +qall)
+(set -x; cd "$HOME/.vim/bundle/vimproc/"; make)
 
 #
 # Install nvm and rbenv
@@ -36,4 +34,4 @@ set +x
 
 # Loads .bashrc
 clear
-(set -e; exec bash --login)
+(set -x; exec bash --login)
