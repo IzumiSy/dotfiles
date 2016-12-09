@@ -25,7 +25,7 @@ ln -snvf "$(pwd)/_vimrc" "$HOME/_vimrc"
 
 set -x
 vim +PluginInstall +qall
-(cd ~/.vim/bundle/vimproc/; make)
+(cd "$HOME/.vim/bundle/vimproc/"; make)
 
 # Loads .bashrc
 clear
