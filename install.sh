@@ -26,6 +26,7 @@ ln -snvf "$(pwd)/_vimrc" "$HOME/_vimrc"
 set -x
 vim +PluginInstall +qall
 (cd "$HOME/.vim/bundle/vimproc/"; make)
+set +x
 
 #
 # Install nvm and rbenv
@@ -35,6 +36,4 @@ vim +PluginInstall +qall
 
 # Loads .bashrc
 clear
-exec bash --login
-
-set +x
+(set -e; exec bash --login)
