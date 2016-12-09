@@ -8,4 +8,7 @@ unlink "$HOME/.bash_profile"
 
 rm -rf "$HOME/.vim"
 
+clear
+exec bash --login
+
 set +x
