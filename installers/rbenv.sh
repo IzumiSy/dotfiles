@@ -6,8 +6,10 @@ function execute_rbenv_install() {
   git clone https://github.com/rbenv/ruby-build.git "$HOME/.rbenv/plugins/ruby-build"
 }
 
+tput bold
 echo "Looks rbenv is not installed yet. Do you want to install it? [yes/no]"
 read answer
+tput sgr0
 
 case $answer in
   yes) execute_rbenv_install; ;;
