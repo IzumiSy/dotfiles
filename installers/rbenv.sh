@@ -1,8 +1,15 @@
 #!/bin/bash
 set -Ceu
 
-git clone https://github.com/rbenv/rbenv.git "$HOME/.rbenv"
-git clone https://github.com/rbenv/ruby-build.git "$HOME/.rbenv/plugins/ruby-build"
+function execute_rbenv_install() {
+  git clone https://github.com/rbenv/rbenv.git "$HOME/.rbenv"
+  git clone https://github.com/rbenv/ruby-build.git "$HOME/.rbenv/plugins/ruby-build"
+}
 
-# TODO: Add modification script here to load rbenv.
+echo "Looks rbenv is not installed yet. Do you want to install it? [Y/n]"
+read answer
 
+case $answer in
+  no) echo "Skipped nvm set-up."; ;;
+  yes|*) execute_rbenv_install; ;;
+esac
