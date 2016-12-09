@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -Ceu
 
 #
 # Install _bashrc
@@ -30,4 +30,4 @@ vim +PluginInstall +qall
 # Loads .bashrc
 exec bash --login
 
-set +xe
+set +x
