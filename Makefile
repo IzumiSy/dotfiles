@@ -1,6 +1,7 @@
 PHONY: install uninstall
+
 install:
-	. ./install.sh
+	. ./INSTALL
 
 uninstall:
-	. ./uninstall.sh
+	. ./UNINSTALL
