@@ -29,8 +29,8 @@ ln -snvf "$(pwd)/_vimrc" "$HOME/_vimrc"
 #
 # Install nvm and rbenv
 #
-[ ! -e "$HOME/.nvm" ] && ./installers/nvm.sh
-[ ! -e "$HOME/.rbenv" ] && ./installers/rbenv.sh
+[ ! -e "$HOME/.nvm" ] && ./cores/nvm.sh
+[ ! -e "$HOME/.rbenv" ] && ./cores/rbenv.sh
 
 # Loads .bashrc
 clear
