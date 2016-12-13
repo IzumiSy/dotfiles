@@ -24,7 +24,7 @@ fi
 ln -snvf "$(pwd)/_vimrc" "$HOME/_vimrc"
 
 (set -x; vim +PluginInstall +qall)
-(set -x; cd "$HOME/.vim/bundle/vimproc/"; make)
+(cd "$HOME/.vim/bundle/vimproc/"; make)
 
 #
 # Install nvm and rbenv
