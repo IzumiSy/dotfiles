@@ -94,7 +94,7 @@ module.exports = {
   plugins: [
     'hyperterm-colors',
     'hyperterm-tabs',
-    'hyperterm-tab-icons',
+    // 'hyperterm-tab-icons',
     'hyperterm-cursor',
     'hyper-blink'
   ],
