@@ -6,6 +6,10 @@ unlink "$HOME/.screenrc"
 unlink "$HOME/.bashrc"
 unlink "$HOME/.bash_profile"
 
+unlink "$HOME/.gitconfig"
+unlink "$HOME/.gitignore_global"
+unlink "$HOME/.hyper.js"
+
 rm -rf "$HOME/.vim"
 
 (set +x; clear)
