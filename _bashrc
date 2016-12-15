@@ -104,6 +104,7 @@ if detect_command git ; then
   function __git_status() {
     local status="$(git status --porcelain 2>/dev/null)"
     local output=''
+
     [[ -n $(egrep '^[MADRC]' <<< "$status") ]] && output="+"
     [[ -n $(egrep '^.[MD]' <<< "$status") ]] && output="!"
     [[ -n $(egrep '^\?\?' <<< "$status") ]] && output="?"
@@ -170,12 +171,6 @@ if detect_command git ; then
     alias git='hub'
     alias gbw='git browse --'
   fi
-fi
-
-# Gist alias
-if detect_command gist ; then
-  alias update_vimrc='gist ~/_vimrc --update https://gist.github.com/IzumiSy/f6a9c92122eda13ed889'
-  alias update_bashrc='gist ~/.bashrc --update https://gist.github.com/IzumiSy/140e2e20484ccf682567'
 fi
 
 # ls
