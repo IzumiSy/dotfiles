@@ -12,7 +12,7 @@ ln -snvf "$(pwd)/etc/_hyper.js" "$HOME/.hyper.js"
 
 # Install _vimrc
 if [ ! -e "$HOME/.vim/bundle" ] ; then
-  if [ ! type git &> /dev/null ] ; then
+  if type git &> /dev/null ; then
     git clone https://github.com/VundleVim/Vundle.vim.git "$HOME/.vim/bundle/Vundle.vim"
   else
     echo "Git not available" && exit 1
