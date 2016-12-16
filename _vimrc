@@ -261,7 +261,7 @@ let g:quickrun_config["sh"] = {
 " ======================== "
 function! SetupUniteOptions()
   if exists(':Unite')
-    let ignores = '.svg$\|.png$\|.gif$\|cache\|.eot$\|.ttf$\|.woff$\|.woff2$\|.keep\|node_modules/\|.ico$'
+    let ignores = '.svg$\|.ico$\|.png$\|.gif$\|cache\|.eot$\|.ttf$\|.woff$\|.woff2$\|.keep'
     call unite#sources#rec#define()
     call unite#custom#source('file_rec,file_rec/async,grep', 'ignore_pattern', ignores)
     call unite#filters#matcher_default#use(['matcher_glob'])
@@ -270,7 +270,9 @@ function! SetupUniteOptions()
     if executable('ag')
       let g:unite_source_rec_async_command='ag --follow --nogroup --nocolor'
       let g:unite_source_grep_command='ag'
-      let g:unite_source_grep_default_opts='--follow --nogroup --nocolor'
+      let g:unite_source_grep_default_opts='--follow --nogroup --nocolor'.
+      \  ' --ignore "node_modules"'.
+      \  ' --ignore "bower_components"'
     elseif executable('hw')
       let g:unite_source_rec_async_command='hw --follow-link --line-number --no-group --no-color'
       let g:unite_source_grep_command='hw'
