@@ -261,12 +261,9 @@ let g:quickrun_config["sh"] = {
 " ======================== "
 function! SetupUniteOptions()
   if exists(':Unite')
-    " Set ignore directories
-    call unite#custom#source('file_rec,file_rec/async', 'ignore_pattern',
-    \   'node_modules/\|jspm_packages/\|bower_components/\|'.
-    \   'tmp/\|cache/\|.git/\|.DS_Store\|png\|jpg')
-
-    " Set matchers
+    " Set up matchers
+    call unite#sources#rec#define()
+    call unite#custom#source('file_rec,file_rec/async,grep', 'ignore_pattern', 'svg\|gif\|ico')
     call unite#filters#matcher_default#use(['matcher_glob'])
     call unite#filters#sorter_default#use(['sorter_rank'])
 
@@ -274,9 +271,7 @@ function! SetupUniteOptions()
     if executable('ag')
       let g:unite_source_rec_async_command='ag --follow --nogroup --nocolor'
       let g:unite_source_grep_command='ag'
-      let g:unite_source_grep_default_opts='--follow --nogroup --nocolor'.
-      \   ' --ignore "node_modules"'.
-      \   ' --ignore "bower_components"'
+      let g:unite_source_grep_default_opts='--follow --nogroup --nocolor'
     elseif executable('hw')
       let g:unite_source_rec_async_command='hw --follow-link --line-number --no-group --no-color'
       let g:unite_source_grep_command='hw'
