@@ -261,13 +261,12 @@ let g:quickrun_config["sh"] = {
 " ======================== "
 function! SetupUniteOptions()
   if exists(':Unite')
-    " Set up matchers
+    let ignores = '.svg$\|.png$\|.gif$\|cache\|.eot$\|.ttf$\|.woff$\|.woff2$\|.keep\|node_modules/\|.ico$'
     call unite#sources#rec#define()
-    call unite#custom#source('file_rec,file_rec/async,grep', 'ignore_pattern', 'svg\|gif\|ico')
+    call unite#custom#source('file_rec,file_rec/async,grep', 'ignore_pattern', ignores)
     call unite#filters#matcher_default#use(['matcher_glob'])
     call unite#filters#sorter_default#use(['sorter_rank'])
 
-    " Use highway/ag for full-text document search
     if executable('ag')
       let g:unite_source_rec_async_command='ag --follow --nogroup --nocolor'
       let g:unite_source_grep_command='ag'
@@ -276,7 +275,6 @@ function! SetupUniteOptions()
       let g:unite_source_rec_async_command='hw --follow-link --line-number --no-group --no-color'
       let g:unite_source_grep_command='hw'
       let g:unite_source_grep_default_opts='--follow-link --line-number --no-group --no-color'
-      " TODO use any options to ignore node_modules and bower_components
     endif
 
     let g:unite_source_history_yank_enable=1
@@ -286,7 +284,6 @@ function! SetupUniteOptions()
     let g:unite_redraw_hold_candidates = 50000
     let g:unite_prompt=">> "
 
-    " Key mappings for Unite commands
     nnoremap <silent>,fo :Unite -start-insert file<CR>
     nnoremap <silent>,ro :Unite -start-insert file_rec/async:.<CR>
     nnoremap <silent>,fg :Unite -start-insert file_rec/git<CR>
