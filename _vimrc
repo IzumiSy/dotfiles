@@ -5,12 +5,10 @@
 filetype off
 
 if has('vim_starting')
-  if &compatible
-    set nocompatible
-  endif
-  set rtp+=~/.vim/bundle/Vundle.vim/
+  set nocompatible
 endif
 
+set rtp+=~/.vim/bundle/Vundle.vim/
 call vundle#begin()
 
 " ========================
