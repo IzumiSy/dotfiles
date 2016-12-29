@@ -292,6 +292,7 @@ function! SetupUniteOptions()
 
     nnoremap <silent>,gb :Unite giti/branch<CR>
     nnoremap <silent>,gs :Unite giti/status -horizontal<CR>
+    nnoremap <silent>,gl :Unite giti/log<CR>
 
     let g:unite_source_grep_recursive_opt=''
   endif
