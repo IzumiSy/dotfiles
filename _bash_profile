@@ -7,3 +7,7 @@ type rbenv &> /dev/null && eval "$(rbenv init -)"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
+if which pyenv > /dev/null; then
+  eval "$(pyenv init -)"
+fi
