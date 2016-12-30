@@ -318,7 +318,7 @@ let g:lightline = {
 \   },
 \   'component': {
 \     'fugitive': '%{exists("*fugitive#head") ? fugitive#head() : ""}',
-\     'readonly': '%{&readonly ? "🔒" : ""}'
+\     'readonly': '%{&readonly ? "LOCKED" : ""}'
 \   }
 \ }
 
