@@ -264,12 +264,12 @@ function! SetupUniteOptions()
     call unite#filters#sorter_default#use(['sorter_rank'])
 
     if executable('ag')
-      let g:unite_source_rec_async_command='ag --follow --nogroup --nocolor'
+      let g:unite_source_rec_async_command=['ag', '--follow', '--nogroup', '--nocolor']
       let g:unite_source_grep_command='ag'
       let g:unite_source_grep_default_opts='--follow --nogroup --nocolor'.
       \  ' --ignore "node_module" --ignore "bower_components" --ignore "*.svg"'
     elseif executable('hw')
-      let g:unite_source_rec_async_command='hw --follow-link --line-number --no-group --no-color'
+      let g:unite_source_rec_async_command=['hw', '--follow-link', '--line-number', '--no-group', '--no-color']
       let g:unite_source_grep_command='hw'
       let g:unite_source_grep_default_opts='--follow-link --line-number --no-group --no-color'
     endif
