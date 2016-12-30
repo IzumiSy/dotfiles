@@ -256,7 +256,11 @@ let g:quickrun_config["sh"] = {
 " ======================== "
 function! SetupUniteOptions()
   if exists(':Unite')
-    let ignores = '.svg$\|.ico$\|.png$\|.gif$\|cache\|.eot$\|.ttf$\|.woff$\|.woff2$\|.keep'
+    let ignores = join([
+    \    '\.png$', '\.ico$', '\.svg$', '\.gif$', '\.keep$',
+    \    '\.eot$', '\.ttf$', '\.woff$', '\.woff2$',
+    \    'tmp/', 'node_modules/', 'bower_components/'
+    \  ], '\|')
     call unite#sources#rec#define()
     call unite#custom#source('file,file_rec,file_rec/async,grep', 'ignore_pattern', ignores)
     call unite#custom#source('file_rec', 'sorters', 'sorter_length')
