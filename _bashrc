@@ -199,7 +199,7 @@ if detect_command peco ; then
     eval "$(fasd --init auto)"
 
     function dpco {
-      local dir="$( d | awk '{ print $2 }' | peco )"
+      local dir="$( d | awk '{ print $2 }' | peco --query \"$(pwd)\ \" )"
       if [ ! -z "$dir" ] ; then
         cd "$dir"
       fi
