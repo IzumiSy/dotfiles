@@ -39,37 +39,28 @@ if detect_command direnv ; then
   eval "$(direnv hook bash)"
 fi
 
-# ------------------
-#   MacOS settings
-# ------------------
-if [[ "$OSTYPE" = "darwin"* ]] ; then
+function apply_osx_preference() {
   alias updatedb='sudo /usr/libexec/locate.updatedb'
-  alias pg.start='pg_ctl -D /usr/local/var/postgres start'
-  alias pg.stop='pg_ctl -D/ /usr/local/var/postgres stop -s -m fast'
-  alias mongo.start='mongod --verbose --config /usr/local/etc/mongod.conf'
 
-  # Resolve file path change caused by CommandLineTools or Xcode
-  if [[ -d "/Applications/Xcode.app" ]] ; then
-    git_prompt_path='/Applications/Xcode.app/Contents/Developer/'
-    git_completion_path='/Applications/Xcode.app/Contents/Developer/'
-  else
-    git_prompt_path='/Library/Developer/CommandLineTools/'
-    git_completion_path='/Library/Developer/CommandLineTools/'
-  fi
+  git_prompt_path='/Library/Developer/CommandLineTools/'
+  git_completion_path='/Library/Developer/CommandLineTools/'
   source "$git_completion_path/usr/share/git-core/git-completion.bash"
   source "$git_prompt_path/usr/share/git-core/git-prompt.sh"
+}
 
-# -----------------------------------
-#   Othe unix distribution settings
-# -----------------------------------
-else
-  # ls commands modification
+function apply_unix_preference() {
   export LS_OPTIONS='--color=auto'
   alias ls='ls $LS_OPTIONS'
 
   if [[ -d "/etc/bash_completion.d/git-prompt" ]] ; then
     source /etc/bash_completion.d/git-prompt
   fi
+}
+
+if [[ "$OSTYPE" = "darwin"* ]] ; then
+  apply_osx_preference
+else
+  apply_unix_preference
 fi
 
 # ---------------
