@@ -39,6 +39,9 @@ if detect_command direnv ; then
   eval "$(direnv hook bash)"
 fi
 
+# --------------------------------
+#   Environment-related settings
+# --------------------------------
 function apply_osx_preference() {
   alias updatedb='sudo /usr/libexec/locate.updatedb'
 
