@@ -28,4 +28,4 @@ fi
 
 # Loads .bashrc
 clear
-(set -x; exec bash --login)
+(set -x; exec $SHELL --login)
