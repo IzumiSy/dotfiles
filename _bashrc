@@ -33,12 +33,6 @@ fi
 # Exports user binary files
 export PATH=$PATH:~/bin/
 
-# Load direnv
-if detect_command direnv ; then
-  export EDITOR=vim
-  eval "$(direnv hook bash)"
-fi
-
 # --------------------------------
 #   Environment-related settings
 # --------------------------------
@@ -189,8 +183,6 @@ if detect_command peco ; then
 
   # Commands with fasd
   if detect_command fasd ; then
-    eval "$(fasd --init auto)"
-
     function dpco {
       local dir="$( d | awk '{ print $2 }' | peco --query \"$(pwd)\ \" )"
       if [ ! -z "$dir" ] ; then
@@ -198,6 +190,31 @@ if detect_command peco ; then
       fi
     }
   fi
+fi
+
+# -----------------------------------------
+#   Loads rbenv, nvm, pyenv, direnv, fasd
+# -----------------------------------------
+export PATH="$HOME/.rbenv/bin:$PATH"
+type rbenv &> /dev/null && eval "$(rbenv init -)"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+export PYENV_ROOT="$HOME/.pyenv"
+if [ -d "$PYENV_ROOT" ]; then
+  export PATH="$PYENV_ROOT/bin:$PATH"
+  eval "$(pyenv init -)"
+  eval "$(pyenv virtualenv-init -)"
+fi
+
+if detect_command direnv ; then
+  export EDITOR=vim
+  eval "$(direnv hook bash)"
+fi
+
+if detect_command fasd ; then
+  eval "$(fasd --init auto)"
 fi
 
 # --------------------------------
