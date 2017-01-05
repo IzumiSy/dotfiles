@@ -301,6 +301,7 @@ function! SetupUniteOptions()
   endif
 endfunction
 autocmd VimEnter * call SetupUniteOptions()
+autocmd VimEnter * :execute "normal \<Plug>(unite_redraw)"
 
 " ========================== "
 "     Lightline settings     "
