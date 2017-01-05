@@ -262,8 +262,8 @@ function! SetupUniteOptions()
     \    'tmp/', 'node_modules/', 'bower_components/'
     \  ], '\|')
     call unite#sources#rec#define()
-    call unite#custom#source('file,file_rec,file_rec/async,grep', 'ignore_pattern', ignores)
-    call unite#custom#source('file_rec', 'sorters', 'sorter_length')
+    call unite#custom#source('file,file_rec,file_rec/git,file_rec/async,grep', 'ignore_pattern', ignores)
+    call unite#custom#source('file,file_rec,file_rec/git,file_rec/async,grep', 'sorters', 'sorter_length')
     call unite#filters#matcher_default#use(['matcher_glob'])
     call unite#filters#sorter_default#use(['sorter_rank'])
 
