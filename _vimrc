@@ -105,6 +105,7 @@ set matchpairs+=<:>
 set whichwrap+=h,l,<,>,[,],b,s,~
 set autoindent
 set autoread
+set ambiwidth=double
 set expandtab
 set notitle
 set number
