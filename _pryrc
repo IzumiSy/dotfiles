@@ -1,0 +1,14 @@
+# Settings for pry-debugger
+#
+
+Pry.config.prompt = proc do |obj, nest_level, _pry_|
+  version = ''
+  version << "#{RUBY_VERSION}"
+
+  "#{version} #{Pry.config.prompt_name}(#{Pry.view_clip(obj)})>"
+end
+
+Pry.commands.alias_command 'c', 'continue'
+Pry.commands.alias_command 's', 'step'
+Pry.commands.alias_command 'n', 'next'
+Pry.commands.alias_command 'f', 'finish'

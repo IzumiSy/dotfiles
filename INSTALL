@@ -9,6 +9,7 @@ ln -snvf "$(pwd)/_bash_profile" "$HOME/.bash_profile"
 ln -snvf "$(pwd)/etc/_gitconfig" "$HOME/.gitconfig"
 ln -snvf "$(pwd)/etc/_gitconfig_global" "$HOME/.gitignore_global"
 ln -snvf "$(pwd)/etc/_hyper.js" "$HOME/.hyper.js"
+ln -svnf "$(pwd)/etc/_pryrc" "$HOME/.pryrc"
 
 # Install _vimrc
 if [ ! -e "$HOME/.vim/bundle" ] ; then
