@@ -226,6 +226,9 @@ nnoremap <silent><C-z> :undo<CR>
 " to block bumping with GNU screen keybinding to change windows
 nnoremap <C-w><C-n> <NOP>
 
+" Disable dot action
+nnoremap . <NOP>
+
 " ========================= "
 "     Quickrun settings     "
 " ========================= "
