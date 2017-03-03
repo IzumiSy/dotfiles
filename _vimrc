@@ -50,9 +50,6 @@ Plugin 'osyo-manga/shabadou.vim'
 " File viewer plugins
 Plugin 'The-NERD-tree'
 
-" Manage VIM session
-Plugin 'xolox/vim-session'
-
 " Git plugins
 Plugin 'https://github.com/airblade/vim-gitgutter'
 Plugin 'https://github.com/kmnk/vim-unite-giti'
