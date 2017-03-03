@@ -50,6 +50,9 @@ Plugin 'osyo-manga/shabadou.vim'
 " File viewer plugins
 Plugin 'The-NERD-tree'
 
+" Manage VIM session
+Plugin 'xolox/vim-session'
+
 " Git plugins
 Plugin 'https://github.com/airblade/vim-gitgutter'
 Plugin 'https://github.com/kmnk/vim-unite-giti'
@@ -119,6 +122,8 @@ set noswapfile
 set nowrap
 set confirm
 set title
+set bomb
+set binary
 set ttyfast
 set cursorline
 set showmatch
@@ -126,6 +131,7 @@ set showcmd
 set splitright
 set laststatus=2
 set encoding=utf-8
+set fileencoding=utf-8
 set fileencodings=utf-8,iso-2022-jp,euc-jp,sjis
 set fileformats=unix,dos,mac
 set backspace=indent,eol,start
