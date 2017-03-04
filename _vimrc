@@ -178,6 +178,7 @@ command Encutf8 :e ++enc=utf8
 command Sudow :w sudo:%
 command Sudoe :e sudo:%
 
+" Command to update tabs to spaces
 command ChangeTab2Space :call s:change_tab_function()
 function s:change_tab_function()
   set expandtab
