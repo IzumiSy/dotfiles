@@ -178,6 +178,12 @@ command Encutf8 :e ++enc=utf8
 command Sudow :w sudo:%
 command Sudoe :e sudo:%
 
+command ChangeTab2Space :call s:change_tab_function()
+function s:change_tab_function()
+  set expandtab
+  retab
+endfunction
+
 " =============================== "
 "     Customized key mappings     "
 " =============================== "
