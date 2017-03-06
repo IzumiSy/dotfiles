@@ -119,8 +119,6 @@ set noswapfile
 set nowrap
 set confirm
 set title
-set bomb
-set binary
 set ttyfast
 set cursorline
 set showmatch
