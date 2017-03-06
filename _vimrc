@@ -319,7 +319,7 @@ autocmd VimEnter * :execute "normal \<Plug>(unite_redraw)"
 "     Lightline settings     "
 " ========================== "
 if !has('gui_running')
-    set t_Co=256
+  set t_Co=256
 endif
 let g:lightline = {
 \   'colorscheme': 'powerline',
@@ -389,7 +389,7 @@ let g:neocomplcache_dictionary_filetype_lists = {
 
 inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
 function! s:my_cr_function()
-    return neocomplcache#smart_close_popup()."\<CR>"
+  return neocomplcache#smart_close_popup()."\<CR>"
 endfunction
 
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
