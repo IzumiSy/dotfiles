@@ -331,7 +331,7 @@ let g:lightline = {
 \     ]
 \   },
 \   'component': {
-\     'fugitive': '%{exists("*fugitive#head") ? fugitive#head() : ""}',
+\     'fugitive': '%{exists("*fugitive#head") ? "<".fugitive#head().">" : ""}',
 \     'readonly': '%{&readonly ? "[LOCKED]" : ""}'
 \   }
 \ }
