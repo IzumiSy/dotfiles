@@ -1,8 +1,6 @@
 " =======================
 "          VIMRC
 " =======================
-
-
 filetype off
 
 if has('vim_starting')
@@ -328,29 +326,15 @@ let g:lightline = {
 \   'active': {
 \     'left': [
 \       ['mode', 'paste'],
-\       ['fugitive', 'readonly', 'filename'],
+\       ['fugitive', 'readonly', 'filename', 'modified'],
 \       ['ctrlpmark']
 \     ]
-\   },
-\   'component_function': {
-\     'filename': 'LightlineFilename'
 \   },
 \   'component': {
 \     'fugitive': '%{exists("*fugitive#head") ? "<".fugitive#head().">" : ""}',
 \     'readonly': '%{&readonly ? "[LOCKED]" : ""}'
 \   }
 \ }
-function! LightlineModified()
-  return &ft =~ 'help' ? '' : &modified ? '+' : &modifiable ? '' : '-'
-endfunction
-function! LightlineFilename()
-  let fname = expand('%:t')
-  return
-    \ fname =~ 'NERD_tree' ? '' :
-    \ &ft == 'unite' ? unite#get_status_string() :
-    \ ('' != fname ? fname : '[NoName]') .
-    \ ('' != LightlineModified() ? ' ' . LightlineModified() : '')
-endfunction
 
 " ============================= "
 "      Git plugin settings      "
