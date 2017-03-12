@@ -371,7 +371,7 @@ let g:EasyMotion_do_mapping=0
 let g:EastMotion_grouping=1
 nmap <C-j><C-j> <Plug>(easymotion-s2)
 nmap <C-k><C-k> <Plug>(easymotion-s2)
-hi EasyMotionShade  ctermbg=none ctermfg=blue
+hi EasyMotionShade ctermbg=none ctermfg=blue
 
 " ============================== "
 "   Settings for NeoComplCache   "
@@ -385,8 +385,8 @@ let g:neocomplcache_lock_buffer_name_pattern="\*ku\*"
 let g:neocomplcache_enable_camel_case_completion=1
 let g:neocomplcache_enable_underbar_completon=1
 let g:neocomplcache_dictionary_filetype_lists = {
-    \ 'default': ''
-    \ }
+\   'default': ''
+\ }
 
 inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
 function! s:my_cr_function()
