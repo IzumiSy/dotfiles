@@ -49,9 +49,8 @@ function apply_unix_preference() {
   export LS_OPTIONS='--color=auto'
   alias ls='ls $LS_OPTIONS'
 
-  if [[ -d "/etc/bash_completion.d/git-prompt" ]] ; then
-    source /etc/bash_completion.d/git-prompt
-  fi
+  source "/etc/bash_completion.d/git-prompt"
+  source "/etc/profile.d/bash_completion.sh"
 }
 
 if [[ "$OSTYPE" = "darwin"* ]] ; then
