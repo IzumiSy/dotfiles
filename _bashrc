@@ -186,7 +186,7 @@ alias mv='mv -i'
 
 # fasd customized
 if detect_command peco ; then
-  alias hpco='eval $(history | cut -c 8-|peco)'
+  alias hpco='eval $(history | cut -c 8- | peco)'
 
   # Commands with fasd
   if detect_command fasd ; then
