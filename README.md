@@ -9,6 +9,6 @@ $ ./INSTALL
 ```
 
 ## Uninstall
-````sh
+```sh
 $ ./UNINSTALL
 ```
