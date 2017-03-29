@@ -5,10 +5,10 @@
 
 ## Install
 ```sh
-$ ./INSTALL
+$ ./install
 ```
 
 ## Uninstall
 ```sh
-$ ./UNINSTALL
+$ ./uninstall
 ```
