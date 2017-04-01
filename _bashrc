@@ -65,6 +65,7 @@ fi
 if detect_command go ; then
   GO_PATH="$HOME/gocodes"
   [ ! -e "${GO_PATH}" ] && mkdir -p "${GO_PATH}"
+  export GOPATH="$GO_PATH"
   export PATH="$PATH:${GO_PATH}/bin"
 fi
 
