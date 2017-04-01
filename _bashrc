@@ -66,8 +66,10 @@ if detect_command go ; then
   GO_PATH_LIB="$HOME/.go/library"
   GO_PATH_SRC="$HOME/Devs/gocodes"
 
+  shopt -s nocasematch
   [ ! -e "${GO_PATH_LIB}" ] && mkdir -p "${GO_PATH_LIB}"
   [ ! -e "${GO_PATH_SRC}" ] && mkdir -p "${GO_PATH_SRC}"
+  shopt -u nocasematch
 
   # Expects existence of ~/devs/gosrc
   export GOPATH="${GO_PATH_LIB}:${GO_PATH_SRC}"
