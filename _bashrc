@@ -73,7 +73,12 @@ fi
 #   Setting for command line prompt
 # -----------------------------------
 function base_line() {
-  echo '\[\e[1;32m\]\u@\h:\w\[\e[00m\]';
+  _bold="\[\e[1;1m\]"
+  _green="\[\e[1;32m\]"
+  _blue="\[\e[1;34m\]"
+  _cyan="\[\e[1;104m\]"
+  _clear="\[\e[00m\]"
+  echo "${_cyan}\u${_clear}${_bold}@${_clear}${_green}\h${_clear}:${_blue}\w${_clear}";
 }
 export PS1="$(base_line)\n ${text}$ "
 export CLICOLOR=1
