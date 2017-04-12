@@ -24,8 +24,8 @@ fi
 (cd "$HOME/.vim/bundle/vimproc/"; make)
 
 # Install nvm and rbenv
-[ ! -e "$HOME/.nvm" ] && ./cores/nvm.sh
-[ ! -e "$HOME/.rbenv" ] && ./cores/rbenv.sh
+[ ! -e "$HOME/.nvm" ] && ./scripts/nvm.sh
+[ ! -e "$HOME/.rbenv" ] && ./scripts/rbenv.sh
 
 # Loads .bashrc
 clear
