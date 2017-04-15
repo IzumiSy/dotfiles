@@ -170,8 +170,8 @@ fi
 # ls
 alias l='ls'
 alias la='ls -a'
-alias ll='ls -lh'
-alias lla='ls -lha'
+alias ll='ls -Flh'
+alias lla='ls -Flha'
 
 # other
 alias x='exit'
