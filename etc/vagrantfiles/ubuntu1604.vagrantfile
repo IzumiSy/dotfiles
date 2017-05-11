@@ -5,7 +5,7 @@
 # configures the configuration version (we support older styles for
 # backwards compatibility). Please don't change it unless you know what
 # you're doing.
-Vagrant.configure("2") do |config|j
+Vagrant.configure("2") do |config|
   config.vm.box = "geerlingguy/ubuntu1604"
 
   # config.ssh.insert_key = false
