@@ -22,6 +22,6 @@ Vagrant.configure("2") do |config|j
     apt install -y git vim
     mkdir ~/devs
     git clone git@github.com:IzumiSy/dotfiles.git ~/devs
-    ./devs/dotfiles/install --skip-scripts
+    yes yes | ./devs/dotfiles/install
   SHELL
 end
