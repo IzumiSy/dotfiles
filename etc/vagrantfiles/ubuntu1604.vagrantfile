@@ -1,0 +1,33 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
+Vagrant.configure("2") do |config|
+  config.vm.box = "geerlingguy/ubuntu1604"
+
+  # config.ssh.insert_key = false
+  config.ssh.forward_agent = true
+
+  # Set up port forwardings
+  config.vm.network "forwarded_port", guest: 3000, host: 3030
+  config.vm.network "forwarded_port", guest: 80, host: 8080
+
+  # Executes a provisioning with root
+  config.vm.provision "shell", inline: <<-ROOT_SHELL
+    apt -y update
+    apt -y upgrade
+    apt -y autoremove
+    apt install -y git vim
+  ROOT_SHELL
+
+  # Install dotfiles
+  config.vm.provision "shell", privileged: false, inline: <<-USER_SHELL
+    mkdir ~/devs
+    echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+    git clone git@github.com:IzumiSy/dotfiles.git ~/devs/dotfiles
+    yes yes | ~/devs/dotfiles/install
+  USER_SHELL
+end

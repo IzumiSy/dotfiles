@@ -16,7 +16,7 @@ if [ ! -e "$HOME/.vim/bundle" ] ; then
   if type git &> /dev/null ; then
     git clone https://github.com/VundleVim/Vundle.vim.git "$HOME/.vim/bundle/Vundle.vim"
   else
-    echo "Git not available" && exit 1
+    echo "Git not available." && exit 1
   fi
 fi
 
@@ -24,8 +24,12 @@ fi
 (cd "$HOME/.vim/bundle/vimproc/"; make)
 
 # Install nvm and rbenv
-[ ! -e "$HOME/.nvm" ] && ./scripts/nvm.sh
-[ ! -e "$HOME/.rbenv" ] && ./scripts/rbenv.sh
+if [ $# -eq 1 ] && [ $1 == "--skip-scripts" ] ; then
+  echo "Scripts installation skipped."
+else
+  [ ! -e "$HOME/.nvm" ] && ./scripts/nvm.sh
+  [ ! -e "$HOME/.rbenv" ] && ./scripts/rbenv.sh
+fi
 
 # Loads .bashrc
 clear
