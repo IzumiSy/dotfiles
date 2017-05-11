@@ -24,8 +24,12 @@ fi
 (cd "$HOME/.vim/bundle/vimproc/"; make)
 
 # Install nvm and rbenv
-[ ! -e "$HOME/.nvm" ] && ./scripts/nvm.sh
-[ ! -e "$HOME/.rbenv" ] && ./scripts/rbenv.sh
+if [ $# -eq 1 ] && [ $1 == "--skip-scripts" ] ; then
+  echo "Scripts installation skipped."
+else
+  [ ! -e "$HOME/.nvm" ] && ./scripts/nvm.sh
+  [ ! -e "$HOME/.rbenv" ] && ./scripts/rbenv.sh
+fi
 
 # Loads .bashrc
 clear
