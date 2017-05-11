@@ -17,9 +17,9 @@ Vagrant.configure("2") do |config|
 
   # Executes a provisioning with root
   config.vm.provision "shell", inline: <<-ROOT_SHELL
-    apt -y update -qq
-    apt -y upgrade -qq
-    apt -y autoremove -qq
+    apt -y update
+    apt -y upgrade
+    apt -y autoremove
     apt install -y git vim
   ROOT_SHELL
 
