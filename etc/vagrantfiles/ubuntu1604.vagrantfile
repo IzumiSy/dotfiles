@@ -21,6 +21,6 @@ Vagrant.configure("2") do |config|j
     apt -y upgrade
     apt install -y git vim
     mkdir ~/devs
-    git clone git@github.com:IzumiSy/dotfiles.git
+    git clone git@github.com:IzumiSy/dotfiles.git ~/devs
   SHELL
 end
