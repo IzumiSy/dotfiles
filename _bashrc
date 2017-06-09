@@ -9,10 +9,8 @@ stty stop undef
 export VTE_CJK_WIDTH=1
 
 # Bash shell settings
-# - Allow fuzzy directory change
-# - Omit `cd` to change the current directory
-shopt -s cdspell
-shopt -s autocd
+shopt -s cdspell &> /dev/null;
+shopt -s autocd  &> /dev/null;
 
 # Settings for history
 export HISTCONTROL=ignoreboth:erasedups
