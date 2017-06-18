@@ -206,8 +206,6 @@ noremap <Up> <Nop>
 noremap <Down> <Nop>
 noremap <Left> <Nop>
 noremap <Right> <Nop>
-inoremap <C-k> <Nop>
-inoremap <C-l> <Nop>
 
 " Visual mode key-mappings for multiple indents
 vnoremap > >gv
@@ -395,10 +393,10 @@ endfunction
 
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
-inoremap <expr><C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
+inoremap <expr><C-k> pumvisible() ? "\<C-p>" : ""
 " inoremap <expr><C-u> pumvisible() : "\<C-p>\<C-p>\<C-p>\<C-p>" : "\<C-u>"
 " inoremap <expr><C-d> pumvisible() ? "\<C-n>\<C-n>\<C-n>\<C-n>" : "\<C-d>"
-inoremap <expr><C-l> pumvisible() ? neocomplcache#smart_close_popup() : "\<C-l>"
+inoremap <expr><C-l> pumvisible() ? neocomplcache#smart_close_popup() : ""
 inoremap <expr><C-h> pumvisible() ? neocomplcache#cancel_popup()."\<C-h>" : "\<C-h>"
 
 " Define keyword.
