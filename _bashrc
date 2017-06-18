@@ -81,6 +81,13 @@ function base_line() {
 export PS1="$(base_line)\n ${text}$ "
 export CLICOLOR=1
 
+# Aliases for Vagrant
+if detect_command vagrant ; then
+  alias vup="vagrant up"
+  alias vhalt="vagrant halt"
+  alias vstat="vagrant status"
+fi
+
 # --------------------
 #   Settings for Git
 # --------------------
