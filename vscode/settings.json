@@ -1,5 +1,5 @@
 {
-    "editor.fontSize": 12,
+    "editor.fontSize": 10,
     "editor.tabSize": 2,
 
     "vim.hlsearch": true,
