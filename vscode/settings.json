@@ -5,5 +5,7 @@
     "vim.useCtrlKeys": true,
     "vim.useSystemClipboard": true,
 
-    "vim.insertModeKeyBindings": []
+    "vim.insertModeKeyBindings": [],
+    
+    "terminal.integrated.fontSize": 10
 }
