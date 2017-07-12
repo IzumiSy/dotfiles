@@ -6,5 +6,7 @@
     "vim.useSystemClipboard": true,
 
     "vim.insertModeKeyBindings": [],
-    "vim.disableAnnoyingNeovimMessage": true
+    "vim.disableAnnoyingNeovimMessage": true,
+
+    "terminal.integrated.fontSize": 10
 }
