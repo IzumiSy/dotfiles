@@ -6,7 +6,7 @@
     "vim.useCtrlKeys": true,
     "vim.useSystemClipboard": true,
     "vim.disableAnnoyingNeovimMessage": true,
-    "vim.insertModeKeyBindings": [],
 
-    "terminal.integrated.fontSize": 10
+    "terminal.integrated.fontSize": 10,
+    "workbench.iconTheme": "vscode-icons"
 }
