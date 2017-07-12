@@ -5,5 +5,6 @@
     "vim.useCtrlKeys": true,
     "vim.useSystemClipboard": true,
 
-    "vim.insertModeKeyBindings": []
+    "vim.insertModeKeyBindings": [],
+    "vim.disableAnnoyingNeovimMessage": true
 }
