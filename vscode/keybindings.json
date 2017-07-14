@@ -33,5 +33,21 @@
   }, {
     "key": "ctrl+t",
     "command": "workbench.action.tasks.runTask"
+  },
+  {
+    "key": "ctrl+n",
+    "command": "workbench.action.nextEditor"
+  },
+  {
+    "key": "shift+cmd+]",
+    "command": "-workbench.action.nextEditor"
+  },
+  {
+    "key": "ctrl+b",
+    "command": "workbench.action.previousEditor"
+  },
+  {
+    "key": "shift+cmd+[",
+    "command": "-workbench.action.previousEditor"
   }
 ]
