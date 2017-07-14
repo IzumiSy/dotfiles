@@ -39,5 +39,11 @@
   }, {
     "key": "ctrl+b",
     "command": "workbench.action.previousEditorInGroup"
+  }, {
+    "key": "ctrl+t",
+    "command": "workbench.action.files.newUntitledFile"
+  }, {
+    "key": "cmd+n",
+    "command": "-workbench.action.files.newUntitledFile"
   }
 ]
