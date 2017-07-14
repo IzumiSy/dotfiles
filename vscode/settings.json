@@ -1,6 +1,8 @@
 {
     "editor.fontSize": 10,
     "editor.tabSize": 2,
+    "editor.scrollBeyondLastLine": false,
+    "editor.minimap.enabled": false,
 
     "vim.hlsearch": true,
     "vim.useCtrlKeys": true,
