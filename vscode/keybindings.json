@@ -31,7 +31,7 @@
     "key": "shift+cmd+b",
     "command": "-workbench.action.tasks.build"
   }, {
-    "key": "ctrl+t",
+    "key": "ctrl+cmd+t",
     "command": "workbench.action.tasks.runTask"
   }, {
     "key": "ctrl+n",
