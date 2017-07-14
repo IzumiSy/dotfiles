@@ -24,5 +24,14 @@
   }, {
     "key": "ctrl+shift+g",
     "command": "-workbench.view.scm"
+  }, {
+    "key": "ctrl+cmd+b",
+    "command": "workbench.action.tasks.build"
+  }, {
+    "key": "shift+cmd+b",
+    "command": "-workbench.action.tasks.build"
+  }, {
+    "key": "ctrl+t",
+    "command": "workbench.action.tasks.runTask"
   }
 ]
