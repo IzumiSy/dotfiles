@@ -18,5 +18,13 @@
     "key": "ctrl+w ctrl+l",
     "command": "workbench.action.focusNextGroup",
     "when": "editorTextFocus"
+  },
+  {
+    "key": "shift+cmd+g",
+    "command": "workbench.view.scm"
+  },
+  {
+    "key": "ctrl+shift+g",
+    "command": "-workbench.view.scm"
   }
 ]
