@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -Ceu
+
+if [[ "$OSTYPE" = "darwin"* ]] ; then
+  VSCODE_PREF_PATH="$HOME/Library/Application Support/Code/User"
+else
+  VSCODE_PREF_PATH="$HOME/.config/Code/User"
+fi
+
+ln -snvf "$(pwd)/keybindings.json" "$VSCODE_PREF_PATH"
+ln -snvf "$(pwd)/settings.json" "$VSCODE_PREF_PATH"
