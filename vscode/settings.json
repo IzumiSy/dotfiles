@@ -1,4 +1,7 @@
 {
+    "terminal.integrated.fontSize": 10,
+    "workbench.iconTheme": "vscode-icons",
+
     "editor.fontSize": 10,
     "editor.tabSize": 2,
     "editor.scrollBeyondLastLine": false,
@@ -9,6 +12,15 @@
     "vim.useSystemClipboard": true,
     "vim.disableAnnoyingNeovimMessage": true,
 
-    "terminal.integrated.fontSize": 10,
-    "workbench.iconTheme": "vscode-icons"
+    "vim.otherModesKeyBindingsNonRecursive": [
+        {
+            "before":["<C-c>"],
+            "after":[],
+            "commands": [
+                {
+                    "command": ":nohl"
+                }
+            ]
+        }
+    ],
 }
