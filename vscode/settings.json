@@ -11,16 +11,15 @@
     "vim.useCtrlKeys": true,
     "vim.useSystemClipboard": true,
     "vim.disableAnnoyingNeovimMessage": true,
-
     "vim.otherModesKeyBindingsNonRecursive": [
         {
-            "before":["<C-c>"],
-            "after":[],
+            "before": ["<C-c>"],
+            "after": [],
             "commands": [
                 {
                     "command": ":nohl"
                 }
             ]
         }
-    ],
+    ]
 }
