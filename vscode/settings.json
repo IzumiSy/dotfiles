@@ -21,6 +21,26 @@
                     "command": ":nohl"
                 }
             ]
+        },
+        {
+            "before": ["<leader>", "f", "g"],
+            "after": [],
+            "commands": [
+                {
+                    "command": "workbench.action.quickOpen",
+                    "args": []
+                }
+            ]
+        },
+        {
+            "before": ["<leader>", "f", "f"],
+            "after": [],
+            "commands": [
+                {
+                    "command": "workbench.view.search",
+                    "args": []
+                }
+            ]
         }
     ]
 }
