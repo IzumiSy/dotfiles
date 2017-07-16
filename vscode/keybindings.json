@@ -53,5 +53,15 @@
   {
     "key": "ctrl+shift+[BracketLeft]",
     "command": "-workbench.action.terminal.toggleTerminal"
+  },
+  {
+    "key": "ctrl+backspace",
+    "command": "editor.action.joinLines",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "ctrl+j",
+    "command": "-editor.action.joinLines",
+    "when": "editorTextFocus && !editorReadonly"
   }
 ]
