@@ -66,5 +66,13 @@
   {
     "key": "cmd+b",
     "command": "-workbench.action.toggleSidebarVisibility"
+  },
+  {
+    "key": "cmd+[BracketLeft]",
+    "command": "workbench.action.togglePanel"
+  },
+  {
+    "key": "cmd+j",
+    "command": "-workbench.action.togglePanel"
   }
 ]
