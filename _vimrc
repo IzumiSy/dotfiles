@@ -89,6 +89,9 @@ Plugin 'rking/ag.vim'
 " Vim motion on speed
 Plugin 'easymotion/vim-easymotion'
 
+" Memoing
+Plugin 'Shougo/junkfile.vim'
+
 " Theme
 Plugin 'desert256.vim'
 
