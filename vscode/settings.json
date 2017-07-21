@@ -7,6 +7,9 @@
     "editor.scrollBeyondLastLine": false,
     "editor.minimap.enabled": false,
 
+    "workbench.editor.enablePreview": false,
+    "workbench.editor.enablePreviewFromQuickOpen": false,
+
     "vim.hlsearch": true,
     "vim.useCtrlKeys": true,
     "vim.useSystemClipboard": true,
