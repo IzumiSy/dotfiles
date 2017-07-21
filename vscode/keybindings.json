@@ -45,33 +45,26 @@
   }, {
     "key": "cmd+n",
     "command": "-workbench.action.files.newUntitledFile"
-  },
-  {
+  }, {
     "key": "shift+alt+[BracketLeft]",
     "command": "workbench.action.terminal.toggleTerminal"
-  },
-  {
+  }, {
     "key": "ctrl+shift+[BracketLeft]",
     "command": "-workbench.action.terminal.toggleTerminal"
-  },
-  {
+  }, {
     "key": "ctrl+j",
     "command": "-editor.action.joinLines",
     "when": "editorTextFocus && !editorReadonly"
-  },
-  {
+  }, {
     "key": "cmd+.",
     "command": "workbench.action.toggleSidebarVisibility"
-  },
-  {
+  }, {
     "key": "cmd+b",
     "command": "-workbench.action.toggleSidebarVisibility"
-  },
-  {
+  }, {
     "key": "cmd+[BracketLeft]",
     "command": "workbench.action.togglePanel"
-  },
-  {
+  }, {
     "key": "cmd+j",
     "command": "-workbench.action.togglePanel"
   }
