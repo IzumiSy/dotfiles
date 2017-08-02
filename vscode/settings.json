@@ -35,5 +35,7 @@
             "command": "workbench.view.search",
             "args": []
         }]
-    }]
+    }],
+
+    "todohighlight.isEnable": true
 }
