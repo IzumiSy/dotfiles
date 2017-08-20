@@ -67,9 +67,10 @@ Plugin 'JulesWang/css.vim'
 Plugin 'hail2u/vim-css3-syntax'
 Plugin 'cakebaker/scss-syntax.vim'
 
-" JavaScript, JSX
+" JavaScript, JSX, Handlebars
 Plugin 'othree/yajs.vim'
 Plugin 'maxmellon/vim-jsx-pretty'
+Plugin 'joukevandermaas/vim-ember-hbs'
 
 " Markdown and realtime preview
 Plugin 'plasticboy/vim-markdown'
