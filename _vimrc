@@ -61,12 +61,15 @@ Plugin 'rails.vim'
 Plugin 'leshill/vim-json'
 Plugin 'digitaltoad/vim-pug'
 
-" HTML5, CSS3, SCSS, JavaScript
+" HTML5, CSS3, SCSS
 Plugin 'othree/html5.vim'
-Plugin 'othree/yajs.vim'
 Plugin 'JulesWang/css.vim'
 Plugin 'hail2u/vim-css3-syntax'
 Plugin 'cakebaker/scss-syntax.vim'
+
+" JavaScript, JSX
+Plugin 'othree/yajs.vim'
+Plugin 'maxmellon/vim-jsx-pretty'
 
 " Markdown and realtime preview
 Plugin 'plasticboy/vim-markdown'
