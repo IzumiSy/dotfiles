@@ -175,8 +175,8 @@ fi
 # ls
 alias l='ls'
 alias la='ls -a'
-alias ll='ls -Flh'
-alias lla='ls -Flha'
+alias ll='ls -Flh --group-directories-first'
+alias lla='ls -Flha --group-directories-first'
 
 # other
 alias x='exit'
