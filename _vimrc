@@ -60,6 +60,7 @@ Plugin 'kchmck/vim-coffee-script'
 Plugin 'rails.vim'
 Plugin 'leshill/vim-json'
 Plugin 'digitaltoad/vim-pug'
+Plugin 'tpope/vim-haml'
 
 " HTML5, CSS3, SCSS
 Plugin 'othree/html5.vim'
