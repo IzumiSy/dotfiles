@@ -51,7 +51,6 @@ Plugin 'The-NERD-tree'
 
 " Git plugins
 Plugin 'https://github.com/airblade/vim-gitgutter'
-Plugin 'https://github.com/kmnk/vim-unite-giti'
 Plugin 'tpope/vim-fugitive'
 
 " Rails, CoffeeScript, TypeScript, JSON, Pug supports for Vim
@@ -310,10 +309,6 @@ function! SetupUniteOptions()
     nnoremap <silent>,fb :Unite -start-insert buffer<CR>
     nnoremap <silent>,ff :Unite grep:. -buffer-name=search-buffer -no-quit<CR>
     nnoremap <silent>,fl :UniteWithCursorWord grep:. -buffer-name=search-buffer -no-quit<CR>
-
-    nnoremap <silent>,gb :Unite giti/branch<CR>
-    nnoremap <silent>,gs :Unite giti/status -horizontal<CR>
-    nnoremap <silent>,gl :Unite giti/log<CR>
 
     let g:unite_source_grep_recursive_opt=''
   endif
