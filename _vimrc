@@ -31,7 +31,7 @@ Plugin 'https://github.com/Shougo/vimproc'
 Plugin 'quickrun.vim'
 
 " Autocomplete popup
-Plugin 'https://github.com/Shougo/neocomplcache'
+Plugin 'https://github.com/Shougo/neocomplete'
 
 " Status line customizing plugin
 Plugin 'https://github.com/itchyny/lightline.vim'
@@ -378,39 +378,26 @@ nmap <C-j><C-j> <Plug>(easymotion-s2)
 nmap <C-k><C-k> <Plug>(easymotion-s2)
 hi EasyMotionShade ctermbg=none ctermfg=blue
 
-" ============================== "
-"   Settings for NeoComplCache   "
-" ============================== "
-let g:neocomplcache_enable_at_startup=1
-let g:neocomplcache_enable_ignore_case=1
-let g:neocomplcache_smart_case=1
-" let g:neocomplcache_enable_auto_select=1
-let g:neocomplcache_min_syntax_length=2
-let g:neocomplcache_lock_buffer_name_pattern="\*ku\*"
-let g:neocomplcache_enable_camel_case_completion=1
-let g:neocomplcache_enable_underbar_completon=1
-let g:neocomplcache_dictionary_filetype_lists = {
-\   'default': ''
-\ }
+" ============================ "
+"   Settings for neocomplete   "
+" ============================ "
+let g:acp_enableAtStartup=0
+let g:neocomplete#enable_at_startup=1
+let g:neocomplete#enable_smart_case=1
 
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function()
-  return neocomplcache#smart_close_popup()."\<CR>"
-endfunction
+if !exists('g:neocomplete#keyword_patterns')
+  let g:neocomplete#keyword_patterns = {}
+endif
+let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 
+inoremap <expr><C-l> neocomplete#complete_common_string()
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
 inoremap <expr><C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
 inoremap <expr><C-k> pumvisible() ? "\<C-p>" : ""
-" inoremap <expr><C-u> pumvisible() : "\<C-p>\<C-p>\<C-p>\<C-p>" : "\<C-u>"
-" inoremap <expr><C-d> pumvisible() ? "\<C-n>\<C-n>\<C-n>\<C-n>" : "\<C-d>"
-inoremap <expr><C-l> pumvisible() ? neocomplcache#smart_close_popup() : ""
-inoremap <expr><C-h> pumvisible() ? neocomplcache#cancel_popup()."\<C-h>" : "\<C-h>"
-
-" Define keyword.
-if !exists('g:neocomplcache_keyword_patterns')
-  let g:neocomplcache_keyword_patterns = {}
-endif
-let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
+inoremap <expr><C-u> pumvisible() : "\<C-p>\<C-p>\<C-p>\<C-p>" : "\<C-u>"
+inoremap <expr><C-d> pumvisible() ? "\<C-n>\<C-n>\<C-n>\<C-n>" : "\<C-d>"
+inoremap <expr><C-h> pumvisible() ? neocomplete#cancel_popup()."\<C-h>" : "\<C-h>"
 
 " ================= "
 "   Abbreviations   "
