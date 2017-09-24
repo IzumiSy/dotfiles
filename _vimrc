@@ -393,6 +393,7 @@ inoremap <expr><C-k> pumvisible() ? "\<C-p>" : ""
 inoremap <expr><C-u> pumvisible() : "\<C-p>\<C-p>\<C-p>\<C-p>" : "\<C-u>"
 inoremap <expr><C-d> pumvisible() ? "\<C-n>\<C-n>\<C-n>\<C-n>" : "\<C-d>"
 inoremap <expr><C-h> pumvisible() ? neocomplete#cancel_popup()."\<C-h>" : "\<C-h>"
+inoremap <expr><C-l> neocomplete#cancel_popup()
 
 " ================= "
 "   Abbreviations   "
