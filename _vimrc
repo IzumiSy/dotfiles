@@ -152,6 +152,7 @@ au BufRead,BufNewFile,BufReadPost *.gs set filetype=javascript
 au BufRead,BufNewFile,BufReadPost *.erb set filetype=eruby.html
 au BufRead,BufNewFile,BufReadPost *.scss set filetype=scss.css
 au BufRead,BufNewFile,BufReadPost *.coffee set filetype=coffee
+au BufRead,BufNewFile,BufReadPost {*.ts,*.tsx} set filetype=typescript
 au BufRead,BufNewFile,BufReadPost *.json set syntax=json
 au BufRead,BufNewFile {*.md} set filetype=markdown
 au BufRead,BufNewFile {COMMIT_EDITMSG} set filetype=gitcommit
@@ -385,7 +386,6 @@ if !exists('g:neocomplete#keyword_patterns')
 endif
 let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 
-inoremap <expr><C-l> neocomplete#complete_common_string()
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
 inoremap <expr><C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
