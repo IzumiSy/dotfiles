@@ -34,18 +34,22 @@ export PATH=$PATH:~/bin/
 # --------------------------------
 #   Environment-related settings
 # --------------------------------
+
+# OSX
 function apply_osx_preference() {
   alias updatedb='sudo /usr/libexec/locate.updatedb'
+  alias ls='gls --color=auto'
 
   git_prompt_path='/Library/Developer/CommandLineTools/'
   git_completion_path='/Library/Developer/CommandLineTools/'
+
   source "$git_completion_path/usr/share/git-core/git-completion.bash"
   source "$git_prompt_path/usr/share/git-core/git-prompt.sh"
 }
 
+# Unix
 function apply_unix_preference() {
-  export LS_OPTIONS='--color=auto'
-  alias ls='ls $LS_OPTIONS'
+  alias ls='ls --color=auto'
 
   source "/etc/bash_completion.d/git-prompt"
   source "/etc/profile.d/bash_completion.sh"
