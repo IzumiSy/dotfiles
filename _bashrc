@@ -127,29 +127,22 @@ if detect_command git ; then
   export PS1="$(base_line)\n$(branch_name)$(git_status) ${text}$ "
 
   # Git command aliases
-  alias g='git'
-
   alias gad='git add .'
   alias gadi='git add -i'
   alias gd='git diff --cached'
-
-  alias gco='git commit'
   alias gcm='git commit -m'
-
-  alias gmas='git checkout master'
-  alias gdev='git checkout develop'
   alias gch='git checkout'
-
-  alias gl='git log --stat'
   alias glo='git log --oneline --decorate --graph'
   alias gs='git status'
-
-  alias hreset='git reset --hard'
-  alias sreset='git reset'
-
-  alias mmerge='git merge origin/master'
-  alias mdev='git merge origin/develop'
   alias gpl='git pull origin $(__get_branch_name)'
+  alias gb='git branch'
+
+  # Delete merged branches
+  alias gcmb="git branch --merged | grep -vE '^\*|master$|develop$' | xargs -I % git branch -d %"
+
+  if detect_command peco ; then
+    alias pco='git branch | peco | xargs git checkout'
+  fi
 
   # An alias for "git push" with master blockage
   function gpo() {
@@ -159,15 +152,6 @@ if detect_command git ; then
       git push origin "$(__get_branch_name)"
     fi
   }
-
-  alias gb='git branch'
-
-  # Delete merged branches
-  alias gcmb="git branch --merged | grep -vE '^\*|master$|develop$' | xargs -I % git branch -d %"
-
-  if detect_command peco ; then
-    alias pco='git branch | peco | xargs git checkout'
-  fi
 
   # Alias for Hub
   if detect_command hub ; then
