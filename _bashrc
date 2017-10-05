@@ -28,6 +28,12 @@ if detect_command figlet ; then
   echo 'Terminal' | figlet -m $0 -f larry3d
 fi
 
+# Fortune
+if detect_command fortune ; then
+  fortune -s
+  echo ""
+fi
+
 # Exports user binary files
 export PATH=$PATH:~/bin/
 
