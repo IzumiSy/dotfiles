@@ -25,7 +25,7 @@ function detect_command() {
 
 # Show welcome message
 if detect_command figlet ; then
-  echo 'Terminal' | figlet -m $0
+  echo 'Terminal' | figlet -m $0 -f larry3d
 fi
 
 # Exports user binary files
