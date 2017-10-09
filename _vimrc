@@ -393,7 +393,7 @@ if !exists('g:neocomplete#force_omni_input_patterns')
 endif
 
 let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-let g:neocomplete#force_omni_input_patterns['typscript'] = '[^. *\t]\.\w*\|\h\w*::'
+let g:neocomplete#force_omni_input_patterns['typescript'] = '[^. *\t]\.\w*\|\h\w*::'
 
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
