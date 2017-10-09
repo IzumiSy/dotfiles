@@ -55,6 +55,7 @@ Plugin 'tpope/vim-fugitive'
 
 " CoffeeScript, TypeScript, JSON, Pug supports for Vim
 Plugin 'leafgarland/typescript-vim'
+Plugin 'clausreinke/typescript-tools'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'leshill/vim-json'
 Plugin 'digitaltoad/vim-pug'
