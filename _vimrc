@@ -139,6 +139,7 @@ set fileencoding=utf-8
 set fileencodings=utf-8,iso-2022-jp,euc-jp,sjis
 set fileformats=unix,dos,mac
 set backspace=indent,eol,start
+set completeopt+=menuone
 syntax on
 silent! colorscheme desert256
 
@@ -387,7 +388,12 @@ let g:neocomplete#enable_smart_case=1
 if !exists('g:neocomplete#keyword_patterns')
   let g:neocomplete#keyword_patterns = {}
 endif
+if !exists('g:neocomplete#force_omni_input_patterns')
+  let g:neocomplete#force_omni_input_patterns = {}
+endif
+
 let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+let g:neocomplete#force_omni_input_patterns['typscript'] = '[^. *\t]\.\w*\|\h\w*::'
 
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
