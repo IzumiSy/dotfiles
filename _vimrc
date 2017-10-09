@@ -412,6 +412,12 @@ cnoreabbrev W w
 cnoreabbrev Q q
 cnoreabbrev Qall qall
 
+" ================== "
+"     Syntastic      "
+" ================== "
+let g:tsuquyomi_disable_quickfix = 1
+let g:syntastic_typescript_checkers = ['tsuquyomi']
+
 " Enable background transparency on Ubuntu
 " these highlight settings needs to be here.
 highlight Normal ctermbg=none
