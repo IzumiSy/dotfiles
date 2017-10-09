@@ -424,6 +424,10 @@ cnoreabbrev Qall qall
 let g:tsuquyomi_disable_quickfix = 1
 let g:syntastic_typescript_checkers = ['tsuquyomi']
 
+" ================= "
+"     Highlight     "
+" ================= "
+
 " Enable background transparency on Ubuntu
 " these highlight settings needs to be here.
 highlight Normal ctermbg=none
