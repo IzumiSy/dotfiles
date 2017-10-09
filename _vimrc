@@ -53,9 +53,11 @@ Plugin 'The-NERD-tree'
 Plugin 'https://github.com/airblade/vim-gitgutter'
 Plugin 'tpope/vim-fugitive'
 
-" CoffeeScript, TypeScript, JSON, Pug supports for Vim
+" TypeScript
 Plugin 'leafgarland/typescript-vim'
 Plugin 'clausreinke/typescript-tools'
+
+" CoffeeScript, TypeScript, JSON, Pug supports for Vim
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'leshill/vim-json'
 Plugin 'digitaltoad/vim-pug'
