@@ -394,7 +394,7 @@ endif
 
 let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 let g:neocomplete#force_omni_input_patterns['typescript'] = '[^. *\t]\.\w*\|\h\w*::'
-let g:neocomplete#source#omni#input_patterns['go'] = '\h\w\.\w*'
+let g:neocomplete#force_omni_input_patterns['go'] = '\h\w\.\w*'
 
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
