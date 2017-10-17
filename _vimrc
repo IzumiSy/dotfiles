@@ -7,98 +7,96 @@ if has('vim_starting')
   set nocompatible
 endif
 
-set rtp+=~/.vim/bundle/Vundle.vim/
-call vundle#begin()
+call plug#begin('~/.vim/plugged')
 
 " ========================
 "     Load VIM plugins
 " ========================
 
-Plugin 'VundleVim/Vundle.vim'
-
 " Sudo wrapper plugin
-Plugin 'sudo.vim'
+Plug 'vim-scripts/sudo.vim'
 
 " Syntax checking plugin
-Plugin 'Syntastic'
+Plug 'vim-scripts/Syntastic'
 
 " Word bracket, commenting plugins
-Plugin 'surround.vim'
-Plugin 'scrooloose/nerdcommenter'
+Plug 'vim-scripts/surround.vim'
+Plug 'scrooloose/nerdcommenter'
 
 " Instant run & asynchronous processing support
-Plugin 'https://github.com/Shougo/vimproc'
-Plugin 'quickrun.vim'
+Plug 'https://github.com/Shougo/vimproc', { 'dir': '~/.vim/plugged/vimproc', 'do': 'make' }
+Plug 'vim-scripts/quickrun.vim', { 'on': 'QuickRun' }
 
 " Autocomplete popup
-Plugin 'https://github.com/Shougo/neocomplete'
+Plug 'https://github.com/Shougo/neocomplete'
 
 " Status line customizing plugin
-Plugin 'https://github.com/itchyny/lightline.vim'
+Plug 'https://github.com/itchyny/lightline.vim'
 
 " Interactive fuzzy-wording finder over multiple
 " sources like files, buffers, and file histories.
-Plugin 'https://github.com/Shougo/unite.vim'
-Plugin 'https://github.com/Shougo/neomru.vim'
-Plugin 'unite-colorscheme'
+Plug 'https://github.com/Shougo/unite.vim'
+Plug 'https://github.com/Shougo/neomru.vim'
+Plug 'vim-scripts/unite-colorscheme'
 
 " Plugins for quickfix
-Plugin 'osyo-manga/unite-quickfix'
-Plugin 'osyo-manga/shabadou.vim'
+Plug 'osyo-manga/unite-quickfix'
+Plug 'osyo-manga/shabadou.vim'
 
 " File viewer plugins
-Plugin 'The-NERD-tree'
+Plug 'vim-scripts/The-NERD-tree', { 'on': 'NerdTreeToggle' }
 
 " Git plugins
-Plugin 'https://github.com/airblade/vim-gitgutter'
-Plugin 'tpope/vim-fugitive'
+Plug 'https://github.com/airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
 
 " CoffeeScript, TypeScript, JSON, Pug supports for Vim
-Plugin 'leafgarland/typescript-vim'
-Plugin 'kchmck/vim-coffee-script'
-Plugin 'leshill/vim-json'
-Plugin 'digitaltoad/vim-pug'
-Plugin 'tpope/vim-haml'
+Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
+Plug 'kchmck/vim-coffee-script', { 'for': 'coffeescript' }
+Plug 'leshill/vim-json', { 'for': 'json' }
+Plug 'digitaltoad/vim-pug', { 'for': 'pug' }
+Plug 'tpope/vim-haml', { 'for': 'haml' }
 
 " HTML5, CSS3, SCSS
-Plugin 'othree/html5.vim'
-Plugin 'JulesWang/css.vim'
-Plugin 'hail2u/vim-css3-syntax'
-Plugin 'cakebaker/scss-syntax.vim'
+Plug 'othree/html5.vim', { 'for': 'html' }
+Plug 'JulesWang/css.vim', { 'for': 'css' }
+Plug 'hail2u/vim-css3-syntax', { 'for': 'css' }
+Plug 'cakebaker/scss-syntax.vim', { 'for': 'scss' }
 
 " JavaScript, JSX, Handlebars
-Plugin 'othree/yajs.vim'
-Plugin 'maxmellon/vim-jsx-pretty'
-Plugin 'joukevandermaas/vim-ember-hbs'
+Plug 'othree/yajs.vim', { 'for': 'javascript' }
+Plug 'maxmellon/vim-jsx-pretty', { 'for': 'javascript' }
+Plug 'joukevandermaas/vim-ember-hbs', { 'for': 'handlebars' }
 
 " Markdown and realtime preview
-Plugin 'plasticboy/vim-markdown'
-Plugin 'kannokanno/previm'
-Plugin 'tyru/open-browser.vim'
+Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
+Plug 'kannokanno/previm', { 'for': 'markdown' }
+Plug 'tyru/open-browser.vim'
 
 " Vue file support
 " Plugin 'posva/vim-vue'
 
 " Golang
-Plugin 'vim-jp/vim-go-extra'
-Plugin 'fatih/vim-go'
+Plug 'vim-jp/vim-go-extra', { 'for': 'go' }
+Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' }
 
 " Whitespace trailer
-Plugin 'bronson/vim-trailing-whitespace'
+Plug 'bronson/vim-trailing-whitespace', { 'on': 'FixWhitespace' }
 
 " The Silver Searcher
-Plugin 'rking/ag.vim'
+Plug 'rking/ag.vim'
 
 " Vim motion on speed
-Plugin 'easymotion/vim-easymotion'
+Plug 'easymotion/vim-easymotion'
 
 " Memoing
-Plugin 'Shougo/junkfile.vim'
+Plug 'Shougo/junkfile.vim'
 
 " Theme
-Plugin 'desert256.vim'
+Plug 'vim-scripts/desert256.vim'
 
-call vundle#end()
+call plug#end()
+
 filetype plugin indent on
 
 " ========================= "
