@@ -50,8 +50,11 @@ Plug 'vim-scripts/The-NERD-tree', { 'on': 'NERDTree' }
 Plug 'https://github.com/airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 
-" CoffeeScript, TypeScript, JSON, Pug supports for Vim
+" TypeScript
 Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
+Plug 'Quramy/tsuquyomi', { 'for': 'typescript' }
+
+" CoffeeScript, JSON, Pug supports for Vim
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffeescript' }
 Plug 'leshill/vim-json', { 'for': 'json' }
 Plug 'digitaltoad/vim-pug', { 'for': 'pug' }
@@ -129,6 +132,7 @@ set fileencoding=utf-8
 set fileencodings=utf-8,iso-2022-jp,euc-jp,sjis
 set fileformats=unix,dos,mac
 set backspace=indent,eol,start
+set completeopt+=menuone
 syntax on
 silent! colorscheme desert256
 
@@ -377,7 +381,13 @@ let g:neocomplete#enable_smart_case=1
 if !exists('g:neocomplete#keyword_patterns')
   let g:neocomplete#keyword_patterns = {}
 endif
+if !exists('g:neocomplete#force_omni_input_patterns')
+  let g:neocomplete#force_omni_input_patterns = {}
+endif
+
 let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+let g:neocomplete#force_omni_input_patterns['typescript'] = '[^. *\t]\.\w*\|\h\w*::'
+let g:neocomplete#force_omni_input_patterns['go'] = '\h\w\.\w*'
 
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
@@ -401,6 +411,16 @@ cnoreabbrev WQ wq
 cnoreabbrev W w
 cnoreabbrev Q q
 cnoreabbrev Qall qall
+
+" ================== "
+"     Syntastic      "
+" ================== "
+let g:tsuquyomi_disable_quickfix = 1
+let g:syntastic_typescript_checkers = ['tsuquyomi']
+
+" ================= "
+"     Highlight     "
+" ================= "
 
 " Enable background transparency on Ubuntu
 " these highlight settings needs to be here.
