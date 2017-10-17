@@ -44,7 +44,7 @@ Plug 'osyo-manga/unite-quickfix'
 Plug 'osyo-manga/shabadou.vim'
 
 " File viewer plugins
-Plug 'vim-scripts/The-NERD-tree', { 'on': 'NerdTreeToggle' }
+Plug 'vim-scripts/The-NERD-tree', { 'on': 'NERDTree' }
 
 " Git plugins
 Plug 'https://github.com/airblade/vim-gitgutter'
