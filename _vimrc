@@ -36,7 +36,7 @@ Plug 'vim-scripts/surround.vim'
 Plug 'scrooloose/nerdcommenter'
 
 " Instant run & asynchronous processing support
-Plug 'https://github.com/Shougo/vimproc', { 'dir': '~/.vim/plugged/vimproc', 'do': 'make' }
+Plug 'https://github.com/Shougo/vimproc', { 'do': 'make' }
 Plug 'vim-scripts/quickrun.vim', { 'on': 'QuickRun' }
 
 " Autocomplete popup
