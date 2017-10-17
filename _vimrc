@@ -1,17 +1,19 @@
-" =======================
-"          VIMRC
-" =======================
-filetype off
-
-if has('vim_starting')
-  set nocompatible
-endif
-
-call plug#begin('~/.vim/plugged')
+" --------------------------------------------------
+"
+" _|      _|  _|_|_|  _|      _|  _|_|_|      _|_|_|
+" _|      _|    _|    _|_|  _|_|  _|    _|  _|
+" _|      _|    _|    _|  _|  _|  _|_|_|    _|
+"   _|  _|      _|    _|      _|  _|    _|  _|
+"     _|      _|_|_|  _|      _|  _|    _|    _|_|_|
+"
+"                                 Created by IzumiSy
+" --------------------------------------------------
 
 " ========================
 "     Load VIM plugins
 " ========================
+
+call plug#begin('~/.vim/plugged')
 
 " Sudo wrapper plugin
 Plug 'vim-scripts/sudo.vim'
@@ -94,8 +96,6 @@ Plug 'vim-jp/vim-go-extra', { 'for': 'go' }
 Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' }
 
 call plug#end()
-
-filetype plugin indent on
 
 " ========================= "
 "      General settings     "
