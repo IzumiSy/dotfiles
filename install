@@ -12,16 +12,15 @@ ln -snvf "$(pwd)/etc/_hyper.js" "$HOME/.hyper.js"
 ln -svnf "$(pwd)/etc/_pryrc" "$HOME/.pryrc"
 
 # Install _vimrc
-if [ ! -e "$HOME/.vim/bundle" ] ; then
-  if type git &> /dev/null ; then
-    git clone https://github.com/VundleVim/Vundle.vim.git "$HOME/.vim/bundle/Vundle.vim"
+if [ ! -e "$HOME/.vim" ] ; then
+  if type curl &> /dev/null ; then
+    curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+      https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    (set -x; vim +PlugInstall +qall)
   else
     echo "Git not available." && exit 1
   fi
 fi
-
-(set -x; vim +PluginInstall +qall)
-(cd "$HOME/.vim/bundle/vimproc/"; make)
 
 # Install nvm and rbenv
 if [ $# -eq 1 ] && [ $1 == "--skip-scripts" ] ; then
