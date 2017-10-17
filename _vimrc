@@ -68,13 +68,8 @@ Plug 'othree/yajs.vim', { 'for': 'javascript' }
 Plug 'maxmellon/vim-jsx-pretty', { 'for': 'javascript' }
 Plug 'joukevandermaas/vim-ember-hbs', { 'for': 'handlebars' }
 
-" Markdown and realtime preview
+" Markdow
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
-Plug 'kannokanno/previm', { 'for': 'markdown' }
-Plug 'tyru/open-browser.vim'
-
-" Vue file support
-" Plugin 'posva/vim-vue'
 
 " Golang
 Plug 'vim-jp/vim-go-extra', { 'for': 'go' }
