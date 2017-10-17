@@ -19,6 +19,18 @@ Plug 'vim-scripts/sudo.vim'
 " Syntax checking plugin
 Plug 'vim-scripts/Syntastic'
 
+" Whitespace trailer
+Plug 'bronson/vim-trailing-whitespace', { 'on': 'FixWhitespace' }
+
+" The Silver Searcher
+Plug 'rking/ag.vim'
+
+" Vim motion on speed
+Plug 'easymotion/vim-easymotion'
+
+" Memoing
+Plug 'Shougo/junkfile.vim'
+
 " Word bracket, commenting plugins
 Plug 'vim-scripts/surround.vim'
 Plug 'scrooloose/nerdcommenter'
@@ -37,6 +49,9 @@ Plug 'https://github.com/itchyny/lightline.vim'
 " sources like files, buffers, and file histories.
 Plug 'https://github.com/Shougo/unite.vim'
 Plug 'https://github.com/Shougo/neomru.vim'
+
+" Theme
+Plug 'vim-scripts/desert256.vim'
 Plug 'vim-scripts/unite-colorscheme'
 
 " Plugins for quickfix
@@ -77,21 +92,6 @@ Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 " Golang
 Plug 'vim-jp/vim-go-extra', { 'for': 'go' }
 Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' }
-
-" Whitespace trailer
-Plug 'bronson/vim-trailing-whitespace', { 'on': 'FixWhitespace' }
-
-" The Silver Searcher
-Plug 'rking/ag.vim'
-
-" Vim motion on speed
-Plug 'easymotion/vim-easymotion'
-
-" Memoing
-Plug 'Shougo/junkfile.vim'
-
-" Theme
-Plug 'vim-scripts/desert256.vim'
 
 call plug#end()
 
