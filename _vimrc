@@ -248,7 +248,8 @@ autocmd FileType c :nnoremap <silent>,rr :QuickRun c<CR>
 autocmd FileType python :nnoremap <silent>,rr :QuickRun python<CR>
 autocmd FileType ruby :nnoremap <silent>,rr :QuickRun ruby<CR>
 autocmd FileType go :nnoremap <silent>,rr :QuickRun go<CR>
-autocmd FileType sh :noremap <silent>,rr :QuickRun sh<CR>
+autocmd FileType sh :nnoremap <silent>,rr :QuickRun sh<CR>
+autocmd FileType d :nnoremap <silent>,rr :QuickRun d<CR>
 if !exists("g:quickrun_config")
     let g:quickrun_config={}
 endif
@@ -263,6 +264,9 @@ let g:quickrun_config["go"] = {
 \ }
 let g:quickrun_config["sh"] = {
 \   'command': 'bash'
+\ }
+let g:quickrun_config["d"] = {
+\ 'command': 'rdmd'
 \ }
 
 " ======================== "
