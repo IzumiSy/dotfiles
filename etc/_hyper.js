@@ -68,7 +68,7 @@ module.exports = {
 
     // for setting shell arguments (i.e. for using interactive shellArgs: ['-i'])
     // by default ['--login'] will be used
-    shellArgs: ['--login'],
+    shellArgs: [],
 
     // for environment variables
     env: {},
@@ -92,9 +92,9 @@ module.exports = {
   //   `@company/project`
   //   `project#1.0.1`
   plugins: [
+    // 'hyperterm-tab-icons',
     'hyperterm-colors',
     'hyperterm-tabs',
-    // 'hyperterm-tab-icons',
     'hyperterm-cursor',
     'hyper-blink'
   ],
