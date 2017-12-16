@@ -417,10 +417,12 @@ cnoreabbrev Q q
 cnoreabbrev Qall qall
 
 " ================== "
-"     Syntastic      "
+"     tsuquyomi      "
 " ================== "
-let g:tsuquyomi_disable_quickfix = 1
 let g:syntastic_typescript_checkers = ['tsuquyomi']
+let g:tsuquyomi_disable_quickfix = 1
+let g:tsuquyomi_disable_default_mappings = 1
+map <buffer> <Nop> <Plug>(TsuquyomiGoBack)
 
 " ================= "
 "     Highlight     "
