@@ -65,7 +65,7 @@ Plug 'tpope/vim-fugitive'
 
 " TypeScript
 Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
-Plug 'Quramy/tsuquyomi', { 'for': 'typescript' }
+Plug 'Quramy/tsuquyomi', { 'for': 'typescript', 'do': 'npm install -g typescript' }
 
 " CoffeeScript, JSON, Pug supports for Vim
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffeescript' }
