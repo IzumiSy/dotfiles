@@ -56,10 +56,6 @@ Plug 'https://github.com/Shougo/neomru.vim'
 Plug 'vim-scripts/desert256.vim'
 Plug 'vim-scripts/unite-colorscheme'
 
-" Plugins for quickfix
-Plug 'osyo-manga/unite-quickfix'
-Plug 'osyo-manga/shabadou.vim'
-
 " File viewer plugins
 Plug 'vim-scripts/The-NERD-tree', { 'on': 'NERDTree' }
 
