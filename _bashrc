@@ -34,9 +34,6 @@ if detect_command fortune ; then
   echo ""
 fi
 
-# Exports user binary files
-export PATH=$PATH:~/bin/
-
 # --------------------------------
 #   Environment-related settings
 # --------------------------------
