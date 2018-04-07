@@ -48,6 +48,9 @@ function apply_osx_preference() {
 
   source "$git_completion_path/usr/share/git-core/git-completion.bash"
   source "$git_prompt_path/usr/share/git-core/git-prompt.sh"
+
+  # Homebrew's sbin
+  export PATH="/usr/local/sbin:$PATH"
 }
 
 # Unix
