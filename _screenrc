@@ -11,9 +11,6 @@ autodetach on
 hardstatus on
 hardstatus alwayslastline "%-w%{= ck}%n %t%{-}%+w"
 
-# Retain shell colouring
-shell -$SHELL
-
 # F2: new screen
 bindkey "^[OQ" screen
 
