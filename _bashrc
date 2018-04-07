@@ -169,7 +169,6 @@ alias lla='ls -Flha --group-directories-first'
 alias x='exit'
 alias v='vim'
 alias c='clear'
-alias bl="byobu -l"
 
 # Always show prompt
 alias rm='rm -i'
