@@ -361,6 +361,11 @@ let g:go_highlight_types=1
 let g:go_highlight_operators=1
 let g:go_def_mapping_enabled=0
 
+" ======================= "
+"  Settings for Markdown  "
+" ======================= "
+let g:vim_markdown_folding_disabled=1
+
 " =========================== "
 "   Settings for easymotion   "
 " =========================== "
@@ -424,7 +429,6 @@ map <buffer> <Nop> <Plug>(TsuquyomiGoBack)
 "     Highlight     "
 " ================= "
 
-" Enable background transparency on Ubuntu
-" these highlight settings needs to be here.
+" Enable background transparency on Ubuntu. these highlight settings needs to be here.
 highlight Normal ctermbg=none
 highlight NonText ctermbg=none
