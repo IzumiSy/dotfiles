@@ -40,5 +40,6 @@
     "todohighlight.isEnable": true,
 
     "go.formatTool": "gofmt",
-    "go.lintOnSave": "off"
+    "go.lintOnSave": "off",
+    "go.gocodeAutoBuild": false,
 }
