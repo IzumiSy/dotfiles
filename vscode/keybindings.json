@@ -34,10 +34,10 @@
     "key": "ctrl+cmd+t",
     "command": "workbench.action.tasks.runTask"
   }, {
-    "key": "ctrl+n",
+    "key": "ctrl+m",
     "command": "workbench.action.nextEditorInGroup"
   }, {
-    "key": "ctrl+b",
+    "key": "ctrl+n",
     "command": "workbench.action.previousEditorInGroup"
   }, {
     "key": "ctrl+t",
