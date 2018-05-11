@@ -67,5 +67,13 @@
   }, {
     "key": "cmd+j",
     "command": "-workbench.action.togglePanel"
+  }, {
+    "key": "ctrl+d",
+    "command": "selectNextSuggestion",
+    "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
+  }, {
+    "key": "ctrl+n",
+    "command": "-selectNextSuggestion",
+    "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
   }
 ]
