@@ -75,5 +75,17 @@
     "key": "ctrl+n",
     "command": "-selectNextSuggestion",
     "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus"
+  }, {
+    "key": "ctrl+d",
+    "command": "workbench.action.quickOpenSelectNext",
+    "when": "inQuickOpen"
+  }, {
+    "key": "ctrl+n",
+    "command": "-workbench.action.quickOpenSelectNext",
+    "when": "inQuickOpen"
+  }, {
+    "key": "ctrl+n",
+    "command": "-workbench.action.quickOpenSelectNext",
+    "when": "inQuickOpen"
   }
 ]
