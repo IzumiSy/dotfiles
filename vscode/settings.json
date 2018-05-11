@@ -13,7 +13,6 @@
     "vim.hlsearch": true,
     "vim.useCtrlKeys": true,
     "vim.useSystemClipboard": true,
-    "vim.disableAnnoyingNeovimMessage": true,
     "vim.leader": ",",
     "vim.otherModesKeyBindingsNonRecursive": [{
         "before": ["<C-c>"],
