@@ -14,6 +14,8 @@
     "vim.useCtrlKeys": true,
     "vim.useSystemClipboard": true,
     "vim.leader": ",",
+    "vim.easymotion": true,
+    "vim.easymotionKeys": "hjklasdfgyuiopqwertnmzxcvbHJKLASDFGYUIOPQWERTNMZXCVB",
     "vim.otherModesKeyBindingsNonRecursive": [{
         "before": ["<C-c>"],
         "after": [],
@@ -34,6 +36,12 @@
             "command": "workbench.view.search",
             "args": []
         }]
+    }, {
+        "before": ["<C-j>", "<C-j>"],
+        "after": ["<leader>", "<leader>", "2", "f"]
+    }, {
+        "before": ["<C-k>", "<C-k>"],
+        "after": ["<leader>", "<leader>", "2", "F"]
     }],
 
     "todohighlight.isEnable": true,
@@ -41,4 +49,6 @@
     "go.formatTool": "gofmt",
     "go.lintOnSave": "off",
     "go.gocodeAutoBuild": false,
+
+    "window.zoomLevel": 0,
 }
