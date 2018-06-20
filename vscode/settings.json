@@ -15,8 +15,11 @@
     "vim.useSystemClipboard": true,
     "vim.leader": ",",
     "vim.easymotion": true,
+    "vim.easymotionMarkerFontFamily": "monaco",
+    "vim.easymotionMarkerBackgroundColor": "purple",
+    "vim.easymotionMarkerFontSize": "12",
     "vim.easymotionKeys": "hjklasdfgyuiopqwertnmzxcvbHJKLASDFGYUIOPQWERTNMZXCVB",
-    "vim.otherModesKeyBindingsNonRecursive": [{
+    "vim.normalModeKeyBindingsNonRecursive": [{
         "before": ["<C-c>"],
         "after": [],
         "commands": [{
