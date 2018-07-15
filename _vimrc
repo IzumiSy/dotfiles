@@ -349,6 +349,7 @@ let g:syntastic_enable_signs=1
 let g:syntastic_enable_highlighting=1
 let g:syntastic_disabled_filetypes=['html']
 let g:syntastic_html_checkers=['']
+let g:syntastic_cpp_compiler_options="-std=c++11 -Wall -Wextra"
 
 " ===================== "
 "  Settings for Golang  "
