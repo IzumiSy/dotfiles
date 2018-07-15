@@ -187,8 +187,8 @@ endfunction
 "     Customized key mappings     "
 " =============================== "
 nnoremap <C-t> :tabnew<CR>
-nnoremap <C-n> :tabn<CR>
-nnoremap <C-b> :tabp<CR>
+nnoremap <C-m> :tabn<CR>
+nnoremap <C-n> :tabp<CR>
 
 nmap <silent><C-h> b
 nmap <silent><C-l> w
