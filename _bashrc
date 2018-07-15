@@ -145,10 +145,19 @@ if detect_command git ; then
 
   # An alias for "git push" with master blockage
   function gpo() {
-    if [ $(__get_branch_name) == "master" ] ; then
-      echo "Master push blocked :)"
-    else
+    if [ $(__get_branch_name) != "master" ] && [ $(__get_branch_name) != "develop" ] ; then
       git push origin "$(__get_branch_name)"
+    else
+      echo "Master push blocked :)"
+    fi
+  }
+
+  # An alias for force "git push" with master blockage
+  function gpof() {
+    if [ $(__get_branch_name) != "master" ] && [ $(__get_branch_name) != "develop" ] ; then
+      git push origin "$(__get_branch_name)" --force-with-lease
+    else
+      echo "Commits pushing to develop or master is blocked :)"
     fi
   }
 
