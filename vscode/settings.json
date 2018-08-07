@@ -1,6 +1,6 @@
 {
     "terminal.integrated.fontSize": 10,
-    "workbench.iconTheme": "vscode-icons",
+    "workbench.iconTheme": "eq-material-theme-icons-light",
 
     "editor.fontSize": 10,
     "editor.tabSize": 2,
@@ -19,6 +19,13 @@
     "vim.easymotionMarkerBackgroundColor": "purple",
     "vim.easymotionMarkerFontSize": "12",
     "vim.easymotionKeys": "hjklasdfgyuiopqwertnmzxcvbHJKLASDFGYUIOPQWERTNMZXCVB",
+    "vim.visualModeKeyBindingsNonRecursive": [{
+       "before": [">"],
+       "commands": ["editor.action.indentLines"]
+    }, {
+       "before": ["<"],
+       "commands": ["editor.action.outdentLines"]
+    }],
     "vim.normalModeKeyBindingsNonRecursive": [{
         "before": ["<C-c>"],
         "after": [],
@@ -29,15 +36,13 @@
         "before": ["<leader>", "f", "g"],
         "after": [],
         "commands": [{
-            "command": "workbench.action.quickOpen",
-            "args": []
+            "command": "workbench.action.quickOpen"
         }]
     }, {
         "before": ["<leader>", "f", "f"],
         "after": [],
         "commands": [{
-            "command": "workbench.view.search",
-            "args": []
+            "command": "workbench.view.search"
         }]
     }, {
         "before": ["<C-j>", "<C-j>"],
@@ -54,4 +59,5 @@
     "go.gocodeAutoBuild": false,
 
     "window.zoomLevel": 0,
+    "materialTheme.fixIconsRunning": false,
 }
