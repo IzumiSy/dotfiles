@@ -4,6 +4,7 @@
 [core]
   editor = vim -c \"set fenc=utf8\"
   excludesfile = ~/.gitignore_global
+  ignorecase = false
 [merge]
   tool = vimdiff2
 [push]
