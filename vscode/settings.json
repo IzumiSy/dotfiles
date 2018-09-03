@@ -1,6 +1,6 @@
 {
     "terminal.integrated.fontSize": 10,
-    "workbench.iconTheme": "eq-material-theme-icons-light",
+    "workbench.iconTheme": "eq-material-theme-icons",
 
     "editor.fontSize": 10,
     "editor.tabSize": 2,
@@ -60,4 +60,5 @@
 
     "window.zoomLevel": 0,
     "materialTheme.fixIconsRunning": false,
+    "workbench.colorTheme": "Bittersweet",
 }
