@@ -179,6 +179,7 @@ alias x='exit'
 alias v='vim'
 alias c='clear'
 alias sc='screen'
+alias be='bundle exec'
 
 # Always show prompt
 alias rm='rm -i'
