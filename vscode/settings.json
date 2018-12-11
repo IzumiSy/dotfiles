@@ -45,10 +45,10 @@
             "command": "workbench.view.search"
         }]
     }, {
-        "before": ["<C-j>", "<C-j>"],
+        "before": ["<C-j>"],
         "after": ["<leader>", "<leader>", "2", "f"]
     }, {
-        "before": ["<C-k>", "<C-k>"],
+        "before": ["<C-k>"],
         "after": ["<leader>", "<leader>", "2", "F"]
     }],
 
