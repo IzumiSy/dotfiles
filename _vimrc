@@ -50,7 +50,7 @@ Plug 'https://github.com/itchyny/lightline.vim'
 " Interactive fuzzy-wording finder over multiple
 " sources like files, buffers, and file histories.
 Plug 'https://github.com/Shougo/unite.vim'
-Plug 'https://github.com/Shougo/neomru.vim'
+" Plug 'https://github.com/Shougo/neomru.vim'
 
 " Theme
 Plug 'vim-scripts/desert256.vim'
