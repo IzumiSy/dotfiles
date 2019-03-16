@@ -61,6 +61,7 @@
     "workbench.colorTheme": "Bittersweet",
 
     "elm.compiler": "./node_modules/.bin/elm",
+    "elm.elmTestCompiler": "./node_modules/.bin/elm-test",
     "elm.makeCommand": "./node_modules/.bin/elm-make",
     "elm.formatCommand": "./node_modules/.bin/elm-format",
     "elm.analyseCommand": "./node_modules/.bin/elm-analyse",
@@ -68,5 +69,6 @@
         "editor.tabSize": 4,
         "editor.formatOnSave": true
     },
-    "elm.elmTestCompiler": "./node_modules/.bin/elm-test"
+
+    "typescript.updateImportsOnFileMove.enabled": "always"
 }
