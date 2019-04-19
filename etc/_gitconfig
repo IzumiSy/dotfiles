@@ -22,3 +22,6 @@
   diff = auto
   status = auto
   branch = auto
+[rerere]
+	enabled = 1
+	autoupdate = true
