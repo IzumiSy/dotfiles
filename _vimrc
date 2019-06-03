@@ -131,6 +131,10 @@ set backspace=indent,eol,start
 set completeopt=menu,preview
 syntax on
 silent! colorscheme desert256
+filetype on
+
+" Maps leader key
+let mapleader=","
 
 " Prevent performance slow-down with long line
 set synmaxcol=200
@@ -425,6 +429,11 @@ let g:syntastic_typescript_checkers = ['tsuquyomi']
 let g:tsuquyomi_disable_quickfix = 1
 let g:tsuquyomi_disable_default_mappings = 1
 map <buffer> <Nop> <Plug>(TsuquyomiGoBack)
+
+" ================= "
+"   NeedCommenter   "
+" ================= "
+let g:NERDSpaceDelims = 1
 
 " ================= "
 "     Highlight     "
