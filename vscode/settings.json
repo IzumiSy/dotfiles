@@ -70,5 +70,6 @@
         "editor.formatOnSave": true
     },
 
-    "typescript.updateImportsOnFileMove.enabled": "always"
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "workbench.iconTheme": "vscode-icons"
 }
