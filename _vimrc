@@ -171,6 +171,9 @@ augroup END
 " Trim whitespace before saving a file except markdown
 au BufWritePre *\({*.md}\)\@<! :FixWhitespace
 
+" Run go-fmt on saving Go files
+au BufWritePost *.go :GoFmt
+
 nnoremap <silent>,tr :NERDTree<CR>
 nnoremap <F7> :Errors<CR>
 nnoremap <F8> :make<CR>
@@ -266,7 +269,7 @@ let g:quickrun_config["sh"] = {
 \   'command': 'bash'
 \ }
 let g:quickrun_config["d"] = {
-\ 'command': 'rdmd'
+\   'command': 'rdmd'
 \ }
 
 " ======================== "
