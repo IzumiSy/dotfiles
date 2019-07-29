@@ -3,6 +3,7 @@ set -Ceu
 
 TOOLS=(
   "git"
+  "vim"
   "make"
   "curl"
 )
