@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 set -Ceu
 
+# Prerequites checking
+if [ -e $(type curl &> /dev/null) ] ; then
+  echo "Curl required to be installed."
+  exit 1
+fi
+
 # Install dotfiles
 ln -snvf "$(pwd)/_vimrc" "$HOME/_vimrc"
 ln -snvf "$(pwd)/_screenrc" "$HOME/.screenrc"
@@ -13,22 +19,14 @@ ln -svnf "$(pwd)/etc/_pryrc" "$HOME/.pryrc"
 
 # Install _vimrc
 if [ ! -e "$HOME/.vim" ] ; then
-  if type curl &> /dev/null ; then
-    curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-      https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    (set -x; vim +PlugInstall +qall)
-  else
-    echo "Git not available." && exit 1
-  fi
+  curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  (set -x; vim +PlugInstall +qall)
 fi
 
 # Install nvm and rbenv
-if [ $# -eq 1 ] && [ $1 == "--skip-scripts" ] ; then
-  echo "Scripts installation skipped."
-else
-  [ ! -e "$HOME/.nvm" ] && ./scripts/nvm.sh
-  [ ! -e "$HOME/.rbenv" ] && ./scripts/rbenv.sh
-fi
+[ ! -e "$HOME/.nvm" ] && ./scripts/nvm.sh
+[ ! -e "$HOME/.rbenv" ] && ./scripts/rbenv.sh
 
 # Loads .bashrc
 clear
