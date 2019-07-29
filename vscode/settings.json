@@ -56,9 +56,14 @@
     "go.formatTool": "gofmt",
     "go.lintOnSave": "off",
     "go.gocodeAutoBuild": false,
+    "go.useLanguageServer": true,
+    "go.toolsEnvVars": {
+        "GO111MODULE": "on"
+    },
 
     "window.zoomLevel": 0,
     "workbench.colorTheme": "Bittersweet",
+    "workbench.iconTheme": "vscode-icons",
 
     "elm.compiler": "./node_modules/.bin/elm",
     "elm.elmTestCompiler": "./node_modules/.bin/elm-test",
@@ -70,6 +75,5 @@
         "editor.formatOnSave": true
     },
 
-    "typescript.updateImportsOnFileMove.enabled": "always",
-    "workbench.iconTheme": "vscode-icons"
+    "typescript.updateImportsOnFileMove.enabled": "always"
 }
