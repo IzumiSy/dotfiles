@@ -1,7 +1,3 @@
-# --------------------
-#    custom .bashrc
-# --------------------
-
 # http://www.itmedia.co.jp/help/tips/linux/l0612.html
 stty stop undef
 
@@ -33,23 +29,9 @@ export GO111MODULE=on
 export GOPATH="$GO_PATH"
 export PATH="$PATH:${GO_PATH}/bin"
 
-# ----------------------------------- #
-#   Setting for command line prompt   #
-# ----------------------------------- #
-
-function base_line() {
-  _bold="\[\e[1;1m\]"
-  _green="\[\e[1;32m\]"
-  _blue="\[\e[1;34m\]"
-  _cyan="\[\e[1;104m\]"
-  _clear="\[\e[00m\]"
-  echo "${_cyan}\h${_clean} ${_green}[\$(date +%k:%M:%S)]${_clear} ${_bold}\w${_clear}";
-}
-export PS1="$(base_line)\n ${text}$ "
-
-# -------------------- #
-#   Settings for Git   #
-# -------------------- #
+# --------------------------------------------------- #
+#   Setting for command line prompt with Git status   #
+# --------------------------------------------------- #
 
 if [[ "$OSTYPE" = "darwin"* ]] ; then
   source "/Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash"
@@ -59,79 +41,79 @@ else
   source "/etc/profile.d/bash_completion.sh"
 fi
 
-if detect_command git ; then
-  # https://github.com/jcgoble3/gitstuff/blob/master/gitprompt.sh
-  function __git_status() {
-    local status="$(git status --porcelain 2>/dev/null)"
-    local output=''
+# https://github.com/jcgoble3/gitstuff/blob/master/gitprompt.sh
+function __git_status() {
+  local status="$(git status --porcelain 2>/dev/null)"
+  local output=''
 
-    [[ -n $(egrep '^[MADRC]' <<< "$status") ]] && output="+"
-    [[ -n $(egrep '^.[MD]' <<< "$status") ]] && output="!"
-    [[ -n $(egrep '^\?\?' <<< "$status") ]] && output="?"
-    [[ $output ]] && echo " [$output]"
-  }
+  [[ -n $(egrep '^[MADRC]' <<< "$status") ]] && output="+"
+  [[ -n $(egrep '^.[MD]' <<< "$status") ]] && output="!"
+  [[ -n $(egrep '^\?\?' <<< "$status") ]] && output="?"
+  [[ $output ]] && echo " [$output]"
+}
 
-  function branch_name() {
-    if detect_command __git_ps1 ; then
-      echo '\[\e[0;36m\]$(__git_ps1)\[\e[00m\]';
-    fi
-  }
-
-  function git_status() {
-    if detect_command __git_status ; then
-      echo '\[\e[0;94m\]$(__git_status)\[\e[00m\]';
-    fi
-  }
-
-  function __get_branch_name() {
-    git branch | grep "*" | cut -d ' ' -f 2
-  }
-
-  # Show branch name and repo status
-  export PS1="$(base_line)\n$(branch_name)$(git_status) ${text}$ "
-
-  # Git command aliases
-  alias gad='git add .'
-  alias gadi='git add -i'
-  alias gd='git diff --cached'
-  alias gcm='git commit -m'
-  alias gch='git checkout'
-  alias glo='git log --oneline --decorate --graph'
-  alias gs='git status'
-  alias gpl='git pull origin $(__get_branch_name)'
-  alias gb='git branch'
-
-  # Delete merged branches
-  alias gcmb="git branch --merged | grep -vE '^\*|master$|develop$' | xargs -I % git branch -d %"
-
-  if detect_command peco ; then
-    alias pco='git branch | peco | xargs git checkout'
+function branch_name() {
+  if detect_command __git_ps1 ; then
+    echo '\[\e[0;36m\]$(__git_ps1)\[\e[00m\]';
   fi
+}
 
-  # An alias for "git push" with master blockage
-  function gpo() {
-    if [ $(__get_branch_name) != "master" ] && [ $(__get_branch_name) != "develop" ] ; then
-      git push origin "$(__get_branch_name)"
-    else
-      echo "Master push blocked :)"
-    fi
-  }
-
-  # An alias for force "git push" with master blockage
-  function gpof() {
-    if [ $(__get_branch_name) != "master" ] && [ $(__get_branch_name) != "develop" ] ; then
-      git push origin "$(__get_branch_name)" --force-with-lease
-    else
-      echo "Commits pushing to develop or master is blocked :)"
-    fi
-  }
-
-  # Alias for Hub
-  if detect_command hub ; then
-    alias git='hub'
-    alias gbw='git browse --'
+function git_status() {
+  if detect_command __git_status ; then
+    echo '\[\e[0;94m\]$(__git_status)\[\e[00m\]';
   fi
+}
+
+function __get_branch_name() {
+  git branch | grep "*" | cut -d ' ' -f 2
+}
+
+function base_line() {
+  _bold="\[\e[1;1m\]"
+  _green="\[\e[1;32m\]"
+  _blue="\[\e[1;34m\]"
+  _cyan="\[\e[1;104m\]"
+  _clear="\[\e[00m\]"
+  echo "${_cyan}\h${_clean} ${_green}[\$(date +%k:%M:%S)]${_clear} ${_bold}\w${_clear}";
+}
+
+export PS1="$(base_line)\n$(branch_name)$(git_status) ${text}$ "
+
+# Git command aliases
+alias gad='git add .'
+alias gadi='git add -i'
+alias gd='git diff --cached'
+alias gcm='git commit -m'
+alias gch='git checkout'
+alias glo='git log --oneline --decorate --graph'
+alias gs='git status'
+alias gpl='git pull origin $(__get_branch_name)'
+alias gb='git branch'
+
+# Delete merged branches
+alias gcmb="git branch --merged | grep -vE '^\*|master$|develop$' | xargs -I % git branch -d %"
+
+if detect_command peco ; then
+  alias pco='git branch | peco | xargs git checkout'
 fi
+
+# An alias for "git push" with master blockage
+function gpo() {
+  if [ $(__get_branch_name) != "master" ] && [ $(__get_branch_name) != "develop" ] ; then
+    git push origin "$(__get_branch_name)"
+  else
+    echo "Master push blocked :)"
+  fi
+}
+
+# An alias for force "git push" with master blockage
+function gpof() {
+  if [ $(__get_branch_name) != "master" ] && [ $(__get_branch_name) != "develop" ] ; then
+    git push origin "$(__get_branch_name)" --force-with-lease
+  else
+    echo "Commits pushing to develop or master is blocked :)"
+  fi
+}
 
 # ------------------ #
 #    Colored "ls"    #
@@ -158,23 +140,19 @@ alias cp='cp -i'
 alias mv='mv -i'
 
 # fasd customized
-if detect_command peco ; then
-  alias hist='eval $(history | cut -c 8- | peco)'
+alias hist='eval $(history | cut -c 8- | peco)'
 
-  # Commands with fasd
-  if detect_command fasd ; then
-    function dpco {
-      local dir="$( d | awk '{ print $2 }' | peco --query \"$(pwd)\ \" )"
-      if [ ! -z "$dir" ] ; then
-        cd "$dir"
-      fi
-    }
+# Commands with fasd
+function dpco() {
+  local dir="$( d | awk '{ print $2 }' | peco --query \"$(pwd)\ \" )"
+  if [ ! -z "$dir" ] ; then
+    cd "$dir"
   fi
-fi
+}
 
-# -----------------------------------------
-#   Loads rbenv, nvm, pyenv, direnv, fasd
-# -----------------------------------------
+# ----------------------------------------- #
+#   Loads rbenv, nvm, pyenv, direnv, fasd   #
+# ----------------------------------------- #
 
 # Homebrew's sbin
 export PATH="/usr/local/sbin:$PATH"
