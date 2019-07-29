@@ -171,9 +171,6 @@ augroup END
 " Trim whitespace before saving a file except markdown
 au BufWritePre *\({*.md}\)\@<! :FixWhitespace
 
-" Run go-fmt on saving Go files
-au BufWritePost *.go :GoFmt
-
 nnoremap <silent>,tr :NERDTree<CR>
 nnoremap <F7> :Errors<CR>
 nnoremap <F8> :make<CR>
@@ -368,6 +365,9 @@ let g:go_highlight_fields=1
 let g:go_highlight_types=1
 let g:go_highlight_operators=1
 let g:go_def_mapping_enabled=0
+au BufWritePost *.go :GoFmt
+au FileType go :nnoremap <silent>,df :GoDef<CR>
+au FileType go :nnoremap <C-h> :GoDefPop 1<CR>
 
 " ======================= "
 "  Settings for Markdown  "
