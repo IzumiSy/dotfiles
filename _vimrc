@@ -88,7 +88,6 @@ Plug 'joukevandermaas/vim-ember-hbs', { 'for': 'handlebars' }
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 
 " Golang
-Plug 'vim-jp/vim-go-extra', { 'for': 'go' }
 Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' }
 
 call plug#end()
@@ -365,7 +364,8 @@ let g:go_highlight_fields=1
 let g:go_highlight_types=1
 let g:go_highlight_operators=1
 let g:go_def_mapping_enabled=0
-au BufWritePost *.go :GoFmt
+au BufWritePost *.go :silent GoFmt
+au BufWritePost *.go :silent GoBuild
 au FileType go :nnoremap <silent>,df :call go#def#Jump("split", 0)<CR>
 
 " ======================= "
