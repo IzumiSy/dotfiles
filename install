@@ -2,9 +2,9 @@
 set -Ceu
 
 TOOLS=(
-	"npm"
-	"make"
-	"curl"
+  "git"
+  "make"
+  "curl"
 )
 
 # Prerequites checking
@@ -14,7 +14,6 @@ for cmd in "${TOOLS[@]}"; do
     exit 1
   fi
 done
-
 
 # Install dotfiles
 ln -snvf "$(pwd)/_vimrc" "$HOME/_vimrc"
