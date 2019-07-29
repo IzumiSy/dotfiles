@@ -23,64 +23,20 @@ function detect_command() {
   type "$1" &> /dev/null ;
 }
 
-# Show welcome message
-if detect_command figlet ; then
-  echo 'Terminal' | figlet -m $0 -f larry3d
-fi
+# ----------------- #
+#    Set $GOPATH    #
+# ----------------- #
 
-# Fortune
-if detect_command fortune ; then
-  fortune -s
-  echo ""
-fi
+GO_PATH="$HOME/gocodes"
+[ ! -e "${GO_PATH}" ] && mkdir -p "${GO_PATH}"
+export GO111MODULE=on
+export GOPATH="$GO_PATH"
+export PATH="$PATH:${GO_PATH}/bin"
 
-# --------------------------------
-#   Environment-related settings
-# --------------------------------
+# ----------------------------------- #
+#   Setting for command line prompt   #
+# ----------------------------------- #
 
-# OSX
-function apply_osx_preference() {
-  alias updatedb='sudo /usr/libexec/locate.updatedb'
-  alias ls='gls --color=auto'
-
-  git_prompt_path='/Library/Developer/CommandLineTools/'
-  git_completion_path='/Library/Developer/CommandLineTools/'
-
-  source "$git_completion_path/usr/share/git-core/git-completion.bash"
-  source "$git_prompt_path/usr/share/git-core/git-prompt.sh"
-
-  # Homebrew's sbin
-  export PATH="/usr/local/sbin:$PATH"
-}
-
-# Unix
-function apply_unix_preference() {
-  alias ls='ls --color=auto'
-
-  source "/etc/bash_completion.d/git-prompt"
-  source "/etc/profile.d/bash_completion.sh"
-}
-
-if [[ "$OSTYPE" = "darwin"* ]] ; then
-  apply_osx_preference
-else
-  apply_unix_preference
-fi
-
-# ---------------
-#   Set $GOPATH
-# ---------------
-if detect_command go ; then
-  GO_PATH="$HOME/gocodes"
-  [ ! -e "${GO_PATH}" ] && mkdir -p "${GO_PATH}"
-  export GO111MODULE=on
-  export GOPATH="$GO_PATH"
-  export PATH="$PATH:${GO_PATH}/bin"
-fi
-
-# -----------------------------------
-#   Setting for command line prompt
-# -----------------------------------
 function base_line() {
   _bold="\[\e[1;1m\]"
   _green="\[\e[1;32m\]"
@@ -90,11 +46,19 @@ function base_line() {
   echo "${_cyan}\h${_clean} ${_green}[\$(date +%k:%M:%S)]${_clear} ${_bold}\w${_clear}";
 }
 export PS1="$(base_line)\n ${text}$ "
-export CLICOLOR=1
 
-# --------------------
-#   Settings for Git
-# --------------------
+# -------------------- #
+#   Settings for Git   #
+# -------------------- #
+
+if [[ "$OSTYPE" = "darwin"* ]] ; then
+  source "/Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash"
+  source "/Library/Developer/CommandLineTools/usr/share/git-core/git-prompt.sh"
+else
+  source "/etc/bash_completion.d/git-prompt"
+  source "/etc/profile.d/bash_completion.sh"
+fi
+
 if detect_command git ; then
   # https://github.com/jcgoble3/gitstuff/blob/master/gitprompt.sh
   function __git_status() {
@@ -169,8 +133,14 @@ if detect_command git ; then
   fi
 fi
 
+# ------------------ #
+#    Colored "ls"    #
+# ------------------ #
+
+export CLICOLOR=1
+ls --color=auto &> /dev/null && alias ls='ls --color=auto' ||
+
 # ls
-alias l='ls'
 alias la='ls -a'
 alias ll='ls -Flh1v --group-directories-first'
 alias lla='ls -Flh1va --group-directories-first'
@@ -205,6 +175,10 @@ fi
 # -----------------------------------------
 #   Loads rbenv, nvm, pyenv, direnv, fasd
 # -----------------------------------------
+
+# Homebrew's sbin
+export PATH="/usr/local/sbin:$PATH"
+
 export PATH="$HOME/.rbenv/bin:$PATH"
 type rbenv &> /dev/null && eval "$(rbenv init -)"
 
