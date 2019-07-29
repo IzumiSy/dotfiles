@@ -32,10 +32,6 @@ if [ ! -e "$HOME/.vim" ] ; then
   (set -x; vim +PlugInstall +qall)
 fi
 
-# Install nvm and rbenv
-[ ! -e "$HOME/.nvm" ] && ./scripts/nvm.sh
-[ ! -e "$HOME/.rbenv" ] && ./scripts/rbenv.sh
-
 # Loads .bashrc
 clear
 (set -x; exec $SHELL --login)
