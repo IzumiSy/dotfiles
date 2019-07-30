@@ -120,9 +120,8 @@ function gpof() {
 # ------------------ #
 
 export CLICOLOR=1
+export LSCOLORS=gxfxcxdxbxegexabagacad
 ls --color=auto &> /dev/null && alias ls='ls --color=auto' ||
-
-# ls
 alias la='ls -a'
 alias ll='ls -Flh1v --group-directories-first'
 alias lla='ls -Flh1va --group-directories-first'
