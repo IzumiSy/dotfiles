@@ -30,9 +30,6 @@ Plug 'rking/ag.vim'
 " Vim motion on speed
 Plug 'easymotion/vim-easymotion'
 
-" Memoing
-Plug 'Shougo/junkfile.vim'
-
 " Word bracket, commenting plugins
 Plug 'vim-scripts/surround.vim'
 Plug 'scrooloose/nerdcommenter'
@@ -50,47 +47,45 @@ Plug 'https://github.com/itchyny/lightline.vim'
 " Interactive fuzzy-wording finder over multiple
 " sources like files, buffers, and file histories.
 Plug 'https://github.com/Shougo/unite.vim'
-" Plug 'https://github.com/Shougo/neomru.vim'
-
-" Theme
-Plug 'vim-scripts/desert256.vim'
-Plug 'vim-scripts/unite-colorscheme'
 
 " File viewer plugins
 Plug 'vim-scripts/The-NERD-tree', { 'on': 'NERDTree' }
 
-" Git plugins
+" Theme
+" - unite-colorscheme is a plugin which adds interactive theme switching with Unite
+Plug 'vim-scripts/desert256.vim'
+Plug 'vim-scripts/unite-colorscheme'
+
+" Git
+" @ vim-gitgutter is a plugin shows Git status on an each line
+" @ vim-fugitive is required for lightline.vim
 Plug 'https://github.com/airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 
 " TypeScript
+" @ typescript-vim is syntax highlight support
+" @ tsuquyomi is a plugin to use TypeScript server
 Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
 Plug 'Quramy/tsuquyomi', { 'for': 'typescript', 'do': 'npm install -g typescript' }
 
-" CoffeeScript, JSON, Pug supports for Vim
+" CSS
+" @ css.vim is a plugin to add standard CSS syntax highlight
+" @ vim-css3-syntax adds a syntax for CSS3 in addition to css.vim
+Plug 'JulesWang/css.vim', { 'for': 'css' }
+Plug 'hail2u/vim-css3-syntax', { 'for': 'css' }
+
+" Other syntaxes
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffeescript' }
 Plug 'leshill/vim-json', { 'for': 'json' }
 Plug 'digitaltoad/vim-pug', { 'for': 'pug' }
 Plug 'tpope/vim-haml', { 'for': 'haml' }
-
-" HTML5, CSS3, SCSS
 Plug 'othree/html5.vim', { 'for': 'html' }
-Plug 'JulesWang/css.vim', { 'for': 'css' }
-Plug 'hail2u/vim-css3-syntax', { 'for': 'css' }
 Plug 'cakebaker/scss-syntax.vim', { 'for': 'scss' }
-
-" JavaScript, JSX, Handlebars
 Plug 'othree/yajs.vim', { 'for': 'javascript' }
 Plug 'maxmellon/vim-jsx-pretty', { 'for': 'javascript' }
 Plug 'joukevandermaas/vim-ember-hbs', { 'for': 'handlebars' }
-
-" Markdow
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
-
-" Golang
 Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' }
-
-" Elm
 Plug 'elmcast/elm-vim', { 'for': 'elm' }
 
 call plug#end()
