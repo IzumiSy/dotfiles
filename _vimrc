@@ -90,6 +90,9 @@ Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 " Golang
 Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' }
 
+" Elm
+Plug 'elmcast/elm-vim', { 'for': 'elm' }
+
 call plug#end()
 
 " ========================= "
@@ -149,6 +152,7 @@ au BufRead,BufNewFile,BufReadPost *.erb set filetype=eruby.html
 au BufRead,BufNewFile,BufReadPost *.scss set filetype=scss.css
 au BufRead,BufNewFile,BufReadPost *.coffee set filetype=coffee
 au BufRead,BufNewFile,BufReadPost {*.ts,*.tsx} set filetype=typescript
+au BufRead,BufNewFile,BufReadPost *.elm set filetype=elm
 au BufRead,BufNewFile,BufReadPost *.json set syntax=json
 au BufRead,BufNewFile {*.md} set filetype=markdown
 au BufRead,BufNewFile {COMMIT_EDITMSG} set filetype=gitcommit
@@ -367,6 +371,15 @@ let g:go_def_mapping_enabled=0
 au BufWritePost *.go :silent GoFmt
 au FileType go :nnoremap <silent>,df :call go#def#Jump("split", 0)<CR>
 
+" ====================== "
+"    Settings for Elm    "
+" ====================== "
+let g:elm_setup_keybindings=0
+let g:syntastic_always_populate_loc_list=1
+let g:syntastic_auto_loc_list=1
+let g:elm_syntastic_show_warnings=1
+let g:elm_format_autosave=1
+
 " ======================= "
 "  Settings for Markdown  "
 " ======================= "
@@ -439,7 +452,6 @@ let g:NERDSpaceDelims = 1
 " ================= "
 "     Highlight     "
 " ================= "
-
 " Enable background transparency on Ubuntu. these highlight settings needs to be here.
 highlight Normal ctermbg=none
 highlight NonText ctermbg=none
