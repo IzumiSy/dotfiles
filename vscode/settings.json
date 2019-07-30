@@ -55,10 +55,14 @@
 
     "go.formatTool": "gofmt",
     "go.lintOnSave": "off",
+    "go.vetOnSave": "package",
     "go.gocodeAutoBuild": false,
-    "go.useLanguageServer": false,
+    "go.useLanguageServer": true,
     "go.toolsEnvVars": {
         "GO111MODULE": "on"
+    },
+    "[go]": {
+        "editor.formatOnSave": true
     },
 
     "window.zoomLevel": 0,
