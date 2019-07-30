@@ -365,7 +365,6 @@ let g:go_highlight_types=1
 let g:go_highlight_operators=1
 let g:go_def_mapping_enabled=0
 au BufWritePost *.go :silent GoFmt
-au BufWritePost *.go :silent GoBuild
 au FileType go :nnoremap <silent>,df :call go#def#Jump("split", 0)<CR>
 
 " ======================= "
