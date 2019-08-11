@@ -163,14 +163,14 @@ function dpco() {
 function _clear() {
   \clear
   if detect_command ruby ; then
-    echo "[Ruby] $(ruby --version)"
+    echo -e "[Ruby] \e[0;36m$(ruby --version)\e[00m"
   fi
   if detect_command node ; then
-    echo "[Node] $(node -v)"
+    echo -e "[Node] \e[0;36m$(node -v)\e[00m"
   fi
   if detect_command gcloud ; then
     local current_project_id="$(gcloud config list project --format='value(core.project)')"
-    echo "[GCP]  $current_project_id"
+    echo -e "[GCP]  \e[1;32m$current_project_id\e[00m"
   fi
   echo ""
 }
