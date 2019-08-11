@@ -62,6 +62,10 @@ function __git_status() {
   [[ $output ]] && echo " [$output]"
 }
 
+function __get_branch_name() {
+  git branch | grep "*" | cut -d ' ' -f 2
+}
+
 function branch_name() {
   if detect_command __git_ps1 ; then
     echo '\[\e[0;36m\]$(__git_ps1)\[\e[00m\]';
@@ -72,10 +76,6 @@ function git_status() {
   if detect_command __git_status ; then
     echo '\[\e[0;94m\]$(__git_status)\[\e[00m\]';
   fi
-}
-
-function __get_branch_name() {
-  git branch | grep "*" | cut -d ' ' -f 2
 }
 
 function base_line() {
@@ -99,6 +99,7 @@ alias glo='git log --oneline --decorate --graph'
 alias gs='git status'
 alias gpl='git pull origin $(__get_branch_name)'
 alias gb='git branch'
+alias gau='gad && git commit "ci skip"'
 
 # Delete merged branches
 alias gcmb="git branch --merged | grep -vE '^\*|master$|develop$' | xargs -I % git branch -d %"
@@ -139,19 +140,15 @@ alias la='ls -a'
 alias ll='ls -Flh1v --group-directories-first'
 alias lla='ls -Flh1va --group-directories-first'
 
-# other
+# others
 alias x='exit'
 alias v='vim'
 alias c='clear'
 alias sc='screen'
 alias be='bundle exec'
-
-# Always show prompt
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
-
-# fasd customized
 alias hist='eval $(history | cut -c 8- | peco)'
 
 # Commands with fasd
@@ -190,17 +187,3 @@ fi
 if detect_command fasd ; then
   eval "$(fasd --init auto)"
 fi
-
-# --------------------------------
-#   Launch GNU screen at startup
-# --------------------------------
-# if detect_command screen ; then
-#   if [[ $TERM != "screen" ]] && [[ $TERM != "dumb" ]] ; then
-#     screen -xR ^z^z
-#   fi
-# fi
-
-# Source global definitions (For DigitalOcean)
-# if [ -f /etc/bashrc ]; then
-#   . /etc/bashrc
-# fi
