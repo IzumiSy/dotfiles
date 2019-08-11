@@ -137,8 +137,8 @@ if detect_command gls ; then
   alias ls="gls --color=auto"
 fi
 alias la='ls -a'
-alias ll='ls -Flh1v --group-directories-first'
-alias lla='ls -Flh1va --group-directories-first'
+alias ll='\clear && ls -Flh1v --group-directories-first'
+alias lla='\clear && ls -Flh1va --group-directories-first'
 
 # others
 alias x='exit'
