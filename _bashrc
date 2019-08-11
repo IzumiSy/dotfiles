@@ -159,6 +159,21 @@ function dpco() {
   fi
 }
 
+# customized clear with environment information
+function _clear() {
+  \clear
+  if detect_command gcloud ; then
+    local current_project_id="$(gcloud config list project --format='value(core.project)')"
+    echo "GCP:  $current_project_id"
+  fi
+  if detect_command node ; then
+    echo "Node: $(node -v)"
+  fi
+  echo ""
+}
+
+alias clear="_clear"
+
 # ----------------------------------------- #
 #   Loads rbenv, nvm, pyenv, direnv, fasd   #
 # ----------------------------------------- #
