@@ -162,12 +162,15 @@ function dpco() {
 # customized clear with environment information
 function _clear() {
   \clear
-  if detect_command gcloud ; then
-    local current_project_id="$(gcloud config list project --format='value(core.project)')"
-    echo "GCP:  $current_project_id"
+  if detect_command ruby ; then
+    echo "[Ruby] $(ruby --version)"
   fi
   if detect_command node ; then
-    echo "Node: $(node -v)"
+    echo "[Node] $(node -v)"
+  fi
+  if detect_command gcloud ; then
+    local current_project_id="$(gcloud config list project --format='value(core.project)')"
+    echo "[GCP]  $current_project_id"
   fi
   echo ""
 }
