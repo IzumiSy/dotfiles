@@ -159,24 +159,6 @@ function dpco() {
   fi
 }
 
-# customized clear with environment information
-function _clear() {
-  \clear
-  if detect_command ruby ; then
-    echo -e "[Ruby] \e[0;36m$(ruby --version)\e[00m"
-  fi
-  if detect_command node ; then
-    echo -e "[Node] \e[0;36m$(node -v)\e[00m"
-  fi
-  if detect_command gcloud ; then
-    local current_project_id="$(gcloud config list project --format='value(core.project)')"
-    echo -e "[GCP]  \e[1;32m$current_project_id\e[00m"
-  fi
-  echo ""
-}
-
-alias clear="_clear"
-
 # ----------------------------------------- #
 #   Loads rbenv, nvm, pyenv, direnv, fasd   #
 # ----------------------------------------- #
@@ -205,3 +187,22 @@ fi
 if detect_command fasd ; then
   eval "$(fasd --init auto)"
 fi
+
+# ----------------- #
+#      iTerm2       #
+# ----------------- #
+
+# See https://www.iterm2.com/3.3/documentation-scripting-fundamentals.html
+function iterm2_print_user_vars() {
+  if detect_command gcloud ; then
+    iterm2_set_user_var gcpVersion $(gcloud config list project --format='value(core.project)')
+  fi
+
+  if detect_command ruby ; then
+    iterm2_set_user_var rubyVersion $(ruby -v | awk '{ print $2 }')
+  fi
+
+  if detect_command node ; then
+    iterm2_set_user_var nodeVersion $(node -v)
+  fi
+}
