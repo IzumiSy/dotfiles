@@ -96,10 +96,10 @@ alias gd='git diff --cached'
 alias gcm='git commit -m'
 alias gch='git checkout'
 alias glo='git log --oneline --decorate --graph'
-alias gs='git status'
+alias gs='git status --short'
 alias gpl='git pull origin $(__get_branch_name)'
 alias gb='git branch'
-alias gau='gad && git commit "ci skip"'
+alias gau='git commit -a -m "ci skip"'
 
 # Delete merged branches
 alias gcmb="git branch --merged | grep -vE '^\*|master$|develop$' | xargs -I % git branch -d %"
