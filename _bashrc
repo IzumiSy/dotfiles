@@ -133,12 +133,11 @@ function gpof() {
 export CLICOLOR=1
 export LSCOLORS=gxfxcxdxbxegexabagacad
 alias ls="ls --color=auto"
-if detect_command gls ; then
-  alias ls="gls --color=auto"
-fi
 alias la='ls -a'
 alias ll='\clear && ls -Flh1v --group-directories-first'
 alias lla='\clear && ls -Flh1va --group-directories-first'
+detect_command gls \
+  && alias ls="gls --color=auto"
 
 # others
 alias x='exit'
@@ -151,12 +150,8 @@ alias cp='cp -i'
 alias mv='mv -i'
 alias hist='eval $(history | cut -c 8- | peco)'
 
-# Commands with fasd
-function dpco() {
-  local dir="$( d | awk '{ print $2 }' | peco --query \"$(pwd)\ \" )"
-  if [ ! -z "$dir" ] ; then
-    cd "$dir"
-  fi
+function dp() {
+  cd $( d | awk '{ print $2 }' | peco --query \"$(pwd)\ \" )
 }
 
 # ----------------------------------------- #
@@ -166,33 +161,31 @@ function dpco() {
 # Homebrew's sbin
 export PATH="/usr/local/sbin:$PATH"
 
-export PATH="$HOME/.rbenv/bin:$PATH"
-type rbenv &> /dev/null && eval "$(rbenv init -)"
+export PATH="$HOME/.rbenv/bin:$PATH" type rbenv &> /dev/null \
+  && eval "$(rbenv init -)"
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+export NVM_DIR="$HOME/.nvm" \
+  && test -e "$NVM_DIR/nvm.sh" \
+  && \. "$NVM_DIR/nvm.sh"
 
-export PYENV_ROOT="$HOME/.pyenv"
-if [ -d "$PYENV_ROOT" ]; then
-  export PATH="$PYENV_ROOT/bin:$PATH"
-  eval "$(pyenv init -)"
-  eval "$(pyenv virtualenv-init -)"
-fi
+export PYENV_ROOT="$HOME/.pyenv" \
+  && test -d "$PYENV_ROOT" \
+  && export PATH="$PYENV_ROOT/bin:$PATH" \
+  && eval "$(pyenv init -)" \
+  && eval "$(pyenv virtualenv-init -)"
 
-if detect_command direnv ; then
-  export EDITOR=vim
-  eval "$(direnv hook bash)"
-fi
+detect_command direnv \
+  && export EDITOR=vim \
+  && eval "$(direnv hook bash)"
 
-if detect_command fasd ; then
-  eval "$(fasd --init auto)"
-fi
+detect_command fasd \
+  && eval "$(fasd --init auto)"
 
 # ----------------- #
 #      iTerm2       #
 # ----------------- #
-
 # See https://www.iterm2.com/3.3/documentation-scripting-fundamentals.html
+
 function iterm2_print_user_vars() {
   if detect_command gcloud ; then
     iterm2_set_user_var gcpVersion $(gcloud config list project --format='value(core.project)')
