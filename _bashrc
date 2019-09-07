@@ -174,12 +174,12 @@ export PYENV_ROOT="$HOME/.pyenv" \
   && eval "$(pyenv init -)" \
   && eval "$(pyenv virtualenv-init -)"
 
-detect_command direnv \
-  && export EDITOR=vim \
-  && eval "$(direnv hook bash)"
-
 detect_command fasd \
   && eval "$(fasd --init auto)"
+
+# detect_command direnv \
+#   && export EDITOR=vim \
+#   && eval "$(direnv hook bash)"
 
 # ----------------- #
 #      iTerm2       #
