@@ -126,6 +126,10 @@ function gpof() {
   fi
 }
 
+function gasq() {
+  git reset --soft $(git merge-base --fork-point $1) && git commit
+}
+
 # ------------------ #
 #    Colored "ls"    #
 # ------------------ #
