@@ -69,18 +69,13 @@
     "workbench.colorTheme": "Bittersweet",
     "workbench.iconTheme": "vscode-icons",
 
-    "elm.compiler": "./node_modules/.bin/elm",
-    "elm.elmTestCompiler": "./node_modules/.bin/elm-test",
-    "elm.makeCommand": "./node_modules/.bin/elm-make",
-    "elm.formatCommand": "./node_modules/.bin/elm-format",
-    "elm.analyseCommand": "./node_modules/.bin/elm-analyse",
+    "elmLS.elmFormatPath": "./node_modules/.bin/elm-format",
+    "elmLS.elmPath": "./node_modules/.bin/elm",
+    "elmLS.elmTestPath": "./node_modules/.bin/elm-test",
     "[elm]": {
         "editor.tabSize": 4,
         "editor.formatOnSave": true
     },
-
-    "elmLS.elmFormatPath": "./node_modules/.bin/elm-format",
-    "elmLS.elmPath": "./node_modules/.bin/elm",
 
     "typescript.updateImportsOnFileMove.enabled": "always",
     "workbench.editor.labelFormat": "short"
