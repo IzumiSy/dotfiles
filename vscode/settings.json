@@ -79,6 +79,9 @@
         "editor.formatOnSave": true
     },
 
+    "elmLS.elmFormatPath": "./node_modules/.bin/elm-format",
+    "elmLS.elmPath": "./node_modules/.bin/elm",
+
     "typescript.updateImportsOnFileMove.enabled": "always",
     "workbench.editor.labelFormat": "short"
 }
