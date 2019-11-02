@@ -134,6 +134,7 @@ function gasq() {
 #    Colored "ls"    #
 # ------------------ #
 
+# NOTE: OSX needs "coreutils" package which can be installed through homebrew
 export CLICOLOR=1
 export LSCOLORS=gxfxcxdxbxegexabagacad
 alias ls="ls --color=auto"
