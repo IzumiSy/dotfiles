@@ -185,12 +185,4 @@ function iterm2_print_user_vars() {
   if detect_command gcloud ; then
     iterm2_set_user_var gcpVersion $(gcloud config list project --format='value(core.project)')
   fi
-
-  if detect_command ruby ; then
-    iterm2_set_user_var rubyVersion $(ruby -v | awk '{ print $2 }')
-  fi
-
-  if detect_command node ; then
-    iterm2_set_user_var nodeVersion $(node -v)
-  fi
 }
