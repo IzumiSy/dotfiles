@@ -29,16 +29,6 @@ function detect_command() {
   type "$1" &> /dev/null ;
 }
 
-# ----------------- #
-#    Set $GOPATH    #
-# ----------------- #
-
-GO_PATH="$HOME/gocodes"
-[ ! -e "${GO_PATH}" ] && mkdir -p "${GO_PATH}"
-export GO111MODULE=on
-export GOPATH="$GO_PATH"
-export PATH="$PATH:${GO_PATH}/bin"
-
 # --------------------------------------------------- #
 #   Setting for command line prompt with Git status   #
 # --------------------------------------------------- #
