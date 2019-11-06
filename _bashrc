@@ -183,6 +183,8 @@ detect_command fasd \
 
 function iterm2_print_user_vars() {
   if detect_command gcloud ; then
-    iterm2_set_user_var gcpVersion $(gcloud config list project --format='value(core.project)')
+    gcp_profile=$(cat $HOME/.config/gcloud/active_config)
+    gcp_project=$(awk '/project/{print $3}' $HOME/.config/gcloud/configurations/config_$gcp_profile)
+    iterm2_set_user_var gcpProjectId $gcp_project
   fi
 }
