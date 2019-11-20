@@ -1,0 +1,85 @@
+#
+# CLI wrapper for gcloud
+#
+# Usage:#
+#   `source` this shell script somewhere loads into your UNIX shell such as .profile, .bashrc, and you name it.
+#
+# Commands:
+#   gctool sw                       - switch gcloud project ID.
+#   gctool mig [serviceName]        - migrates all of one service version into another.
+#   gctool mig-latest [serviceName] - migrates all of one service service version into another.
+#   gctool log [serviceName]
+#   gctool log-latest [serviceName]
+#
+
+current_project_id=$(gcloud config get-value project)
+echo "Current project ID: $current_project_id"
+
+case "$1" in
+  # Migrates all traffic of one version into another
+  "mig" )
+    if [ -z $2 ]; then
+      _need_to_specify_a_parameter
+      return
+    fi
+    local version_id=$(_extract_service_version_with_peco $2)
+    gcloud app services set-traffic $2 --splits ${version_id}=1
+    ;;
+
+  "mig-latest" )
+    if [ -z $2 ]; then
+      _need_to_specify_a_parameter
+      return
+    fi
+    local latest_version_id=$(_extract_latest_service_version $2)
+    gcloud app services set-traffic $2 --splits ${latest_version_id}=1
+    ;;
+
+  # Open GCP Console for watching logs of specified version selected by user
+  "log" )
+    if [ -z $2 ]; then
+      _need_to_specify_a_parameter
+      return
+    fi
+    local version_id=$(_extract_app_version_with_peco $2)
+    gcloud app open-console --logs --version=$version_id -s $2
+    ;;
+
+  # Open GCP Console for watching logs of the latest version on web browser
+  "log-latest" )
+    if [ -z $2 ]; then
+      _need_to_specify_a_parameter
+      return
+    fi
+    local latest_version_id=$(gcloud app versions list --format="value(VERSION)" -s a | tail -n1)
+    gcloud app open-console --logs --version=$latest_version_id -s $2
+    ;;
+
+  # Switch current GCP project ID
+  "sw" )
+    local new_project_id=$(gcloud projects list --format="value(PROJECT_ID)" | peco)
+    gcloud config set project $new_project_id
+    echo "Your current project is $new_project_id"
+    ;;
+
+  # Fallback
+  * )
+    echo "Need to use one of operations at least: mig, mig-latest, sw, log, log-latest"
+    ;;
+esac
+
+function _extract_service_version_with_peco () {
+   local version_raw=$(gcloud app versions list --sort-by=~LAST_DEPLOYED -s $1 | sed '1d' | peco)
+   local version_id=$(echo $version_raw | awk -F' ' '{print $2}')
+   echo $version_id
+}
+
+function _extract_latest_service_version () {
+  local version_id=$(gcloud app versions list --sort-by=~LAST_DEPLOYED -s $1 | sed '1d' | head -n 1 | awk -F' ' '{print $2}')
+  echo $version_id
+}
+
+function _need_to_specify_a_parameter () {
+  echo "Need one parameter at least to specify service name. Following services are available:"
+  gcloud app services list --format="list(SERVICE)"
+}

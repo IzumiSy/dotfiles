@@ -32,6 +32,9 @@ if [ ! -e "$HOME/.vim" ] ; then
   (set -x; vim +PlugInstall +qall)
 fi
 
+# Install shell
+ln -snvf "$(pwd)/shell/gctool" "/usr/local/bin/gctool"
+
 # Loads .bashrc
 clear
 (set -x; exec $SHELL --login)
