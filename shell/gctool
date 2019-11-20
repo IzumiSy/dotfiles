@@ -1,9 +1,6 @@
 #
 # CLI wrapper for gcloud
 #
-# Usage:#
-#   `source` this shell script somewhere loads into your UNIX shell such as .profile, .bashrc, and you name it.
-#
 # Commands:
 #   gctool sw                       - switch gcloud project ID.
 #   gctool mig [serviceName]        - migrates all of one service version into another.
