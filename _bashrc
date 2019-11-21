@@ -29,10 +29,6 @@ function detect_command() {
   type "$1" &> /dev/null ;
 }
 
-# --------------------------------------------------- #
-#   Setting for command line prompt with Git status   #
-# --------------------------------------------------- #
-
 if [[ "$OSTYPE" = "darwin"* ]] ; then
   source "/Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash"
   source "/Library/Developer/CommandLineTools/usr/share/git-core/git-prompt.sh"
@@ -120,10 +116,6 @@ function gasq() {
   git reset --soft $(git merge-base --fork-point $1) && git commit
 }
 
-# ------------------ #
-#    Colored "ls"    #
-# ------------------ #
-
 # NOTE: OSX needs "coreutils" package which can be installed through homebrew
 export CLICOLOR=1
 export LSCOLORS=gxfxcxdxbxegexabagacad
@@ -149,38 +141,44 @@ function dp() {
   cd $( d | awk '{ print $2 }' | peco --query \"$(pwd)\ \" )
 }
 
-# ----------------------------------------- #
-#   Loads rbenv, nvm, pyenv, direnv, fasd   #
-# ----------------------------------------- #
-
 # Homebrew's sbin
 export PATH="/usr/local/sbin:$PATH"
 
+{
 export PATH="$HOME/.rbenv/bin:$PATH" type rbenv &> /dev/null \
-  && eval "$(rbenv init -)"
+  && eval "$(rbenv init -)" \
+  && echo "Initialized: rbenv"
+} &
 
+{
 export NVM_DIR="$HOME/.nvm" \
   && test -e "$NVM_DIR/nvm.sh" \
-  && \. "$NVM_DIR/nvm.sh"
+  && \. "$NVM_DIR/nvm.sh" \
+  && echo "Initialized: nvm"
+} &
 
+{
 export PYENV_ROOT="$HOME/.pyenv" \
   && test -d "$PYENV_ROOT" \
   && export PATH="$PYENV_ROOT/bin:$PATH" \
   && eval "$(pyenv init -)" \
-  && eval "$(pyenv virtualenv-init -)"
+  && eval "$(pyenv virtualenv-init -)" \
+  && echo "Initialized: pyenv"
+} &
 
+{
 detect_command fasd \
-  && eval "$(fasd --init auto)"
+  && eval "$(fasd --init auto)" \
+  && echo "Initialized: fasd"
+} &
+
+wait
 
 # detect_command direnv \
 #   && export EDITOR=vim \
 #   && eval "$(direnv hook bash)"
 
-# ----------------- #
-#      iTerm2       #
-# ----------------- #
 # See https://www.iterm2.com/3.3/documentation-scripting-fundamentals.html
-
 function iterm2_print_user_vars() {
   if detect_command gcloud ; then
     gcp_profile=$(cat $HOME/.config/gcloud/active_config)
