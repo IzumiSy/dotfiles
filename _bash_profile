@@ -2,10 +2,6 @@
   && . "$HOME/.bashrc" \
   && echo "Loaded .bashrc"
 
-{
-  [ -f "$HOME/.profile" ] \
-    && . "$HOME/.profile" \
-    && echo "Loaded .profile"
-} &
-
-wait
+[ -f "$HOME/.profile" ] \
+  && . "$HOME/.profile" \
+  && echo "Loaded .profile"
