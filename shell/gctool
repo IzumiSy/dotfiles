@@ -67,9 +67,14 @@ case "$1" in
 
   # Switch current GCP project ID
   "sw" )
-    new_project_id=$(gcloud projects list --format="value(PROJECT_ID)" | peco)
-    gcloud config set project $new_project_id
-    echo "Your current project is $new_project_id"
+    if [ -z $2 ]; then
+      new_project_id=$(gcloud projects list --format="value(PROJECT_ID)" | peco)
+      gcloud config set project $new_project_id
+      echo "Your current project is $new_project_id"
+    else
+      gcloud config set project $2
+      echo "Your current project is $2"
+    fi
     ;;
 
   # Fallback
