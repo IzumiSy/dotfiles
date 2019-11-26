@@ -34,9 +34,8 @@ Plug 'easymotion/vim-easymotion'
 Plug 'vim-scripts/surround.vim'
 Plug 'scrooloose/nerdcommenter'
 
-" Instant run & asynchronous processing support
+" Asynchronous processing support
 Plug 'https://github.com/Shougo/vimproc', { 'do': 'make' }
-Plug 'vim-scripts/quickrun.vim', { 'on': 'QuickRun' }
 
 " Autocomplete popup
 Plug 'https://github.com/Shougo/neocomplete'
@@ -236,36 +235,6 @@ nnoremap <C-w><C-n> <NOP>
 
 " Disable dot action
 nnoremap . <NOP>
-
-" ========================= "
-"     Quickrun settings     "
-" ========================= "
-autocmd FileType perl,cgi :nnoremap <silent>,rr :QuickRun perl<CR>
-autocmd FileType cpp :nnoremap <silent>,rr :QuickRun g++<CR>
-autocmd FileType c :nnoremap <silent>,rr :QuickRun c<CR>
-autocmd FileType python :nnoremap <silent>,rr :QuickRun python<CR>
-autocmd FileType ruby :nnoremap <silent>,rr :QuickRun ruby<CR>
-autocmd FileType go :nnoremap <silent>,rr :QuickRun go<CR>
-autocmd FileType sh :nnoremap <silent>,rr :QuickRun sh<CR>
-autocmd FileType d :nnoremap <silent>,rr :QuickRun d<CR>
-if !exists("g:quickrun_config")
-    let g:quickrun_config={}
-endif
-let g:quickrun_config["_"] = {
-\   'hook/time/enable': 1,
-\   'runner/vimproc/updatetime': 60,
-\   'outputter/buffer/split': ':botright 14sp',
-\   'runner': 'vimproc'
-\ }
-let g:quickrun_config["go"] = {
-\   'command': 'go run'
-\ }
-let g:quickrun_config["sh"] = {
-\   'command': 'bash'
-\ }
-let g:quickrun_config["d"] = {
-\   'command': 'rdmd'
-\ }
 
 " ======================== "
 "      Unite settings      "
