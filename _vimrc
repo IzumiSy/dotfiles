@@ -35,7 +35,7 @@ Plug 'vim-scripts/surround.vim'
 Plug 'scrooloose/nerdcommenter'
 
 " Asynchronous processing support
-Plug 'https://github.com/Shougo/vimproc', { 'do': 'make' }
+" Plug 'https://github.com/Shougo/vimproc', { 'do': 'make' }
 
 " Autocomplete popup
 Plug 'https://github.com/Shougo/neocomplete'
