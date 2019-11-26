@@ -34,9 +34,6 @@ Plug 'easymotion/vim-easymotion'
 Plug 'vim-scripts/surround.vim'
 Plug 'scrooloose/nerdcommenter'
 
-" Asynchronous processing support
-" Plug 'https://github.com/Shougo/vimproc', { 'do': 'make' }
-
 " Autocomplete popup
 Plug 'https://github.com/Shougo/neocomplete'
 
@@ -46,6 +43,7 @@ Plug 'https://github.com/itchyny/lightline.vim'
 " Interactive fuzzy-wording finder over multiple
 " sources like files, buffers, and file histories.
 Plug 'https://github.com/Shougo/unite.vim'
+Plug 'https://github.com/Shougo/vimproc', { 'do': 'make' }
 
 " File viewer plugins
 Plug 'vim-scripts/The-NERD-tree', { 'on': 'NERDTree' }
