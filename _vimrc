@@ -333,6 +333,12 @@ let g:go_def_mapping_enabled=0
 au BufWritePost *.go :silent GoFmt
 au FileType go :nnoremap <silent>,df :call go#def#Jump("split", 0)<CR>
 
+" Fix for fuckin slow autocompletion
+" [Ref] https://github.com/fatih/vim-go/issues/2049#issuecomment-437045293
+let g:go_auto_sameids=0
+let g:go_auto_type_info=0
+let g:go_gocode_propose_source=0
+
 " ====================== "
 "    Settings for Elm    "
 " ====================== "
