@@ -44,6 +44,7 @@ Plug 'https://github.com/itchyny/lightline.vim'
 " sources like files, buffers, and file histories.
 Plug 'https://github.com/Shougo/unite.vim'
 Plug 'https://github.com/Shougo/vimproc', { 'do': 'make' }
+Plug 'https://github.com/Shougo/neomru.vim'
 
 " File viewer plugins
 Plug 'vim-scripts/The-NERD-tree', { 'on': 'NERDTree' }
@@ -123,6 +124,7 @@ set fileencodings=utf-8,iso-2022-jp,euc-jp,sjis
 set fileformats=unix,dos,mac
 set backspace=indent,eol,start
 set completeopt=menu,preview
+set updatetime=100
 syntax on
 silent! colorscheme desert256
 filetype on
@@ -335,8 +337,8 @@ au FileType go :nnoremap <silent>,df :call go#def#Jump("split", 0)<CR>
 
 " Fix for fuckin slow autocompletion
 " [Ref] https://github.com/fatih/vim-go/issues/2049#issuecomment-437045293
-let g:go_auto_sameids=0
 let g:go_auto_type_info=0
+let g:go_auto_sameids=0
 let g:go_gocode_propose_source=0
 
 " ====================== "
