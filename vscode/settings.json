@@ -81,5 +81,7 @@
     },
 
     "typescript.updateImportsOnFileMove.enabled": "always",
-    "workbench.editor.labelFormat": "short"
+    "workbench.editor.labelFormat": "short",
+    "files.encoding": "utf8bom",
+    "editor.renderControlCharacters": true
 }
