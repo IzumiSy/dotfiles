@@ -27,8 +27,9 @@ Plug 'bronson/vim-trailing-whitespace', { 'on': 'FixWhitespace' }
 " The Silver Searcher
 Plug 'rking/ag.vim'
 
-" Vim motion on speed
+" Vim manipulation
 Plug 'easymotion/vim-easymotion'
+Plug 'https://github.com/deris/vim-gothrough-jk'
 
 " Word bracket, commenting plugins
 Plug 'vim-scripts/surround.vim'
@@ -125,6 +126,7 @@ set fileformats=unix,dos,mac
 set backspace=indent,eol,start
 set completeopt=menu,preview
 set updatetime=100
+set relativenumber
 syntax on
 silent! colorscheme desert256
 filetype on
@@ -418,6 +420,12 @@ map <buffer> <Nop> <Plug>(TsuquyomiGoBack)
 "   NeedCommenter   "
 " ================= "
 let g:NERDSpaceDelims = 1
+
+" ==================== "
+"   vim-gothrough-jk   "
+" ==================== "
+let g:go_through_jk_reset_interval = 2000
+let g:go_through_jk_move_count = 5
 
 " ================= "
 "     Highlight     "
