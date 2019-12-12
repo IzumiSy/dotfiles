@@ -1,13 +1,22 @@
 {
+    "window.zoomLevel": 0,
+
+    "files.encoding": "utf8bom"
+
     "terminal.integrated.fontSize": 10,
 
     "editor.fontSize": 10,
     "editor.tabSize": 2,
     "editor.scrollBeyondLastLine": false,
     "editor.minimap.enabled": false,
+    "editor.renderControlCharacters": true,
+    "editor.lineNumbers": "relative"
 
     "workbench.editor.enablePreview": false,
     "workbench.editor.enablePreviewFromQuickOpen": false,
+    "workbench.editor.labelFormat": "short",
+    "workbench.colorTheme": "Bittersweet",
+    "workbench.iconTheme": "vscode-icons",
 
     "vim.hlsearch": true,
     "vim.useCtrlKeys": true,
@@ -65,9 +74,6 @@
         "editor.formatOnSave": true
     },
 
-    "window.zoomLevel": 0,
-    "workbench.colorTheme": "Bittersweet",
-    "workbench.iconTheme": "vscode-icons",
     "elmLS.elmFormatPath": "./node_modules/.bin/elm-format",
     "elmLS.elmPath": "./node_modules/.bin/elm",
     "elmLS.elmTestPath": "./node_modules/.bin/elm-test",
@@ -80,8 +86,5 @@
         "editor.formatOnSave": true
     },
 
-    "typescript.updateImportsOnFileMove.enabled": "always",
-    "workbench.editor.labelFormat": "short",
-    "files.encoding": "utf8bom",
-    "editor.renderControlCharacters": true
+    "typescript.updateImportsOnFileMove.enabled": "always"
 }
