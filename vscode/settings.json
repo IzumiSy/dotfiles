@@ -74,13 +74,6 @@
         "editor.formatOnSave": true
     },
 
-    "elmLS.elmFormatPath": "./node_modules/.bin/elm-format",
-    "elmLS.elmPath": "./node_modules/.bin/elm",
-    "elmLS.elmTestPath": "./node_modules/.bin/elm-test",
-    "elm.compiler": "./node_modules/.bin/elm",
-    "elm.makeCommand": "./node_modules/.bin/elm-make",
-    "elm.formatCommand": "./node_modules/.bin/elm-format",
-    "elm.elmTestCompiler": "./node_modules/.bin/elm-test",
     "[elm]": {
         "editor.tabSize": 4,
         "editor.formatOnSave": true
