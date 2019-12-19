@@ -36,22 +36,16 @@
     }],
     "vim.normalModeKeyBindingsNonRecursive": [{
         "before": ["<C-c>"],
-        "after": [],
-        "commands": [{
-            "command": ":nohl"
-        }]
+        "commands": [":nohl"]
     }, {
         "before": ["<leader>", "f", "g"],
-        "after": [],
-        "commands": [{
-            "command": "workbench.action.quickOpen"
-        }]
+        "commands": ["workbench.action.quickOpen"]
     }, {
         "before": ["<leader>", "f", "f"],
-        "after": [],
-        "commands": [{
-            "command": "workbench.view.search"
-        }]
+        "commands": ["workbench.view.search"]
+    }, {
+        "before": ["<leader>", "d", "f"],
+        "commands": ["editor.action.goToTypeDefinition"]
     }, {
         "before": ["<C-j>"],
         "after": ["<leader>", "<leader>", "2", "f"]
