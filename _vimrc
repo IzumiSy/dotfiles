@@ -29,7 +29,8 @@ Plug 'rking/ag.vim'
 
 " Vim manipulation
 Plug 'easymotion/vim-easymotion'
-Plug 'https://github.com/deris/vim-gothrough-jk'
+Plug 'deris/vim-gothrough-jk'
+Plug 'terryma/vim-multiple-cursors'
 
 " Word bracket, commenting plugins
 Plug 'vim-scripts/surround.vim'
@@ -426,6 +427,25 @@ let g:NERDSpaceDelims = 1
 " ==================== "
 let g:go_through_jk_reset_interval = 2000
 let g:go_through_jk_move_count = 5
+
+" ===================== "
+"   vim-multi-cursors   "
+" ===================== "
+let g:multi_cursor_use_default_mapping=0
+let g:multi_cursor_start_word_key="<S-i>"
+let g:multi_cursor_quit_key="<C-c>"
+
+" Prevent Neocomplete in vim-multi-cursors working
+function! Multiple_cursors_before()
+  if exists(':NeoCompleteLock')==2
+    exe 'NeoCompleteLock'
+  endif
+endfunction
+function! Multiple_cursors_after()
+  if exists(':NeoCompleteUnlock')==2
+    exe 'NeoCompleteUnlock'
+  endif
+endfunction
 
 " ================= "
 "     Highlight     "
