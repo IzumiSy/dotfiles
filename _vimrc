@@ -322,6 +322,7 @@ nnoremap <silent>,gl :GV!<CR>
 let g:syntastic_enable_signs=1
 let g:syntastic_enable_highlighting=1
 let g:syntastic_cpp_compiler_options="-std=c++11 -Wall -Wextra"
+let g:syntastic_check_on_wq=0
 
 " ===================== "
 "  Settings for Golang  "
