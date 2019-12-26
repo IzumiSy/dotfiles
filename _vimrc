@@ -19,7 +19,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'vim-scripts/sudo.vim'
 
 " Syntax checking plugin
-Plug 'vim-scripts/Syntastic'
+Plug 'dense-analysis/ale'
 
 " Whitespace trailer
 Plug 'bronson/vim-trailing-whitespace', { 'on': 'FixWhitespace' }
@@ -316,13 +316,10 @@ nnoremap <silent>,gg :GitGutterToggle<CR>
 nnoremap <silent>,gh :GitGutterLineHighlightsToggle<CR>
 nnoremap <silent>,gl :GV!<CR>
 
-" ========================== "
-"     Syntastic settings     "
-" ========================== "
-let g:syntastic_enable_signs=1
-let g:syntastic_enable_highlighting=1
-let g:syntastic_cpp_compiler_options="-std=c++11 -Wall -Wextra"
-let g:syntastic_check_on_wq=0
+" ============ "
+"     ale      "
+" ============ "
+let g:ale_lint_on_save=0
 
 " ===================== "
 "  Settings for Golang  "
@@ -347,9 +344,6 @@ let g:go_gocode_propose_source=0
 "    Settings for Elm    "
 " ====================== "
 let g:elm_setup_keybindings=0
-let g:syntastic_always_populate_loc_list=1
-let g:syntastic_auto_loc_list=1
-let g:elm_syntastic_show_warnings=1
 let g:elm_format_autosave=1
 
 " ======================= "
@@ -411,7 +405,6 @@ cnoreabbrev Qall qall
 " ================== "
 "     tsuquyomi      "
 " ================== "
-let g:syntastic_typescript_checkers = ['tsuquyomi']
 let g:tsuquyomi_disable_quickfix = 1
 let g:tsuquyomi_disable_default_mappings = 1
 map <buffer> <Nop> <Plug>(TsuquyomiGoBack)
