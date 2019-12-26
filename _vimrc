@@ -337,9 +337,11 @@ nnoremap <silent>,gl :GV!<CR>
 " ============ "
 "     ale      "
 " ============ "
-let g:ale_lint_on_save=0
 let g:ale_set_loclist=0
 let g:ale_set_quickfix=1
+let g:ale_linters={
+\   'go': ['gopls', 'gobuild', 'govet']
+\ }
 
 " ===================== "
 "  Settings for Golang  "
