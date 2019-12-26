@@ -41,6 +41,7 @@ Plug 'https://github.com/Shougo/neocomplete'
 
 " Status line customizing plugin
 Plug 'https://github.com/itchyny/lightline.vim'
+Plug 'maximbaz/lightline-ale'
 
 " Interactive fuzzy-wording finder over multiple
 " sources like files, buffers, and file histories.
@@ -300,11 +301,28 @@ let g:lightline = {
 \       ['mode', 'paste'],
 \       ['fugitive', 'readonly', 'filename', 'modified'],
 \       ['ctrlpmark']
+\     ],
+\     'right': [
+\       ['lineinfo'],
+\       ['fileformat', 'fileencoding', 'filetype'],
+\       ['linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok']
 \     ]
 \   },
 \   'component': {
 \     'fugitive': '%{exists("*fugitive#head") ? "<".fugitive#head().">" : ""}',
 \     'readonly': '%{&readonly ? "[LOCKED]" : ""}'
+\   },
+\   'component_expand': {
+\     'linter_checking': 'lightline#ale#checking',
+\     'linter_warnings': 'lightline#ale#warnings',
+\     'linter_errors': 'lightline#ale#errors',
+\     'linter_ok': 'lightline#ale#ok'
+\   },
+\   'component_type': {
+\     'linter_checking': 'left',
+\     'linter_warnings': 'warning',
+\     'linter_errors': 'error',
+\     'linter_ok': 'left'
 \   }
 \ }
 
@@ -320,6 +338,8 @@ nnoremap <silent>,gl :GV!<CR>
 "     ale      "
 " ============ "
 let g:ale_lint_on_save=0
+let g:ale_set_loclist=0
+let g:ale_set_quickfix=1
 
 " ===================== "
 "  Settings for Golang  "
