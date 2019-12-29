@@ -24,10 +24,10 @@ Plug 'dense-analysis/ale'
 " Whitespace trailer
 Plug 'bronson/vim-trailing-whitespace', { 'on': 'FixWhitespace' }
 
-" The Silver Searcher
+" Fulltext searching
 Plug 'rking/ag.vim'
 
-" Vim manipulation
+" Nice Vim manipulation
 Plug 'easymotion/vim-easymotion'
 Plug 'deris/vim-gothrough-jk'
 Plug 'terryma/vim-multiple-cursors'
@@ -53,9 +53,7 @@ Plug 'https://github.com/Shougo/neomru.vim'
 Plug 'vim-scripts/The-NERD-tree', { 'on': 'NERDTree' }
 
 " Theme
-" - unite-colorscheme is a plugin which adds interactive theme switching with Unite
 Plug 'vim-scripts/desert256.vim'
-Plug 'vim-scripts/unite-colorscheme'
 
 " Git
 " @ vim-gitgutter is a plugin shows Git status on an each line
@@ -75,10 +73,14 @@ Plug 'Quramy/tsuquyomi', { 'for': 'typescript', 'do': 'npm install -g typescript
 Plug 'JulesWang/css.vim', { 'for': 'css' }
 Plug 'hail2u/vim-css3-syntax', { 'for': 'css' }
 
+" Golang
+Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' }
+
+" Elm
+Plug 'elmcast/elm-vim', { 'for': 'elm' }
+
 " Other syntaxes
-Plug 'kchmck/vim-coffee-script', { 'for': 'coffeescript' }
 Plug 'leshill/vim-json', { 'for': 'json' }
-Plug 'digitaltoad/vim-pug', { 'for': 'pug' }
 Plug 'tpope/vim-haml', { 'for': 'haml' }
 Plug 'othree/html5.vim', { 'for': 'html' }
 Plug 'cakebaker/scss-syntax.vim', { 'for': 'scss' }
@@ -86,8 +88,6 @@ Plug 'othree/yajs.vim', { 'for': 'javascript' }
 Plug 'maxmellon/vim-jsx-pretty', { 'for': 'javascript' }
 Plug 'joukevandermaas/vim-ember-hbs', { 'for': 'handlebars' }
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
-Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' }
-Plug 'elmcast/elm-vim', { 'for': 'elm' }
 
 call plug#end()
 
@@ -148,7 +148,6 @@ let &titleold=getcwd()
 au BufRead,BufNewFile,BufReadPost *.gs set filetype=javascript
 au BufRead,BufNewFile,BufReadPost *.erb set filetype=eruby.html
 au BufRead,BufNewFile,BufReadPost *.scss set filetype=scss.css
-au BufRead,BufNewFile,BufReadPost *.coffee set filetype=coffee
 au BufRead,BufNewFile,BufReadPost {*.ts,*.tsx} set filetype=typescript
 au BufRead,BufNewFile,BufReadPost *.elm set filetype=elm
 au BufRead,BufNewFile,BufReadPost *.json set syntax=json
@@ -156,12 +155,8 @@ au BufRead,BufNewFile {*.md} set filetype=markdown
 au BufRead,BufNewFile {COMMIT_EDITMSG} set filetype=gitcommit
 au BufRead,BufNewFile {.envrc,_bash*} set filetype=sh
 
-" wanna use vim-vue, but for now this is the best
-au BufRead,BufNewFile,BufReadPost *.vue set filetype=html
-
 au FileType c,golang set tabstop=4 shiftwidth=4 softtabstop=4
-au FileType c,cpp,perl,python set cindent
-au FileType perl,cgi :compiler perl
+au FileType c,cpp,python set cindent
 
 " Check files' modifiction more frequently
 augroup checktime
