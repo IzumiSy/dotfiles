@@ -335,7 +335,7 @@ nnoremap <silent>,gl :GV!<CR>
 let g:ale_set_loclist=0
 let g:ale_set_quickfix=1
 let g:ale_linters={
-\   'go': ['gopls', 'gobuild', 'govet']
+\   'go': ['gopls', 'govet']
 \ }
 
 " ===================== "
