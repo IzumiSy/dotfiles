@@ -335,7 +335,7 @@ nnoremap <silent>,gl :GV!<CR>
 let g:ale_set_loclist=0
 let g:ale_set_quickfix=1
 let g:ale_linters={
-\   'go': ['gopls', 'govet']
+\   'go': ['gopls']
 \ }
 
 " ===================== "
@@ -348,6 +348,8 @@ let g:go_highlight_fields=1
 let g:go_highlight_types=1
 let g:go_highlight_operators=1
 let g:go_def_mapping_enabled=0
+let g:go_def_mode='gopls'
+let g:go_info_mode='gopls'
 au BufWritePost *.go :silent GoFmt
 au FileType go :nnoremap <silent>,df :call go#def#Jump("split", 0)<CR>
 
