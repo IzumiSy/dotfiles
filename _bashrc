@@ -144,6 +144,10 @@ function dp() {
 # Homebrew's sbin
 export PATH="/usr/local/sbin:$PATH"
 
+# Default golang setting
+export GO111MODULE=on
+export PATH=$PATH:$HOME/go/bin
+
 export PATH="$HOME/.rbenv/bin:$PATH" type rbenv &> /dev/null \
   && eval "$(rbenv init -)" \
   && echo "Initialized: rbenv"
