@@ -19,7 +19,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'vim-scripts/sudo.vim'
 
 " Syntax checking plugin
-Plug 'dense-analysis/ale'
+" Plug 'dense-analysis/ale'
 
 " Whitespace trailer
 Plug 'bronson/vim-trailing-whitespace', { 'on': 'FixWhitespace' }
