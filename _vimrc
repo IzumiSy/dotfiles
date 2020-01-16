@@ -20,6 +20,7 @@ Plug 'vim-scripts/sudo.vim'
 
 " Syntax checking plugin
 " Plug 'dense-analysis/ale'
+" Plug 'maximbaz/lightline-ale'
 
 " Whitespace trailer
 Plug 'bronson/vim-trailing-whitespace', { 'on': 'FixWhitespace' }
@@ -41,7 +42,6 @@ Plug 'https://github.com/Shougo/neocomplete'
 
 " Status line customizing plugin
 Plug 'https://github.com/itchyny/lightline.vim'
-Plug 'maximbaz/lightline-ale'
 
 " Interactive fuzzy-wording finder over multiple
 " sources like files, buffers, and file histories.
@@ -332,11 +332,11 @@ nnoremap <silent>,gl :GV!<CR>
 " ============ "
 "     ale      "
 " ============ "
-let g:ale_set_loclist=0
-let g:ale_set_quickfix=1
-let g:ale_linters={
-\   'go': ['gopls']
-\ }
+" let g:ale_set_loclist=0
+" let g:ale_set_quickfix=1
+" let g:ale_linters={
+" \   'go': ['gopls']
+" \ }
 
 " ===================== "
 "  Settings for Golang  "
