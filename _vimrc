@@ -145,16 +145,13 @@ let &titleold=getcwd()
 " ========================== "
 "     Filetype detection     "
 " ========================== "
-au BufRead,BufNewFile,BufReadPost *.gs set filetype=javascript
 au BufRead,BufNewFile,BufReadPost *.erb set filetype=eruby.html
-au BufRead,BufNewFile,BufReadPost *.scss set filetype=scss.css
 au BufRead,BufNewFile,BufReadPost {*.ts,*.tsx} set filetype=typescript
 au BufRead,BufNewFile,BufReadPost *.elm set filetype=elm
-au BufRead,BufNewFile,BufReadPost *.json set syntax=json
-au BufRead,BufNewFile {*.md} set filetype=markdown
 au BufRead,BufNewFile {COMMIT_EDITMSG} set filetype=gitcommit
 au BufRead,BufNewFile {.envrc,_bash*} set filetype=sh
 
+" Speciul tab/indent width
 au FileType c,golang set tabstop=4 shiftwidth=4 softtabstop=4
 au FileType c,cpp,python set cindent
 
