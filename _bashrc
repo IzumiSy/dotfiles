@@ -141,6 +141,11 @@ function dp() {
   cd $( d | awk '{ print $2 }' | peco --query \"$(pwd)\ \" )
 }
 
+# Views csv file in a formatted way
+function csvr() {
+  column -s, -t $1
+}
+
 # Homebrew's sbin
 export PATH="/usr/local/sbin:$PATH"
 
