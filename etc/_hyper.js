@@ -77,12 +77,14 @@ module.exports = {
     bell: 'SOUND',
 
     // if true, selected text will automatically be copied to the clipboard
-    copyOnSelect: false
+    copyOnSelect: false,
 
     // URL to custom bell
     // bellSoundURL: 'http://example.com/bell.mp3',
 
     // for advanced config flags please refer to https://hyper.is/#cfg
+
+    opacity: 0.9,
   },
 
   // a list of plugins to fetch and install from npm
@@ -92,11 +94,12 @@ module.exports = {
   //   `@company/project`
   //   `project#1.0.1`
   plugins: [
-    // 'hyperterm-tab-icons',
-    'hyperterm-colors',
-    'hyperterm-tabs',
-    'hyperterm-cursor',
-    'hyper-blink'
+    "hyper-statusline",
+    "hyper-opacity",
+    "hyper-tabs-enhanced",
+    "hyper-blink",
+    "hyperlinks",
+    "hyperterm-cursor",
   ],
 
   // in development, you can create a directory under
@@ -105,6 +108,17 @@ module.exports = {
   localPlugins: [],
 
   keymaps: {
-    'tab:new': 'ctrl+alt+t'
+    'tab:new': [
+      'cmd+t',
+      'ctrl+t',
+    ],
+    'tab:prev': [
+      'cmd+[',
+      'ctrl+[',
+    ],
+    'tab:next': [
+      'cmd+]',
+      'ctrl+]',
+    ]
   }
 };
