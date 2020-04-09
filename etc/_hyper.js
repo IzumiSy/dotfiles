@@ -109,16 +109,16 @@ module.exports = {
 
   keymaps: {
     'tab:new': [
-      'cmd+t',
-      'ctrl+t',
+      'cmd+shift+t',
+      'ctrl+shift+t',
     ],
     'tab:prev': [
-      'cmd+[',
-      'ctrl+[',
+      'cmd+{',
+      'ctrl+shift+[',
     ],
     'tab:next': [
-      'cmd+]',
-      'ctrl+]',
+      'cmd+}',
+      'ctrl+shift+]',
     ]
   }
 };
