@@ -240,7 +240,8 @@ function! SetupUniteOptions()
     let ignores = join([
     \    '\.png$', '\.ico$', '\.svg$', '\.gif$', '\.keep$',
     \    '\.eot$', '\.ttf$', '\.woff$', '\.woff2$',
-    \    'tmp/', 'node_modules/', 'bower_components/'
+    \    'tmp/', 'node_modules/', 'bower_components/',
+    \    'elm-stuff/', '.cache'
     \  ], '\|')
     call unite#sources#rec#define()
     call unite#custom#source('file,file_rec,file_rec/git,file_rec/async,grep', 'ignore_pattern', ignores)
