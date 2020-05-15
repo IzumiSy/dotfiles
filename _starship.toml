@@ -3,5 +3,20 @@ add_newline = false
 [git_branch]
 symbol = ""
 
+[git_status]
+stashed = ""
+
+[time]
+disabled = false
+
 [battery]
+disabled = true
+
+[python]
+disabled = true
+
+[package]
+disabled = true
+
+[golang]
 disabled = true
