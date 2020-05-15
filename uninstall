@@ -5,7 +5,7 @@ unlink "$HOME/_vimrc"
 unlink "$HOME/.screenrc"
 unlink "$HOME/.bashrc"
 unlink "$HOME/.bash_profile"
-
+unlink "$HOME/.starship.toml"
 unlink "$HOME/.gitconfig"
 unlink "$HOME/.gitignore_global"
 unlink "$HOME/.hyper.js"
