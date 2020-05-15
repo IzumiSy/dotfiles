@@ -152,14 +152,6 @@ export PATH="/usr/local/sbin:$PATH"
 export GO111MODULE=on
 export PATH=$PATH:$HOME/go/bin
 
-# Loading rbenv
-# `rbenv init` at default runs rehashing but this is really, really slow.
-# so here runs `rbenv rehash` with ampersand in order to make it backgrounded.
-export PATH="$HOME/.rbenv/bin:$PATH" type rbenv &> /dev/null \
-  && eval "$(rbenv init --no-rehash -)" \
-  && (rbenv rehash &) 2> /dev/null \
-  && echo "Initialized: rbenv"
-
 export NVM_DIR="$HOME/.nvm" \
   && test -e "$NVM_DIR/nvm.sh" \
   && \. "$NVM_DIR/nvm.sh" \
@@ -179,6 +171,14 @@ detect_command fasd \
 # detect_command direnv \
 #   && export EDITOR=vim \
 #   && eval "$(direnv hook bash)"
+
+# Loading rbenv
+# `rbenv init` at default runs rehashing but this is really, really slow.
+# so here runs `rbenv rehash` with ampersand in order to make it backgrounded.
+export PATH="$HOME/.rbenv/bin:$PATH" type rbenv &> /dev/null \
+  && eval "$(rbenv init --no-rehash -)" \
+  && (rbenv rehash &) 2> /dev/null \
+  && echo "Initialized: rbenv"
 
 # See https://www.iterm2.com/3.3/documentation-scripting-fundamentals.html
 function iterm2_print_user_vars() {
