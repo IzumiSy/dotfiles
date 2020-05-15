@@ -27,6 +27,9 @@ ln -snvf "$(pwd)/etc/_gitconfig_global" "$HOME/.gitignore_global"
 ln -snvf "$(pwd)/etc/_hyper.js" "$HOME/.hyper.js"
 ln -svnf "$(pwd)/etc/_pryrc" "$HOME/.pryrc"
 
+# Install starship
+curl -fsSL https://starship.rs/install.sh | bash
+
 # Install _vimrc
 if [ ! -e "$HOME/.vim" ] ; then
   curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
