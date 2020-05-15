@@ -8,7 +8,12 @@
 #
 # -------------------------------------------------
 
-# http://www.itmedia.co.jp/help/tips/linux/l0612.html
+
+export STARSHIP_CONFIG=~/.starship.toml
+eval "$(starship init bash)"
+
+# Disable console freezing with Ctrl+S
+# ref: http://www.itmedia.co.jp/help/tips/linux/l0612.html
 stty stop undef
 
 # Workaround to prevent problem with Byobu that occurs in connecting with Teraterm
@@ -23,8 +28,7 @@ export HISTCONTROL=ignoreboth:erasedups
 export HISTIGNORE="ls:ll:cd .."
 export HISTSIZE=5000
 
-# Command existence detector
-# Need to be defined here
+# A predicate function to determine if the given command exists or not
 function detect_command() {
   type "$1" &> /dev/null ;
 }
@@ -33,51 +37,11 @@ if [[ "$OSTYPE" = "darwin"* ]] ; then
   # git must be installed via homebrew
   source "/usr/local/etc/bash_completion.d/git-prompt.sh"
   source "/usr/local/etc/bash_completion.d/git-completion.bash"
-  # source "/Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash"
-  # source "/Library/Developer/CommandLineTools/usr/share/git-core/git-prompt.sh"
 else
   # this usually aims for Ubuntu
   source "/etc/bash_completion.d/git-prompt"
   source "/etc/profile.d/bash_completion.sh"
 fi
-
-# https://github.com/jcgoble3/gitstuff/blob/master/gitprompt.sh
-function __git_status() {
-  local status="$(git status --porcelain 2>/dev/null)"
-  local output=''
-
-  [[ -n $(egrep '^[MADRC]' <<< "$status") ]] && output="+"
-  [[ -n $(egrep '^.[MD]' <<< "$status") ]] && output="!"
-  [[ -n $(egrep '^\?\?' <<< "$status") ]] && output="?"
-  [[ $output ]] && echo " [$output]"
-}
-
-function __get_branch_name() {
-  git branch | grep "*" | cut -d ' ' -f 2
-}
-
-function branch_name() {
-  if detect_command __git_ps1 ; then
-    echo '\[\e[0;36m\]$(__git_ps1)\[\e[00m\]';
-  fi
-}
-
-function git_status() {
-  if detect_command __git_status ; then
-    echo '\[\e[0;94m\]$(__git_status)\[\e[00m\]';
-  fi
-}
-
-function base_line() {
-  _bold="\[\e[1;1m\]"
-  _green="\[\e[1;32m\]"
-  _blue="\[\e[1;34m\]"
-  _cyan="\[\e[1;104m\]"
-  _clear="\[\e[00m\]"
-  echo "${_cyan}\h${_clean} ${_green}[\$(date +%k:%M:%S)]${_clear} ${_bold}\w${_clear}";
-}
-
-export PS1="$(base_line)\n$(branch_name)$(git_status) ${text}$ "
 
 # Git command aliases
 alias gad='git add .'
@@ -90,6 +54,10 @@ alias gs='git status --short'
 alias gpl='git pull origin $(__get_branch_name)'
 alias gb='git branch'
 alias gau='git commit -a -m "ci skip"'
+
+function __get_branch_name() {
+  git branch | grep "*" | cut -d ' ' -f 2
+}
 
 # Delete merged branches
 alias gcmb="git branch --merged | grep -vE '^\*|master$|develop$' | xargs -I % git branch -d %"
