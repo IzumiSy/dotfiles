@@ -30,9 +30,13 @@ function detect_command() {
 }
 
 if [[ "$OSTYPE" = "darwin"* ]] ; then
-  source "/Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash"
-  source "/Library/Developer/CommandLineTools/usr/share/git-core/git-prompt.sh"
+  # git must be installed via homebrew
+  source "/usr/local/etc/bash_completion.d/git-prompt.sh"
+  source "/usr/local/etc/bash_completion.d/git-completion.bash"
+  # source "/Library/Developer/CommandLineTools/usr/share/git-core/git-completion.bash"
+  # source "/Library/Developer/CommandLineTools/usr/share/git-core/git-prompt.sh"
 else
+  # this usually aims for Ubuntu
   source "/etc/bash_completion.d/git-prompt"
   source "/etc/profile.d/bash_completion.sh"
 fi
