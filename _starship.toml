@@ -2,3 +2,6 @@ add_newline = false
 
 [git_branch]
 symbol = ""
+
+[battery]
+disabled = true
