@@ -20,3 +20,7 @@ disabled = true
 
 [golang]
 disabled = true
+
+[java]
+symbol = "☕️ "
+style = "red"
