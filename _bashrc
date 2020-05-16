@@ -124,10 +124,6 @@ detect_command fasd \
   && eval "$(fasd --init auto)" \
   && echo "Initialized: fasd"
 
-# detect_command direnv \
-#   && export EDITOR=vim \
-#   && eval "$(direnv hook bash)"
-
 # `init` function can manually initialize language version switcher.
 function init() {
   case $1 in
@@ -138,21 +134,31 @@ function init() {
       export PATH="$HOME/.rbenv/bin:$PATH" type rbenv &> /dev/null \
         && eval "$(rbenv init --no-rehash -)" \
         && (rbenv rehash &) 2> /dev/null \
-        && echo "Initialized: rbenv" \
+        && echo "Initialized: rbenv ($(rbenv --version))" \
         ;;
+
     "nvm")
       export NVM_DIR="$HOME/.nvm" \
         && test -e "$NVM_DIR/nvm.sh" \
         && \. "$NVM_DIR/nvm.sh" \
-        && echo "Initialized: nvm" \
+        && echo "Initialized: nvm ($(nvm --version))" \
         ;;
+
     "pyenv")
       export PYENV_ROOT="$HOME/.pyenv" \
         && export PATH="$PYENV_ROOT/bin:$PATH" \
         && eval "$(pyenv init -)" \
         && eval "$(pyenv virtualenv-init -)" \
-        && echo "Initialized: pyenv" \
+        && echo "Initialized: pyenv ($(pyenv --version))" \
         ;;
+
+    "direnv")
+      detect_command direnv \
+        && export EDITOR=vim \
+        && eval "$(direnv hook bash)" \
+        && echo "Initialized: direnv ($(direnv --version))" \
+        ;;
+
     *)
       echo "Initlized: nothing"
   esac
