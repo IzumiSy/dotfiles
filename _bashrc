@@ -48,12 +48,13 @@ alias gad='git add .'
 alias gadi='git add -i'
 alias gd='git diff --cached'
 alias gcm='git commit -m'
+alias gau='git commit -a -m "ci skip"'
 alias gch='git checkout'
-alias glo='git log --oneline --decorate --graph'
+alias gloa='git log --oneline --decorate --graph'
+alias glo='gloa -10'
 alias gs='git status --short'
 alias gpl='git pull origin $(__get_branch_name)'
 alias gb='git branch'
-alias gau='git commit -a -m "ci skip"'
 
 function __get_branch_name() {
   git branch | grep "*" | cut -d ' ' -f 2
@@ -95,8 +96,7 @@ alias ls="ls --color=auto"
 alias la='ls -a'
 alias ll='\clear && ls -Flh1v --group-directories-first'
 alias lla='\clear && ls -Flh1va --group-directories-first'
-detect_command gls \
-  && alias ls="gls --color=auto"
+detect_command gls && alias ls="gls --color=auto"
 
 # others
 alias x='exit'
