@@ -71,5 +71,6 @@
         "editor.formatOnSave": true
     },
 
-    "typescript.updateImportsOnFileMove.enabled": "always"
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "files.maxMemoryForLargeFilesMB": 1024
 }
