@@ -72,5 +72,10 @@
     },
 
     "typescript.updateImportsOnFileMove.enabled": "always",
-    "files.maxMemoryForLargeFilesMB": 1024
+    "files.maxMemoryForLargeFilesMB": 1024,
+
+    "files.watcherExclude": {
+        "**/.git/objects/**": true,
+        "**/node_modules/**": true
+    } 
 }
