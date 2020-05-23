@@ -159,9 +159,10 @@ function init() {
 # Lazy loading for nvm
 export NVM_DIR="$HOME/.nvm"
 if [ -e "$NVM_DIR/nvm.sh" ]; then
-  alias nvm='unalias nvm node npm && . "$NVM_DIR"/nvm.sh && nvm'
-  alias node='unalias nvm node npm && . "$NVM_DIR"/nvm.sh && node'
-  alias npm='unalias nvm node npm && . "$NVM_DIR"/nvm.sh && npm'
+  alias nvm='unalias nvm node npm npx && . "$NVM_DIR"/nvm.sh && nvm'
+  alias node='unalias nvm node npm npx && . "$NVM_DIR"/nvm.sh && node'
+  alias npm='unalias nvm node npm npx && . "$NVM_DIR"/nvm.sh && npm'
+  alias npx='unalias nvm node npx npx && . $NVM_DIR"/nvm.sh && npx'
 fi
 
 # Lazy loading for rbenv
