@@ -113,6 +113,15 @@ function dp() {
   cd $( d | awk '{ print $2 }' | peco --query \"$(pwd)\ \" )
 }
 
+# See https://www.iterm2.com/3.3/documentation-scripting-fundamentals.html
+function iterm2_print_user_vars() {
+  if detect_command gcloud ; then
+    gcp_profile=$(cat $HOME/.config/gcloud/active_config)
+    gcp_project=$(awk '/project/{print $3}' $HOME/.config/gcloud/configurations/config_$gcp_profile)
+    iterm2_set_user_var gcpProjectId $gcp_project
+  fi
+}
+
 # Homebrew's sbin
 export PATH="/usr/local/sbin:$PATH"
 
@@ -127,23 +136,6 @@ detect_command fasd \
 # `init` function can manually initialize language version switcher.
 function init() {
   case $1 in
-    "rbenv")
-      # Loading rbenv
-      # `rbenv init` at default runs rehashing but this is really, really slow.
-      # so here runs `rbenv rehash` with ampersand in order to make it backgrounded.
-      export PATH="$HOME/.rbenv/bin:$PATH" type rbenv &> /dev/null \
-        && eval "$(rbenv init --no-rehash -)" \
-        && (rbenv rehash &) 2> /dev/null \
-        && echo "Initialized: rbenv ($(rbenv --version))" \
-        ;;
-
-    "nvm")
-      export NVM_DIR="$HOME/.nvm" \
-        && test -e "$NVM_DIR/nvm.sh" \
-        && \. "$NVM_DIR/nvm.sh" \
-        && echo "Initialized: nvm ($(nvm --version))" \
-        ;;
-
     "pyenv")
       export PYENV_ROOT="$HOME/.pyenv" \
         && export PATH="$PYENV_ROOT/bin:$PATH" \
@@ -164,11 +156,18 @@ function init() {
   esac
 }
 
-# See https://www.iterm2.com/3.3/documentation-scripting-fundamentals.html
-function iterm2_print_user_vars() {
-  if detect_command gcloud ; then
-    gcp_profile=$(cat $HOME/.config/gcloud/active_config)
-    gcp_project=$(awk '/project/{print $3}' $HOME/.config/gcloud/configurations/config_$gcp_profile)
-    iterm2_set_user_var gcpProjectId $gcp_project
-  fi
-}
+# Lazy loading for nvm
+export NVM_DIR="$HOME/.nvm"
+if [ -e "$NVM_DIR/nvm.sh" ]; then
+  alias nvm='unalias nvm node npm && . "$NVM_DIR"/nvm.sh && nvm'
+  alias node='unalias nvm node npm && . "$NVM_DIR"/nvm.sh && node'
+  alias npm='unalias nvm node npm && . "$NVM_DIR"/nvm.sh && npm'
+fi
+
+# Lazy loading for rbenv
+export PATH="$HOME/.rbenv/bin:$PATH"
+if [ -e "$HOME/.rbenv" ]; then
+  alias ruby='unalias ruby bundle gem && eval "$(rbenv init -)" && ruby'
+  alias bundle='unalias ruby bundle gem && eval "$(rbenv init -)" && bundle'
+  alias gem='unalias ruby bundle gem && eval "$(rbenv init -)" && gem'
+fi
