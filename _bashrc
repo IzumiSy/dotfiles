@@ -8,9 +8,10 @@
 #
 # -------------------------------------------------
 
-
-export STARSHIP_CONFIG=~/.starship.toml
-eval "$(starship init bash)"
+# A predicate function to determine if the given command exists or not
+function exists() {
+  type "$1" &> /dev/null ;
+}
 
 # Disable console freezing with Ctrl+S
 # ref: http://www.itmedia.co.jp/help/tips/linux/l0612.html
@@ -27,11 +28,6 @@ shopt -s autocd  &> /dev/null;
 export HISTCONTROL=ignoreboth:erasedups
 export HISTIGNORE="ls:ll:cd .."
 export HISTSIZE=5000
-
-# A predicate function to determine if the given command exists or not
-function detect_command() {
-  type "$1" &> /dev/null ;
-}
 
 if [[ "$OSTYPE" = "darwin"* ]] ; then
   # git must be installed via homebrew
@@ -63,7 +59,7 @@ function __get_branch_name() {
 # Delete merged branches
 alias gcmb="git branch --merged | grep -vE '^\*|master$|develop$' | xargs -I % git branch -d %"
 
-if detect_command peco ; then
+if exists peco ; then
   alias pco='git branch | peco | xargs git checkout'
 fi
 
@@ -96,7 +92,7 @@ alias ls="ls --color=auto"
 alias la='ls -a'
 alias ll='\clear && ls -Flh1v --group-directories-first'
 alias lla='\clear && ls -Flh1va --group-directories-first'
-detect_command gls && alias ls="gls --color=auto"
+exists gls && alias ls="gls --color=auto"
 
 # others
 alias x='exit'
@@ -115,7 +111,7 @@ function dp() {
 
 # See https://www.iterm2.com/3.3/documentation-scripting-fundamentals.html
 function iterm2_print_user_vars() {
-  if detect_command gcloud ; then
+  if exists gcloud ; then
     gcp_profile=$(cat $HOME/.config/gcloud/active_config)
     gcp_project=$(awk '/project/{print $3}' $HOME/.config/gcloud/configurations/config_$gcp_profile)
     iterm2_set_user_var gcpProjectId $gcp_project
@@ -129,7 +125,7 @@ export PATH="/usr/local/sbin:$PATH"
 export GO111MODULE=on
 export PATH=$PATH:$HOME/go/bin
 
-detect_command fasd \
+exists fasd \
   && eval "$(fasd --init auto)" \
   && echo "Initialized: fasd"
 
@@ -145,7 +141,7 @@ function init() {
         ;;
 
     "direnv")
-      detect_command direnv \
+      exists direnv \
         && export EDITOR=vim \
         && eval "$(direnv hook bash)" \
         && echo "Initialized: direnv ($(direnv --version))" \
@@ -171,4 +167,9 @@ if [ -e "$HOME/.rbenv" ]; then
   alias ruby='unalias ruby bundle gem && eval "$(rbenv init -)" && ruby'
   alias bundle='unalias ruby bundle gem && eval "$(rbenv init -)" && bundle'
   alias gem='unalias ruby bundle gem && eval "$(rbenv init -)" && gem'
+fi
+
+if exists starship ; then
+  export STARSHIP_CONFIG=~/.starship.toml
+  eval "$(starship init bash)"
 fi
