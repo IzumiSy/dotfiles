@@ -35,10 +35,10 @@ module.exports = {
     // set to `false` if you want to hide the minimize, maximize and close buttons
     // additionally, set to `'left'` if you want them on the left, like in Ubuntu
     // default: `true` on windows and Linux (ignored on macOS)
-    showWindowControls: '',
+    showWindowControls: 'left',
 
     // custom padding (css format, i.e.: `top right bottom left`)
-    padding: '0px 10px',
+    padding: '10px 10px',
 
     // the full list. if you're going to provide the full color palette,
     // including the 6 x 6 color cubes and the grayscale map, just provide
@@ -87,6 +87,11 @@ module.exports = {
     hyperGcpStatusLine: {
       gcloudBinary: '/usr/local/bin/gcloud',
       kubectlBinary: '/usr/local/bin/kubectl'
+    },
+
+    hyperTabs: {
+      // trafficButtons: true,
+      tabIconsColored: true
     }
   },
 
@@ -103,7 +108,8 @@ module.exports = {
     "hyper-blink",
     "hyperlinks",
     "hyperterm-cursor",
-    "hyper-gcp-status-line"
+    "hyper-gcp-status-line",
+    "hyper-seti-monokai"
   ],
 
   // in development, you can create a directory under
