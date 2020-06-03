@@ -82,7 +82,7 @@ module.exports = {
     // URL to custom bell
     // bellSoundURL: 'http://example.com/bell.mp3',
 
-    opacity: 0.9,
+    // opacity: 0.9,
 
     hyperGcpStatusLine: {
       gcloudBinary: '/usr/local/bin/gcloud',
@@ -98,7 +98,7 @@ module.exports = {
   //   `project#1.0.1`
   plugins: [
     // "hyper-statusline",
-    "hyper-opacity",
+    // "hyper-opacity",
     "hyper-tabs-enhanced",
     "hyper-blink",
     "hyperlinks",
