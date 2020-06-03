@@ -84,7 +84,7 @@ module.exports = {
 
     // for advanced config flags please refer to https://hyper.is/#cfg
 
-    opacity: 0.9,
+    opacity: 0.9
   },
 
   // a list of plugins to fetch and install from npm
@@ -99,7 +99,7 @@ module.exports = {
     "hyper-tabs-enhanced",
     "hyper-blink",
     "hyperlinks",
-    "hyperterm-cursor",
+    "hyperterm-cursor"
   ],
 
   // in development, you can create a directory under
@@ -108,17 +108,10 @@ module.exports = {
   localPlugins: [],
 
   keymaps: {
-    'tab:new': [
-      'cmd+shift+t',
-      'ctrl+shift+t',
-    ],
-    'tab:prev': [
-      'cmd+{',
-      'ctrl+shift+[',
-    ],
-    'tab:next': [
-      'cmd+}',
-      'ctrl+shift+]',
-    ]
+    'tab:new': 'command+shift+t',
+    'tab:prev': 'command+[',
+    'tab:next': 'command+]',
+    'pane:prev': 'command+shift+[',
+    'pane:next': 'command+shift+]'
   }
 };
