@@ -88,6 +88,7 @@ Plug 'othree/yajs.vim', { 'for': 'javascript' }
 Plug 'maxmellon/vim-jsx-pretty', { 'for': 'javascript' }
 Plug 'joukevandermaas/vim-ember-hbs', { 'for': 'handlebars' }
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
+Plug 'cespare/vim-toml', { 'for': 'toml' }
 
 call plug#end()
 
@@ -148,6 +149,7 @@ let &titleold=getcwd()
 au BufRead,BufNewFile,BufReadPost *.erb set filetype=eruby.html
 au BufRead,BufNewFile,BufReadPost {*.ts,*.tsx} set filetype=typescript
 au BufRead,BufNewFile,BufReadPost *.elm set filetype=elm
+au BufRead,BufNewFile,BufReadPost *.toml set filetype=toml
 au BufRead,BufNewFile {COMMIT_EDITMSG} set filetype=gitcommit
 au BufRead,BufNewFile {.envrc,_bash*} set filetype=sh
 
