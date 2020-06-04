@@ -14,7 +14,7 @@ function exists() {
 }
 
 # Disable console freezing with Ctrl+S
-# ref: http://www.itmedia.co.jp/help/tips/linux/l0612.html
+# (ref: http://www.itmedia.co.jp/help/tips/linux/l0612.html)
 stty stop undef
 
 # Workaround to prevent problem with Byobu that occurs in connecting with Teraterm
@@ -180,7 +180,7 @@ if [ -e "$HOME/.rbenv" ]; then
   alias gem='unalias ruby bundle gem && eval "$(rbenv init -)" && gem'
 fi
 
-if exists starship ; then
-  export STARSHIP_CONFIG=~/.starship.toml
-  # eval "$(starship init bash)"
-fi
+# if exists starship ; then
+#   export STARSHIP_CONFIG=~/.starship.toml
+#   eval "$(starship init bash)"
+# fi
