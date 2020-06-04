@@ -90,7 +90,6 @@ module.exports = {
     },
 
     hyperTabs: {
-      // trafficButtons: true,
       tabIconsColored: true
     }
   },
@@ -102,13 +101,12 @@ module.exports = {
   //   `@company/project`
   //   `project#1.0.1`
   plugins: [
-    // "hyper-statusline",
-    // "hyper-opacity",
+    "hyper-statusline",
+    // "hyper-gcp-status-line",
     "hyper-tabs-enhanced",
     "hyper-blink",
     "hyperlinks",
     "hyperterm-cursor",
-    "hyper-gcp-status-line",
     "hyper-seti-monokai"
   ],
 
