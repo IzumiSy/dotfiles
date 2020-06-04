@@ -110,13 +110,13 @@ function dp() {
 }
 
 # See https://www.iterm2.com/3.3/documentation-scripting-fundamentals.html
-# function iterm2_print_user_vars() {
-#   if exists gcloud ; then
-#     gcp_profile=$(cat $HOME/.config/gcloud/active_config)
-#     gcp_project=$(awk '/project/{print $3}' $HOME/.config/gcloud/configurations/config_$gcp_profile)
-#     iterm2_set_user_var gcpProjectId $gcp_project
-#   fi
-# }
+function iterm2_print_user_vars() {
+  if exists gcloud ; then
+    gcp_profile=$(cat $HOME/.config/gcloud/active_config)
+    gcp_project=$(awk '/project/{print $3}' $HOME/.config/gcloud/configurations/config_$gcp_profile)
+    iterm2_set_user_var gcpProjectId $gcp_project
+  fi
+}
 
 function base_line() {
   _bold="\[\e[1;1m\]"
