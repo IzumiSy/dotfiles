@@ -118,6 +118,17 @@ function dp() {
 #   fi
 # }
 
+function base_line() {
+  _bold="\[\e[1;1m\]"
+  _green="\[\e[1;32m\]"
+  _blue="\[\e[1;34m\]"
+  _cyan="\[\e[1;104m\]"
+  _clear="\[\e[00m\]"
+  echo "${_blue}\h${_clear} ${_green}[\$(date +%k:%M:%S)]${_clear} ${_bold}\w${_clear}";
+}
+
+export PS1="$(base_line) ${text}$ "
+
 # Homebrew's sbin
 export PATH="/usr/local/sbin:$PATH"
 
