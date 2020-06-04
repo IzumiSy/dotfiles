@@ -125,9 +125,9 @@ export PATH="/usr/local/sbin:$PATH"
 export GO111MODULE=on
 export PATH=$PATH:$HOME/go/bin
 
-exists fasd \
-  && eval "$(fasd --init auto)" \
-  && echo "Initialized: fasd"
+# exists fasd \
+#   && eval "$(fasd --init auto)" \
+#   && echo "Initialized: fasd"
 
 # `init` function can manually initialize language version switcher.
 function init() {
@@ -171,5 +171,5 @@ fi
 
 if exists starship ; then
   export STARSHIP_CONFIG=~/.starship.toml
-  eval "$(starship init bash)"
+  # eval "$(starship init bash)"
 fi
