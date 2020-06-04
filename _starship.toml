@@ -1,16 +1,35 @@
 add_newline = false
 
+# git
+
 [git_branch]
 symbol = ""
 
 [git_status]
 stashed = ""
 
+# system
+
 [time]
 disabled = false
 
 [battery]
 disabled = true
+
+[aws]
+disabled = true
+
+[jobs]
+disabled = true
+
+[hostname]
+disabled = true
+
+# language
+
+[java]
+symbol = "☕️ "
+style = "red"
 
 [python]
 disabled = true
@@ -21,6 +40,46 @@ disabled = true
 [golang]
 disabled = true
 
-[java]
-symbol = "☕️ "
-style = "red"
+[conda]
+disabled = true
+
+[crystal]
+disabled = true
+
+[dotnet]
+disabled = true
+
+[elixier]
+disabled = true
+
+[erlang]
+disabled = true
+
+[haskell]
+disabled = true
+
+[julia]
+disabled = true
+
+[nix_shell]
+disabled = true
+
+[ocaml]
+disabled = true
+
+[php]
+disabled = true
+
+[singularity]
+disabled = true
+
+[zig]
+disabled = true
+
+[purescript]
+disabled = true
+
+# tools
+
+[terraform]
+disabled = true
