@@ -49,7 +49,7 @@ alias gch='git checkout'
 alias gloa='git log --oneline --decorate --graph'
 alias glo='gloa -10'
 alias gs='git status --short'
-alias gpl='git pull origin $(__get_branch_name)'
+alias gpl='git pull --rebase origin $(__get_branch_name)'
 alias gb='git branch'
 
 function __get_branch_name() {
