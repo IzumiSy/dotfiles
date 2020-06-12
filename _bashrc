@@ -163,21 +163,17 @@ function init() {
   esac
 }
 
-# Lazy loading for nvm
 export NVM_DIR="$HOME/.nvm"
 if [ -e "$NVM_DIR/nvm.sh" ]; then
-  alias nvm='unalias nvm node npm npx && . "$NVM_DIR"/nvm.sh && nvm'
-  alias node='unalias nvm node npm npx && . "$NVM_DIR"/nvm.sh && node'
-  alias npm='unalias nvm node npm npx && . "$NVM_DIR"/nvm.sh && npm'
-  alias npx='unalias nvm node npm npx && . "$NVM_DIR"/nvm.sh && npx'
+  . "$NVM_DIR"/nvm.sh
+  echo "Loaded nvm"
 fi
 
-# Lazy loading for rbenv
 export PATH="$HOME/.rbenv/bin:$PATH"
 if [ -e "$HOME/.rbenv" ]; then
-  alias ruby='unalias ruby bundle gem && eval "$(rbenv init -)" && ruby'
-  alias bundle='unalias ruby bundle gem && eval "$(rbenv init -)" && bundle'
-  alias gem='unalias ruby bundle gem && eval "$(rbenv init -)" && gem'
+  eval "$(rbenv init --no-rehash -)"
+  (rbenv rehash &) 2> /dev/null # lazy rehashing
+  echo "Loaded rbenv"
 fi
 
 # if exists starship ; then
