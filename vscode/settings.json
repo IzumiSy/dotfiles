@@ -56,6 +56,7 @@
 
     "go.formatTool": "gofmt",
     "go.lintOnSave": "off",
+    "go.buildOnSave": "off"
     "go.vetOnSave": "package",
     "go.gocodeAutoBuild": false,
     "go.useLanguageServer": true,
@@ -73,14 +74,16 @@
     },
 
     "typescript.updateImportsOnFileMove.enabled": "always",
-    "files.maxMemoryForLargeFilesMB": 1024,
 
+    "files.maxMemoryForLargeFilesMB": 1024,
     "files.watcherExclude": {
         "**/.git/objects/**": true,
         "**/node_modules/**": true,
         "**/elm-stuff/**": true
     },
+
     "search.exclude": {
         "**/elm-stuff": true
+        "**/node_modules/**": true,
     }
 }
