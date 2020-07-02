@@ -153,9 +153,9 @@ au BufRead,BufNewFile,BufReadPost *.toml set filetype=toml
 au BufRead,BufNewFile {COMMIT_EDITMSG} set filetype=gitcommit
 au BufRead,BufNewFile {.envrc,_bash*} set filetype=sh
 
-" Speciul tab/indent width
-au FileType c,golang set tabstop=4 shiftwidth=4 softtabstop=4
-au FileType c,cpp,python set cindent
+" Special tab/indent width
+au FileType c,cpp,golang,python set tabstop=4 shiftwidth=4 softtabstop=4
+au FileType c,cpp,golang,python set cindent
 
 " Check files' modifiction more frequently
 augroup checktime
