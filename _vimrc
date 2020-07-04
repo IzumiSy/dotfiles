@@ -312,12 +312,6 @@ nnoremap <silent>,gg :GitGutterToggle<CR>
 nnoremap <silent>,gh :GitGutterLineHighlightsToggle<CR>
 nnoremap <silent>,gl :GV!<CR>
 
-" ====================== "
-"    Settings for Elm    "
-" ====================== "
-let g:elm_setup_keybindings=0
-let g:elm_format_autosave=1
-
 " ======================= "
 "  Settings for Markdown  "
 " ======================= "
@@ -369,5 +363,5 @@ let g:multi_cursor_quit_key="<C-c>"
 "     Highlight     "
 " ================= "
 " Enable background transparency on Ubuntu. these highlight settings needs to be here.
-highlight Normal ctermbg=none
-highlight NonText ctermbg=none
+" highlight Normal ctermbg=none
+" highlight NonText ctermbg=none
