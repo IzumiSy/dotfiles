@@ -61,8 +61,6 @@ Plug 'mattn/vim-goimports', { 'for': 'go' }
 
 call plug#end()
 
-set
-
 " ========================= "
 "      General settings     "
 " ========================= "
@@ -209,12 +207,14 @@ nnoremap . <NOP>
 "      vim-lsp      "
 " ================= "
 let g:lsp_settings = {
-\ 'elm-language-server': {
-\   'elmPath': './node_modules/elm',
-\   'elmFormatPath': './node_modules/elm-format',
-\   'elmTestPath': './node_modules/elm-test'
+\   'elm-language-server': {
+\     'initialization_options': {
+\       'elmPath': './node_modules/.bin/elm',
+\       'elmFormatPath': './node_modules/.bin/elm-format',
+\       'elmTestPath': './node_modules/.bin/elm-test'
+\     }
+\   }
 \ }
-\}
 
 " ======================== "
 "      Unite settings      "
