@@ -300,7 +300,7 @@ nnoremap <silent>,gl :GV!<CR>
 " ======================= "
 "  Settings for Markdown  "
 " ======================= "
-let g:vim_markdown_folding_disabled=1
+let g:vim_markdown_folding_disabled = 1
 
 " =========================== "
 "   Settings for easymotion   "
@@ -340,9 +340,9 @@ let g:go_through_jk_move_count = 5
 " ===================== "
 "   vim-multi-cursors   "
 " ===================== "
-let g:multi_cursor_use_default_mapping=0
-let g:multi_cursor_start_word_key="<S-i>"
-let g:multi_cursor_quit_key="<C-c>"
+let g:multi_cursor_use_default_mapping = 0
+let g:multi_cursor_start_word_key = "<S-i>"
+let g:multi_cursor_quit_key = "<C-c>"
 
 " ================= "
 "     Highlight     "
