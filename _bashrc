@@ -105,9 +105,9 @@ alias cp='cp -i'
 alias mv='mv -i'
 alias hist='eval $(history | cut -c 8- | peco)'
 
-function dp() {
-  cd $( d | awk '{ print $2 }' | peco --query \"$(pwd)\ \" )
-}
+# function dp() {
+#   cd $( d | awk '{ print $2 }' | peco --query \"$(pwd)\ \" )
+# }
 
 # See https://www.iterm2.com/3.3/documentation-scripting-fundamentals.html
 function iterm2_print_user_vars() {
