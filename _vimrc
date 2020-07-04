@@ -190,6 +190,9 @@ nnoremap <C-w><C-n> <NOP>
 " Disable dot action
 nnoremap . <NOP>
 
+" Shift-free command mode in US layout
+nmap ; :
+
 " ================= "
 "      vim-lsp      "
 " ================= "
