@@ -206,7 +206,10 @@ let g:lsp_settings = {
 \     }
 \   }
 \ }
-au BufWritePre * :LspDocumentFormat
+au BufWritePre {*.go,*.elm,*.ts,*.js} :LspDocumentFormat
+nnoremap <leader>df :vert LspDefinition<CR>
+nnoremap <leader>tt :tab LspDefinition<CR>
+nnoremap <leader>ee :LspDocumentDiagnostics<CR>
 
 " ====================== "
 "      asyncomplete      "
