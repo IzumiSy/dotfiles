@@ -305,9 +305,9 @@ let g:vim_markdown_folding_disabled=1
 " =========================== "
 "   Settings for easymotion   "
 " =========================== "
-let g:EasyMotion_keys='hjklasdfgyuiopqwertnmzxcvbHJKLASDFGYUIOPQWERTNMZXCVB'
-let g:EasyMotion_do_mapping=0
-let g:EastMotion_grouping=1
+let g:EasyMotion_keys = 'hjklasdfgyuiopqwertnmzxcvbHJKLASDFGYUIOPQWERTNMZXCVB'
+let g:EasyMotion_do_mapping = 0
+let g:EasyMotion_smartcase = 1
 nmap <C-j> <Plug>(easymotion-s2)
 nmap <C-k> <Plug>(easymotion-s2)
 hi EasyMotionShade ctermbg=none ctermfg=blue
