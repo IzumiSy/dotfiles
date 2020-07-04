@@ -154,7 +154,9 @@ endfunction
 nnoremap <C-t> :tabnew<CR>
 nnoremap <C-m> :tabn<CR>
 nnoremap <C-n> :tabp<CR>
+nnoremap <C-x> :q<CR>
 
+" Quick horizontal key manueuvers
 nmap <silent><C-h> b
 nmap <silent><C-l> w
 vmap <silent><C-h> b
@@ -162,15 +164,6 @@ vmap <silent><C-l> w
 
 " Fix strange behavior of Backspace
 inoremap <expr><BS> "\<C-h>"
-
-" Closes window
-nnoremap <C-x> :q<CR>
-
-" Disables arrow keys
-noremap <Up> <Nop>
-noremap <Down> <Nop>
-noremap <Left> <Nop>
-noremap <Right> <Nop>
 
 " Visual mode key-mappings for multiple indents
 vnoremap > >gv
