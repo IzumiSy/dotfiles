@@ -15,71 +15,33 @@
 
 call plug#begin('~/.vim/plugged')
 
-" Sudo wrapper plugin
 Plug 'vim-scripts/sudo.vim'
-
-" Syntax checking plugin
-" Plug 'dense-analysis/ale'
-" Plug 'maximbaz/lightline-ale'
-
-" Whitespace trailer
 Plug 'bronson/vim-trailing-whitespace', { 'on': 'FixWhitespace' }
-
-" Fulltext searching
 Plug 'rking/ag.vim'
-
-" Nice Vim manipulation
 Plug 'easymotion/vim-easymotion'
 Plug 'deris/vim-gothrough-jk'
 Plug 'terryma/vim-multiple-cursors'
-
-" Word bracket, commenting plugins
 Plug 'vim-scripts/surround.vim'
 Plug 'scrooloose/nerdcommenter'
-
-" Autocomplete popup
-Plug 'https://github.com/Shougo/neocomplete'
-
-" Status line customizing plugin
+" Plug 'https://github.com/Shougo/neocomplete'
 Plug 'https://github.com/itchyny/lightline.vim'
-
-" Interactive fuzzy-wording finder over multiple
-" sources like files, buffers, and file histories.
 Plug 'https://github.com/Shougo/unite.vim'
 Plug 'https://github.com/Shougo/vimproc', { 'do': 'make' }
 Plug 'https://github.com/Shougo/neomru.vim'
-
-" File viewer plugins
 Plug 'vim-scripts/The-NERD-tree', { 'on': 'NERDTree' }
-
-" Theme
 Plug 'vim-scripts/desert256.vim'
-
-" Git
-" @ vim-gitgutter is a plugin shows Git status on an each line
-" @ vim-fugitive is required for lightline.vim
 Plug 'https://github.com/airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 
-" TypeScript
-" @ typescript-vim is syntax highlight support
-" @ tsuquyomi is a plugin to use TypeScript server
-Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
-Plug 'Quramy/tsuquyomi', { 'for': 'typescript', 'do': 'npm install -g typescript' }
 
-" CSS
-" @ css.vim is a plugin to add standard CSS syntax highlight
-" @ vim-css3-syntax adds a syntax for CSS3 in addition to css.vim
-Plug 'JulesWang/css.vim', { 'for': 'css' }
-Plug 'hail2u/vim-css3-syntax', { 'for': 'css' }
+" LSP
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-lsp.vim'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'mattn/vim-lsp-settings'
 
-" Golang
-Plug 'fatih/vim-go', { 'for': 'go', 'do': ':GoInstallBinaries' }
-
-" Elm
-Plug 'elmcast/elm-vim', { 'for': 'elm' }
-
-" Other syntaxes
+" Syntaxes
 Plug 'leshill/vim-json', { 'for': 'json' }
 Plug 'tpope/vim-haml', { 'for': 'haml' }
 Plug 'othree/html5.vim', { 'for': 'html' }
@@ -89,6 +51,13 @@ Plug 'maxmellon/vim-jsx-pretty', { 'for': 'javascript' }
 Plug 'joukevandermaas/vim-ember-hbs', { 'for': 'handlebars' }
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'cespare/vim-toml', { 'for': 'toml' }
+Plug 'elmcast/elm-vim', { 'for': 'elm' }
+Plug 'JulesWang/css.vim', { 'for': 'css' }
+Plug 'hail2u/vim-css3-syntax', { 'for': 'css' }
+Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
+
+" Language-specifc plugins
+Plug 'mattn/vim-goimports', { 'for': 'go' }
 
 call plug#end()
 
@@ -154,8 +123,8 @@ au BufRead,BufNewFile {COMMIT_EDITMSG} set filetype=gitcommit
 au BufRead,BufNewFile {.envrc,_bash*} set filetype=sh
 
 " Special tab/indent width
-au FileType c,cpp,golang,python set tabstop=4 shiftwidth=4 softtabstop=4
-au FileType c,cpp,golang,python set cindent
+au FileType c,cpp,go,python set tabstop=4 shiftwidth=4 softtabstop=4
+au FileType c,cpp set cindent
 
 " Check files' modifiction more frequently
 augroup checktime
@@ -329,36 +298,6 @@ nnoremap <silent>,gg :GitGutterToggle<CR>
 nnoremap <silent>,gh :GitGutterLineHighlightsToggle<CR>
 nnoremap <silent>,gl :GV!<CR>
 
-" ============ "
-"     ale      "
-" ============ "
-" let g:ale_set_loclist=0
-" let g:ale_set_quickfix=1
-" let g:ale_linters={
-" \   'go': ['gopls']
-" \ }
-
-" ===================== "
-"  Settings for Golang  "
-" ===================== "
-let g:go_highlight_functions=1
-let g:go_highlight_methods=1
-let g:go_highlight_structs=1
-let g:go_highlight_fields=1
-let g:go_highlight_types=1
-let g:go_highlight_operators=1
-let g:go_def_mapping_enabled=0
-let g:go_def_mode='gopls'
-let g:go_info_mode='gopls'
-au BufWritePost *.go :silent GoFmt
-au FileType go :nnoremap <silent>,df :call go#def#Jump("split", 0)<CR>
-
-" Fix for fuckin slow autocompletion
-" [Ref] https://github.com/fatih/vim-go/issues/2049#issuecomment-437045293
-let g:go_auto_type_info=0
-let g:go_auto_sameids=0
-let g:go_gocode_propose_source=0
-
 " ====================== "
 "    Settings for Elm    "
 " ====================== "
@@ -380,33 +319,6 @@ nmap <C-j><C-j> <Plug>(easymotion-s2)
 nmap <C-k><C-k> <Plug>(easymotion-s2)
 hi EasyMotionShade ctermbg=none ctermfg=blue
 
-" ============================ "
-"   Settings for neocomplete   "
-" ============================ "
-let g:acp_enableAtStartup=0
-let g:neocomplete#enable_at_startup=1
-let g:neocomplete#enable_smart_case=1
-
-if !exists('g:neocomplete#keyword_patterns')
-  let g:neocomplete#keyword_patterns = {}
-endif
-if !exists('g:neocomplete#force_omni_input_patterns')
-  let g:neocomplete#force_omni_input_patterns = {}
-endif
-
-let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-let g:neocomplete#force_omni_input_patterns['typescript'] = '[^. *\t]\.\w*\|\h\w*::'
-let g:neocomplete#force_omni_input_patterns['go'] = '\h\w\.\w*'
-
-inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
-inoremap <expr><C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
-inoremap <expr><C-k> pumvisible() ? "\<C-p>" : ""
-inoremap <expr><C-u> pumvisible() : "\<C-p>\<C-p>\<C-p>\<C-p>" : "\<C-u>"
-inoremap <expr><C-d> pumvisible() ? "\<C-n>\<C-n>\<C-n>\<C-n>" : "\<C-d>"
-inoremap <expr><C-h> pumvisible() ? neocomplete#cancel_popup()."\<C-h>" : "\<C-h>"
-inoremap <expr><C-l> neocomplete#cancel_popup()
-
 " ================= "
 "   Abbreviations   "
 " ================= "
@@ -420,13 +332,6 @@ cnoreabbrev WQ wq
 cnoreabbrev W w
 cnoreabbrev Q q
 cnoreabbrev Qall qall
-
-" ================== "
-"     tsuquyomi      "
-" ================== "
-let g:tsuquyomi_disable_quickfix = 1
-let g:tsuquyomi_disable_default_mappings = 1
-map <buffer> <Nop> <Plug>(TsuquyomiGoBack)
 
 " ================= "
 "   NeedCommenter   "
@@ -445,18 +350,6 @@ let g:go_through_jk_move_count = 5
 let g:multi_cursor_use_default_mapping=0
 let g:multi_cursor_start_word_key="<S-i>"
 let g:multi_cursor_quit_key="<C-c>"
-
-" Prevent Neocomplete in vim-multi-cursors working
-function! Multiple_cursors_before()
-  if exists(':NeoCompleteLock')==2
-    exe 'NeoCompleteLock'
-  endif
-endfunction
-function! Multiple_cursors_after()
-  if exists(':NeoCompleteUnlock')==2
-    exe 'NeoCompleteUnlock'
-  endif
-endfunction
 
 " ================= "
 "     Highlight     "
