@@ -61,6 +61,8 @@ Plug 'mattn/vim-goimports', { 'for': 'go' }
 
 call plug#end()
 
+set
+
 " ========================= "
 "      General settings     "
 " ========================= "
@@ -202,6 +204,17 @@ nnoremap <C-w><C-n> <NOP>
 
 " Disable dot action
 nnoremap . <NOP>
+
+" ================= "
+"      vim-lsp      "
+" ================= "
+let g:lsp_settings = {
+\ 'elm-language-server': {
+\   'elmPath': './node_modules/elm',
+\   'elmFormatPath': './node_modules/elm-format',
+\   'elmTestPath': './node_modules/elm-test'
+\ }
+\}
 
 " ======================== "
 "      Unite settings      "
