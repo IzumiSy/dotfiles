@@ -216,6 +216,11 @@ let g:lsp_settings = {
 \   }
 \ }
 
+" ====================== "
+"      asyncomplete      "
+" ====================== "
+let g:asyncomplete_popup_delay = 100
+
 " ======================== "
 "      Unite settings      "
 " ======================== "
