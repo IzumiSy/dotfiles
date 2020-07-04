@@ -204,6 +204,7 @@ let g:lsp_settings = {
 \     }
 \   }
 \ }
+au BufWritePre * :LspDocumentFormat
 
 " ====================== "
 "      asyncomplete      "
