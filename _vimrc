@@ -43,17 +43,15 @@ Plug 'https://github.com/IzumiSy/vim-lsp-settings'
 " Syntaxes
 Plug 'leshill/vim-json', { 'for': 'json' }
 Plug 'tpope/vim-haml', { 'for': 'haml' }
-Plug 'othree/html5.vim', { 'for': 'html' }
-Plug 'cakebaker/scss-syntax.vim', { 'for': 'scss' }
+" Plug 'othree/html5.vim', { 'for': 'html' }
+" Plug 'cakebaker/scss-syntax.vim', { 'for': 'scss' }
 Plug 'othree/yajs.vim', { 'for': 'javascript' }
 Plug 'maxmellon/vim-jsx-pretty', { 'for': 'javascript' }
 Plug 'joukevandermaas/vim-ember-hbs', { 'for': 'handlebars' }
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'cespare/vim-toml', { 'for': 'toml' }
-Plug 'elmcast/elm-vim', { 'for': 'elm' }
-Plug 'JulesWang/css.vim', { 'for': 'css' }
+" Plug 'JulesWang/css.vim', { 'for': 'css' }
 Plug 'hail2u/vim-css3-syntax', { 'for': 'css' }
-Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
 
 " Language-specifc plugins
 Plug 'mattn/vim-goimports', { 'for': 'go' }
@@ -181,9 +179,6 @@ vnoremap < <gv
 " Resets highlighting
 nnoremap <silent> <Esc><Esc> :noh<CR> :call clearmatches()<CR>
 
-" Searching the selected text in visual mode
-vmap <silent>,ff y/<C-R>"<CR>
-
 " Block opening command history.
 " It is triggered off mistakenly when using :q
 nnoremap q: <NOP>
@@ -205,6 +200,8 @@ nnoremap . <NOP>
 " ================= "
 "      vim-lsp      "
 " ================= "
+let g:lsp_documentation_float = 0
+let g:lsp_preview_max_height = 30
 let g:lsp_settings = {
 \   'elm-language-server': {
 \     'initialization_options': {
