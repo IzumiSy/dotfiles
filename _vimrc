@@ -209,7 +209,7 @@ au BufWritePre * :LspDocumentFormat
 " ====================== "
 "      asyncomplete      "
 " ====================== "
-let g:asyncomplete_popup_delay = 100
+let g:asyncomplete_popup_delay = 150
 
 " ======================== "
 "      Unite settings      "
