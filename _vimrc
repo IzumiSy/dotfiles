@@ -23,7 +23,6 @@ Plug 'deris/vim-gothrough-jk'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'vim-scripts/surround.vim'
 Plug 'scrooloose/nerdcommenter'
-" Plug 'https://github.com/Shougo/neocomplete'
 Plug 'https://github.com/itchyny/lightline.vim'
 Plug 'https://github.com/Shougo/unite.vim'
 Plug 'https://github.com/Shougo/vimproc', { 'do': 'make' }
