@@ -276,8 +276,7 @@ let g:lightline = {
 \     ],
 \     'right': [
 \       ['lineinfo'],
-\       ['fileformat', 'fileencoding', 'filetype'],
-\       ['linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok']
+\       ['fileformat', 'fileencoding', 'filetype']
 \     ]
 \   },
 \   'component': {
