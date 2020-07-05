@@ -217,13 +217,16 @@ nnoremap <leader>ee :LspDocumentDiagnostics<CR>
 "      asyncomplete      "
 " ====================== "
 let g:asyncomplete_popup_delay = 150
+let g:asyncomplete_auto_popup = 0
 set pumheight=30
 inoremap <expr><C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
 inoremap <expr><C-k> pumvisible() ? "\<C-p>" : ""
 inoremap <expr><C-u> pumvisible() ? "\<C-p>\<C-p>\<C-p>\<C-p>\<C-p>" : "\<C-u>"
 inoremap <expr><C-d> pumvisible() ? "\<C-n>\<C-n>\<C-n>\<C-n>\<C-p>" : "\<C-d>"
 inoremap <expr><C-h> pumvisible() ? asyncomplete#cancel_popup() : "\<C-h>"
-inoremap <expr><C-l> asyncomplete#close_popup()
+" Completion triggers (CTRL-L and typed period)
+inoremap <expr><C-l> pumvisible() ? asyncomplete#close_popup() : asyncomplete#force_refresh()
+imap . .<Plug>(asyncomplete_force_refresh)
 
 " ======================== "
 "      Unite settings      "
