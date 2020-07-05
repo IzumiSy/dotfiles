@@ -219,13 +219,13 @@ let g:asyncomplete_popup_delay = 150
 let g:asyncomplete_auto_popup = 0
 set pumheight=30
 inoremap <expr><CR>  pumvisible() ? "<C-y>" : "<CR>"
-inoremap <expr><C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
-inoremap <expr><C-k> pumvisible() ? "\<C-p>" : ""
-inoremap <expr><C-u> pumvisible() ? "\<C-p>\<C-p>\<C-p>\<C-p>\<C-p>" : "\<C-u>"
-inoremap <expr><C-d> pumvisible() ? "\<C-n>\<C-n>\<C-n>\<C-n>\<C-p>" : "\<C-d>"
-inoremap <expr><C-h> pumvisible() ? asyncomplete#cancel_popup() : "\<C-h>"
-inoremap <expr><C-c> pumvisible() ? asyncomplete#cancel_popup() : "\<C-c>"
-" Completion triggers (CTRL-L and typed period)
+inoremap <expr><C-j> pumvisible() ? "<Down>" : "<C-j>"
+inoremap <expr><C-k> pumvisible() ? "<Up>" : "<C-k>"
+inoremap <expr><C-u> pumvisible() ? "<Up><Up><Up><Up><Up>" : "<C-u>"
+inoremap <expr><C-d> pumvisible() ? "<Down><Down><Down><Down><Down>" : "<C-d>"
+inoremap <expr><C-h> pumvisible() ? asyncomplete#cancel_popup() : "<C-h>"
+inoremap <expr><C-c> pumvisible() ? asyncomplete#cancel_popup() : "<C-c>"
+" Completion triggers (when CTRL-L or a period typed)
 inoremap <expr><C-l> pumvisible() ? asyncomplete#close_popup() : asyncomplete#force_refresh()
 imap . .<Plug>(asyncomplete_force_refresh)
 
