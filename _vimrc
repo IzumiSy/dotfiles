@@ -287,14 +287,13 @@ let g:lightline = {
 \       ['readonly', 'filename', 'modified']
 \     ],
 \     'right': [
-\       ['lineinfo', 'lsp'],
+\       ['lineinfo'],
 \       ['fileformat', 'fileencoding', 'filetype']
 \     ]
 \   },
 \   'component': {
 \     'fugitive': '%{exists("*fugitive#head") ? "<".fugitive#head().">" : ""}',
 \     'readonly': '%{&readonly ? "[LOCKED]" : ""}',
-\     'lsp': '%{execute(":LspStatus")}'
 \   }
 \ }
 
