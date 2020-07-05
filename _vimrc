@@ -217,6 +217,7 @@ nnoremap <leader>ee :LspDocumentDiagnostics<CR>
 "      asyncomplete      "
 " ====================== "
 let g:asyncomplete_popup_delay = 150
+set pumheight=30
 inoremap <expr><C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
 inoremap <expr><C-k> pumvisible() ? "\<C-p>" : ""
 inoremap <expr><C-u> pumvisible() ? "\<C-p>\<C-p>\<C-p>\<C-p>\<C-p>" : "\<C-u>"
