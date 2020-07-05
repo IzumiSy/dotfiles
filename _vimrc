@@ -224,6 +224,7 @@ inoremap <expr><C-k> pumvisible() ? "\<C-p>" : ""
 inoremap <expr><C-u> pumvisible() ? "\<C-p>\<C-p>\<C-p>\<C-p>\<C-p>" : "\<C-u>"
 inoremap <expr><C-d> pumvisible() ? "\<C-n>\<C-n>\<C-n>\<C-n>\<C-p>" : "\<C-d>"
 inoremap <expr><C-h> pumvisible() ? asyncomplete#cancel_popup() : "\<C-h>"
+inoremap <expr><C-c> pumvisible() ? asyncomplete#cancel_popup() : "\<C-c>"
 " Completion triggers (CTRL-L and typed period)
 inoremap <expr><C-l> pumvisible() ? asyncomplete#close_popup() : asyncomplete#force_refresh()
 imap . .<Plug>(asyncomplete_force_refresh)
