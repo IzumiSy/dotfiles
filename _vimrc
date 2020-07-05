@@ -32,7 +32,6 @@ Plug 'vim-scripts/desert256.vim'
 Plug 'https://github.com/airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 
-
 " LSP
 Plug 'prabirshrestha/async.vim'
 Plug 'prabirshrestha/asyncomplete.vim'
@@ -219,6 +218,7 @@ nnoremap <leader>ee :LspDocumentDiagnostics<CR>
 let g:asyncomplete_popup_delay = 150
 let g:asyncomplete_auto_popup = 0
 set pumheight=30
+inoremap <expr><CR>  pumvisible() ? "<C-y>" : "<CR>"
 inoremap <expr><C-j> pumvisible() ? "\<C-n>" : "\<C-j>"
 inoremap <expr><C-k> pumvisible() ? "\<C-p>" : ""
 inoremap <expr><C-u> pumvisible() ? "\<C-p>\<C-p>\<C-p>\<C-p>\<C-p>" : "\<C-u>"
