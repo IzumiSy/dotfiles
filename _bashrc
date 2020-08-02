@@ -13,9 +13,9 @@ function exists() {
   type "$1" &> /dev/null ;
 }
 
-# Disable console freezing with Ctrl+S
+# Disable console freezing with Ctrl+S only when stty is available
 # (ref: http://www.itmedia.co.jp/help/tips/linux/l0612.html)
-stty stop undef
+[ -t 0 ] && stty stop undef
 
 # Workaround to prevent problem with Byobu that occurs in connecting with Teraterm
 export VTE_CJK_WIDTH=1
