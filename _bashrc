@@ -98,12 +98,14 @@ exists gls && alias ls="gls --color=auto"
 alias x='exit'
 alias v='vim'
 alias c='clear'
-alias sc='screen'
 alias be='bundle exec'
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
 alias hist='eval $(history | cut -c 8- | peco)'
+
+alias sc='screen'
+export SCREENDIR=$HOME/.screen
 
 # function dp() {
 #   cd $( d | awk '{ print $2 }' | peco --query \"$(pwd)\ \" )
