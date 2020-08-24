@@ -51,6 +51,7 @@ Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'cespare/vim-toml', { 'for': 'toml' }
 " Plug 'JulesWang/css.vim', { 'for': 'css' }
 Plug 'hail2u/vim-css3-syntax', { 'for': 'css' }
+Plug 'itchyny/vim-haskell-indent', { 'for': 'haskell' }
 
 " Language-specifc plugins
 Plug 'mattn/vim-goimports', { 'for': 'go' }
