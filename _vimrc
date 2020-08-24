@@ -161,6 +161,10 @@ nmap <silent><C-l> w
 vmap <silent><C-h> b
 vmap <silent><C-l> w
 
+" Buffer history
+inoremap <A-Left> :bprev<CR>
+inoremap <A-Right> :bnext<CR>
+
 " Fix strange behavior of Backspace
 inoremap <expr><BS> "\<C-h>"
 
