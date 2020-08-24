@@ -161,16 +161,15 @@ nmap <silent><C-l> w
 vmap <silent><C-h> b
 vmap <silent><C-l> w
 
-" Buffer history
-inoremap <A-Left> :bprev<CR>
-inoremap <A-Right> :bnext<CR>
-
 " Fix strange behavior of Backspace
 inoremap <expr><BS> "\<C-h>"
 
 " Visual mode key-mappings for multiple indents
 vnoremap > >gv
 vnoremap < <gv
+
+" Buffer manipulation
+nnoremap <leader>zz :bprev<CR>
 
 " Resets highlighting
 nnoremap <silent> <Esc><Esc> :noh<CR> :call clearmatches()<CR>
@@ -267,14 +266,14 @@ function! SetupUniteOptions()
     let g:unite_redraw_hold_candidates = 50000
     let g:unite_prompt=">> "
 
-    nnoremap <silent>,fo :Unite -start-insert file<CR>
-    nnoremap <silent>,ro :Unite -start-insert file_rec/async:.<CR>
-    nnoremap <silent>,fg :Unite -start-insert file_rec/git<CR>
-    nnoremap <silent>,fm :Unite -start-insert file_mru<CR>
-    nnoremap <silent>,fh :Unite -start-insert history/yank<CR>
-    nnoremap <silent>,fb :Unite -start-insert buffer<CR>
-    nnoremap <silent>,ff :Unite grep:. -buffer-name=search-buffer -no-quit<CR>
-    nnoremap <silent>,fl :UniteWithCursorWord grep:. -buffer-name=search-buffer -no-quit<CR>
+    nnoremap <silent><leader>fo :Unite -start-insert file<CR>
+    nnoremap <silent><leader>ro :Unite -start-insert file_rec/async:.<CR>
+    nnoremap <silent><leader>fg :Unite -start-insert file_rec/git<CR>
+    nnoremap <silent><leader>fm :Unite -start-insert file_mru<CR>
+    nnoremap <silent><leader>fh :Unite -start-insert history/yank<CR>
+    nnoremap <silent><leader>fb :Unite -start-insert buffer<CR>
+    nnoremap <silent><leader>ff :Unite grep:. -buffer-name=search-buffer -no-quit<CR>
+    nnoremap <silent><leader>fl :UniteWithCursorWord grep:. -buffer-name=search-buffer -no-quit<CR>
 
     let g:unite_source_grep_recursive_opt=''
   endif
