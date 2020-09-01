@@ -56,7 +56,7 @@
 
     "go.formatTool": "gofmt",
     "go.lintOnSave": "off",
-    "go.buildOnSave": "off"
+    "go.buildOnSave": "off",
     "go.vetOnSave": "package",
     "go.gocodeAutoBuild": false,
     "go.useLanguageServer": true,
