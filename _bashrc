@@ -135,6 +135,7 @@ export PS1="$(base_line) ${text}$ "
 export PATH="/usr/local/sbin:$PATH"
 
 # Default golang setting
+export GOPRIVATE="github.com/unipos/*"
 export GO111MODULE=on
 export PATH=$PATH:$HOME/go/bin
 
