@@ -2,3 +2,6 @@ GPATH
 GRTAGS
 GTAGS
 .envrc
+.DS_Store
+.jvmopts
+.env
