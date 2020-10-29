@@ -1,6 +1,6 @@
 map <c-u> scrollPageUp
 map <c-d> scrollPageDown
-map <c-n> previousTab
-map <c-m> nextTab
+map <c-a-h> previousTab
+map <c-a-l> nextTab
 map <c-h> goBack
 map <c-l> goForward
