@@ -166,18 +166,23 @@ function init() {
   esac
 }
 
+# For node.js
 export NVM_DIR="$HOME/.nvm"
 if [ -e "$NVM_DIR/nvm.sh" ]; then
   . "$NVM_DIR"/nvm.sh
   echo "Loaded nvm"
 fi
 
+# For ruby
 export PATH="$HOME/.rbenv/bin:$PATH"
 if [ -e "$HOME/.rbenv" ]; then
   eval "$(rbenv init --no-rehash -)"
   (rbenv rehash &) 2> /dev/null # lazy rehashing
   echo "Loaded rbenv"
 fi
+
+# For rustlang
+export PATH="$HOME/.cargo/bin:$PATH"
 
 # if exists starship ; then
 #   export STARSHIP_CONFIG=~/.starship.toml
