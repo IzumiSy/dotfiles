@@ -85,14 +85,25 @@ function gasq() {
   git reset --soft $(git merge-base --fork-point $1) && git commit
 }
 
-# NOTE: OSX needs "coreutils" package which can be installed through homebrew
-export CLICOLOR=1
-export LSCOLORS=gxfxcxdxbxegexabagacad
-alias ls="ls --color=auto"
-alias la='ls -a'
-alias ll='\clear && ls -Flh1v --group-directories-first'
-alias lla='\clear && ls -Flh1va --group-directories-first'
-exists gls && alias ls="gls --color=auto"
+# ls override with "exa"
+if exists exa ; then
+  alias ls="exa"
+  alias ll="exa -lh --time-style=long-iso --group-directories-first"
+  alias lla="exa -lha --time-style=long-iso --group-directories-first"
+else
+  # NOTE: OSX needs "coreutils" package which can be installed through homebrew
+  export CLICOLOR=1
+  export LSCOLORS=gxfxcxdxbxegexabagacad
+  alias ls="ls --color=auto"
+  alias ll='\clear && ls -Flh1v --group-directories-first'
+  alias lla='\clear && ls -Flh1va --group-directories-first'
+  exists gls && alias ls="gls --color=auto"
+fi
+
+# cat override with "bat"
+if exists bat ; then
+  alias cat="bat"
+fi
 
 # others
 alias x='exit'
