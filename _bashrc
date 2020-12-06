@@ -194,6 +194,9 @@ fi
 
 # For rustlang
 export PATH="$HOME/.cargo/bin:$PATH"
+if exists cargo ; then
+  source "$HOME/.cargo/env"
+fi
 
 # if exists starship ; then
 #   export STARSHIP_CONFIG=~/.starship.toml
