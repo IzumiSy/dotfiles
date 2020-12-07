@@ -13,6 +13,36 @@ function exists() {
   type "$1" &> /dev/null ;
 }
 
+# For node.js
+export NVM_DIR="$HOME/.nvm"
+if [ -e "$NVM_DIR/nvm.sh" ]; then
+  . "$NVM_DIR"/nvm.sh
+  echo "Loaded nvm"
+fi
+
+# For ruby
+export PATH="$HOME/.rbenv/bin:$PATH"
+if [ -e "$HOME/.rbenv" ]; then
+  eval "$(rbenv init --no-rehash -)"
+  (rbenv rehash &) 2> /dev/null # lazy rehashing
+  echo "Loaded rbenv"
+fi
+
+# For rustlang
+export PATH="$HOME/.cargo/bin:$PATH"
+if exists cargo ; then
+  source "$HOME/.cargo/env"
+fi
+
+# exists fasd \
+#   && eval "$(fasd --init auto)" \
+#   && echo "Initialized: fasd"
+
+# if exists starship ; then
+#   export STARSHIP_CONFIG=~/.starship.toml
+#   eval "$(starship init bash)"
+# fi
+
 # Disable console freezing with Ctrl+S only when stty is available
 # (ref: http://www.itmedia.co.jp/help/tips/linux/l0612.html)
 [ -t 0 ] && stty stop undef
@@ -122,15 +152,6 @@ export SCREENDIR=$HOME/.screen
 #   cd $( d | awk '{ print $2 }' | peco --query \"$(pwd)\ \" )
 # }
 
-# See https://www.iterm2.com/3.3/documentation-scripting-fundamentals.html
-function iterm2_print_user_vars() {
-  if exists gcloud ; then
-    gcp_profile=$(cat $HOME/.config/gcloud/active_config)
-    gcp_project=$(awk '/project/{print $3}' $HOME/.config/gcloud/configurations/config_$gcp_profile)
-    iterm2_set_user_var gcpProjectId $gcp_project
-  fi
-}
-
 function base_line() {
   _bold="\[\e[1;1m\]"
   _green="\[\e[1;32m\]"
@@ -149,10 +170,6 @@ export PATH="/usr/local/sbin:$PATH"
 export GOPRIVATE="github.com/unipos/*"
 export GO111MODULE=on
 export PATH=$PATH:$HOME/go/bin
-
-# exists fasd \
-#   && eval "$(fasd --init auto)" \
-#   && echo "Initialized: fasd"
 
 # `init` function can manually initialize language version switcher.
 function init() {
@@ -177,28 +194,11 @@ function init() {
   esac
 }
 
-# For node.js
-export NVM_DIR="$HOME/.nvm"
-if [ -e "$NVM_DIR/nvm.sh" ]; then
-  . "$NVM_DIR"/nvm.sh
-  echo "Loaded nvm"
-fi
-
-# For ruby
-export PATH="$HOME/.rbenv/bin:$PATH"
-if [ -e "$HOME/.rbenv" ]; then
-  eval "$(rbenv init --no-rehash -)"
-  (rbenv rehash &) 2> /dev/null # lazy rehashing
-  echo "Loaded rbenv"
-fi
-
-# For rustlang
-export PATH="$HOME/.cargo/bin:$PATH"
-if exists cargo ; then
-  source "$HOME/.cargo/env"
-fi
-
-# if exists starship ; then
-#   export STARSHIP_CONFIG=~/.starship.toml
-#   eval "$(starship init bash)"
-# fi
+# See https://www.iterm2.com/3.3/documentation-scripting-fundamentals.html
+function iterm2_print_user_vars() {
+  if exists gcloud ; then
+    gcp_profile=$(cat $HOME/.config/gcloud/active_config)
+    gcp_project=$(awk '/project/{print $3}' $HOME/.config/gcloud/configurations/config_$gcp_profile)
+    iterm2_set_user_var gcpProjectId $gcp_project
+  fi
+}
