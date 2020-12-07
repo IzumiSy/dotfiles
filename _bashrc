@@ -31,6 +31,15 @@ fi
 # For rustlang
 export PATH="$HOME/.cargo/bin:$PATH"
 if exists cargo ; then
+  # NOTE:
+  #  If you come across an error related to ssh-agent, put the line below to ~/.cargo/config.
+  #  This configuration can make cargo reference ~/.ssh/config when downloading packages.
+  #
+  # ```
+  # [net]
+  # git-fetch-with-cli = true
+  # ```
+  #
   source "$HOME/.cargo/env"
 fi
 
@@ -111,9 +120,9 @@ function gpof() {
   fi
 }
 
-function gasq() {
-  git reset --soft $(git merge-base --fork-point $1) && git commit
-}
+# function gasq() {
+#   git reset --soft $(git merge-base --fork-point $1) && git commit
+# }
 
 # ls override with "exa"
 if exists exa ; then
