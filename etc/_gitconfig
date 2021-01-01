@@ -25,5 +25,5 @@
 [rerere]
   enabled = 1
   autoupdate = true
-[url "ssh://git@github.com/"]
-  insteadOf = https://github.com/
+[url "ssh://git@github.com/unipos"]
+  insteadOf = https://github.com/unipos
