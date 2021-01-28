@@ -143,8 +143,7 @@ augroup END
 au BufWritePre *\({*.md}\)\@<! :FixWhitespace
 
 nnoremap <silent>,tr :NERDTree<CR>
-nnoremap <F7> :Errors<CR>
-nnoremap <F8> :make<CR>
+nnoremap <silent>,hh :browse oldfiles<CR>
 
 command VIMRC edit $MYVIMRC
 command Encutf8 :e ++enc=utf8
