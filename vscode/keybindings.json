@@ -11,11 +11,11 @@
     "command": "undo",
     "when": "editorTextFocus"
   }, {
-    "key": "ctrl+alt+h",
+    "key": "ctrl+cmd+h",
     "command": "workbench.action.focusPreviousGroup",
     "when": "editorTextFocus"
   }, {
-    "key": "ctrl+alt+l",
+    "key": "ctrl+cmd+l",
     "command": "workbench.action.focusNextGroup",
     "when": "editorTextFocus"
   }, {
