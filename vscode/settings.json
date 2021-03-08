@@ -65,7 +65,6 @@
         "editor.formatOnSave": true
     },
 
-    "elmLS.elmAnalyseTrigger": "save",
     "[elm]": {
         "editor.tabSize": 4,
         "editor.formatOnSave": true
