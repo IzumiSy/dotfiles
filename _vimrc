@@ -102,7 +102,7 @@ set fileencodings=utf-8,iso-2022-jp,euc-jp,sjis
 set fileformats=unix,dos,mac
 set backspace=indent,eol,start
 set completeopt=menu,preview
-set updatetime=100
+set updatetime=10000
 set relativenumber
 syntax on
 silent! colorscheme desert256
