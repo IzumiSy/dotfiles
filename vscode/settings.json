@@ -47,7 +47,7 @@
         "commands": ["workbench.view.search"]
     }, {
         "before": ["<leader>", "d", "f"],
-        "commands": ["editor.action.goToTypeDefinition"]
+        "commands": ["editor.action.revealDefinition"]
     }, {
         "before": ["<C-j>"],
         "after": ["<leader>", "<leader>", "2", "f"]
