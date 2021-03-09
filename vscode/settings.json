@@ -29,6 +29,12 @@
     }, {
        "before": ["<"],
        "commands": ["editor.action.outdentLines"]
+    }, {
+        "before": ["<C-l>"],
+        "after": ["w"]
+    }, {
+        "before": ["<C-h>"],
+        "after": ["b"]
     }],
     "vim.normalModeKeyBindingsNonRecursive": [{
         "before": ["<C-c>"],
@@ -48,6 +54,12 @@
     }, {
         "before": ["<C-k>"],
         "after": ["<leader>", "<leader>", "2", "F"]
+    }, {
+        "before": ["<C-l>"],
+        "after": ["w"]
+    }, {
+        "before": ["<C-h>"],
+        "after": ["b"]
     }],
 
     "todohighlight.isEnable": true,

@@ -1,9 +1,5 @@
 [
   {
-    "key": "ctrl+h",
-    "command": "deleteLeft",
-    "when": "editorTextFocus"
-  }, {
     "key": "ctrl+x",
     "command": "workbench.action.closeActiveEditor"
   }, {
@@ -94,5 +90,10 @@
     "key": "shift+cmd+[BracketLeft]",
     "command": "workbench.action.focusActiveEditorGroup",
     "when": "terminalFocus"
+  },
+  {
+    "key": "ctrl+h",
+    "command": "-deleteLeft",
+    "when": "textInputFocus"
   }
 ]
