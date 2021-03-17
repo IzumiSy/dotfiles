@@ -30,12 +30,6 @@ ln -svnf "$(pwd)/etc/_pryrc" "$HOME/.pryrc"
 # Install starship
 # curl -fsSL https://starship.rs/install.sh | bash
 
-# Install _vimrc
-if [ ! -e "$HOME/.vim" ] ; then
-  curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  (set -x; vim +PlugInstall +qall)
-fi
-
 # Install shell tools with root
 sudo ln -snvf "$(pwd)/shell/gctool" "/usr/local/bin/gctool"
 
