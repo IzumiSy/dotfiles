@@ -303,7 +303,7 @@ let g:lightline = {
 \   'active': {
 \     'left': [
 \       ['mode', 'paste'],
-\       ['readonly', 'absolutepath', 'modified']
+\       ['readonly', 'relativepath', 'modified']
 \     ],
 \     'right': [
 \       ['lineinfo'],
@@ -313,8 +313,22 @@ let g:lightline = {
 \   'component': {
 \     'fugitive': '%{exists("*fugitive#head") ? "<".fugitive#head().">" : ""}',
 \     'readonly': '%{&readonly ? "[LOCKED]" : ""}',
+\   },
+\   'component_function': {
+\     'relativepath': 'RelativePath',
 \   }
 \ }
+
+" Calculate relative path from current git project.
+" This functins requires vim-fugitive plugins to work.
+function! RelativePath()
+  let root = fnamemodify(get(b:, 'git_dir'), ':h')
+  let path = expand('%:p')
+  if path[:len(root)-1] ==# root
+    return path[len(root)+1:]
+  endif
+  return expand('%')
+endfunction
 
 " ============================= "
 "      Git plugin settings      "
