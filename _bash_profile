@@ -1,3 +1,6 @@
+# NOTE: ~/.bash_profile is executed for login shells.
+# This configures shell before the initial command prompt.
+
 [ -f "$HOME/.bashrc"  ] \
   && . "$HOME/.bashrc" \
   && echo "Loaded .bashrc"
