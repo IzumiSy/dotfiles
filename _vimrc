@@ -286,7 +286,7 @@ function! SetupUniteOptions()
     nnoremap <silent><leader>ff :Unite grep:. -buffer-name=search-buffer -no-quit<CR>
     nnoremap <silent><leader>fl :UniteWithCursorWord grep:. -buffer-name=search-buffer -no-quit<CR>
 
-    command Hist :Unite -start-insert file_mru<CR>
+    command Hist :Unite -start-insert file_mru
   endif
 endfunction
 autocmd VimEnter * call SetupUniteOptions()
