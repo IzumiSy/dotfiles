@@ -273,20 +273,20 @@ function! SetupUniteOptions()
     let g:unite_source_history_yank_enable=1
     let g:unite_source_file_mru_limit=200
     let g:unite_source_rec_min_cache_files=500
-    let g:unite_source_rec_max_cache_files=99999
+    let g:unite_source_rec_max_cache_files=20000
     let g:unite_redraw_hold_candidates = 50000
+    let g:unite_source_grep_recursive_opt=''
     let g:unite_prompt=">> "
 
-    nnoremap <silent><leader>fo :Unite -start-insert file<CR>
-    nnoremap <silent><leader>ro :Unite -start-insert file_rec/async:.<CR>
+    " nnoremap <silent><leader>fo :Unite -start-insert file<CR>
+    " nnoremap <silent><leader>ro :Unite -start-insert file_rec/async:.<CR>
+    " nnoremap <silent><leader>fh :Unite -start-insert history/yank<CR>
+    " nnoremap <silent><leader>fb :Unite -start-insert buffer<CR>
     nnoremap <silent><leader>fg :Unite -start-insert file_rec/git<CR>
-    nnoremap <silent><leader>fm :Unite -start-insert file_mru<CR>
-    nnoremap <silent><leader>fh :Unite -start-insert history/yank<CR>
-    nnoremap <silent><leader>fb :Unite -start-insert buffer<CR>
     nnoremap <silent><leader>ff :Unite grep:. -buffer-name=search-buffer -no-quit<CR>
     nnoremap <silent><leader>fl :UniteWithCursorWord grep:. -buffer-name=search-buffer -no-quit<CR>
 
-    let g:unite_source_grep_recursive_opt=''
+    command Hist :Unite -start-insert file_mru<CR>
   endif
 endfunction
 autocmd VimEnter * call SetupUniteOptions()
