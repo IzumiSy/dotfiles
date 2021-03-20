@@ -3,26 +3,20 @@
 # -----------------
 # Docs: http://www.limy.org/program/screen.html
 
-startup_message off
-defencoding utf-8
 autodetach on
+escape ^f^f
 
-# Show status line
+defutf8 on
+defencoding utf-8
+encoding utf8 utf8
+
+startup_message off
+vbell off
+
 hardstatus off
 hardstatus alwayslastline
 hardstatus string '%{= kG}[ %{G}%H %{g}][ %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %m-%d %{W} %c %{g}]'
 
-# F2: new screen
-bindkey "^[OQ" screen
-
-# F3: previous screen
-bindkey "^[OR" prev
-
-# F4: next screen
-bindkey "^[OS" next
-
-# F7: copy mode
-bindkey "^[[18~" copy
-
-# F8: title edit
-bindkey "^[[19~" title
+bind n screen
+bind h prev
+bind l next
