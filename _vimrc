@@ -386,6 +386,6 @@ let g:multi_cursor_quit_key = "<C-c>"
 " ================= "
 "     Highlight     "
 " ================= "
-" Enable background transparency on Ubuntu. these highlight settings needs to be here.
-" highlight Normal ctermbg=none
-" highlight NonText ctermbg=none
+" Enable background transparency. these highlight settings needs to be here.
+highlight Normal ctermbg=none
+highlight NonText ctermbg=none
