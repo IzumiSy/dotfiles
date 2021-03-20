@@ -13,14 +13,145 @@ function exists() {
   type "$1" &> /dev/null ;
 }
 
-# For node.js
+# Disable console freezing with Ctrl+S only when stty is available
+# (ref: http://www.itmedia.co.jp/help/tips/linux/l0612.html)
+[ -t 0 ] && stty stop undef
+
+# Workaround to prevent problem with Byobu that occurs in connecting with Teraterm
+export VTE_CJK_WIDTH=1
+
+# Bash shell settings
+shopt -s cdspell &> /dev/null;
+shopt -s autocd  &> /dev/null;
+
+# Settings for history
+export HISTCONTROL=ignoreboth:erasedups
+export HISTIGNORE="ls:ll:cd .."
+export HISTSIZE=5000
+
+# Settings for ls
+export CLICOLOR=1
+export LSCOLORS=gxfxcxdxbxegexabagacad
+
+# Setting for screen
+export SCREENDIR=$HOME/.screen
+
+# Homebrew's sbin
+export PATH="/usr/local/sbin:$PATH"
+
+function base_line() {
+  _bold="\[\e[1;1m\]"
+  _green="\[\e[1;32m\]"
+  _blue="\[\e[1;34m\]"
+  _cyan="\[\e[1;104m\]"
+  _clear="\[\e[00m\]"
+  echo "${_blue}\h${_clear} ${_green}[\$(date +%k:%M:%S)]${_clear} ${_bold}\w${_clear}";
+}
+export PS1="$(base_line) ${text}$ "
+
+# ls override with "exa"
+if exists exa ; then
+  alias ls="exa"
+  alias ll="exa -lh --time-style=long-iso --group-directories-first"
+  alias lla="exa -lha --time-style=long-iso --group-directories-first"
+else
+  # NOTE: OSX needs "coreutils" package which can be installed through homebrew
+  alias ls="ls --color=auto"
+  alias ll='\clear && ls -Flh1v --group-directories-first'
+  alias lla='\clear && ls -Flh1va --group-directories-first'
+  exists gls && alias ls="gls --color=auto"
+fi
+
+# cat override with "bat"
+if exists bat ; then
+  alias cat="bat"
+fi
+
+# Basics
+alias x='exit'
+alias v='vim'
+alias c='clear'
+alias be='bundle exec'
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+alias hist='eval $(history | cut -c 8- | peco)'
+alias sc='screen'
+
+# Git command aliases
+alias gad='git add .'
+alias gadi='git add -i'
+alias gd='git diff --cached'
+alias gcm='git commit -m'
+alias gau='git commit -a -m "ci skip"'
+alias gch='git checkout'
+alias gloa='git log --oneline --decorate --graph'
+alias glo='gloa -10'
+alias gs='git status --short'
+alias gpl='git pull --rebase origin $(__get_branch_name)'
+alias gb='git branch'
+alias gcmb="git branch --merged | grep -vE '^\*|master$|develop$' | xargs -I % git branch -d %"
+alias pco='git branch | peco | xargs git checkout'
+alias gpo='check_protecting_branch && git push origin $(__get_branch_name)'
+alias gpof='check_protecting_branch && git push origin $(__get_branch_name) --force-with-lease'
+
+# Check if the current branch to operate is protected or not
+function check_protecting_branch() {
+  PROTECTING_BRANCH=(
+    "master"
+    "develop"
+    "main"
+  )
+
+  for branch in "${PROTECTING_BRANCH[@]}"; do
+    if [[ "$branch" = "$(__get_branch_name)" ]] ; then
+      echo "Operation to the current branch is protected"
+      return 1
+    fi
+  done
+}
+
+function __get_branch_name() {
+  git branch | grep "*" | cut -d ' ' -f 2
+}
+
+# Default golang setting
+export GOPRIVATE="github.com/unipos/*"
+export GO111MODULE=on
+export PATH=$PATH:$HOME/go/bin
+
+# Asynchronous manual initializer
+# eg.) `init pyenv`, `init direnv`, etc...
+function init() {
+  case $1 in
+    "pyenv")
+      export PYENV_ROOT="$HOME/.pyenv" \
+        && export PATH="$PYENV_ROOT/bin:$PATH" \
+        && eval "$(pyenv init -)" \
+        && eval "$(pyenv virtualenv-init -)" \
+        && echo "Initialized: pyenv ($(pyenv --version))" \
+        ;;
+
+    "direnv")
+      exists direnv \
+        && export EDITOR=vim \
+        && eval "$(direnv hook bash)" \
+        && echo "Initialized: direnv ($(direnv --version))" \
+        ;;
+
+    *)
+      echo "Initlized: nothing"
+  esac
+}
+
+# Enables nvm if installed
 export NVM_DIR="$HOME/.nvm"
 if [ -e "$NVM_DIR/nvm.sh" ]; then
   . "$NVM_DIR"/nvm.sh
   echo "Loaded nvm"
 fi
 
-# For ruby
+# Enables rbenv if installed
 export PATH="$HOME/.rbenv/bin:$PATH"
 if [ -e "$HOME/.rbenv" ]; then
   eval "$(rbenv init --no-rehash -)"
@@ -47,27 +178,23 @@ fi
 #   && eval "$(fasd --init auto)" \
 #   && echo "Initialized: fasd"
 
-# if exists starship ; then
-#   export STARSHIP_CONFIG=~/.starship.toml
-#   eval "$(starship init bash)"
-# fi
+# Enables starship if installed
+if exists starship ; then
+  export STARSHIP_CONFIG=~/.starship.toml
+  eval "$(starship init bash)"
+fi
 
-# Disable console freezing with Ctrl+S only when stty is available
-# (ref: http://www.itmedia.co.jp/help/tips/linux/l0612.html)
-[ -t 0 ] && stty stop undef
+# Setting for status bar in iTerm2.
+# See https://www.iterm2.com/3.3/documentation-scripting-fundamentals.html
+function iterm2_print_user_vars() {
+  if exists gcloud ; then
+    gcp_profile=$(cat $HOME/.config/gcloud/active_config)
+    gcp_project=$(awk '/project/{print $3}' $HOME/.config/gcloud/configurations/config_$gcp_profile)
+    iterm2_set_user_var gcpProjectId $gcp_project
+  fi
+}
 
-# Workaround to prevent problem with Byobu that occurs in connecting with Teraterm
-export VTE_CJK_WIDTH=1
-
-# Bash shell settings
-shopt -s cdspell &> /dev/null;
-shopt -s autocd  &> /dev/null;
-
-# Settings for history
-export HISTCONTROL=ignoreboth:erasedups
-export HISTIGNORE="ls:ll:cd .."
-export HISTSIZE=5000
-
+# Sourcing git completion for bash
 if [[ "$OSTYPE" = "darwin"* ]] ; then
   # git must be installed via homebrew
   source "/usr/local/etc/bash_completion.d/git-prompt.sh"
@@ -77,137 +204,3 @@ else
   source "/etc/bash_completion.d/git-prompt"
   source "/etc/profile.d/bash_completion.sh"
 fi
-
-# Git command aliases
-alias gad='git add .'
-alias gadi='git add -i'
-alias gd='git diff --cached'
-alias gcm='git commit -m'
-alias gau='git commit -a -m "ci skip"'
-alias gch='git checkout'
-alias gloa='git log --oneline --decorate --graph'
-alias glo='gloa -10'
-alias gs='git status --short'
-alias gpl='git pull --rebase origin $(__get_branch_name)'
-alias gb='git branch'
-
-function __get_branch_name() {
-  git branch | grep "*" | cut -d ' ' -f 2
-}
-
-# Delete merged branches
-alias gcmb="git branch --merged | grep -vE '^\*|master$|develop$' | xargs -I % git branch -d %"
-
-if exists peco ; then
-  alias pco='git branch | peco | xargs git checkout'
-fi
-
-# An alias for "git push" with master blockage
-function gpo() {
-  if [ $(__get_branch_name) != "master" ] && [ $(__get_branch_name) != "develop" ] ; then
-    git push origin "$(__get_branch_name)"
-  else
-    echo "Master push blocked :)"
-  fi
-}
-
-# An alias for force "git push" with master blockage
-function gpof() {
-  if [ $(__get_branch_name) != "master" ] && [ $(__get_branch_name) != "develop" ] ; then
-    git push origin "$(__get_branch_name)" --force-with-lease
-  else
-    echo "Commits pushing to develop or master is blocked :)"
-  fi
-}
-
-# function gasq() {
-#   git reset --soft $(git merge-base --fork-point $1) && git commit
-# }
-
-# ls override with "exa"
-if exists exa ; then
-  alias ls="exa"
-  alias ll="exa -lh --time-style=long-iso --group-directories-first"
-  alias lla="exa -lha --time-style=long-iso --group-directories-first"
-else
-  # NOTE: OSX needs "coreutils" package which can be installed through homebrew
-  export CLICOLOR=1
-  export LSCOLORS=gxfxcxdxbxegexabagacad
-  alias ls="ls --color=auto"
-  alias ll='\clear && ls -Flh1v --group-directories-first'
-  alias lla='\clear && ls -Flh1va --group-directories-first'
-  exists gls && alias ls="gls --color=auto"
-fi
-
-# cat override with "bat"
-if exists bat ; then
-  alias cat="bat"
-fi
-
-# others
-alias x='exit'
-alias v='vim'
-alias c='clear'
-alias be='bundle exec'
-alias rm='rm -i'
-alias cp='cp -i'
-alias mv='mv -i'
-alias hist='eval $(history | cut -c 8- | peco)'
-
-alias sc='screen'
-export SCREENDIR=$HOME/.screen
-
-# function dp() {
-#   cd $( d | awk '{ print $2 }' | peco --query \"$(pwd)\ \" )
-# }
-
-function base_line() {
-  _bold="\[\e[1;1m\]"
-  _green="\[\e[1;32m\]"
-  _blue="\[\e[1;34m\]"
-  _cyan="\[\e[1;104m\]"
-  _clear="\[\e[00m\]"
-  echo "${_blue}\h${_clear} ${_green}[\$(date +%k:%M:%S)]${_clear} ${_bold}\w${_clear}";
-}
-
-export PS1="$(base_line) ${text}$ "
-
-# Homebrew's sbin
-export PATH="/usr/local/sbin:$PATH"
-
-# Default golang setting
-export GOPRIVATE="github.com/unipos/*"
-export GO111MODULE=on
-export PATH=$PATH:$HOME/go/bin
-
-# `init` function can manually initialize language version switcher.
-function init() {
-  case $1 in
-    "pyenv")
-      export PYENV_ROOT="$HOME/.pyenv" \
-        && export PATH="$PYENV_ROOT/bin:$PATH" \
-        && eval "$(pyenv init -)" \
-        && eval "$(pyenv virtualenv-init -)" \
-        && echo "Initialized: pyenv ($(pyenv --version))" \
-        ;;
-
-    "direnv")
-      exists direnv \
-        && export EDITOR=vim \
-        && eval "$(direnv hook bash)" \
-        && echo "Initialized: direnv ($(direnv --version))" \
-        ;;
-
-    *)
-      echo "Initlized: nothing"
-  esac
-}
-
-# See https://www.iterm2.com/3.3/documentation-scripting-fundamentals.html
-function iterm2_print_user_vars() {
-  if exists gcloud ; then
-    gcp_profile=$(cat $HOME/.config/gcloud/active_config)
-    gcp_project=$(awk '/project/{print $3}' $HOME/.config/gcloud/configurations/config_$gcp_profile)
-    iterm2_set_user_var gcpProjectId $gcp_project
-  fi
-}
