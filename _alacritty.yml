@@ -7,3 +7,7 @@ window:
   dimensions:
     columns: 155
     lines: 43
+mouse_bindings:
+  - { mouse: Right, action: Copy }
+key_bindings:
+  - { key: V, mods: Control, action: Paste }
