@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -Ceu
+set -Ceux
 
 TOOLS=(
   "git"
@@ -22,17 +22,14 @@ ln -snvf "$(pwd)/_screenrc" "$HOME/.screenrc"
 ln -snvf "$(pwd)/_bashrc" "$HOME/.bashrc"
 ln -snvf "$(pwd)/_bash_profile" "$HOME/.bash_profile"
 ln -snvf "$(pwd)/_starship.toml" "$HOME/.starship.toml"
+ln -snvf "$(pwd)/_alacritty.yml" "$HOME/.alacritty.yml"
 ln -snvf "$(pwd)/etc/_gitconfig" "$HOME/.gitconfig"
 ln -snvf "$(pwd)/etc/_gitignore_global" "$HOME/.gitignore_global"
 ln -snvf "$(pwd)/etc/_hyper.js" "$HOME/.hyper.js"
 ln -svnf "$(pwd)/etc/_pryrc" "$HOME/.pryrc"
 
-# Install starship
-# curl -fsSL https://starship.rs/install.sh | bash
-
 # Install shell tools with root
 sudo ln -snvf "$(pwd)/shell/gctool" "/usr/local/bin/gctool"
 
 # Loads .bashrc
-clear
-(set -x; exec $SHELL --login)
+exec $SHELL --login

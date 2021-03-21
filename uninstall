@@ -6,13 +6,12 @@ unlink "$HOME/.screenrc"
 unlink "$HOME/.bashrc"
 unlink "$HOME/.bash_profile"
 unlink "$HOME/.starship.toml"
+unlink "$HOME/.alacritty.yml"
 unlink "$HOME/.gitconfig"
 unlink "$HOME/.gitignore_global"
 unlink "$HOME/.hyper.js"
+unlink "$HOME/.pryrc"
 
-rm -rf "$HOME/.vim"
+sudo unlink "/usr/local/bin/gctool"
 
-(set +x; clear)
 exec bash --login
-
-set +x
