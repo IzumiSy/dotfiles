@@ -26,6 +26,5 @@ bind ^l next
 bind l next
 bind ^x remove
 bind x remove
-
-bind ^p # unbind
-bind p # unbind
+bind ^p copy
+bind p copy
