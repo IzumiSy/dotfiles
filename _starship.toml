@@ -55,9 +55,6 @@ disabled = true
 [erlang]
 disabled = true
 
-[haskell]
-disabled = true
-
 [julia]
 disabled = true
 
@@ -74,12 +71,4 @@ disabled = true
 disabled = true
 
 [zig]
-disabled = true
-
-[purescript]
-disabled = true
-
-# tools
-
-[terraform]
 disabled = true
