@@ -1,9 +1,9 @@
-background_opacity: 0.85
+background_opacity: 0.9
 font:
   size: 9
 mouse:
   hide_when_typing: true
 window:
   dimensions:
-    columns: 145
-    lines: 40
+    columns: 155
+    lines: 43
