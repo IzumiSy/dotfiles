@@ -1,5 +1,10 @@
 add_newline = false
 
+# git
+
+[git_branch]
+symbol = ""
+
 # system
 
 [time]
