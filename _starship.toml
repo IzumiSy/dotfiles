@@ -1,9 +1,17 @@
-add_newline = false
-
-# git
-
-[git_branch]
-symbol = ""
+format = """
+$directory\
+$git_branch\
+$git_commit\
+$git_state\
+$git_status\
+$gcloud\
+$package\
+$cmd_duration\
+$line_break\
+$time\
+$status\
+$character
+"""
 
 # system
 
@@ -13,59 +21,17 @@ disabled = false
 [battery]
 disabled = true
 
-[aws]
-disabled = true
-
 [jobs]
 disabled = true
 
 [hostname]
 disabled = true
 
-# language
+# git
 
-[java]
-symbol = "☕️ "
-style = "red"
+[git_branch]
+symbol = ""
 
-[python]
-disabled = true
-
-[package]
-disabled = true
-
-[golang]
-disabled = true
-
-[conda]
-disabled = true
-
-[crystal]
-disabled = true
-
-[dotnet]
-disabled = true
-
-[elixier]
-disabled = true
-
-[erlang]
-disabled = true
-
-[julia]
-disabled = true
-
-[nix_shell]
-disabled = true
-
-[ocaml]
-disabled = true
-
-[php]
-disabled = true
-
-[singularity]
-disabled = true
-
-[zig]
-disabled = true
+[gcloud]
+format = 'for [$project]($style) '
+style = "bold green"
