@@ -7,6 +7,7 @@ autodetach on
 escape ^f^f
 term xterm-256color
 altscreen on
+shell $SHELL
 
 defutf8 on
 defencoding utf-8
@@ -15,9 +16,7 @@ encoding utf8 utf8
 startup_message off
 vbell off
 
-hardstatus off
-hardstatus alwayslastline
-hardstatus string '%{= kG}[ %{G}%H %{g}][ %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %m-%d %{W} %c %{g}]'
+hardstatus alwayslastline '%{= kG}[ %{G}%H %{g}][ %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %m-%d %{W} %c %{g}]'
 
 bind ^n screen
 bind n screen
