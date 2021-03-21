@@ -6,6 +6,7 @@
 autodetach on
 escape ^f^f
 term xterm-256color
+altscreen on
 
 defutf8 on
 defencoding utf-8
@@ -18,8 +19,14 @@ hardstatus off
 hardstatus alwayslastline
 hardstatus string '%{= kG}[ %{G}%H %{g}][ %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %m-%d %{W} %c %{g}]'
 
+bind ^n screen
 bind n screen
+bind ^h prev
 bind h prev
+bind ^l next
 bind l next
+bind ^x remove
 bind x remove
-# bind p eval "split -v" focus screen
+
+bind ^p # unbind
+bind p # unbind
