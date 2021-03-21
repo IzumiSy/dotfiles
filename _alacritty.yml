@@ -5,10 +5,10 @@ mouse:
   hide_when_typing: true
 window:
   dimensions:
-    columns: 155
-    lines: 43
+    columns: 100
+    lines: 33
   position:
-    x: 50
+    x: 100
     y: 50
 mouse_bindings:
   - { mouse: Right, action: Copy }
