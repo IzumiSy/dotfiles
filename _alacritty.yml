@@ -1,0 +1,5 @@
+background_opacity: 0.85
+font:
+  size: 9
+mouse:
+  hide_when_typing: true
