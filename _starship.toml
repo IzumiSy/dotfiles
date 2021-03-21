@@ -1,13 +1,5 @@
 add_newline = false
 
-# git
-
-[git_branch]
-symbol = ""
-
-[git_status]
-stashed = ""
-
 # system
 
 [time]
