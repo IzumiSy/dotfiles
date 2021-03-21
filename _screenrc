@@ -8,6 +8,7 @@ escape ^f^f
 term xterm-256color
 altscreen on
 shell $SHELL
+ignorecase on
 
 defutf8 on
 defencoding utf-8
