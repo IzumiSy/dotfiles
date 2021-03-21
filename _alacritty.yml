@@ -14,4 +14,4 @@ mouse_bindings:
   - { mouse: Right, action: Copy }
 key_bindings:
   - { key: V, mods: Control, action: Paste }
-  - { key: N, mods: Control, action: SpawnNewInstance }
+  - { key: N, mods: Control|Shift, action: SpawnNewInstance }
