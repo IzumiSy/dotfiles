@@ -15,3 +15,7 @@ mouse_bindings:
 key_bindings:
   - { key: V, mods: Control, action: Paste }
   - { key: N, mods: Control|Shift, action: SpawnNewInstance }
+  - { key: Key0, mods: Control, action: ResetFontSize }
+  - { key: Semicolon, mods: Control, action: IncreaseFontSize }
+  - { key: Minus, mods: Control, action: DecreaseFontSize }
+  - { key: 36, mods: Command, action: ToggleSimpleFullscreen }
