@@ -34,7 +34,7 @@ Plug 'https://github.com/itchyny/lightline.vim'
 Plug 'https://github.com/Shougo/unite.vim'
 Plug 'https://github.com/Shougo/vimproc', { 'do': 'make' }
 Plug 'https://github.com/Shougo/neomru.vim'
-Plug 'vim-scripts/The-NERD-tree', { 'on': 'NERDTree' }
+Plug 'vim-scripts/The-NERD-tree'
 Plug 'vim-scripts/desert256.vim'
 Plug 'https://github.com/airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
@@ -140,7 +140,7 @@ augroup END
 " Trim whitespace before saving a file except markdown
 au BufWritePre *\({*.md}\)\@<! :FixWhitespace
 
-nnoremap <silent>,tr :NERDTree<CR>
+nnoremap <silent>,tr :NERDTreeFind<CR>
 nnoremap <silent>,hh :browse oldfiles<CR>
 
 command VIMRC edit $MYVIMRC
