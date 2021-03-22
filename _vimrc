@@ -159,8 +159,8 @@ endfunction
 "     Customized key mappings     "
 " =============================== "
 nnoremap <C-t> :tabnew<CR>
-nnoremap <C-m> :tabn<CR>
-nnoremap <C-n> :tabp<CR>
+nnoremap <C-n> :tabn<CR>
+nnoremap <C-p> :tabp<CR>
 nnoremap <C-x> :q<CR>
 
 " Quick horizontal key manueuvers
