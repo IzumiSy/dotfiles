@@ -9,6 +9,7 @@ term xterm-256color
 altscreen on
 shell $SHELL
 ignorecase on
+defscrollback 10000
 
 defutf8 on
 defencoding utf-8
