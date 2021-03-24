@@ -259,21 +259,21 @@ function! SetupUniteOptions()
     call unite#filters#matcher_default#use(['matcher_glob'])
     call unite#filters#sorter_default#use(['sorter_rank'])
 
-    if executable('ag')
-      let g:unite_source_rec_async_command=['ag', '--follow', '--nogroup', '--nocolor']
-      let g:unite_source_grep_command='ag'
-      let g:unite_source_grep_default_opts='--follow --nogroup --nocolor'
-    elseif executable('hw')
+    if executable('hw')
       let g:unite_source_rec_async_command=['hw', '--follow-link', '--line-number', '--no-group', '--no-color']
       let g:unite_source_grep_command='hw'
       let g:unite_source_grep_default_opts='--follow-link --line-number --no-group --no-color'
+    elseif executable('ag')
+      let g:unite_source_rec_async_command=['ag', '--follow', '--nogroup', '--nocolor']
+      let g:unite_source_grep_command='ag'
+      let g:unite_source_grep_default_opts='--follow --nogroup --nocolor'
     endif
 
     let g:unite_source_history_yank_enable=1
     let g:unite_source_file_mru_limit=200
     let g:unite_source_rec_min_cache_files=500
-    let g:unite_source_rec_max_cache_files=20000
-    let g:unite_redraw_hold_candidates = 50000
+    let g:unite_source_rec_max_cache_files=50000
+    let g:unite_redraw_hold_candidates = 100000
     let g:unite_source_grep_recursive_opt=''
     let g:unite_prompt=">> "
 
