@@ -18,10 +18,10 @@
     "key": "ctrl+cmd+t",
     "command": "workbench.action.tasks.runTask"
   }, {
-    "key": "ctrl+m",
+    "key": "ctrl+n",
     "command": "workbench.action.nextEditorInGroup"
   }, {
-    "key": "ctrl+n",
+    "key": "ctrl+p",
     "command": "workbench.action.previousEditorInGroup"
   }, {
     "key": "ctrl+t",
