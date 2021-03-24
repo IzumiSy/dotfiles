@@ -24,6 +24,9 @@ export VTE_CJK_WIDTH=1
 shopt -s cdspell &> /dev/null;
 shopt -s autocd  &> /dev/null;
 
+# Disabled CTRL-D termination
+set -o ignoreeof
+
 # Settings for history
 export HISTCONTROL=ignoreboth:erasedups
 export HISTIGNORE="ls:ll:cd .."
