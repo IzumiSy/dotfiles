@@ -14,6 +14,7 @@ defscrollback 10000
 defutf8 on
 defencoding utf-8
 encoding utf8 utf8
+cjkwidth on
 
 startup_message off
 vbell off
