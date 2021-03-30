@@ -141,7 +141,6 @@ augroup END
 au BufWritePre *\({*.md}\)\@<! :FixWhitespace
 
 nnoremap <silent>,tr :NERDTreeFind<CR>
-nnoremap <silent>,hh :browse oldfiles<CR>
 
 command VIMRC edit $MYVIMRC
 command Encutf8 :e ++enc=utf8
@@ -284,8 +283,7 @@ function! SetupUniteOptions()
     nnoremap <silent><leader>fg :Unite -start-insert file_rec/git<CR>
     nnoremap <silent><leader>ff :Unite grep:. -buffer-name=search-buffer -no-quit<CR>
     nnoremap <silent><leader>fl :UniteWithCursorWord grep:. -buffer-name=search-buffer -no-quit<CR>
-
-    command Hist :Unite -start-insert file_mru
+    nnoremap <silent><leader>hh :Unite -start-insert file_mru<CR>
   endif
 endfunction
 autocmd VimEnter * call SetupUniteOptions()
