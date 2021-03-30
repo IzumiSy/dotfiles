@@ -140,7 +140,18 @@ augroup END
 " Trim whitespace before saving a file except markdown
 au BufWritePre *\({*.md}\)\@<! :FixWhitespace
 
-nnoremap <silent>,tr :NERDTreeFind<CR>
+" SmartNERDTree function opens NERDTree in smarter way.
+" If the current buffer is empty, it executes NERDTree on the current diretory.
+" But, if the file is opened in calling this function, it unfolds the directory which
+" contains the file currently opened in NERDTree.
+nnoremap <silent>,tr :call SmartNERDTree()<CR>
+function! SmartNERDTree()
+    if @% == ""
+        NERDTreeToggle
+    else
+        NERDTreeFind
+    endif
+endfun
 
 command VIMRC edit $MYVIMRC
 command Encutf8 :e ++enc=utf8
@@ -280,10 +291,10 @@ function! SetupUniteOptions()
     " nnoremap <silent><leader>ro :Unite -start-insert file_rec/async:.<CR>
     " nnoremap <silent><leader>fh :Unite -start-insert history/yank<CR>
     " nnoremap <silent><leader>fb :Unite -start-insert buffer<CR>
+    nnoremap <silent><leader>hh :Unite -start-insert file_mru<CR>
     nnoremap <silent><leader>fg :Unite -start-insert file_rec/git<CR>
     nnoremap <silent><leader>ff :Unite grep:. -buffer-name=search-buffer -no-quit<CR>
     nnoremap <silent><leader>fl :UniteWithCursorWord grep:. -buffer-name=search-buffer -no-quit<CR>
-    nnoremap <silent><leader>hh :Unite -start-insert file_mru<CR>
   endif
 endfunction
 autocmd VimEnter * call SetupUniteOptions()
