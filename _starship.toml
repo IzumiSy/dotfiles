@@ -15,6 +15,9 @@ $character
 
 # system
 
+[directory]
+truncation_length = 3
+
 [time]
 disabled = false
 
