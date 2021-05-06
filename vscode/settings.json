@@ -87,11 +87,13 @@
     "files.maxMemoryForLargeFilesMB": 1024,
     "files.watcherExclude": {
         "**/.git/objects/**": true,
+        "**/.next/**": true,
         "**/node_modules/**": true,
-        "**/elm-stuff/**": true
+        "**/elm-stuff/**": true,
     },
 
     "search.exclude": {
+        "**/.next/**": true,
         "**/elm-stuff": true,
         "**/node_modules/**": true
     }
