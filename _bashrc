@@ -39,8 +39,10 @@ export LSCOLORS=gxfxcxdxbxegexabagacad
 # Setting for screen
 export SCREENDIR=$HOME/.screen
 
-# Homebrew's sbin
-export PATH="/usr/local/sbin:$PATH"
+# Adds thirdparty binaries
+export PATH="/usr/local/sbin:$PATH"  # Homebrew
+export PATH="$HOME/.cargo/bin:$PATH" # Rustlang
+export PATH="$PATH:$HOME/go/bin"     # Golang
 
 function base_line() {
   _bold="\[\e[1;1m\]"
@@ -122,7 +124,6 @@ function __get_branch_name() {
 # Default golang setting
 export GOPRIVATE="github.com/unipos/*"
 export GO111MODULE=on
-export PATH=$PATH:$HOME/go/bin
 
 # Asynchronous manual initializer
 # eg.) `init pyenv`, `init direnv`, etc...
@@ -164,7 +165,6 @@ if [ -e "$HOME/.rbenv" ]; then
 fi
 
 # For rustlang
-export PATH="$HOME/.cargo/bin:$PATH"
 if exists cargo ; then
   # NOTE:
   #  If you come across an error related to ssh-agent, put the line below to ~/.cargo/config.
