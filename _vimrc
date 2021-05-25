@@ -229,7 +229,7 @@ let g:lsp_settings = {
 \     }
 \   }
 \ }
-au BufWritePre {*.go,*.elm,*.ts,*.js,*.rs} :LspDocumentFormat
+au BufWritePre {*.go,*.elm,*.ts,*.js,*.rs} :LspDocumentFormatSync
 nnoremap <leader>df :vert LspDefinition<CR>
 nnoremap <leader>rr :LspReferences<CR>
 nnoremap <leader>tt :tab LspDefinition<CR>
