@@ -236,6 +236,7 @@ nnoremap <leader>tt :tab LspDefinition<CR>
 nnoremap <leader>ip :LspImplementation<CR>
 nnoremap <leader>rr :LspReferences<CR>
 nnoremap <leader>ee :LspDocumentDiagnostics<CR>
+nnoremap <leader>rn :LspRename<CR>
 
 " ====================== "
 "      asyncomplete      "
