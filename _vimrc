@@ -347,7 +347,7 @@ endfunction
 " let g:git_command_edit = 'rightbelow vnew'
 " nnoremap <silent>,gg :GitGutterToggle<CR>
 nnoremap <silent>,gh :GitGutterLineHighlightsToggle<CR>
-nnoremap <silent>,gg :vert Git<CR>
+nnoremap <silent>,gs :vert Git<CR>
 nnoremap <silent>,gd :vert Git diff --staged<CR>
 nnoremap <silent>,gl :vert Git log<CR>
 nnoremap <silent>,gc :vert Git commit<CR>
