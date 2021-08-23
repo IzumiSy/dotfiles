@@ -351,17 +351,21 @@ nnoremap <silent>,gs :vert Git<CR>
 nnoremap <silent>,gd :vert Git diff --staged<CR>
 nnoremap <silent>,gl :vert Git log<CR>
 nnoremap <silent>,gc :vert Git commit<CR>
-nnoremap <silent>,ga :Git add .<CR>
-nnoremap <silent>,gp :call PushToCurrentBranch()<CR>
+nnoremap <silent>,ga :call GitAdd()<CR>
+nnoremap <silent>,gp :call GitPushCurrentBranch()<CR>
 command Gwp :Git commit -m "wip"
 command Glo :vert Git log --oneline --decorate --graph
 
 " Pushes commits to the branch whose name is the same as we are currently checking out on
-function! PushToCurrentBranch()
-  " let branch = fugitive#statusline()
-  " let branch = substitute(branch, '\c\v\[?GIT\(([a-z0-9\-_\./:]+)\)\]?', $BRANCH.' \1', 'g')
-  let branch = system('git branch --show-current')
-  exe ":Git push origin" . branch
+function! GitPushCurrentBranch()
+  let branch = trim(system('git branch --show-current'))
+  echo "Git pushing to the remote branch..."
+  execute ":Git push origin " . branch
+endfunction
+
+function! GitAdd()
+  execute ":Git add ."
+  echo "Files staged."
 endfunction
 
 " ======================= "
