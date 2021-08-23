@@ -313,8 +313,8 @@ let g:lightline = {
 \   'colorscheme': 'one',
 \   'active': {
 \     'left': [
-\       ['mode', 'paste'],
-\       ['readonly', 'relativepath', 'modified']
+\       ['mode', 'paste', ],
+\       ['git', 'readonly', 'relativepath', 'modified']
 \     ],
 \     'right': [
 \       ['lineinfo'],
@@ -322,7 +322,7 @@ let g:lightline = {
 \     ]
 \   },
 \   'component': {
-\     'fugitive': '%{exists("*fugitive#head") ? "<".fugitive#head().">" : ""}',
+\     'git': '%{FugitiveStatusline()}',
 \     'readonly': '%{&readonly ? "[LOCKED]" : ""}',
 \   },
 \   'component_function': {
