@@ -348,10 +348,12 @@ endfunction
 " nnoremap <silent>,gg :GitGutterToggle<CR>
 nnoremap <silent>,gh :GitGutterLineHighlightsToggle<CR>
 nnoremap <silent>,gg :vert Git<CR>
-command Gad :Git add .
+nnoremap <silent>,gd :vert Git diff --staged<CR>
+nnoremap <silent>,gl :vert Git log<CR>
+nnoremap <silent>,gc :vert Git commit<CR>
+nnoremap <silent>,ga :Git add .<CR>
 command Gwp :Git commit -m "wip"
-command Gcm :vert Git commit
-command Gdf :vert Git diff --staged
+command Glo :vert Git log --oneline --decorate --graph
 
 " ======================= "
 "  Settings for Markdown  "
