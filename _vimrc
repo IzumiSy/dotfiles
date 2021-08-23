@@ -359,7 +359,7 @@ command Glo :vert Git log --oneline --decorate --graph
 " Pushes commits to the branch whose name is the same as we are currently checking out on
 function! GitPushCurrentBranch()
   let branch = trim(system('git branch --show-current'))
-  echo "Git pushing to the remote branch..."
+  echo "Git pushing to the remote branch... (" . branch . ")"
   execute ":Git push origin " . branch
 endfunction
 
