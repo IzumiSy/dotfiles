@@ -345,7 +345,7 @@ endfunction
 " ======================= "
 "      vim-fugitive       "
 " ======================= "
-nnoremap <silent><leader>gs :vert Git<CR>
+nnoremap <silent><leader>gs :Git<CR>:20wincmd_<CR>
 nnoremap <silent><leader>gd :vert Git diff --staged<CR>
 nnoremap <silent><leader>gl :vert Flogsplit<CR>
 nnoremap <silent><leader>gg :Git commit<CR>
