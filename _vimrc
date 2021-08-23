@@ -346,8 +346,8 @@ endfunction
 " ====================================== "
 " let g:git_command_edit = 'rightbelow vnew'
 " nnoremap <silent>,gg :GitGutterToggle<CR>
-nnoremap <silent>,gg :Git<CR>
 nnoremap <silent>,gh :GitGutterLineHighlightsToggle<CR>
+nnoremap <silent>,gg :vert Git<CR>
 command Gad :Git add .
 command Gwp :Git commit -m "wip"
 command Gcm :vert Git commit
