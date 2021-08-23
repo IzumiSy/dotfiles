@@ -358,7 +358,6 @@ command Glo :vert Git log --oneline --decorate --graph
 
 " Pushes commits to the branch whose name is the same as we are currently checking out on
 function! PushToCurrentBranch()
-  exe ":Gwrite"
   " let branch = fugitive#statusline()
   " let branch = substitute(branch, '\c\v\[?GIT\(([a-z0-9\-_\./:]+)\)\]?', $BRANCH.' \1', 'g')
   let branch = system('git branch --show-current')
