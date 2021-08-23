@@ -341,13 +341,17 @@ function! RelativePath()
   return expand('%')
 endfunction
 
-" ============================= "
-"      Git plugin settings      "
-" ============================= "
-let g:git_command_edit = 'rightbelow vnew'
-nnoremap <silent>,gg :GitGutterToggle<CR>
+" ====================================== "
+"      vim-fugitive & vim-gitgitter      "
+" ====================================== "
+" let g:git_command_edit = 'rightbelow vnew'
+" nnoremap <silent>,gg :GitGutterToggle<CR>
+nnoremap <silent>,gg :Git<CR>
 nnoremap <silent>,gh :GitGutterLineHighlightsToggle<CR>
-nnoremap <silent>,gl :GV!<CR>
+command Gad :Git add .
+command Gwp :Git commit -m "wip"
+command Gcm :vert Git commit
+command Gdf :vert Git diff --staged
 
 " ======================= "
 "  Settings for Markdown  "
