@@ -342,30 +342,23 @@ function! RelativePath()
   return expand('%')
 endfunction
 
-" ====================================== "
-"      vim-fugitive & vim-gitgitter      "
-" ====================================== "
-" let g:git_command_edit = 'rightbelow vnew'
-" nnoremap <silent>,gg :GitGutterToggle<CR>
-nnoremap <silent>,gh :GitGutterLineHighlightsToggle<CR>
-nnoremap <silent>,gs :vert Git<CR>
-nnoremap <silent>,gd :vert Git diff --staged<CR>
-nnoremap <silent>,gl :vert Flogsplit<CR>
-nnoremap <silent>,gc :Git commit<CR>
-nnoremap <silent>,gw :Git commit -m "wip"<CR>
-nnoremap <silent>,ga :call GitAdd()<CR>
-nnoremap <silent>,gp :call GitPushCurrentBranch()<CR>
+" ======================= "
+"      vim-fugitive       "
+" ======================= "
+nnoremap <silent><leader>gh :GitGutterLineHighlightsToggle<CR>
+nnoremap <silent><leader>gs :vert Git<CR>
+nnoremap <silent><leader>gd :vert Git diff --staged<CR>
+nnoremap <silent><leader>gl :vert Flogsplit<CR>
+nnoremap <silent><leader>gg :Git commit<CR>
+nnoremap <silent><leader>gw :Git commit -m "wip"<CR>
+nnoremap <silent><leader>ga :Git add . --verbose<CR>
+nnoremap <silent><leader>gp :call GitPushCurrentBranch()<CR>
 
 " Pushes commits to the branch whose name is the same as we are currently checking out on
 function! GitPushCurrentBranch()
   let branch = trim(system('git branch --show-current'))
   echo "Git pushing to the remote branch... (" . branch . ")"
   execute ":Git push origin " . branch
-endfunction
-
-function! GitAdd()
-  execute ":Git add ."
-  echo "Files staged."
 endfunction
 
 " ======================= "
