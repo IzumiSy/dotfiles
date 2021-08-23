@@ -345,7 +345,6 @@ endfunction
 " ======================= "
 "      vim-fugitive       "
 " ======================= "
-nnoremap <silent><leader>gh :GitGutterLineHighlightsToggle<CR>
 nnoremap <silent><leader>gs :vert Git<CR>
 nnoremap <silent><leader>gd :vert Git diff --staged<CR>
 nnoremap <silent><leader>gl :vert Flogsplit<CR>
