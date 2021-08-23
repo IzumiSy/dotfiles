@@ -37,6 +37,7 @@ Plug 'https://github.com/Shougo/neomru.vim'
 Plug 'vim-scripts/The-NERD-tree'
 Plug 'vim-scripts/desert256.vim'
 Plug 'https://github.com/airblade/vim-gitgutter'
+Plug 'TamaMcGlinn/vim-flog' " A temp bugfix repo of rbong/vim-flog
 Plug 'tpope/vim-fugitive'
 
 " LSP
@@ -349,12 +350,11 @@ endfunction
 nnoremap <silent>,gh :GitGutterLineHighlightsToggle<CR>
 nnoremap <silent>,gs :vert Git<CR>
 nnoremap <silent>,gd :vert Git diff --staged<CR>
-nnoremap <silent>,gl :vert Git log<CR>
-nnoremap <silent>,gc :vert Git commit<CR>
+nnoremap <silent>,gl :vert Flogsplit<CR>
+nnoremap <silent>,gc :Git commit<CR>
+nnoremap <silent>,gw :Git commit -m "wip"<CR>
 nnoremap <silent>,ga :call GitAdd()<CR>
 nnoremap <silent>,gp :call GitPushCurrentBranch()<CR>
-command Gwp :Git commit -m "wip"
-command Glo :vert Git log --oneline --decorate --graph
 
 " Pushes commits to the branch whose name is the same as we are currently checking out on
 function! GitPushCurrentBranch()
