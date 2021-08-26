@@ -351,6 +351,7 @@ nnoremap <silent><leader>gl :vert Flogsplit<CR>
 nnoremap <silent><leader>gg :Git commit<CR>
 nnoremap <silent><leader>gw :Git commit -m "wip"<CR>
 nnoremap <silent><leader>ga :Git add . --verbose<CR>
+nnoremap <silent><leader>gb :Git blame<CR>
 nnoremap <silent><leader>gp :call GitPushCurrentBranch()<CR>
 
 " Pushes commits to the branch whose name is the same as we are currently checking out on
