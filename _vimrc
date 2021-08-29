@@ -61,7 +61,7 @@ Plug 'itchyny/vim-haskell-indent', { 'for': 'haskell' }
 Plug 'digitaltoad/vim-pug', { 'for': 'pug' }
 
 " Language-specifc plugins
-Plug 'mattn/vim-goimports', { 'for': 'go' }
+" Plug 'mattn/vim-goimports', { 'for': 'go' }
 
 call plug#end()
 
