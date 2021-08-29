@@ -23,21 +23,22 @@ endif
 call plug#begin('~/.vim/plugged')
 
 Plug 'vim-scripts/sudo.vim'
-Plug 'bronson/vim-trailing-whitespace', { 'on': 'FixWhitespace' }
-Plug 'rking/ag.vim'
-Plug 'easymotion/vim-easymotion'
+Plug 'bronson/vim-trailing-whitespace', { 'on': ['FixWhitespace'] }
+Plug 'easymotion/vim-easymotion', { 'on': ['<Plug>(easymotion-s2)'] }
 Plug 'deris/vim-gothrough-jk'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'vim-scripts/surround.vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'https://github.com/itchyny/lightline.vim'
-Plug 'https://github.com/Shougo/unite.vim'
+Plug 'https://github.com/Shougo/unite.vim', { 'on': ['Unite', 'UniteWithCursorWord'] }
 Plug 'https://github.com/Shougo/vimproc', { 'do': 'make' }
 Plug 'https://github.com/Shougo/neomru.vim'
-Plug 'vim-scripts/The-NERD-tree'
+Plug 'vim-scripts/The-NERD-tree', { 'on': ['NERDTreeToggle', 'NEREDTreeFind'] }
 Plug 'vim-scripts/desert256.vim'
+
+" Git
 Plug 'https://github.com/airblade/vim-gitgutter'
-Plug 'TamaMcGlinn/vim-flog' " A temp bugfix repo of rbong/vim-flog
+Plug 'TamaMcGlinn/vim-flog', { 'on': ['Flogsplit'] } " A temp bugfix repo of rbong/vim-flog
 Plug 'tpope/vim-fugitive'
 
 " LSP
