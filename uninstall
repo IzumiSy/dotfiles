@@ -12,6 +12,7 @@ unlink "$HOME/.gitignore_global"
 unlink "$HOME/.hyper.js"
 unlink "$HOME/.pryrc"
 
-sudo unlink "/usr/local/bin/gctool"
+unlink "$HOME/.config/alacritty/dracula.yml"
+unlink "/usr/local/bin/gctool"
 
 exec bash --login

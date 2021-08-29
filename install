@@ -33,7 +33,7 @@ mkdir -p ~/.config/alacritty
 ln -snvf "$(pwd)/alacritty/dracula.yml" "$HOME/.config/alacritty/dracula.yml"
 
 # Install shell tools with root
-sudo ln -snvf "$(pwd)/shell/gctool" "/usr/local/bin/gctool"
+ln -snvf "$(pwd)/shell/gctool" "/usr/local/bin/gctool"
 
 # Loads .bashrc
 exec $SHELL --login
