@@ -259,8 +259,35 @@ imap . .<Plug>(asyncomplete_force_refresh)
 " ======================== "
 "      Unite settings      "
 " ======================== "
+let g:unite_source_history_yank_enable=1
+let g:unite_source_file_mru_limit=200
+let g:unite_source_rec_min_cache_files=500
+let g:unite_source_rec_max_cache_files=50000
+let g:unite_redraw_hold_candidates = 100000
+let g:unite_source_grep_recursive_opt=''
+let g:unite_prompt=">> "
+
+if executable('hw')
+  let g:unite_source_rec_async_command=['hw', '--follow-link', '--line-number', '--no-group', '--no-color']
+  let g:unite_source_grep_command='hw'
+  let g:unite_source_grep_default_opts='--follow-link --line-number --no-group --no-color'
+elseif executable('ag')
+  let g:unite_source_rec_async_command=['ag', '--follow', '--nogroup', '--nocolor']
+  let g:unite_source_grep_command='ag'
+  let g:unite_source_grep_default_opts='--follow --nogroup --nocolor'
+endif
+
+" nnoremap <silent><leader>fo :Unite -start-insert file<CR>
+" nnoremap <silent><leader>ro :Unite -start-insert file_rec/async:.<CR>
+" nnoremap <silent><leader>fh :Unite -start-insert history/yank<CR>
+" nnoremap <silent><leader>fb :Unite -start-insert buffer<CR>
+nnoremap <silent><leader>hh :Unite -start-insert file_mru<CR>
+nnoremap <silent><leader>fg :Unite -start-insert file_rec/git<CR>
+nnoremap <silent><leader>ff :Unite grep:. -buffer-name=search-buffer -no-quit<CR>
+nnoremap <silent><leader>fl :UniteWithCursorWord grep:. -buffer-name=search-buffer -no-quit<CR>
+
 function! SetupUniteOptions()
-  if exists(':Unite')
+  if exists('g:loaded_unite')
     let ignores = join([
     \    '\.png$', '\.ico$', '\.svg$', '\.gif$', '\.keep$',
     \    '\.eot$', '\.ttf$', '\.woff$', '\.woff2$',
@@ -273,36 +300,10 @@ function! SetupUniteOptions()
     call unite#filters#matcher_default#use(['matcher_glob'])
     call unite#filters#sorter_default#use(['sorter_rank'])
 
-    if executable('hw')
-      let g:unite_source_rec_async_command=['hw', '--follow-link', '--line-number', '--no-group', '--no-color']
-      let g:unite_source_grep_command='hw'
-      let g:unite_source_grep_default_opts='--follow-link --line-number --no-group --no-color'
-    elseif executable('ag')
-      let g:unite_source_rec_async_command=['ag', '--follow', '--nogroup', '--nocolor']
-      let g:unite_source_grep_command='ag'
-      let g:unite_source_grep_default_opts='--follow --nogroup --nocolor'
-    endif
-
-    let g:unite_source_history_yank_enable=1
-    let g:unite_source_file_mru_limit=200
-    let g:unite_source_rec_min_cache_files=500
-    let g:unite_source_rec_max_cache_files=50000
-    let g:unite_redraw_hold_candidates = 100000
-    let g:unite_source_grep_recursive_opt=''
-    let g:unite_prompt=">> "
-
-    " nnoremap <silent><leader>fo :Unite -start-insert file<CR>
-    " nnoremap <silent><leader>ro :Unite -start-insert file_rec/async:.<CR>
-    " nnoremap <silent><leader>fh :Unite -start-insert history/yank<CR>
-    " nnoremap <silent><leader>fb :Unite -start-insert buffer<CR>
-    nnoremap <silent><leader>hh :Unite -start-insert file_mru<CR>
-    nnoremap <silent><leader>fg :Unite -start-insert file_rec/git<CR>
-    nnoremap <silent><leader>ff :Unite grep:. -buffer-name=search-buffer -no-quit<CR>
-    nnoremap <silent><leader>fl :UniteWithCursorWord grep:. -buffer-name=search-buffer -no-quit<CR>
+    autocmd VimEnter * :execute "normal \<Plug>(unite_redraw)"
   endif
 endfunction
 autocmd VimEnter * call SetupUniteOptions()
-autocmd VimEnter * :execute "normal \<Plug>(unite_redraw)"
 
 " ========================== "
 "     Lightline settings     "
