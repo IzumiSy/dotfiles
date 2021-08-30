@@ -18,6 +18,7 @@ key_bindings:
   - { key: Key0, mods: Control, action: ResetFontSize }
   - { key: Semicolon, mods: Control, action: IncreaseFontSize }
   - { key: Minus, mods: Control, action: DecreaseFontSize }
-  - { key: 36, mods: Command, action: ToggleSimpleFullscreen }
+  - { key: 36, mods: Command, action: ToggleFullscreen }
+  - { key: 36, mods: Command|Shift, action: ToggleSimpleFullscreen }
 import:
   - ~/.config/alacritty/dracula.yml
