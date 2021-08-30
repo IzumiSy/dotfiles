@@ -16,7 +16,8 @@ window:
 mouse_bindings:
   - { mouse: Right, action: Copy }
 key_bindings:
-  - { key: V, mods: Control, action: Paste }
+  - { key: C, mods: Control|Shift, action: Copy }
+  - { key: V, mods: Control|Shift, action: Paste }
   - { key: N, mods: Control|Shift, action: SpawnNewInstance }
   - { key: Key0, mods: Control, action: ResetFontSize }
   - { key: Semicolon, mods: Control, action: IncreaseFontSize }
