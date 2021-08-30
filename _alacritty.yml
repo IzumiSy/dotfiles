@@ -7,6 +7,9 @@ window:
   dimensions:
     columns: 100
     lines: 33
+  padding:
+    x: 3
+    y: 3
   position:
     x: 100
     y: 50
