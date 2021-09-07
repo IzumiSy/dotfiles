@@ -215,6 +215,9 @@ nnoremap . <NOP>
 " Shift-free command mode in US layout
 nmap ; :
 
+" Disabled built-in SQL completion in Vim
+let g:omni_sql_no_default_maps = 1
+
 " ================= "
 "      vim-lsp      "
 " ================= "
