@@ -159,6 +159,7 @@ command VIMRC edit $MYVIMRC
 command Encutf8 :e ++enc=utf8
 command Sudow :w sudo:%
 command Sudoe :e sudo:%
+command Uuid :r !uuidgen|tr "[A-Z]" "[a-z]"
 
 " Command to update tabs to spaces
 command ChangeTab2Space :call s:change_tab_function()
