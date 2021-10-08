@@ -95,6 +95,7 @@ set cursorline
 set showmatch
 set showcmd
 set splitright
+set switchbuf+=vsplit
 set laststatus=2
 set encoding=utf-8
 set fileencoding=utf-8
@@ -286,10 +287,10 @@ endif
 " nnoremap <silent><leader>ro :Unite -start-insert file_rec/async:.<CR>
 " nnoremap <silent><leader>fh :Unite -start-insert history/yank<CR>
 " nnoremap <silent><leader>fb :Unite -start-insert buffer<CR>
-nnoremap <silent><leader>hh :Unite -start-insert file_mru<CR>
-nnoremap <silent><leader>fg :Unite -start-insert file_rec/git<CR>
-nnoremap <silent><leader>ff :Unite grep:. -buffer-name=search-buffer -no-quit<CR>
-nnoremap <silent><leader>fl :UniteWithCursorWord grep:. -buffer-name=search-buffer -no-quit<CR>
+nnoremap <silent><leader>hh :Unite -start-insert -default-action=tabswitch file_mru<CR>
+nnoremap <silent><leader>fg :Unite -start-insert -default-action=tabswitch file_rec/git<CR>
+nnoremap <silent><leader>ff :Unite grep:. -buffer-name=search-buffer -default-action=tabswitch -no-quit<CR>
+nnoremap <silent><leader>fl :UniteWithCursorWord grep:. -buffer-name=search-buffer -default-action=tabswitch -no-quit<CR>
 
 function! SetupUniteOptions()
   if exists('g:loaded_unite')
