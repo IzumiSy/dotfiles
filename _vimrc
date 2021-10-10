@@ -294,6 +294,11 @@ nnoremap <silent><leader>fl :UniteWithCursorWord grep:. -buffer-name=search-buff
 
 autocmd FileType unite call s:unite_settings()
 function! s:unite_settings()
+  imap <buffer> <C-j> <Plug>(unite_select_next_line)
+  imap <buffer> <C-k> <Plug>(unite_select_previous_line)
+  imap <buffer> <C-d> <Plug>(unite_select_next_page)
+  imap <buffer> <C-u> <Plug>(unite_select_previous_page)
+
   nmap <silent><buffer><expr> Enter unite#do_action('switch')
   imap <silent><buffer><expr> Enter unite#do_action('switch')
   nmap <silent><buffer><expr> <C-t> unite#do_action('tabswitch')
