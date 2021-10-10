@@ -287,10 +287,20 @@ endif
 " nnoremap <silent><leader>ro :Unite -start-insert file_rec/async:.<CR>
 " nnoremap <silent><leader>fh :Unite -start-insert history/yank<CR>
 " nnoremap <silent><leader>fb :Unite -start-insert buffer<CR>
-nnoremap <silent><leader>hh :Unite -start-insert -default-action=tabswitch file_mru<CR>
-nnoremap <silent><leader>fg :Unite -start-insert -default-action=tabswitch file_rec/git<CR>
-nnoremap <silent><leader>ff :Unite grep:. -buffer-name=search-buffer -default-action=tabswitch -no-quit<CR>
-nnoremap <silent><leader>fl :UniteWithCursorWord grep:. -buffer-name=search-buffer -default-action=tabswitch -no-quit<CR>
+nnoremap <silent><leader>hh :Unite -start-insert file_mru<CR>
+nnoremap <silent><leader>fg :Unite -start-insert file_rec/git<CR>
+nnoremap <silent><leader>ff :Unite grep:. -buffer-name=search-buffer -no-quit<CR>
+nnoremap <silent><leader>fl :UniteWithCursorWord grep:. -buffer-name=search-buffer -no-quit<CR>
+
+autocmd FileType unite call s:unite_settings()
+function! s:unite_settings()
+  nmap <silent><buffer><expr> Enter unite#do_action('switch')
+  imap <silent><buffer><expr> Enter unite#do_action('switch')
+  nmap <silent><buffer><expr> <C-t> unite#do_action('tabswitch')
+  imap <silent><buffer><expr> <C-t> unite#do_action('tabswitch')
+  nmap <silent><buffer><expr> <C-s> unite#do_action('vsplitswitch')
+  imap <silent><buffer><expr> <C-s> unite#do_action('vsplitswitch')
+endfunction
 
 function! SetupUniteOptions()
   if exists('g:loaded_unite')
