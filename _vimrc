@@ -193,6 +193,10 @@ vnoremap < <gv
 " Buffer manipulation
 nnoremap <leader>zz :bprev<CR>
 
+" Errors
+nnoremap <leader>ne :cn<CR>
+nnoremap <leader>pe :cp<CR>
+
 " Resets highlighting
 nnoremap <silent> <Esc><Esc> :noh<CR> :call clearmatches()<CR>
 
