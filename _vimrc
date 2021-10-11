@@ -276,7 +276,6 @@ let g:unite_source_rec_max_cache_files=50000
 let g:unite_redraw_hold_candidates = 100000
 let g:unite_source_grep_recursive_opt=''
 let g:unite_prompt=">> "
-
 if executable('hw')
   let g:unite_source_rec_async_command=['hw', '--follow-link', '--line-number', '--no-group', '--no-color']
   let g:unite_source_grep_command='hw'
