@@ -30,7 +30,7 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'vim-scripts/surround.vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'https://github.com/itchyny/lightline.vim'
-Plug 'https://github.com/Shougo/unite.vim', { 'on': ['Unite', 'UniteWithCursorWord'] }
+Plug 'https://github.com/Shougo/unite.vim'
 Plug 'https://github.com/Shougo/vimproc', { 'do': 'make' }
 Plug 'https://github.com/Shougo/neomru.vim'
 Plug 'vim-scripts/The-NERD-tree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
@@ -295,7 +295,23 @@ nnoremap <silent><leader>hh :Unite -start-insert file_mru<CR>
 nnoremap <silent><leader>fg :Unite -start-insert file_rec/git<CR>
 nnoremap <silent><leader>ff :Unite grep:. -buffer-name=search-buffer -no-quit<CR>
 nnoremap <silent><leader>fl :UniteWithCursorWord grep:. -buffer-name=search-buffer -no-quit<CR>
-
+let ignores = join([
+\    '\.png$', '\.ico$', '\.svg$', '\.gif$', '\.keep$',
+\    '\.eot$', '\.ttf$', '\.woff$', '\.woff2$',
+\    'tmp/', 'node_modules/', 'bower_components/',
+\    'elm-stuff/', '.cache', 'vendor/',
+\  ], '\|')
+call unite#sources#rec#define()
+call unite#custom#source('file,file_rec,file_rec/git,file_rec/async,grep', 'ignore_pattern', ignores)
+call unite#custom#source('file,file_rec,file_rec/git,file_rec/async,grep', 'sorters', 'sorter_length')
+call unite#filters#matcher_default#use(['matcher_glob'])
+call unite#filters#sorter_default#use(['sorter_rank'])
+call unite#custom#profile('default', 'context', {
+\   'no_quit': 1,
+\   'start_insert': 1,
+\   'vertical_preview': 1,
+\ })
+autocmd VimEnter * :execute "normal \<Plug>(unite_redraw)"
 autocmd FileType unite call s:unite_settings()
 function! s:unite_settings()
   imap <buffer> <C-j> <Plug>(unite_select_next_line)
@@ -310,25 +326,6 @@ function! s:unite_settings()
   nmap <silent><buffer><expr> <C-s> unite#do_action('vsplitswitch')
   imap <silent><buffer><expr> <C-s> unite#do_action('vsplitswitch')
 endfunction
-
-function! SetupUniteOptions()
-  if exists('g:loaded_unite')
-    let ignores = join([
-    \    '\.png$', '\.ico$', '\.svg$', '\.gif$', '\.keep$',
-    \    '\.eot$', '\.ttf$', '\.woff$', '\.woff2$',
-    \    'tmp/', 'node_modules/', 'bower_components/',
-    \    'elm-stuff/', '.cache'
-    \  ], '\|')
-    call unite#sources#rec#define()
-    call unite#custom#source('file,file_rec,file_rec/git,file_rec/async,grep', 'ignore_pattern', ignores)
-    call unite#custom#source('file,file_rec,file_rec/git,file_rec/async,grep', 'sorters', 'sorter_length')
-    call unite#filters#matcher_default#use(['matcher_glob'])
-    call unite#filters#sorter_default#use(['sorter_rank'])
-
-    autocmd VimEnter * :execute "normal \<Plug>(unite_redraw)"
-  endif
-endfunction
-autocmd VimEnter * call SetupUniteOptions()
 
 " ========================== "
 "     Lightline settings     "
