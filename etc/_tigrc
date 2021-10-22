@@ -1,0 +1,6 @@
+bind generic c ?git checkout %(commit)
+bind generic p ?git pull %(remote) %(branch)
+bind generic f ?git fetch
+bind generic b view-refs
+bind generic <C-R> screen-redraw
+bind generic <C-X> quit

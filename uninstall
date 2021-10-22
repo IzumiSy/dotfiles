@@ -11,6 +11,7 @@ unlink "$HOME/.gitconfig"
 unlink "$HOME/.gitignore_global"
 unlink "$HOME/.hyper.js"
 unlink "$HOME/.pryrc"
+unlink "$HOME/.tigrc"
 
 unlink "$HOME/.config/alacritty/dracula.yml"
 unlink "/usr/local/bin/gctool"

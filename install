@@ -27,6 +27,7 @@ ln -snvf "$(pwd)/etc/_gitconfig" "$HOME/.gitconfig"
 ln -snvf "$(pwd)/etc/_gitignore_global" "$HOME/.gitignore_global"
 ln -snvf "$(pwd)/etc/_hyper.js" "$HOME/.hyper.js"
 ln -svnf "$(pwd)/etc/_pryrc" "$HOME/.pryrc"
+ln -snvf "$(pwd)/etc/_tigrc" "$HOME/.tigrc"
 
 # Install alacritty theme
 mkdir -p ~/.config/alacritty
