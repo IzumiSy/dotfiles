@@ -243,8 +243,8 @@ let g:lsp_settings = {
 
 au BufWritePre {*.go,*.elm,*.ts,*.js,*.rs} :LspDocumentFormatSync
 nnoremap <leader>df :vert LspDefinition<CR>
+nnoremap <leader>ip :vert LspImplementation<CR>
 nnoremap <leader>tt :tab LspDefinition<CR>
-nnoremap <leader>ip :LspImplementation<CR>
 nnoremap <leader>rr :LspReferences<CR>
 nnoremap <leader>ee :LspDocumentDiagnostics<CR>
 nnoremap <leader>rn :LspRename<CR>
