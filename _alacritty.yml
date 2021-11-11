@@ -1,6 +1,6 @@
 background_opacity: 0.95
 font:
-  size: 11
+  size: 9.5
 mouse:
   hide_when_typing: true
 window:
