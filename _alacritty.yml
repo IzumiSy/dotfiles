@@ -16,13 +16,15 @@ window:
 mouse_bindings:
   - { mouse: Right, action: Copy }
 key_bindings:
-  - { key: C, mods: Control|Shift, action: Copy }
-  - { key: V, mods: Control|Shift, action: Paste }
-  - { key: N, mods: Control|Shift, action: SpawnNewInstance }
-  - { key: Key0, mods: Control, action: ResetFontSize }
-  - { key: Semicolon, mods: Control, action: IncreaseFontSize }
-  - { key: Minus, mods: Control, action: DecreaseFontSize }
-  - { key: 36, mods: Command, action: ToggleFullscreen }
-  - { key: 36, mods: Command|Shift, action: ToggleSimpleFullscreen }
+  - { key: C,         mods: Control|Shift,  action: Copy }
+  - { key: V,         mods: Control|Shift,  action: Paste }
+  - { key: N,         mods: Control|Shift,  action: SpawnNewInstance }
+  - { key: Key0,      mods: Control,        action: ResetFontSize }
+  - { key: Semicolon, mods: Control,        action: IncreaseFontSize }
+  - { key: Minus,     mods: Control,        action: DecreaseFontSize }
+  - { key: 36,        mods: Command,        action: ToggleFullscreen }
+  - { key: 36,        mods: Command|Shift,  action: ToggleSimpleFullscreen }
+  - { key: Yen,       mods: Alt,            chars: "\xA5" }
+  - { key: Yen,                             chars: "\x5C" }
 import:
   - ~/.config/alacritty/dracula.yml
