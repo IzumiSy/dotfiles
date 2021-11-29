@@ -60,6 +60,7 @@ Plug 'ap/vim-css-color', { 'for': 'css' }
 Plug 'hail2u/vim-css3-syntax', { 'for': 'css' }
 Plug 'itchyny/vim-haskell-indent', { 'for': 'haskell' }
 Plug 'digitaltoad/vim-pug', { 'for': 'pug' }
+Plug 'earthly/earthly.vim', { 'branch': 'main' }
 
 " Language-specifc plugins
 " Plug 'mattn/vim-goimports', { 'for': 'go' }
