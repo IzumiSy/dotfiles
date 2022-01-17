@@ -82,7 +82,7 @@ alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
 alias hist='eval $(history | cut -c 8- | peco)'
-alias sc='screen'
+alias sc='screen -xRR'
 
 # Git command aliases
 alias gad='git add .'
