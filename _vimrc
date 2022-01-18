@@ -31,7 +31,7 @@ Plug 'vim-scripts/surround.vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'https://github.com/itchyny/lightline.vim'
 Plug 'https://github.com/Shougo/unite.vim'
-Plug 'https://github.com/Shougo/vimproc', { 'do': 'make' }
+Plug 'https://github.com/Shougo/vimproc'
 Plug 'https://github.com/Shougo/neomru.vim'
 Plug 'vim-scripts/The-NERD-tree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
 Plug 'vim-scripts/desert256.vim'
