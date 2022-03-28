@@ -40,9 +40,10 @@ export LSCOLORS=gxfxcxdxbxegexabagacad
 export SCREENDIR=$HOME/.screen
 
 # Adds thirdparty binaries
-export PATH="/usr/local/sbin:$PATH"  # Homebrew
-export PATH="$HOME/.cargo/bin:$PATH" # Rustlang
-export PATH="$PATH:$HOME/go/bin"     # Golang
+export PATH="/usr/local/sbin:$PATH"   # Homebrew
+export PATH="/opt/Homebrew/bin:$PATH" # Homebrew (m1mac)
+export PATH="$HOME/.cargo/bin:$PATH"  # Rustlang
+export PATH="$PATH:$HOME/go/bin"      # Golang
 
 function base_line() {
   _bold="\[\e[1;1m\]"
