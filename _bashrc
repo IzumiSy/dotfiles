@@ -40,9 +40,11 @@ export LSCOLORS=gxfxcxdxbxegexabagacad
 export SCREENDIR=$HOME/.screen
 
 # Adds thirdparty binaries
-export PATH="$PATH:/opt/Homebrew/bin" # Homebrew
-export PATH="$PATH:$HOME/.cargo/bin"  # Rustlang
-export PATH="$PATH:$HOME/go/bin"      # Golang
+export PATH="$PATH:$HOME/.cargo/bin" # Rustlang
+export PATH="$PATH:$HOME/go/bin"     # Golang
+if exists brew ; then
+  export PATH="$PATH:$(brew --prefix)/bin" # Homebrew
+fi
 
 function base_line() {
   _bold="\[\e[1;1m\]"
@@ -199,13 +201,11 @@ function iterm2_print_user_vars() {
   fi
 }
 
-# Sourcing git completion for bash
-if [[ "$OSTYPE" = "darwin"* ]] ; then
-  # git must be installed via homebrew
-  source "/usr/local/etc/bash_completion.d/git-prompt.sh"
-  source "/usr/local/etc/bash_completion.d/git-completion.bash"
+# Git completion
+if exists brew ; then
+  source "$(brew --prefix)/etc/bash_completion.d/git-prompt.sh"
+  source "$(brew --prefix)/etc/bash_completion.d/git-completion.bash"
 else
-  # this usually aims for Ubuntu
   source "/etc/bash_completion.d/git-prompt"
   source "/etc/profile.d/bash_completion.sh"
 fi
