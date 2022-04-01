@@ -46,7 +46,7 @@ Plug 'prabirshrestha/async.vim'
 Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
 Plug 'prabirshrestha/vim-lsp'
-Plug 'https://github.com/IzumiSy/vim-lsp-settings'
+Plug 'https://github.com/mattn/vim-lsp-settings'
 
 " Syntaxes
 Plug 'leshill/vim-json', { 'for': 'json' }
@@ -61,9 +61,6 @@ Plug 'hail2u/vim-css3-syntax', { 'for': 'css' }
 Plug 'itchyny/vim-haskell-indent', { 'for': 'haskell' }
 Plug 'digitaltoad/vim-pug', { 'for': 'pug' }
 Plug 'earthly/earthly.vim', { 'branch': 'main' }
-
-" Language-specifc plugins
-" Plug 'mattn/vim-goimports', { 'for': 'go' }
 
 call plug#end()
 
