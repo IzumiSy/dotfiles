@@ -1,4 +1,6 @@
 font:
+  normal:
+    family: Hack Nerd Font Mono
   size: 10
 mouse:
   hide_when_typing: true
