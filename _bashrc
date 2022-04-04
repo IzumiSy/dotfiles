@@ -40,9 +40,11 @@ export LSCOLORS=gxfxcxdxbxegexabagacad
 export SCREENDIR=$HOME/.screen
 
 # Adds thirdparty binaries
-export PATH="$PATH:$HOME/.cargo/bin"  # Rustlang
-export PATH="$PATH:$HOME/go/bin"      # Golang
-export PATH="$PATH:/opt/Homebrew/bin" # Homebrew
+export PATH="$PATH:$HOME/.cargo/bin"    # Rustlang
+export PATH="$PATH:$HOME/go/bin"        # Golang
+if exists /opt/Homebrew/bin/brew ; then
+  eval $(/opt/Homebrew/bin/brew shellenv)
+fi
 
 function base_line() {
   _bold="\[\e[1;1m\]"
