@@ -128,7 +128,7 @@ au BufRead,BufNewFile {COMMIT_EDITMSG} set filetype=gitcommit
 au BufRead,BufNewFile {.envrc,_bash*} set filetype=sh
 
 " Special tab/indent width
-au FileType javascript,typescript set tabstop=2 shiftwidth=2 softtabstop=2
+au FileType html,javascript,typescript set tabstop=2 shiftwidth=2 softtabstop=2
 au FileType c,cpp,go,python,elm set tabstop=4 shiftwidth=4 softtabstop=4
 au FileType c,cpp set cindent
 
