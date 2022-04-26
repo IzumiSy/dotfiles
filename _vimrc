@@ -247,6 +247,12 @@ nnoremap <leader>rr :LspReferences<CR>
 nnoremap <leader>ee :LspDocumentDiagnostics<CR>
 nnoremap <leader>rn :LspRename<CR>
 
+" Debugging
+if !empty($VIM_DEBUG)
+  let g:lsp_log_verbose = 1
+  let g:lsp_log_file = expand('~/vim-lsp.log')
+endif
+
 " ====================== "
 "      asyncomplete      "
 " ====================== "
