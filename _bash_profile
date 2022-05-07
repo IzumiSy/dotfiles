@@ -4,7 +4,3 @@
 [ -f "$HOME/.bashrc"  ] \
   && . "$HOME/.bashrc" \
   && echo "Loaded .bashrc"
-
-[ -f "$HOME/.profile" ] \
-  && . "$HOME/.profile" \
-  && echo "Loaded .profile"
