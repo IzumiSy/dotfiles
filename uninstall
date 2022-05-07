@@ -4,7 +4,7 @@ set -Ceux
 unlink "$HOME/_vimrc"
 unlink "$HOME/.screenrc"
 unlink "$HOME/.bashrc"
-unlink "$HOME/.bash_profile"
+# unlink "$HOME/.bash_profile"
 unlink "$HOME/.starship.toml"
 unlink "$HOME/.alacritty.yml"
 unlink "$HOME/.gitconfig"
