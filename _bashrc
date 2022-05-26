@@ -101,8 +101,8 @@ alias gpl='git pull --rebase origin $(__get_branch_name)'
 alias gb='git branch'
 alias gcmb="git branch --merged | grep -vE '^\*|master$|develop$' | xargs -I % git branch -d %"
 alias pco='git branch | peco | xargs git checkout'
-alias gpo='check_protecting_branch && git push origin $(__get_branch_name)'
-alias gpof='check_protecting_branch && git push origin $(__get_branch_name) --force-with-lease --force-if-includes'
+alias gpo='check_protecting_branch && git push -u origin $(__get_branch_name)'
+alias gpof='check_protecting_branch && git push -u origin $(__get_branch_name) --force-with-lease --force-if-includes'
 
 # Check if the current branch to operate is protected or not
 function check_protecting_branch() {
