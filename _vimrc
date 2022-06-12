@@ -195,6 +195,9 @@ nnoremap <leader>zz :bprev<CR>
 nnoremap <leader>ne :cn<CR>
 nnoremap <leader>pe :cp<CR>
 
+" Terminals
+nnoremap <leader>ot :vert term<CR>
+
 " Resets highlighting
 nnoremap <silent> <Esc><Esc> :noh<CR> :call clearmatches()<CR>
 
