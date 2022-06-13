@@ -249,6 +249,7 @@ au BufWritePre {*.go,*.elm,*.ts,*.js,*.rs} :LspDocumentFormatSync
 nnoremap <leader>df :vert LspDefinition<CR>
 nnoremap <leader>ip :vert LspImplementation<CR>
 nnoremap <leader>tt :tab LspDefinition<CR>
+nnoremap <leader>hp :LspHover<CR>
 nnoremap <leader>rr :LspReferences<CR>
 nnoremap <leader>ee :LspDocumentDiagnostics<CR>
 nnoremap <leader>rn :LspRename<CR>
