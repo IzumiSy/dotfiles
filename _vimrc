@@ -175,6 +175,9 @@ nnoremap <C-n> :tabn<CR>
 nnoremap <C-p> :tabp<CR>
 nnoremap <C-x> :q<CR>
 
+" Reload the file opened in the current buffer from disk
+nnoremap <C-r> :e!<CR>
+
 " Quick horizontal key manueuvers
 nmap <silent><C-h> b
 nmap <silent><C-l> w
