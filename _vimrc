@@ -51,7 +51,7 @@ Plug 'https://github.com/mattn/vim-lsp-settings'
 " Syntaxes
 Plug 'leshill/vim-json', { 'for': 'json' }
 Plug 'tpope/vim-haml', { 'for': 'haml' }
-Plug 'othree/yajs.vim', { 'for': 'javascript' }
+Plug 'https://github.com/pangloss/vim-javascript', { 'for': 'javascript' }
 Plug 'maxmellon/vim-jsx-pretty', { 'for': 'javascript' }
 Plug 'joukevandermaas/vim-ember-hbs', { 'for': 'handlebars' }
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
