@@ -391,7 +391,7 @@ nnoremap <silent><leader>gp :call GitPushCurrentBranch()<CR>
 function! GitPushCurrentBranch()
   let branch = trim(system('git branch --show-current'))
   echo "Git pushing to the remote branch... (" . branch . ")"
-  execute ":Git push origin " . branch
+  execute ":Git push -u origin " . branch
 endfunction
 
 " ======================= "
