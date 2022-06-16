@@ -428,7 +428,12 @@ cnoreabbrev Qall qall
 " ================= "
 "   NeedCommenter   "
 " ================= "
+let g:NERDCreateDefaultMappings = 0
 let g:NERDSpaceDelims = 1
+let g:NERDCompactSexyComs = 1
+let g:NERDDefaultAlign = 'left'
+nnoremap <leader>cc <plug>NERDCommenterToggle
+vnoremap <leader>cc <plug>NERDCommenterToggle
 
 " ==================== "
 "   vim-gothrough-jk   "
