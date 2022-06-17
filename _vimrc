@@ -251,10 +251,10 @@ nnoremap <leader>ip :vert LspImplementation<CR>
 nnoremap <leader>tt :tab LspDefinition<CR>
 nnoremap <leader>hp :LspHover<CR>
 nnoremap <leader>rr :LspReferences<CR>
-nnoremap <leader>ee :LspNextError<CR>
-nnoremap <leader>ea :LspDocumentDiagnostics<CR>
+nnoremap <leader>ee :LspDocumentDiagnostics<CR>
 nnoremap <leader>rn :LspRename<CR>
 nnoremap <leader>ca :LspCodeAction<CR>
+nnoremap E :LspNextError<CR>
 
 " Debugging
 if !empty($VIM_DEBUG)
