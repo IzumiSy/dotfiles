@@ -173,9 +173,11 @@ endfunction
 imap jj <Esc>
 nnoremap J <Nop>
 nnoremap H b
+vnoremap H b
 nnoremap <C-j> <Nop>
 nnoremap K <Nop>
 nnoremap L w
+vnoremap L w
 nnoremap <C-d> <Nop>
 
 " Quit
