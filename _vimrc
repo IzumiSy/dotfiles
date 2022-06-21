@@ -188,8 +188,10 @@ nnoremap D <C-d>
 
 " Split windows
 nnoremap S :vsplit<CR>
-nmap fl <C-w><C-w>
-nmap fh <C-w>W
+nmap fl <C-w>l
+nmap fk <C-w>k
+nmap fj <C-w>j
+nmap fh <C-w>h
 
 " Tab shortcuts
 nnoremap T :tabnew<CR>
