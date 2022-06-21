@@ -170,19 +170,31 @@ endfunction
 " =============================== "
 "     Customized key mappings     "
 " =============================== "
-nnoremap <C-t> :tabnew<CR>
-nnoremap <C-n> :tabn<CR>
-nnoremap <C-p> :tabp<CR>
-nnoremap <C-x> :q<CR>
+inoremap <M-Space> <Esc>
+nnoremap J <Nop>
+nnoremap <C-j> <Nop>
+nnoremap K <Nop>
+nnoremap <C-d> <Nop>
+
+" Quit
+nnoremap X :q<CR>
+
+" Pagination
+nnoremap U <C-u>
+nnoremap D <C-d>
+
+" Split windows
+nnoremap S :vsplit<CR>
+nmap fl <C-w><C-w>
+nmap fh <C-w>W
+
+" Tab shortcuts
+nnoremap T :tabnew<CR>
+nnoremap FL :tabn<CR>
+nnoremap FH :tabp<CR>
 
 " Reload the file opened in the current buffer from disk
 nnoremap <C-r> :e!<CR>
-
-" Quick horizontal key manueuvers
-nmap <silent><C-h> b
-nmap <silent><C-l> w
-vmap <silent><C-h> b
-vmap <silent><C-l> w
 
 " Fix strange behavior of Backspace
 inoremap <expr><BS> "\<C-h>"
@@ -209,9 +221,7 @@ nnoremap <silent> <Esc><Esc> :noh<CR> :call clearmatches()<CR>
 nnoremap q: <NOP>
 
 " It applies ordinary Windows key binding for undo
-" On the default setting, Vim has Ctrl-Z for temporary quitting
-" with shell control system, but it is not actually useful.
-nnoremap <silent>u <NOP>
+" Vim has Ctrl-Z for temporary quitting by default but that is not actually useful.
 nnoremap <silent><C-z> <NOP>
 nnoremap <silent><C-z> :undo<CR>
 
