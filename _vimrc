@@ -170,7 +170,7 @@ endfunction
 " =============================== "
 "     Customized key mappings     "
 " =============================== "
-imap ii <Esc>
+imap jj <Esc>
 nnoremap J <Nop>
 nnoremap H b
 nnoremap <C-j> <Nop>
