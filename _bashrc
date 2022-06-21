@@ -76,7 +76,7 @@ fi
 
 # Basics
 alias x='exit'
-alias v='vim'
+alias v='vim -c ":call SmartNERDTree()"'
 alias vh='vim +NERDTree'
 alias c='clear'
 alias be='bundle exec'
