@@ -172,8 +172,10 @@ endfunction
 " =============================== "
 inoremap <M-Space> <Esc>
 nnoremap J <Nop>
+nnoremap H b
 nnoremap <C-j> <Nop>
 nnoremap K <Nop>
+nnoremap L w
 nnoremap <C-d> <Nop>
 
 " Quit
