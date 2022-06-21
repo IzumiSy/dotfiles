@@ -171,17 +171,17 @@ endfunction
 "     Customized key mappings     "
 " =============================== "
 inoremap <M-Space> <Esc>
-nnoremap J <C-d>
+nnoremap J <Nop>
 nnoremap <C-j> <Nop>
-nnoremap K <C-u>
+nnoremap K <Nop>
 nnoremap <C-d> <Nop>
 
 " Quit
 nnoremap X :q<CR>
 
 " Pagination
-nnoremap U <Nop>
-nnoremap D <Nop>
+nnoremap U <C-u>
+nnoremap D <C-d>
 
 " Split windows
 nnoremap S :vsplit<CR>
