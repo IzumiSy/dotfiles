@@ -4,7 +4,7 @@
 # Docs: http://www.limy.org/program/screen.html
 
 autodetach on
-escape ^f^f
+escape ^Z^Z
 term xterm-256color
 altscreen on
 shell $SHELL
