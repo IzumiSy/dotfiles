@@ -180,6 +180,7 @@ nnoremap <C-d> <Nop>
 
 " Quit
 nnoremap X :q<CR>
+nnoremap <C-x> :q<CR>
 
 " Pagination
 nnoremap U <C-u>
