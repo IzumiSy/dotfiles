@@ -35,6 +35,7 @@ Plug 'https://github.com/Shougo/vimproc'
 Plug 'https://github.com/Shougo/neomru.vim'
 Plug 'vim-scripts/The-NERD-tree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
 Plug 'vim-scripts/desert256.vim'
+Plug 'https://github.com/cocopon/vaffle.vim'
 
 " Git
 Plug 'https://github.com/airblade/vim-gitgutter'
@@ -145,14 +146,14 @@ au BufWritePre *\({*.md}\)\@<! :FixWhitespace
 " If the current buffer is empty, it executes NERDTree on the current diretory.
 " But, if the file is opened in calling this function, it unfolds the directory which
 " contains the file currently opened in NERDTree.
-nnoremap <silent>,tr :call SmartNERDTree()<CR>
+nnoremap <silent><leader>tr :call SmartNERDTree()<CR>
 function! SmartNERDTree()
     if @% == ""
         NERDTreeToggle
     else
         NERDTreeFind
     endif
-endfun
+endfunction
 
 command VIMRC edit $MYVIMRC
 command Encutf8 :e ++enc=utf8
@@ -244,6 +245,19 @@ nmap ; :
 
 " Disabled built-in SQL completion in Vim
 let g:omni_sql_no_default_maps = 1
+
+" ============= "
+"    Vaffle     "
+" ============= "
+let g:vaffle_show_hidden_files = 1
+nnoremap <silent><leader>pp :call SmartVaffle()<CR>
+function! SmartVaffle()
+  if @% == ""
+    Vaffle
+  else
+    tabnew|Vaffle
+  endif
+endfunction
 
 " ================= "
 "      vim-lsp      "
