@@ -36,10 +36,7 @@ Plug 'https://github.com/Shougo/neomru.vim'
 Plug 'vim-scripts/The-NERD-tree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
 Plug 'vim-scripts/desert256.vim'
 Plug 'https://github.com/cocopon/vaffle.vim'
-
-" Git
 Plug 'https://github.com/airblade/vim-gitgutter'
-Plug 'TamaMcGlinn/vim-flog', { 'on': ['Flogsplit'] } " A temp bugfix repo of rbong/vim-flog
 Plug 'tpope/vim-fugitive'
 
 " LSP
@@ -414,7 +411,7 @@ endfunction
 " ======================= "
 nnoremap <silent><leader>gs :Git<CR>:20wincmd_<CR>
 nnoremap <silent><leader>gd :vert Git diff --staged<CR>
-nnoremap <silent><leader>gl :vert Flogsplit<CR>
+nnoremap <silent><leader>gl :vert Git log --oneline --decorate<CR>
 nnoremap <silent><leader>gg :Git commit<CR>
 nnoremap <silent><leader>gw :Git commit -m "wip"<CR>
 nnoremap <silent><leader>ga :Git add . --verbose<CR>
