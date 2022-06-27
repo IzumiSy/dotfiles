@@ -256,7 +256,7 @@ function! SmartVaffle()
     Vaffle
   else
     let currentFilePath = expand("%:h")
-    :execute "tabnew|Vaffle %:h" . currentFilePath
+    :execute "tabnew|Vaffle " . currentFilePath
   endif
 endfunction
 
