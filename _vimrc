@@ -184,7 +184,9 @@ nnoremap <C-x> :q<CR>
 
 " Pagination
 nnoremap U <C-u>
+vnoremap U <C-u>
 nnoremap D <C-d>
+vnoremap D <C-d>
 
 " Split windows
 nnoremap S :vsplit<CR>
