@@ -306,7 +306,7 @@ inoremap <expr>K     pumvisible() ? "<Up>" : "K"
 inoremap <expr>U     pumvisible() ? "<Up><Up><Up><Up><Up>" : "U"
 inoremap <expr>D     pumvisible() ? "<Down><Down><Down><Down><Down>" : "D"
 inoremap <expr>H     pumvisible() ? asyncomplete#cancel_popup() : "H"
-imap     .           .<Plug>(asyncomplete_force_refresh)
+inoremap <expr><C-l> pumvisible() ? asyncomplete#close_popup() : asyncomplete#force_refresh()
 
 " ======================== "
 "      Unite settings      "
