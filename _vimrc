@@ -45,6 +45,7 @@ Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
 Plug 'prabirshrestha/vim-lsp'
 Plug 'https://github.com/mattn/vim-lsp-settings'
+Plug 'micchy326/lightline-lsp-progress', { 'branch': 'main' }
 
 " Syntaxes
 Plug 'leshill/vim-json', { 'for': 'json' }
@@ -378,8 +379,8 @@ let g:lightline = {
 \   'colorscheme': 'one',
 \   'active': {
 \     'left': [
-\       ['mode', 'paste', ],
-\       ['git', 'readonly', 'relativepath', 'modified']
+\       ['mode', 'paste'],
+\       ['git', 'readonly', 'relativepath', 'modified', 'lsp_status']
 \     ],
 \     'right': [
 \       ['lineinfo'],
@@ -391,6 +392,7 @@ let g:lightline = {
 \     'readonly': '%{&readonly ? "[LOCKED]" : ""}',
 \   },
 \   'component_function': {
+\     'lsp_status': 'lightline_lsp_progress#progress',
 \     'relativepath': 'RelativePath',
 \   }
 \ }
