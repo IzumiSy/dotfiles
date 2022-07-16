@@ -267,6 +267,7 @@ let g:lsp_diagnostics_float_delay = 1000
 let g:lsp_diagnostics_echo_delay = 1000
 let g:lsp_documentation_float = 0
 let g:lsp_format_sync_timeout = 1000
+let g:lsp_work_done_progress_enabled = 1
 let g:lsp_settings = {
 \   'elm-language-server': {
 \     'initialization_options': {
