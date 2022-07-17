@@ -376,6 +376,7 @@ endfunction
 if !has('gui_running')
   set t_Co=256
 endif
+let g:lightline_lsp_progress_skip_time = 0.1
 let g:lightline = {
 \   'colorscheme': 'one',
 \   'active': {
