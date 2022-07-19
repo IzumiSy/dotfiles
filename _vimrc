@@ -92,6 +92,7 @@ set cursorline
 set showmatch
 set showcmd
 set splitright
+set signcolumn=yes
 set switchbuf+=vsplit
 set laststatus=2
 set encoding=utf-8
