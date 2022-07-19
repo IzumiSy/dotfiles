@@ -246,6 +246,9 @@ nmap ; :
 " Disabled built-in SQL completion in Vim
 let g:omni_sql_no_default_maps = 1
 
+" Automatically redraw buffers on focused
+:au FocusGained * :redraw!
+
 " ============= "
 "    Vaffle     "
 " ============= "
