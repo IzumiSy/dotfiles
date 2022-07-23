@@ -19,7 +19,7 @@ done
 # Install dotfiles
 ln -snvf "$(pwd)/_vimrc" "$HOME/_vimrc"
 ln -snvf "$(pwd)/_screenrc" "$HOME/.screenrc"
-ln -snvh "$(pwd)/_tmux.conf" "$HOME/.tmux.conf"
+ln -snvf "$(pwd)/_tmux.conf" "$HOME/.tmux.conf"
 ln -snvf "$(pwd)/_bashrc" "$HOME/.bashrc"
 # ln -snvf "$(pwd)/_bash_profile" "$HOME/.bash_profile"
 ln -snvf "$(pwd)/_starship.toml" "$HOME/.starship.toml"
