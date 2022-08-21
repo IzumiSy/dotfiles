@@ -38,6 +38,7 @@ Plug 'vim-scripts/desert256.vim'
 Plug 'https://github.com/cocopon/vaffle.vim'
 Plug 'https://github.com/airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
+Plug 'prettier/vim-prettier'
 
 " LSP
 Plug 'prabirshrestha/async.vim'
@@ -281,8 +282,15 @@ let g:lsp_settings = {
 \     }
 \   }
 \ }
-
-au BufWritePre {*.go,*.elm,*.ts,*.js,*.rs} :LspDocumentFormatSync
+au BufWritePre {*.go,*.elm,*.rs} :LspDocumentFormatSync
+au BufWritePre {*.js,*.ts} :call RunPrettierOrLSPFormat()
+function! RunPrettierOrLSPFormat()
+  if system('PrettierCliPath') == ""
+    LspDocumentFormatSync
+  else
+    Prettier
+  endif
+endfunction
 nnoremap <leader>df :vert LspDefinition<CR>
 nnoremap <leader>ip :vert LspImplementation<CR>
 nnoremap <leader>tt :tab LspDefinition<CR>
