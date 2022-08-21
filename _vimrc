@@ -33,7 +33,6 @@ Plug 'https://github.com/itchyny/lightline.vim'
 Plug 'https://github.com/Shougo/unite.vim'
 Plug 'https://github.com/Shougo/vimproc'
 Plug 'https://github.com/Shougo/neomru.vim'
-Plug 'vim-scripts/The-NERD-tree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
 Plug 'vim-scripts/desert256.vim'
 Plug 'https://github.com/cocopon/vaffle.vim'
 Plug 'https://github.com/airblade/vim-gitgutter'
@@ -141,19 +140,6 @@ augroup END
 
 " Trim whitespace before saving a file except markdown
 au BufWritePre *\({*.md}\)\@<! :FixWhitespace
-
-" SmartNERDTree function opens NERDTree in smarter way.
-" If the current buffer is empty, it executes NERDTree on the current diretory.
-" But, if the file is opened in calling this function, it unfolds the directory which
-" contains the file currently opened in NERDTree.
-nnoremap <silent><leader>tr :call SmartNERDTree()<CR>
-function! SmartNERDTree()
-    if @% == ""
-        NERDTreeToggle
-    else
-        NERDTreeFind
-    endif
-endfunction
 
 command VIMRC edit $MYVIMRC
 command Encutf8 :e ++enc=utf8
