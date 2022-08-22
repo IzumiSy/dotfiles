@@ -38,6 +38,7 @@ Plug 'https://github.com/cocopon/vaffle.vim'
 Plug 'https://github.com/airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'prettier/vim-prettier'
+Plug 'IzumiSy/vim-test', { 'branch': 'fix_playwright_nearest_test' }
 
 " LSP
 Plug 'prabirshrestha/async.vim'
@@ -237,6 +238,17 @@ let g:omni_sql_no_default_maps = 1
 " Automatically redraw buffers on focused
 :au BufEnter,WinEnter * :redraw!
 
+" ============== "
+"    vim-test    "
+" ============== "
+let test#strategy = "vimterminal"
+let test#vim#term_position = "vert"
+let g:test#preserve_screen = 1
+let g:test#javascript#playwright#options = '--workers=1'
+nnoremap <leader>tt :TestNearest<CR>
+nnoremap <leader>td :TestNearest --debug<CR>
+nnoremap <leader>T :TestFile<CR>
+
 " ============= "
 "    Vaffle     "
 " ============= "
@@ -277,7 +289,6 @@ function! RunPrettierOrLSPFormat()
 endfunction
 nnoremap <leader>df :vert LspDefinition<CR>
 nnoremap <leader>ip :vert LspImplementation<CR>
-nnoremap <leader>tt :tab LspDefinition<CR>
 nnoremap <leader>hp :LspHover<CR>
 nnoremap <leader>rr :LspReferences<CR>
 nnoremap <leader>ee :LspDocumentDiagnostics<CR>
