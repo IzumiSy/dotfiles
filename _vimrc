@@ -38,7 +38,7 @@ Plug 'https://github.com/cocopon/vaffle.vim'
 Plug 'https://github.com/airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'prettier/vim-prettier'
-Plug 'IzumiSy/vim-test', { 'branch': 'fix_playwright_nearest_test' }
+Plug 'vim-test/vim-test'
 
 " LSP
 Plug 'prabirshrestha/async.vim'
