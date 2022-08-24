@@ -284,7 +284,7 @@ function! RunPrettierOrLSPFormat()
   if system('PrettierCliPath') == ""
     LspDocumentFormat
   else
-    Prettier
+    PrettierAsync
   endif
 endfunction
 nnoremap <leader>df :vert LspDefinition<CR>
