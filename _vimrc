@@ -278,11 +278,11 @@ let g:lsp_settings = {
 \     }
 \   }
 \ }
-au BufWritePre {*.go,*.elm,*.rs} :LspDocumentFormatSync
+au BufWritePre {*.go,*.elm,*.rs} :LspDocumentFormat
 au BufWritePre {*.js,*.ts} :call RunPrettierOrLSPFormat()
 function! RunPrettierOrLSPFormat()
   if system('PrettierCliPath') == ""
-    LspDocumentFormatSync
+    LspDocumentFormat
   else
     Prettier
   endif
