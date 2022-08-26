@@ -39,6 +39,7 @@ Plug 'https://github.com/airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'prettier/vim-prettier'
 Plug 'vim-test/vim-test'
+Plug 'osyo-manga/vim-anzu'
 
 " LSP
 Plug 'prabirshrestha/async.vim'
@@ -237,6 +238,10 @@ let g:omni_sql_no_default_maps = 1
 
 " Automatically redraw buffers on focused
 :au BufEnter,WinEnter * :redraw!
+
+" Mapping for vim-anzu
+nmap n <Plug>(anzu-n-with-echo)
+nmap <Esc><Esc> <Plug>(anzu-clear-search-status)
 
 " ============== "
 "    vim-test    "
