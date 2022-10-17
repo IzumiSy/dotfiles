@@ -62,6 +62,7 @@ Plug 'hail2u/vim-css3-syntax', { 'for': 'css' }
 Plug 'itchyny/vim-haskell-indent', { 'for': 'haskell' }
 Plug 'digitaltoad/vim-pug', { 'for': 'pug' }
 Plug 'earthly/earthly.vim', { 'branch': 'main' }
+Plug 'jparise/vim-graphql', { 'for': 'graphql' }
 
 call plug#end()
 
