@@ -63,6 +63,7 @@ Plug 'itchyny/vim-haskell-indent', { 'for': 'haskell' }
 Plug 'digitaltoad/vim-pug', { 'for': 'pug' }
 Plug 'earthly/earthly.vim', { 'branch': 'main' }
 Plug 'jparise/vim-graphql', { 'for': 'graphql' }
+Plug 'haya14busa/vim-gofmt', { 'for': 'go' }
 
 call plug#end()
 
@@ -286,7 +287,7 @@ let g:lsp_settings = {
 \     }
 \   }
 \ }
-au BufWritePre {*.go,*.elm,*.rs} :LspDocumentFormat
+au BufWritePre {*.elm,*.rs} :LspDocumentFormat
 au BufWritePre {*.js,*.ts} :call RunPrettierOrLSPFormat()
 function! RunPrettierOrLSPFormat()
   if system('PrettierCliPath') == ""
@@ -309,6 +310,15 @@ if !empty($VIM_DEBUG)
   let g:lsp_log_verbose = 1
   let g:lsp_log_file = expand('~/vim-lsp.log')
 endif
+
+" =============== "
+"    vim-gofmt    "
+" =============== "
+au BufWritePre *.go :Fmt
+let g:gofmt_formatters = [
+\   { 'cmd': 'gofmt', 'args': ['-s', '-w'] },
+\   { 'cmd': 'goimports', 'args': ['-w'] },
+\ ]
 
 " ====================== "
 "      asyncomplete      "
