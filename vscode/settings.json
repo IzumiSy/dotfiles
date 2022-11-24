@@ -11,15 +11,15 @@
     "workbench.editor.labelFormat": "short",
     "files.maxMemoryForLargeFilesMB": 1024,
     "files.watcherExclude": {
-        "**/.git/objects/**": true,
-        "**/.next/**": true,
-        "**/node_modules/**": true,
-        "**/elm-stuff/**": true,
+      "**/.git/objects/**": true,
+      "**/.next/**": true,
+      "**/node_modules/**": true,
+      "**/elm-stuff/**": true,
     },
     "search.exclude": {
-        "**/.next/**": true,
-        "**/elm-stuff": true,
-        "**/node_modules/**": true
+      "**/.next/**": true,
+      "**/elm-stuff": true,
+      "**/node_modules/**": true
     },
 
     "vim.hlsearch": true,
@@ -37,17 +37,17 @@
     ],
     "vim.visualModeKeyBindingsNonRecursive": [
       {
-         "before": [">"],
-         "commands": ["editor.action.indentLines"]
+       "before": [">"],
+       "commands": ["editor.action.indentLines"]
       }, {
-         "before": ["<"],
-         "commands": ["editor.action.outdentLines"]
+       "before": ["<"],
+       "commands": ["editor.action.outdentLines"]
       }, {
-          "before": ["<S-l>"],
-          "after": ["w"]
+        "before": ["<S-l>"],
+        "after": ["w"]
       }, {
-          "before": ["<S-h>"],
-          "after": ["b"]
+        "before": ["<S-h>"],
+        "after": ["b"]
       }, {
         "before": ["<S-d>"],
         "after": ["<C-d>"]
@@ -113,14 +113,14 @@
     "go.useLanguageServer": true,
     "go.toolsManagement.autoUpdate": true,
     "go.toolsEnvVars": {
-        "GO111MODULE": "on"
+      "GO111MODULE": "on"
     },
     "[go]": {
-        "editor.formatOnSave": true
+      "editor.formatOnSave": true
     },
     "[elm]": {
-        "editor.tabSize": 4,
-        "editor.formatOnSave": true
+      "editor.tabSize": 4,
+      "editor.formatOnSave": true
     },
     "typescript.updateImportsOnFileMove.enabled": "always"
 }
