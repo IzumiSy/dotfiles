@@ -1,20 +1,28 @@
 {
     "window.zoomLevel": 0,
-
     "terminal.integrated.fontSize": 10,
-
-    "editor.fontSize": 10,
     "editor.tabSize": 2,
     "editor.scrollBeyondLastLine": false,
     "editor.minimap.enabled": false,
     "editor.renderControlCharacters": true,
     "editor.lineNumbers": "relative",
-
     "workbench.editor.enablePreview": false,
     "workbench.editor.enablePreviewFromQuickOpen": false,
     "workbench.editor.labelFormat": "short",
     "workbench.colorTheme": "Bittersweet",
     "workbench.iconTheme": "vscode-icons",
+    "files.maxMemoryForLargeFilesMB": 1024,
+    "files.watcherExclude": {
+        "**/.git/objects/**": true,
+        "**/.next/**": true,
+        "**/node_modules/**": true,
+        "**/elm-stuff/**": true,
+    },
+    "search.exclude": {
+        "**/.next/**": true,
+        "**/elm-stuff": true,
+        "**/node_modules/**": true
+    }
 
     "vim.hlsearch": true,
     "vim.useCtrlKeys": true,
@@ -65,7 +73,6 @@
           "after": ["b"]
       }
     ],
-
     "todohighlight.isEnable": true,
 
     "go.formatTool": "gofmt",
@@ -77,7 +84,6 @@
     "go.toolsManagement.autoUpdate": true,
     "go.toolsEnvVars": {
         "GO111MODULE": "on"
-    },
     "[go]": {
         "editor.formatOnSave": true
     },
@@ -86,20 +92,5 @@
         "editor.tabSize": 4,
         "editor.formatOnSave": true
     },
-
     "typescript.updateImportsOnFileMove.enabled": "always",
-
-    "files.maxMemoryForLargeFilesMB": 1024,
-    "files.watcherExclude": {
-        "**/.git/objects/**": true,
-        "**/.next/**": true,
-        "**/node_modules/**": true,
-        "**/elm-stuff/**": true,
-    },
-
-    "search.exclude": {
-        "**/.next/**": true,
-        "**/elm-stuff": true,
-        "**/node_modules/**": true
-    }
 }
