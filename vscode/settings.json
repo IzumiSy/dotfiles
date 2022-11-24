@@ -20,7 +20,7 @@
         "**/.next/**": true,
         "**/elm-stuff": true,
         "**/node_modules/**": true
-    }
+    },
 
     "vim.hlsearch": true,
     "vim.useCtrlKeys": true,
@@ -85,10 +85,9 @@
     "[go]": {
         "editor.formatOnSave": true
     },
-
     "[elm]": {
         "editor.tabSize": 4,
         "editor.formatOnSave": true
     },
-    "typescript.updateImportsOnFileMove.enabled": "always",
+    "typescript.updateImportsOnFileMove.enabled": "always"
 }
