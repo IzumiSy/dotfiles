@@ -58,23 +58,41 @@
     ],
     "vim.normalModeKeyBindingsNonRecursive": [
       {
-          "before": ["<C-c>"],
-          "commands": [":nohl"]
+        "before": ["<C-c>"],
+        "commands": [":nohl"]
       }, {
-          "before": ["<leader>", "f", "g"],
-          "commands": ["workbench.action.quickOpen"]
+        "before": ["<leader>", "p", "p"],
+        "commands": ["workbench.explorer.fileView.focus"]
       }, {
-          "before": ["<leader>", "f", "f"],
-          "commands": ["workbench.view.search"]
+        "before": ["<leader>", "f", "g"],
+        "commands": ["workbench.action.quickOpen"]
       }, {
-          "before": ["<leader>", "d", "f"],
-          "commands": ["editor.action.revealDefinitionAside"]
+        "before": ["<leader>", "f", "f"],
+        "commands": ["workbench.view.search"]
       }, {
-          "before": ["<S-l>"],
-          "after": ["w"]
+        "before": ["<leader>", "d", "f"],
+        "commands": ["editor.action.revealDefinitionAside"]
       }, {
-          "before": ["<S-h>"],
-          "after": ["b"]
+        "before": ["<S-f>", "h"],
+        "commands": ["workbench.action.previousEditorInGroup"]
+      }, {
+        "before": ["<S-f>", "l"],
+        "commands": ["workbench.action.nextEditorInGroup"]
+      }, {
+        "before": ["f", "l"],
+        "commands": ["workbench.action.focusNextGroup"]
+      }, {
+        "before": ["f", "h"],
+        "commands": ["workbench.action.focusPreviousGroup"]
+      }, {
+        "before": ["<S-s>"],
+        "commands": [":vs"]
+      }, {
+        "before": ["<S-l>"],
+        "after": ["w"]
+      }, {
+        "before": ["<S-h>"],
+        "after": ["b"]
       }, {
         "before": ["<S-d>"],
         "after": ["<C-d>"]
