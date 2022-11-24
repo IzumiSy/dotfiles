@@ -9,8 +9,6 @@
     "workbench.editor.enablePreview": false,
     "workbench.editor.enablePreviewFromQuickOpen": false,
     "workbench.editor.labelFormat": "short",
-    "workbench.colorTheme": "Bittersweet",
-    "workbench.iconTheme": "vscode-icons",
     "files.maxMemoryForLargeFilesMB": 1024,
     "files.watcherExclude": {
         "**/.git/objects/**": true,
