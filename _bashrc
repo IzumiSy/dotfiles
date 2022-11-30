@@ -71,7 +71,7 @@ fi
 
 # cat override with "bat"
 if exists bat ; then
-  alias cat="bat"
+  alias cat="bat -p"
 fi
 
 # Basics
