@@ -64,6 +64,7 @@ Plug 'digitaltoad/vim-pug', { 'for': 'pug' }
 Plug 'earthly/earthly.vim', { 'branch': 'main' }
 Plug 'jparise/vim-graphql', { 'for': 'graphql' }
 Plug 'haya14busa/vim-gofmt', { 'for': 'go' }
+Plug 'mechatroner/rainbow_csv', { 'for': ['csv', 'tsv'] }
 
 call plug#end()
 
@@ -135,6 +136,7 @@ au BufRead,BufNewFile {.envrc,_bash*} set filetype=sh
 au FileType html,javascript,typescript set tabstop=2 shiftwidth=2 softtabstop=2
 au FileType c,cpp,go,python,elm set tabstop=4 shiftwidth=4 softtabstop=4
 au FileType c,cpp set cindent
+au FileType tsv set noexpandtab
 
 " Check files' modifiction more frequently
 augroup checktime
