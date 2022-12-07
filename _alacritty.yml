@@ -26,6 +26,9 @@ key_bindings:
   - { key: 36,        mods: Command|Shift,  action: ToggleSimpleFullscreen }
   - { key: Yen,       mods: Alt,            chars: "\xA5" }
   - { key: Yen,                             chars: "\x5C" }
+import:
+  # Clone this repo with git: https://github.com/eendroroy/alacritty-theme
+  - ~/.alacritty-colorscheme/themes/darcula.yaml
 shell:
   program: /bin/bash
   args:
