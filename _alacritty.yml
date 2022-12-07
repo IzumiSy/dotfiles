@@ -1,6 +1,4 @@
 font:
-  normal:
-    family: SauceCodePro Nerd Font
   size: 10.5
 mouse:
   hide_when_typing: true
@@ -28,5 +26,7 @@ key_bindings:
   - { key: 36,        mods: Command|Shift,  action: ToggleSimpleFullscreen }
   - { key: Yen,       mods: Alt,            chars: "\xA5" }
   - { key: Yen,                             chars: "\x5C" }
-import:
-  - ~/.config/alacritty/dracula.yml
+shell:
+  program: /bin/bash
+  args:
+    - --login
