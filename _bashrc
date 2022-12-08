@@ -83,7 +83,8 @@ alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
 alias hist='eval $(history | cut -c 8- | peco)'
-alias sc='screen -xRR'
+alias tm="tmux new -s $(uuidgen)"
+alias tma="tmux a"
 
 # Git command aliases
 alias gad='git add .'
