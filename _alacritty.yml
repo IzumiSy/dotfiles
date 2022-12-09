@@ -29,3 +29,7 @@ key_bindings:
 import:
   # Clone this repo with git: https://github.com/eendroroy/alacritty-theme
   - ~/.alacritty-colorscheme/themes/darcula.yaml
+shell:
+  program: /bin/bash
+  args:
+    - --login
