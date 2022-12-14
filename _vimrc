@@ -218,6 +218,7 @@ nnoremap <leader>ot :vert term<CR>
 
 " Copy
 nnoremap <leader>cp :w !pbcopy<CR>
+vnoremap <leader>cp :w !pbcopy<CR>
 
 " Resets highlighting
 nnoremap <silent> <Esc><Esc> :noh<CR> :call clearmatches()<CR>
