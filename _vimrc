@@ -512,6 +512,11 @@ let g:multi_cursor_use_default_mapping = 0
 let g:multi_cursor_start_word_key = "<S-i>"
 let g:multi_cursor_quit_key = "<C-c>"
 
+" ============= "
+"    vim-cue    "
+" ============= "
+let g:cue_fmt_on_save = 0
+
 " ================= "
 "     Highlight     "
 " ================= "
