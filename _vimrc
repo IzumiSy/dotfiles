@@ -40,6 +40,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'prettier/vim-prettier'
 Plug 'vim-test/vim-test'
 Plug 'osyo-manga/vim-anzu'
+Plug 'glidenote/memolist.vim'
 
 " LSP
 Plug 'prabirshrestha/async.vim'
@@ -517,6 +518,13 @@ let g:multi_cursor_quit_key = "<C-c>"
 "    vim-cue    "
 " ============= "
 let g:cue_fmt_on_save = 0
+
+" ============== "
+"    memolist    "
+" ============== "
+let g:memolist_path = "~/.memo"
+nnoremap <leader>mm :MemoNew<CR>
+nnoremap <leader>ml :MemoList<CR>
 
 " ================= "
 "     Highlight     "
