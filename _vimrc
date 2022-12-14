@@ -89,6 +89,7 @@ set hlsearch
 set ignorecase
 set smartcase
 set clipboard=unnamed
+set pastetoggle=@
 set ruler
 set noswapfile
 set nowrap
