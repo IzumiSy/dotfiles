@@ -523,6 +523,7 @@ let g:cue_fmt_on_save = 0
 "    memolist    "
 " ============== "
 let g:memolist_path = "~/.memo"
+let g:memolist_memo_suffix = "txt"
 nnoremap <leader>mm :MemoNew<CR>
 nnoremap <leader>ml :MemoList<CR>
 
