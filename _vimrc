@@ -65,6 +65,7 @@ Plug 'earthly/earthly.vim', { 'branch': 'main' }
 Plug 'jparise/vim-graphql', { 'for': 'graphql' }
 Plug 'haya14busa/vim-gofmt', { 'for': 'go' }
 Plug 'mechatroner/rainbow_csv', { 'for': ['csv', 'tsv'] }
+Plug 'jjo/vim-cue', { 'for': 'cue' }
 
 call plug#end()
 
