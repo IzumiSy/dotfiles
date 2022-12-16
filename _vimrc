@@ -89,7 +89,6 @@ set hlsearch
 set ignorecase
 set smartcase
 set clipboard=unnamed
-set pastetoggle=@
 set ruler
 set noswapfile
 set nowrap
@@ -221,6 +220,16 @@ nnoremap <leader>ot :vert term<CR>
 " Copy
 nnoremap <leader>cp :w !pbcopy<CR>
 vnoremap <leader>cp :w !pbcopy<CR>
+
+" Enabling paste mode only in Normal mode (pastetoggle cannot achieve this)
+nnoremap @ :call TogglePasteMode()<CR>
+function! TogglePasteMode()
+  if &paste
+    set nopaste
+  else
+    set paste
+  endif
+endfunction
 
 " Resets highlighting
 nnoremap <silent> <Esc><Esc> :noh<CR> :call clearmatches()<CR>
