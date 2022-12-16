@@ -85,6 +85,7 @@ alias mv='mv -i'
 alias hist='eval $(history | cut -c 8- | peco)'
 alias tm="tmux new -s $(uuidgen)"
 alias tma="tmux a"
+alias tenki="curl wttr.in/Chiba"
 
 # Git command aliases
 alias gad='git add .'
