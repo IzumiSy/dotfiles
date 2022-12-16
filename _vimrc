@@ -222,12 +222,20 @@ nnoremap <leader>cp :w !pbcopy<CR>
 vnoremap <leader>cp :w !pbcopy<CR>
 
 " Enabling paste mode only in Normal mode (pastetoggle cannot achieve this)
+" In addition, it maps `p` with pasting contents from clipboard and switching into nopaste mode
 nnoremap @ :call TogglePasteMode()<CR>
 function! TogglePasteMode()
   if &paste
     set nopaste
   else
     set paste
+  endif
+endfunction
+nnoremap p :call PasteSwitchingIntoNoPaste()<CR>
+function! PasteSwitchingIntoNoPaste()
+  normal! "+p
+  if &paste
+    set nopaste
   endif
 endfunction
 
