@@ -233,7 +233,7 @@ function! TogglePasteMode()
 endfunction
 nnoremap p :call PasteSwitchingIntoNoPaste()<CR>
 function! PasteSwitchingIntoNoPaste()
-  normal! "+p
+  normal! p
   if &paste
     set nopaste
   endif
