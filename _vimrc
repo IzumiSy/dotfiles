@@ -153,7 +153,13 @@ command VIMRC edit $MYVIMRC
 command Encutf8 :e ++enc=utf8
 command Sudow :w sudo:%
 command Sudoe :e sudo:%
-command Uuid :r !uuidgen|tr "[A-Z]" "[a-z]"
+
+" Insert UUID
+function GenerateUuid() abort
+  let l:uuid = system('uuidgen | tr "[A-Z]" "[a-z]" | tr -d "\n"')
+  execute "normal! a".uuid."\<esc>"
+endfunction
+command Uuid :call GenerateUuid()
 
 " Command to update tabs to spaces
 command ChangeTab2Space :call s:change_tab_function()
