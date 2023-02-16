@@ -21,7 +21,6 @@
     "**/elm-stuff": true,
     "**/node_modules/**": true
   },
-
   "vim.hlsearch": true,
   "vim.useCtrlKeys": true,
   "vim.useSystemClipboard": true,
@@ -137,5 +136,6 @@
   "typescript.updateImportsOnFileMove.enabled": "always",
   "[typescript]": {
     "editor.formatOnSave": true
-  }
+  },
+  "sort-json.settings.sortLevel": 1
 }
