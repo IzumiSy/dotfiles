@@ -1,133 +1,284 @@
 {
-  "editor.fontSize": 10.5,
-  "editor.fontFamily": "Monaco, Menlo, 'Courier New', monospace",
   "workbench.fontAliasing": "auto",
-  "terminal.integrated.fontSize": 10,
-  "editor.tabSize": 2,
-  "editor.scrollBeyondLastLine": false,
-  "editor.minimap.enabled": false,
-  "editor.renderControlCharacters": true,
-  "editor.lineNumbers": "relative",
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "workbench.editor.enablePreview": false,
-  "workbench.editor.enablePreviewFromQuickOpen": false,
   "workbench.editor.labelFormat": "short",
-  "files.maxMemoryForLargeFilesMB": 1024,
-  "files.watcherExclude": {
-    "**/.git/objects/**": true,
-    "**/.next/**": true,
-    "**/node_modules/**": true,
-    "**/elm-stuff/**": true,
-  },
+  "workbench.editor.enablePreviewFromQuickOpen": false,
+  "workbench.editor.enablePreview": false,
+  "vim.visualModeKeyBindingsNonRecursive": [
+    {
+      "before": [
+        ">"
+      ],
+      "commands": [
+        "editor.action.indentLines"
+      ]
+    },
+    {
+      "before": [
+        "<"
+      ],
+      "commands": [
+        "editor.action.outdentLines"
+      ]
+    },
+    {
+      "before": [
+        "<S-l>"
+      ],
+      "after": [
+        "w"
+      ]
+    },
+    {
+      "before": [
+        "<S-h>"
+      ],
+      "after": [
+        "b"
+      ]
+    },
+    {
+      "before": [
+        "<S-d>"
+      ],
+      "after": [
+        "<C-d>"
+      ]
+    },
+    {
+      "before": [
+        "<S-u>"
+      ],
+      "after": [
+        "<C-u>"
+      ]
+    }
+  ],
+  "vim.useSystemClipboard": true,
+  "vim.useCtrlKeys": true,
+  "vim.normalModeKeyBindingsNonRecursive": [
+    {
+      "before": [
+        "<C-c>"
+      ],
+      "commands": [
+        ":nohl"
+      ]
+    },
+    {
+      "before": [
+        "<leader>",
+        "g",
+        "a"
+      ],
+      "commands": [
+        "git.stage",
+        "workbench.view.scm"
+      ]
+    },
+    {
+      "before": [
+        "<leader>",
+        "g",
+        "g"
+      ],
+      "commands": [
+        "git.commit"
+      ]
+    },
+    {
+      "before": [
+        "<leader>",
+        "g",
+        "d"
+      ],
+      "commands": [
+        "git.openChange"
+      ]
+    },
+    {
+      "before": [
+        "<leader>",
+        "p",
+        "p"
+      ],
+      "commands": [
+        "workbench.explorer.fileView.focus"
+      ]
+    },
+    {
+      "before": [
+        "<leader>",
+        "f",
+        "g"
+      ],
+      "commands": [
+        "workbench.action.quickOpen"
+      ]
+    },
+    {
+      "before": [
+        "<leader>",
+        "f",
+        "f"
+      ],
+      "commands": [
+        "workbench.view.search"
+      ]
+    },
+    {
+      "before": [
+        "<leader>",
+        "d",
+        "f"
+      ],
+      "commands": [
+        "editor.action.revealDefinitionAside"
+      ]
+    },
+    {
+      "before": [
+        "<S-f>",
+        "h"
+      ],
+      "commands": [
+        "workbench.action.previousEditor"
+      ]
+    },
+    {
+      "before": [
+        "<S-f>",
+        "l"
+      ],
+      "commands": [
+        "workbench.action.nextEditor"
+      ]
+    },
+    {
+      "before": [
+        "f",
+        "l"
+      ],
+      "commands": [
+        "workbench.action.focusNextGroup"
+      ]
+    },
+    {
+      "before": [
+        "f",
+        "h"
+      ],
+      "commands": [
+        "workbench.action.focusPreviousGroup"
+      ]
+    },
+    {
+      "before": [
+        "<S-s>"
+      ],
+      "commands": [
+        ":vs"
+      ]
+    },
+    {
+      "before": [
+        "<S-t>"
+      ],
+      "commands": [
+        "workbench.action.newWindowTab"
+      ]
+    },
+    {
+      "before": [
+        "<S-l>"
+      ],
+      "after": [
+        "w"
+      ]
+    },
+    {
+      "before": [
+        "<S-h>"
+      ],
+      "after": [
+        "b"
+      ]
+    },
+    {
+      "before": [
+        "<S-d>"
+      ],
+      "after": [
+        "<C-d>"
+      ]
+    },
+    {
+      "before": [
+        "<S-u>"
+      ],
+      "after": [
+        "<C-u>"
+      ]
+    },
+    {
+      "before": [
+        "<S-x>"
+      ],
+      "commands": [
+        ":q"
+      ]
+    }
+  ],
+  "vim.leader": ",",
+  "vim.insertModeKeyBindings": [
+    {
+      "before": [
+        "j",
+        "j"
+      ],
+      "after": [
+        "<ESC>"
+      ]
+    }
+  ],
+  "vim.hlsearch": true,
+  "vim.easymotionMarkerBackgroundColor": "purple",
+  "vim.easymotionKeys": "hjklasdfgyuiopqwertnmzxcvbHJKLASDFGYUIOPQWERTNMZXCVB",
+  "vim.easymotion": true,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "terminal.integrated.fontSize": 10,
+  "sort-json.settings.sortLevel": 1,
   "search.exclude": {
     "**/.next/**": true,
     "**/elm-stuff": true,
     "**/node_modules/**": true
   },
-  "vim.hlsearch": true,
-  "vim.useCtrlKeys": true,
-  "vim.useSystemClipboard": true,
-  "vim.leader": ",",
-  "vim.easymotion": true,
-  "vim.easymotionMarkerBackgroundColor": "purple",
-  "vim.easymotionKeys": "hjklasdfgyuiopqwertnmzxcvbHJKLASDFGYUIOPQWERTNMZXCVB",
-  "vim.insertModeKeyBindings": [
-    {
-      "before": ["j", "j"],
-      "after": ["<ESC>"]
-    }
-  ],
-  "vim.visualModeKeyBindingsNonRecursive": [
-    {
-      "before": [">"],
-      "commands": ["editor.action.indentLines"]
-    }, {
-      "before": ["<"],
-      "commands": ["editor.action.outdentLines"]
-    }, {
-      "before": ["<S-l>"],
-      "after": ["w"]
-    }, {
-      "before": ["<S-h>"],
-      "after": ["b"]
-    }, {
-      "before": ["<S-d>"],
-      "after": ["<C-d>"]
-    }, {
-      "before": ["<S-u>"],
-      "after": ["<C-u>"]
-    }
-  ],
-  "vim.normalModeKeyBindingsNonRecursive": [
-    {
-      "before": ["<C-c>"],
-      "commands": [":nohl"]
-    }, {
-      "before": ["<leader>", "g", "a"],
-      "commands": ["git.stage", "workbench.view.scm"]
-    }, {
-      "before": ["<leader>", "g", "g"],
-      "commands": ["git.commit"]
-    }, {
-      "before": ["<leader>", "g", "d"],
-      "commands": ["git.openChange"]
-    }, {
-      "before": ["<leader>", "p", "p"],
-      "commands": ["workbench.explorer.fileView.focus"]
-    }, {
-      "before": ["<leader>", "f", "g"],
-      "commands": ["workbench.action.quickOpen"]
-    }, {
-      "before": ["<leader>", "f", "f"],
-      "commands": ["workbench.view.search"]
-    }, {
-      "before": ["<leader>", "d", "f"],
-      "commands": ["editor.action.revealDefinitionAside"]
-    }, {
-      "before": ["<S-f>", "h"],
-      "commands": ["workbench.action.previousEditor"]
-    }, {
-      "before": ["<S-f>", "l"],
-      "commands": ["workbench.action.nextEditor"]
-    }, {
-      "before": ["f", "l"],
-      "commands": ["workbench.action.focusNextGroup"]
-    }, {
-      "before": ["f", "h"],
-      "commands": ["workbench.action.focusPreviousGroup"]
-    }, {
-      "before": ["<S-s>"],
-      "commands": [":vs"]
-    }, {
-      "before": ["<S-t>"],
-      "commands": ["workbench.action.newWindowTab"]
-    }, {
-      "before": ["<S-l>"],
-      "after": ["w"]
-    }, {
-      "before": ["<S-h>"],
-      "after": ["b"]
-    }, {
-      "before": ["<S-d>"],
-      "after": ["<C-d>"]
-    }, {
-      "before": ["<S-u>"],
-      "after": ["<C-u>"]
-    }, {
-      "before": ["<S-x>"],
-      "commands": [":q"]
-    }
-  ],
-
-  "go.formatTool": "gofmt",
-  "go.lintOnSave": "off",
-  "go.buildOnSave": "off",
   "go.vetOnSave": "package",
-  "go.gocodeAutoBuild": false,
   "go.useLanguageServer": true,
   "go.toolsManagement.autoUpdate": true,
   "go.toolsEnvVars": {
     "GO111MODULE": "on"
+  },
+  "go.lintOnSave": "off",
+  "go.gocodeAutoBuild": false,
+  "go.formatTool": "gofmt",
+  "go.buildOnSave": "off",
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.next/**": true,
+    "**/node_modules/**": true,
+    "**/elm-stuff/**": true
+  },
+  "files.maxMemoryForLargeFilesMB": 1024,
+  "editor.tabSize": 2,
+  "editor.scrollBeyondLastLine": false,
+  "editor.renderControlCharacters": true,
+  "editor.minimap.enabled": false,
+  "editor.lineNumbers": "relative",
+  "editor.fontSize": 10.5,
+  "editor.fontFamily": "Monaco, Menlo, 'Courier New', monospace",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[typescript]": {
+    "editor.formatOnSave": true
   },
   "[go]": {
     "editor.formatOnSave": true
@@ -135,10 +286,5 @@
   "[elm]": {
     "editor.tabSize": 4,
     "editor.formatOnSave": true
-  },
-  "typescript.updateImportsOnFileMove.enabled": "always",
-  "[typescript]": {
-    "editor.formatOnSave": true
-  },
-  "sort-json.settings.sortLevel": 1
+  }
 }
