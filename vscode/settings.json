@@ -1,4 +1,7 @@
 {
+  "editor.fontSize": 10.5,
+  "editor.fontFamily": "Monaco, Menlo, 'Courier New', monospace",
+  "workbench.fontAliasing": "auto",
   "terminal.integrated.fontSize": 10,
   "editor.tabSize": 2,
   "editor.scrollBeyondLastLine": false,
