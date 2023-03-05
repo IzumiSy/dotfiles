@@ -25,7 +25,8 @@ key_bindings:
   - { key: Yen,       mods: Alt,            chars: "\xA5" }
   - { key: Yen,                             chars: "\x5C" }
 import:
-  # Clone this repo with git: https://github.com/eendroroy/alacritty-theme
+  # Clone theme repo with git
+  # Run: git clone https://github.com/alacritty/alacritty-theme ~/.alacritty-colorscheme
   - ~/.alacritty-colorscheme/themes/darcula.yaml
 shell:
   program: /bin/bash
