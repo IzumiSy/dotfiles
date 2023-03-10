@@ -6,6 +6,7 @@ $git_state\
 $git_status\
 $gcloud\
 $package\
+$nix_shell\
 $cmd_duration\
 $line_break\
 $time\
