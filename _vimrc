@@ -108,7 +108,7 @@ set fileencodings=utf-8,iso-2022-jp,euc-jp,sjis
 set fileformats=unix,dos,mac
 set backspace=indent,eol,start
 set completeopt=menu,preview
-set updatetime=10000
+set updatetime=1000
 set relativenumber
 syntax on
 silent! colorscheme desert256
@@ -310,6 +310,8 @@ endfunction
 let g:lsp_documentation_float = 0
 let g:lsp_format_sync_timeout = 1000
 let g:lsp_work_done_progress_enabled = 1
+let g:lsp_inlay_hints_enabled = 0
+let g:lsp_diagnostics_virtual_text_enabled = 0
 let g:lsp_settings = {
 \   'elm-language-server': {
 \     'initialization_options': {
@@ -342,6 +344,10 @@ if !empty($VIM_DEBUG)
   let g:lsp_log_verbose = 1
   let g:lsp_log_file = expand('~/vim-lsp.log')
 endif
+
+" Inlay style
+highlight lspInlayHintsType ctermfg=darkgray guifg=darkgray ctermbg=black guibg=black
+highlight lspInlayHintsParameter ctermfg=darkgray guifg=darkgray ctermbg=black guibg=black
 
 " =============== "
 "    vim-gofmt    "
