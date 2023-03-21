@@ -41,5 +41,5 @@ show_notifications = true
 symbol = ""
 
 [gcloud]
-format = 'for [$project]($style) '
+format = 'for gcloud\([$project]($style)\) '
 style = "bold green"
