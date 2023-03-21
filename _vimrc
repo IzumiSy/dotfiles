@@ -24,7 +24,7 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'vim-scripts/sudo.vim'
 Plug 'bronson/vim-trailing-whitespace', { 'on': ['FixWhitespace'] }
-Plug 'easymotion/vim-easymotion', { 'on': ['<Plug>(easymotion-s2)'] }
+" Plug 'easymotion/vim-easymotion', { 'on': ['<Plug>(easymotion-s2)'] }
 Plug 'deris/vim-gothrough-jk'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'vim-scripts/surround.vim'
@@ -332,12 +332,12 @@ function! RunPrettierOrLSPFormat()
 endfunction
 nnoremap <leader>df :vert LspDefinition<CR>
 nnoremap <leader>ip :vert LspImplementation<CR>
-nnoremap <leader>hp :LspHover<CR>
 nnoremap <leader>rr :LspReferences<CR>
 nnoremap <leader>ee :LspDocumentDiagnostics<CR>
 nnoremap <leader>rn :LspRename<CR>
 nnoremap <leader>ca :LspCodeAction<CR>
 nnoremap E :LspNextError<CR>
+nnoremap K :LspHover<CR>
 
 " Debugging
 if !empty($VIM_DEBUG)
@@ -500,12 +500,12 @@ let g:vim_markdown_folding_disabled = 1
 " =========================== "
 "   Settings for easymotion   "
 " =========================== "
-let g:EasyMotion_keys = 'hjklasdfgyuiopqwertnmzxcvbHJKLASDFGYUIOPQWERTNMZXCVB'
-let g:EasyMotion_do_mapping = 0
-let g:EasyMotion_smartcase = 1
-nmap <C-j> <Plug>(easymotion-s2)
-nmap <C-k> <Plug>(easymotion-s2)
-hi EasyMotionShade ctermbg=none ctermfg=blue
+" let g:EasyMotion_keys = 'hjklasdfgyuiopqwertnmzxcvbHJKLASDFGYUIOPQWERTNMZXCVB'
+" let g:EasyMotion_do_mapping = 0
+" let g:EasyMotion_smartcase = 1
+" nmap <C-j> <Plug>(easymotion-s2)
+" nmap <C-k> <Plug>(easymotion-s2)
+" hi EasyMotionShade ctermbg=none ctermfg=blue
 
 " ================= "
 "   Abbreviations   "
