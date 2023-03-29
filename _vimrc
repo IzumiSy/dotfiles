@@ -322,7 +322,7 @@ let g:lsp_settings = {
 \   }
 \ }
 au BufWritePre {*.elm,*.rs} :LspDocumentFormat
-au BufWritePre {*.js,*.ts} :call RunPrettierOrLSPFormat()
+au BufWritePre {*.mjs,*.js,*.ts,*.json} :call RunPrettierOrLSPFormat()
 function! RunPrettierOrLSPFormat()
   if system('PrettierCliPath') == ""
     LspDocumentFormat
