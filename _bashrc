@@ -161,8 +161,10 @@ if [ -e "$NVM_DIR/nvm.sh" ]; then
 fi
 
 # Enables rbenv if installed
-export PATH="$HOME/.rbenv/bin:$PATH"
-if [ -e "$HOME/.rbenv" ]; then
+if exists rbenv ; then
+  if [ -e "$HOME/.rbenv" ]; then
+    export PATH="$HOME/.rbenv/bin:$PATH"
+  fi
   eval "$(rbenv init --no-rehash -)"
   (rbenv rehash &) 2> /dev/null # lazy rehashing
   echo "Loaded rbenv"
