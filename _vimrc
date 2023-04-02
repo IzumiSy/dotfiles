@@ -126,11 +126,6 @@ let &titleold=getcwd()
 " ========================== "
 "     Filetype detection     "
 " ========================== "
-au BufRead,BufNewFile,BufReadPost *.erb set filetype=eruby.html
-au BufRead,BufNewFile,BufReadPost {*.ts,*.tsx} set filetype=typescript
-au BufRead,BufNewFile,BufReadPost *.elm set filetype=elm
-au BufRead,BufNewFile,BufReadPost *.toml set filetype=toml
-au BufRead,BufNewFile,BufReadPost *.pug set filetype=pug
 au BufRead,BufNewFile {COMMIT_EDITMSG} set filetype=gitcommit
 au BufRead,BufNewFile {.envrc,_bash*} set filetype=sh
 
