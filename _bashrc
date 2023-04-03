@@ -71,7 +71,7 @@ fi
 
 # cat override with "bat"
 if exists bat ; then
-  alias cat="bat -p"
+  alias cat="bat -p --theme=Dracula"
 fi
 
 # Basics
