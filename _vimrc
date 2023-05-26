@@ -133,7 +133,7 @@ au BufRead,BufNewFile {.envrc,_bash*} set filetype=sh
 au FileType html,javascript,typescript set tabstop=2 shiftwidth=2 softtabstop=2
 au FileType c,cpp,go,python,elm set tabstop=4 shiftwidth=4 softtabstop=4
 au FileType c,cpp set cindent
-au FileType tsv set noexpandtab
+au FileType tsv,cue set noexpandtab
 
 " Check files' modifiction more frequently
 augroup checktime
