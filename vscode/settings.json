@@ -3,6 +3,7 @@
   "workbench.editor.labelFormat": "short",
   "workbench.editor.enablePreviewFromQuickOpen": false,
   "workbench.editor.enablePreview": false,
+  "workbench.colorTheme": "Default Dark+",
   "vim.visualModeKeyBindingsNonRecursive": [
     {
       "before": [
