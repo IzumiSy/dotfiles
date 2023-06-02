@@ -269,7 +269,6 @@
     "**/node_modules/**": true,
     "**/elm-stuff/**": true
   },
-  "files.maxMemoryForLargeFilesMB": 1024,
   "editor.tabSize": 2,
   "editor.scrollBeyondLastLine": false,
   "editor.renderControlCharacters": true,
