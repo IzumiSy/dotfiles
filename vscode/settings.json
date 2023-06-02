@@ -59,6 +59,26 @@
   "vim.normalModeKeyBindingsNonRecursive": [
     {
       "before": [
+        "<leader>",
+        "p",
+        "p"
+      ],
+      "commands": [
+        "workbench.action.quickOpen"
+      ]
+    },
+    {
+      "before": [
+        "<leader>",
+        "f",
+        "g"
+      ],
+      "commands": [
+        "workbench.action.quickOpen"
+      ]
+    },
+    {
+      "before": [
         "<C-c>"
       ],
       "commands": [
@@ -94,26 +114,6 @@
       ],
       "commands": [
         "git.openChange"
-      ]
-    },
-    {
-      "before": [
-        "<leader>",
-        "p",
-        "p"
-      ],
-      "commands": [
-        "workbench.explorer.fileView.focus"
-      ]
-    },
-    {
-      "before": [
-        "<leader>",
-        "f",
-        "g"
-      ],
-      "commands": [
-        "workbench.action.quickOpen"
       ]
     },
     {
