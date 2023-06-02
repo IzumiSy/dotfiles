@@ -278,14 +278,15 @@
   "editor.fontSize": 10.5,
   "editor.fontFamily": "Monaco, Menlo, 'Courier New', monospace",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "[typescript]": {
-    "editor.formatOnSave": true
-  },
-  "[go]": {
-    "editor.formatOnSave": true
-  },
   "[elm]": {
     "editor.tabSize": 4,
+    "editor.formatOnSave": true
+  },
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma",
+    "editor.formatOnSave": true
+  },
+  "[go,json,js,jsx,ts,tsx]": {
     "editor.formatOnSave": true
   }
 }
