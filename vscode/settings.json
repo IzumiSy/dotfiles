@@ -277,6 +277,13 @@
   "editor.fontSize": 10.5,
   "editor.fontFamily": "Monaco, Menlo, 'Courier New', monospace",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[go]": {
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": true
+    },
+    "editor.suggest.snippetsPreventQuickSuggestions": false
+  },
   "[elm]": {
     "editor.tabSize": 4,
     "editor.formatOnSave": true
@@ -285,7 +292,19 @@
     "editor.defaultFormatter": "Prisma.prisma",
     "editor.formatOnSave": true
   },
-  "[go,json,js,jsx,ts,tsx]": {
+  "[json]": {
+    "editor.formatOnSave": true
+  },
+  "[javascript]": {
+    "editor.formatOnSave": true
+  },
+  "[javascriptreact]": {
+    "editor.formatOnSave": true
+  },
+  "[typescript]": {
+    "editor.formatOnSave": true
+  },
+  "[typescriptreact]": {
     "editor.formatOnSave": true
   }
 }
