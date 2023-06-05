@@ -542,7 +542,7 @@ let g:multi_cursor_quit_key = "<C-c>"
 " ============= "
 "    vim-cue    "
 " ============= "
-let g:cue_fmt_on_save = 0
+let g:cue_fmt_on_save = 1
 
 " ============== "
 "    memolist    "
