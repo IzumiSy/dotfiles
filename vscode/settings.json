@@ -275,7 +275,7 @@
   "editor.minimap.enabled": false,
   "editor.lineNumbers": "relative",
   "editor.fontSize": 10.5,
-  "editor.fontFamily": "Monaco, Menlo, 'Courier New', monospace",
+  "editor.fontFamily": "Consolas, Menlo, 'Courier New', monospace",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "[go]": {
     "editor.formatOnSave": true,
