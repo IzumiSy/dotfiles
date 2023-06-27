@@ -184,10 +184,22 @@
     },
     {
       "before": [
-        "<S-s>"
+        "<leader>",
+        "s",
+        "p"
       ],
       "commands": [
         ":vs"
+      ]
+    },
+    {
+      "before": [
+        "<leader>",
+        "v",
+        "s"
+      ],
+      "commands": [
+        ":sp"
       ]
     },
     {
