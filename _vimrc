@@ -318,8 +318,9 @@ let g:lsp_settings = {
 \     }
 \   }
 \ }
-au BufWritePre {*.elm,*.rs} :LspDocumentFormat
-au BufWritePre {*.mjs,*.js,*.jsx,*.ts,*.tsx,*.json} :call RunPrettierOrLSPFormat()
+
+" Try to format prettier with fallback to LSP formatter
+au BufWritePre {*.elm,*.rs,*.mjs,*.js,*.jsx,*.ts,*.tsx,*.json} :call RunPrettierOrLSPFormat()
 function! RunPrettierOrLSPFormat()
   let l:prettierCliPath = system('PrettierCliPath')
   if stridx(l:prettierCliPath, "command not found") == -1
