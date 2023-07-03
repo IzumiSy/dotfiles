@@ -321,10 +321,11 @@ let g:lsp_settings = {
 au BufWritePre {*.elm,*.rs} :LspDocumentFormat
 au BufWritePre {*.mjs,*.js,*.jsx,*.ts,*.tsx,*.json} :call RunPrettierOrLSPFormat()
 function! RunPrettierOrLSPFormat()
-  if system('PrettierCliPath') == ""
-    LspDocumentFormat
-  else
+  let l:prettierCliPath = system('PrettierCliPath')
+  if stridx(l:prettierCliPath, "command not found") == -1
     PrettierAsync
+  else
+    LspDocumentFormat
   endif
 endfunction
 nnoremap <leader>df :vert LspDefinition<CR>
