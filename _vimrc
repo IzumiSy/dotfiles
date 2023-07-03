@@ -187,7 +187,9 @@ nnoremap D <C-d>
 vnoremap D <C-d>
 
 " Split windows
-nnoremap S :vsplit<CR>
+nnoremap S <nop>
+nnoremap <leader>sp :vsplit<CR>
+nnoremap <leader>vs :split<CR>
 nmap fl <C-w>l
 nmap fk <C-w>k
 nmap fj <C-w>j
