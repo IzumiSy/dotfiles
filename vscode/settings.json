@@ -170,7 +170,7 @@
         "l"
       ],
       "commands": [
-        "workbench.action.focusNextGroup"
+        "workbench.action.navigateRight"
       ]
     },
     {
@@ -179,7 +179,25 @@
         "h"
       ],
       "commands": [
-        "workbench.action.focusPreviousGroup"
+        "workbench.action.navigateLeft"
+      ]
+    },
+    {
+      "before": [
+        "f",
+        "j"
+      ],
+      "commands": [
+        "workbench.action.navigateDown"
+      ]
+    },
+    {
+      "before": [
+        "f",
+        "k"
+      ],
+      "commands": [
+        "workbench.action.navigateUp"
       ]
     },
     {
