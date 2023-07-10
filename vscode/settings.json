@@ -52,6 +52,16 @@
       "after": [
         "<C-u>"
       ]
+    },
+    {
+      "before": [
+        "<leader>",
+        "c",
+        "c"
+      ],
+      "commands": [
+        "editor.action.commentLine"
+      ]
     }
   ],
   "vim.useSystemClipboard": true,
