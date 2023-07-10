@@ -310,9 +310,7 @@
     "GO111MODULE": "on"
   },
   "go.lintOnSave": "off",
-  "go.gocodeAutoBuild": false,
   "go.formatTool": "gofmt",
-  "go.buildOnSave": "off",
   "files.watcherExclude": {
     "**/.git/objects/**": true,
     "**/.next/**": true,
