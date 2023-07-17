@@ -132,6 +132,10 @@
     {
       "before": ["<leader>", "r", "n"],
       "commands": ["editor.action.rename"]
+    },
+    {
+      "before": ["<leader>", "r", "r"],
+      "commands": ["editor.action.goToReferences"]
     }
   ],
   "vim.leader": ",",
