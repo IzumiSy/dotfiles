@@ -208,5 +208,6 @@
   },
   "[typescriptreact]": {
     "editor.formatOnSave": true
-  }
+  },
+  "files.insertFinalNewline": true
 }
