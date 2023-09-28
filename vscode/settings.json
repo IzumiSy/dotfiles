@@ -6,149 +6,316 @@
   "workbench.colorTheme": "Default Dark+",
   "vim.visualModeKeyBindingsNonRecursive": [
     {
-      "before": [">"],
-      "commands": ["editor.action.indentLines"]
+      "before": [
+        ">"
+      ],
+      "commands": [
+        "editor.action.indentLines"
+      ]
     },
     {
-      "before": ["<"],
-      "commands": ["editor.action.outdentLines"]
+      "before": [
+        "<"
+      ],
+      "commands": [
+        "editor.action.outdentLines"
+      ]
     },
     {
-      "before": ["<S-l>"],
-      "after": ["w"]
+      "before": [
+        "<S-l>"
+      ],
+      "after": [
+        "w"
+      ]
     },
     {
-      "before": ["<S-h>"],
-      "after": ["b"]
+      "before": [
+        "<S-h>"
+      ],
+      "after": [
+        "b"
+      ]
     },
     {
-      "before": ["<S-d>"],
-      "after": ["<C-d>"]
+      "before": [
+        "<S-d>"
+      ],
+      "after": [
+        "<C-d>"
+      ]
     },
     {
-      "before": ["<S-u>"],
-      "after": ["<C-u>"]
+      "before": [
+        "<S-u>"
+      ],
+      "after": [
+        "<C-u>"
+      ]
     },
     {
-      "before": ["<leader>", "c", "c"],
-      "commands": ["editor.action.commentLine"]
+      "before": [
+        "<leader>",
+        "c",
+        "c"
+      ],
+      "commands": [
+        "editor.action.commentLine"
+      ]
     }
   ],
   "vim.useSystemClipboard": true,
   "vim.useCtrlKeys": true,
   "vim.normalModeKeyBindingsNonRecursive": [
     {
-      "before": ["<leader>", "p", "p"],
-      "commands": ["workbench.action.quickOpen"]
+      "before": [
+        "<leader>",
+        "p",
+        "p"
+      ],
+      "commands": [
+        "workbench.action.quickOpen"
+      ]
     },
     {
-      "before": ["<leader>", "f", "g"],
-      "commands": ["workbench.action.quickOpen"]
+      "before": [
+        "<leader>",
+        "f",
+        "g"
+      ],
+      "commands": [
+        "workbench.action.quickOpen"
+      ]
     },
     {
-      "before": ["<C-c>"],
-      "commands": [":nohl"]
+      "before": [
+        "<C-c>"
+      ],
+      "commands": [
+        ":nohl"
+      ]
     },
     {
-      "before": ["<leader>", "g", "a"],
-      "commands": ["git.stage", "workbench.view.scm"]
+      "before": [
+        "<leader>",
+        "g",
+        "a"
+      ],
+      "commands": [
+        "git.stage",
+        "workbench.view.scm"
+      ]
     },
     {
-      "before": ["<leader>", "g", "g"],
-      "commands": ["git.commit"]
+      "before": [
+        "<leader>",
+        "g",
+        "g"
+      ],
+      "commands": [
+        "git.commit"
+      ]
     },
     {
-      "before": ["<leader>", "g", "d"],
-      "commands": ["git.openChange"]
+      "before": [
+        "<leader>",
+        "g",
+        "d"
+      ],
+      "commands": [
+        "git.openChange"
+      ]
     },
     {
-      "before": ["<leader>", "f", "f"],
-      "commands": ["workbench.view.search"]
+      "before": [
+        "<leader>",
+        "f",
+        "f"
+      ],
+      "commands": [
+        "workbench.view.search"
+      ]
     },
     {
-      "before": ["<leader>", "d", "f"],
-      "commands": ["editor.action.revealDefinitionAside"]
+      "before": [
+        "<leader>",
+        "d",
+        "f"
+      ],
+      "commands": [
+        "editor.action.revealDefinitionAside"
+      ]
     },
     {
-      "before": ["<S-f>", "h"],
-      "commands": ["workbench.action.previousEditor"]
+      "before": [
+        "<S-f>",
+        "h"
+      ],
+      "commands": [
+        "workbench.action.previousEditor"
+      ]
     },
     {
-      "before": ["<S-f>", "l"],
-      "commands": ["workbench.action.nextEditor"]
+      "before": [
+        "<S-f>",
+        "l"
+      ],
+      "commands": [
+        "workbench.action.nextEditor"
+      ]
     },
     {
-      "before": ["<leader>", "c", "a"],
-      "commands": ["editor.action.sourceAction"]
+      "before": [
+        "<leader>",
+        "c",
+        "a"
+      ],
+      "commands": [
+        "editor.action.sourceAction"
+      ]
     },
     {
-      "before": ["f", "l"],
-      "commands": ["workbench.action.navigateRight"]
+      "before": [
+        "f",
+        "l"
+      ],
+      "commands": [
+        "workbench.action.navigateRight"
+      ]
     },
     {
-      "before": ["f", "h"],
-      "commands": ["workbench.action.navigateLeft"]
+      "before": [
+        "f",
+        "h"
+      ],
+      "commands": [
+        "workbench.action.navigateLeft"
+      ]
     },
     {
-      "before": ["f", "j"],
-      "commands": ["workbench.action.navigateDown"]
+      "before": [
+        "f",
+        "j"
+      ],
+      "commands": [
+        "workbench.action.navigateDown"
+      ]
     },
     {
-      "before": ["f", "k"],
-      "commands": ["workbench.action.navigateUp"]
+      "before": [
+        "f",
+        "k"
+      ],
+      "commands": [
+        "workbench.action.navigateUp"
+      ]
     },
     {
-      "before": ["<leader>", "s", "p"],
-      "commands": [":vs"]
+      "before": [
+        "<leader>",
+        "s",
+        "p"
+      ],
+      "commands": [
+        ":vs"
+      ]
     },
     {
-      "before": ["<leader>", "v", "s"],
-      "commands": [":sp"]
+      "before": [
+        "<leader>",
+        "v",
+        "s"
+      ],
+      "commands": [
+        ":sp"
+      ]
     },
     {
-      "before": ["<S-t>"],
-      "commands": ["workbench.action.newWindowTab"]
+      "before": [
+        "<S-t>"
+      ],
+      "commands": [
+        "workbench.action.newWindowTab"
+      ]
     },
     {
-      "before": ["<S-l>"],
-      "after": ["w"]
+      "before": [
+        "<S-l>"
+      ],
+      "after": [
+        "w"
+      ]
     },
     {
-      "before": ["<S-h>"],
-      "after": ["b"]
+      "before": [
+        "<S-h>"
+      ],
+      "after": [
+        "b"
+      ]
     },
     {
-      "before": ["<S-d>"],
-      "after": ["<C-d>"]
+      "before": [
+        "<S-d>"
+      ],
+      "after": [
+        "<C-d>"
+      ]
     },
     {
-      "before": ["<S-u>"],
-      "after": ["<C-u>"]
+      "before": [
+        "<S-u>"
+      ],
+      "after": [
+        "<C-u>"
+      ]
     },
     {
-      "before": ["<S-x>"],
-      "commands": [":q"]
+      "before": [
+        "<S-x>"
+      ],
+      "commands": [
+        ":q"
+      ]
     },
     {
-      "before": ["<leader>", "r", "n"],
-      "commands": ["editor.action.rename"]
+      "before": [
+        "<leader>",
+        "r",
+        "n"
+      ],
+      "commands": [
+        "editor.action.rename"
+      ]
     },
     {
-      "before": ["<leader>", "r", "r"],
-      "commands": ["editor.action.goToReferences"]
+      "before": [
+        "<leader>",
+        "r",
+        "r"
+      ],
+      "commands": [
+        "editor.action.goToReferences"
+      ]
     }
   ],
   "vim.leader": ",",
   "vim.insertModeKeyBindings": [
     {
-      "before": ["j", "j"],
-      "after": ["<ESC>"]
+      "before": [
+        "j",
+        "j"
+      ],
+      "after": [
+        "<ESC>"
+      ]
     }
   ],
   "vim.hlsearch": true,
   "vim.easymotionMarkerBackgroundColor": "purple",
   "vim.easymotionKeys": "hjklasdfgyuiopqwertnmzxcvbHJKLASDFGYUIOPQWERTNMZXCVB",
   "vim.easymotion": true,
+  "javascript.updateImportsOnFileMove.enabled": "always",
   "typescript.updateImportsOnFileMove.enabled": "always",
   "terminal.integrated.fontSize": 10,
   "sort-json.settings.sortLevel": 1,
@@ -209,5 +376,8 @@
   "[typescriptreact]": {
     "editor.formatOnSave": true
   },
-  "files.insertFinalNewline": true
+  "files.insertFinalNewline": true,
+  "[terraform]": {
+    "editor.defaultFormatter": "hashicorp.terraform"
+  }
 }
