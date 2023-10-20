@@ -17,11 +17,11 @@ for cmd in "${TOOLS[@]}"; do
 done
 
 # Install dotfiles
-ln -snvf "$(pwd)/_vimrc" "$HOME/_vimrc"
+ln -snvf "$(pwd)/_vimrc" "$HOME/.vimrc"
+ln -svnf "$(owd)/_ideavimrc" "$HOME/.ideavimrc"
 ln -snvf "$(pwd)/_screenrc" "$HOME/.screenrc"
 ln -snvf "$(pwd)/_tmux.conf" "$HOME/.tmux.conf"
 ln -snvf "$(pwd)/_bashrc" "$HOME/.bashrc"
-# ln -snvf "$(pwd)/_bash_profile" "$HOME/.bash_profile"
 ln -snvf "$(pwd)/_starship.toml" "$HOME/.starship.toml"
 ln -snvf "$(pwd)/_alacritty.yml" "$HOME/.alacritty.yml"
 ln -snvf "$(pwd)/etc/_gitconfig" "$HOME/.gitconfig"

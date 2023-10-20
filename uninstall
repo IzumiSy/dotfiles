@@ -1,11 +1,11 @@
 #!/bin/bash
 set -Ceux
 
-unlink "$HOME/_vimrc"
+unlink "$HOME/.vimrc"
+unlink "$HOME/.ideavimrc"
 unlink "$HOME/.screenrc"
 unlink "$HOME/.tmux.conf"
 unlink "$HOME/.bashrc"
-# unlink "$HOME/.bash_profile"
 unlink "$HOME/.starship.toml"
 unlink "$HOME/.alacritty.yml"
 unlink "$HOME/.gitconfig"
