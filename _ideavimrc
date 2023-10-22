@@ -1,1 +1,28 @@
+" Maps leader key
+let mapleader=","
+
+" Keys
 imap jj <Esc>
+nnoremap H b
+vnoremap H b
+nnoremap L w
+vnoremap L w
+
+" Pagination
+nnoremap U <C-u>
+vnoremap U <C-u>
+nnoremap D <C-d>
+vnoremap D <C-d>
+
+" Split windows
+nnoremap S <nop>
+nnoremap <leader>sp :vsplit<CR>
+nnoremap <leader>vs :split<CR>
+nmap fl <C-w>l
+nmap fk <C-w>k
+nmap fj <C-w>j
+nmap fh <C-w>h
+
+" Quit
+nnoremap X :q<CR>
+nnoremap <C-x> :q<CR>
