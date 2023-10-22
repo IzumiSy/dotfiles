@@ -18,7 +18,7 @@ done
 
 # Install dotfiles
 ln -snvf "$(pwd)/_vimrc" "$HOME/.vimrc"
-ln -svnf "$(owd)/_ideavimrc" "$HOME/.ideavimrc"
+ln -svnf "$(pwd)/_ideavimrc" "$HOME/.ideavimrc"
 ln -snvf "$(pwd)/_screenrc" "$HOME/.screenrc"
 ln -snvf "$(pwd)/_tmux.conf" "$HOME/.tmux.conf"
 ln -snvf "$(pwd)/_bashrc" "$HOME/.bashrc"
