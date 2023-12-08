@@ -380,4 +380,8 @@
   "[terraform]": {
     "editor.defaultFormatter": "hashicorp.terraform"
   }
+  },
+  "[cue]": {
+    "editor.defaultFormatter": "brody715.vscode-cuelang"
+  },
 }
