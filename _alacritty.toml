@@ -1,0 +1,70 @@
+# Clone alacritty-theme in advance (https://github.com/alacritty/alacritty-theme)
+
+import = ["~/.alacritty-colorscheme/themes/darcula.toml"]
+
+[font]
+size = 10.5
+
+[[keyboard.bindings]]
+action = "Copy"
+key = "C"
+mods = "Control|Shift"
+
+[[keyboard.bindings]]
+action = "Paste"
+key = "V"
+mods = "Control|Shift"
+
+[[keyboard.bindings]]
+action = "SpawnNewInstance"
+key = "N"
+mods = "Control|Shift"
+
+[[keyboard.bindings]]
+action = "ResetFontSize"
+key = "Key0"
+mods = "Control"
+
+[[keyboard.bindings]]
+action = "IncreaseFontSize"
+key = "Semicolon"
+mods = "Control"
+
+[[keyboard.bindings]]
+action = "DecreaseFontSize"
+key = "Minus"
+mods = "Control"
+
+[[keyboard.bindings]]
+action = "ToggleFullscreen"
+key = 36
+mods = "Command"
+
+[[keyboard.bindings]]
+action = "ToggleSimpleFullscreen"
+key = 36
+mods = "Command|Shift"
+
+[[mouse.bindings]]
+action = "Copy"
+mouse = "Right"
+
+[shell]
+args = ["--login"]
+program = "/bin/bash"
+
+[window]
+dynamic_title = true
+opacity = 0.95
+
+[window.dimensions]
+columns = 100
+lines = 33
+
+[window.padding]
+x = 3
+y = 3
+
+[window.position]
+x = 100
+y = 50
