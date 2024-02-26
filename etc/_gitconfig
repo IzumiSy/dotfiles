@@ -7,6 +7,7 @@
   ignorecase = false
 [merge]
   tool = vimdiff2
+  conflictstyle = zdiff3
 [push]
   default = tracking
 [github]
@@ -15,6 +16,7 @@
   token = !security find-internet-password -a IzumiSy -s github.com -l 'ghi token' -w
 [diff]
   tool = vimdiff
+  algorithm = histogram
 [difftool]
   prompt = false
 [color]
@@ -29,3 +31,8 @@
   insteadOf = https://github.com/unipos
 [rebase]
   autosquash = true
+  autostash = true
+[pull]
+  rebase = true
+[mergetool]
+  keepBackup = false
