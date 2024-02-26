@@ -5,6 +5,7 @@
   editor = vim -c \"set fenc=utf8\"
   excludesfile = ~/.gitignore_global
   ignorecase = false
+  pager = delta --color-only
 [merge]
   tool = vimdiff2
   conflictstyle = zdiff3
@@ -15,8 +16,9 @@
 [ghi]
   token = !security find-internet-password -a IzumiSy -s github.com -l 'ghi token' -w
 [diff]
-  tool = vimdiff
+  tool = vimdiff2
   algorithm = histogram
+  colorMoved = default
 [difftool]
   prompt = false
 [color]
@@ -36,3 +38,8 @@
   rebase = true
 [mergetool]
   keepBackup = false
+[delta]
+  line-numbers = true
+  navigate = true
+[interactive]
+  diffFilter = delta --color-only
