@@ -129,30 +129,6 @@ function __get_branch_name() {
 export GOPRIVATE="github.com/unipos/*"
 export GO111MODULE=on
 
-# Asynchronous manual initializer
-# eg.) `init pyenv`, `init direnv`, etc...
-function init() {
-  case $1 in
-    "pyenv")
-      export PYENV_ROOT="$HOME/.pyenv" \
-        && export PATH="$PYENV_ROOT/bin:$PATH" \
-        && eval "$(pyenv init -)" \
-        && eval "$(pyenv virtualenv-init -)" \
-        && echo "Initialized: pyenv ($(pyenv --version))" \
-        ;;
-
-    "direnv")
-      exists direnv \
-        && export EDITOR=vim \
-        && eval "$(direnv hook bash)" \
-        && echo "Initialized: direnv ($(direnv --version))" \
-        ;;
-
-    *)
-      echo "Initlized: nothing"
-  esac
-}
-
 # Enables nvm if installed
 export NVM_DIR="$HOME/.nvm"
 if [ -e "$NVM_DIR/nvm.sh" ]; then
