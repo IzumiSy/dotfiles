@@ -82,7 +82,6 @@ alias be='bundle exec'
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
-alias hist='history -s $(history | cut -c 8- | peco)'
 alias tm="tmux new -s $(uuidgen)"
 alias tma="tmux a"
 alias tenki="curl wttr.in/Chiba"
@@ -104,6 +103,14 @@ alias gcmb="git branch --merged | grep -vE '^\*|master$|develop$' | xargs -I % g
 alias pco='git branch | peco | xargs git checkout'
 alias gpo='check_protecting_branch && git push -u origin $(__get_branch_name)'
 alias gpof='check_protecting_branch && git push -u origin $(__get_branch_name) --force-with-lease --force-if-includes'
+
+# Run the last command set it as the last one in the command history
+function hist() {
+  CMD=$(history | cut -c 8- | peco)
+  history -s $CMD
+  echo $CMD
+  eval "$CMD"
+}
 
 # Check if the current branch to operate is protected or not
 function check_protecting_branch() {
