@@ -1,7 +1,7 @@
 # Clone alacritty-theme in advance (https://github.com/alacritty/alacritty-theme) under ~/.alacritty-theme
 
 import = [
-  "~/.alacritty-theme/themes/github_dark_colorblind.toml"
+  "~/.alacritty-theme/themes/github_dark.toml"
 ]
 
 [font]
