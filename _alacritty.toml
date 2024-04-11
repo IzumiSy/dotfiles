@@ -1,6 +1,8 @@
-# Clone alacritty-theme in advance (https://github.com/alacritty/alacritty-theme)
+# Clone alacritty-theme in advance (https://github.com/alacritty/alacritty-theme) under ~/.alacritty-theme
 
-import = ["~/.alacritty-colorscheme/themes/darcula.toml"]
+import = [
+  "~/.alacritty-theme/themes/github_dark_colorblind.toml"
+]
 
 [font]
 size = 10.5
