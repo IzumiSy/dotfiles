@@ -376,10 +376,10 @@
   "[typescriptreact]": {
     "editor.formatOnSave": true
   },
-  "files.insertFinalNewline": true,
-  "[terraform]": {
-    "editor.defaultFormatter": "hashicorp.terraform"
+  "[graphql]": {
+    "editor.formatOnSave": true
   },
+
   "[cue]": {
     "editor.defaultFormatter": "brody715.vscode-cuelang"
   },
@@ -389,4 +389,5 @@
     }
   ],
   "eslint.useFlatConfig": true,
+  "files.insertFinalNewline": true,
 }
