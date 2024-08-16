@@ -353,6 +353,9 @@
     },
     "editor.suggest.snippetsPreventQuickSuggestions": false
   },
+  "[mdx]": {
+    "editor.tabSize": 4,
+  },
   "[elm]": {
     "editor.tabSize": 4,
     "editor.formatOnSave": true
@@ -379,7 +382,6 @@
   "[graphql]": {
     "editor.formatOnSave": true
   },
-
   "[cue]": {
     "editor.defaultFormatter": "brody715.vscode-cuelang"
   },
