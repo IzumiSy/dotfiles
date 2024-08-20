@@ -33,8 +33,8 @@
   {
     "context": "VimControl && Editor",
     "bindings": {
-      "shift-u": "editor::MovePageUp",
-      "shift-d": "editor::MovePageDown"
+      "shift-u": ["workspace::SendKeystrokes", "ctrl-u"],
+      "shift-d": ["workspace::SendKeystrokes", "ctrl-d"]
     }
   },
   {
