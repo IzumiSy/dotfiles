@@ -1,0 +1,46 @@
+// Zed keymap
+//
+// For information on binding keys, see the Zed
+// documentation: https://zed.dev/docs/key-bindings
+//
+// To see the default key bindings run `zed: open default keymap`
+// from the command palette.
+[
+  {
+    "context": "VimControl && !menu",
+    "bindings": {
+      "s": null,
+      "shift-j": null,
+      "shift-k": null,
+      "shift-h": ["workspace::SendKeystrokes", "b"],
+      "shift-l": ["workspace::SendKeystrokes", "w"],
+      "shift-x": "pane::CloseActiveItem",
+      "shift-f h": "pane::ActivatePrevItem",
+      "shift-f l": "pane::ActivateNextItem",
+      ", s p": "pane::SplitRight",
+      ", v s": "pane::SplitDown",
+      ", d f": "editor::GoToDefinitionSplit",
+      ", c a": "editor::ToggleCodeActions",
+      ", r r": "editor::FindAllReferences",
+      ", r n": "editor::Rename",
+      ", p p": "file_finder::Toggle",
+      "f l": ["workspace::ActivatePaneInDirection", "Right"],
+      "f h": ["workspace::ActivatePaneInDirection", "Left"],
+      "f k": ["workspace::ActivatePaneInDirection", "Up"],
+      "f j": ["workspace::ActivatePaneInDirection", "Down"]
+    }
+  },
+  {
+    "context": "VimControl && Editor",
+    "bindings": {
+      "shift-u": "editor::MovePageUp",
+      "shift-d": "editor::MovePageDown"
+    }
+  },
+  {
+    "context": "vim_mode == insert",
+    "bindings": {
+      "j j": "vim::NormalBefore"
+    }
+  }
+]
