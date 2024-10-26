@@ -1,5 +1,6 @@
 # Clone alacritty-theme in advance (https://github.com/alacritty/alacritty-theme) under ~/.alacritty-theme
 
+[general]
 import = [
   "~/.alacritty-theme/themes/github_dark.toml"
 ]
@@ -50,10 +51,6 @@ mods = "Command|Shift"
 [[mouse.bindings]]
 action = "Copy"
 mouse = "Right"
-
-[shell]
-args = ["--login"]
-program = "/bin/bash"
 
 [window]
 dynamic_title = true
