@@ -138,8 +138,8 @@ export GO111MODULE=on
 
 # Enables nvm if installed
 export NVM_DIR="$HOME/.nvm"
-if [ -e "$NVM_DIR/nvm.sh" ]; then
-  . "$NVM_DIR"/nvm.sh
+if [ -s "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" ]; then
+  . "$HOMEBREW_PREFIX/opt/nvm/nvm.sh"
   echo "Loaded nvm"
 fi
 
