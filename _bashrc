@@ -76,9 +76,7 @@ fi
 
 # Basics
 alias x='exit'
-alias v='vim'
 alias c='clear'
-alias be='bundle exec'
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
