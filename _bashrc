@@ -82,9 +82,8 @@ alias be='bundle exec'
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
-alias tm="tmux new -s $(uuidgen)"
-alias tma="tmux a"
 alias tenki="curl wttr.in/Chiba"
+alias tma="tmux attach -t \"$(pwd)\" || tmux new -s \"$(pwd)\""
 
 # Git command aliases
 alias gad='git add .'
