@@ -131,9 +131,12 @@ export GO111MODULE=on
 
 # Enables nvm if installed
 export NVM_DIR="$HOME/.nvm"
-if [ -s "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" ]; then
+if [ -s "$NVM_DIR/nvm.sh" ]; then
+  . "$NVM_DIR/nvm.sh"
+  echo "Loaded nvm (from $NVM_DIR)"
+elif [ -s "$HOMEBREW_PREFIX/opt/nvm/nvm.sh" ]; then
   . "$HOMEBREW_PREFIX/opt/nvm/nvm.sh"
-  echo "Loaded nvm"
+  echo "Loaded nvm (from homebrew)"
 fi
 
 # Enables rbenv if installed
