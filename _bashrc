@@ -163,10 +163,6 @@ if exists rust ; then
   source "$HOME/.cargo/env"
 fi
 
-# exists fasd \
-#   && eval "$(fasd --init auto)" \
-#   && echo "Initialized: fasd"
-
 # Enables starship if installed
 if exists starship ; then
   export STARSHIP_CONFIG=~/.starship.toml
