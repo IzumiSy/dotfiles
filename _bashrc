@@ -56,11 +56,11 @@ function base_line() {
 }
 export PS1="$(base_line) ${text}$ "
 
-# ls override with "exa"
-if exists exa ; then
-  alias ls="exa"
-  alias ll="exa -lh --time-style=long-iso --group-directories-first"
-  alias lla="exa -lha --bytes --time-style=long-iso --group-directories-first"
+# ls override with "eza"
+if exists eza ; then
+  alias ls="eza"
+  alias ll="eza -lh --time-style=long-iso --group-directories-first"
+  alias lla="eza -lha --bytes --time-style=long-iso --group-directories-first"
 else
   # NOTE: OSX needs "coreutils" package which can be installed through homebrew
   alias ls="ls --color=auto"
