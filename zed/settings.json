@@ -8,7 +8,11 @@
     "version": "2"
   },
   "ui_font_size": 13,
-  "buffer_font_size": 12,
+  "buffer_font_size": 11,
+  "terminal": {
+    "font_size": 10,
+    "font_family": "Monaco"
+  },
   "theme": {
     "mode": "system",
     "light": "Adaltas Dark",
