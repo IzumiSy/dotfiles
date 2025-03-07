@@ -382,9 +382,6 @@
   "[graphql]": {
     "editor.formatOnSave": true
   },
-  "[cue]": {
-    "editor.defaultFormatter": "brody715.vscode-cuelang"
-  },
   "eslint.workingDirectories": [
     {
       "mode": "auto"
