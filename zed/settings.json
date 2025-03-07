@@ -11,7 +11,10 @@
   "buffer_font_size": 11,
   "terminal": {
     "font_size": 10,
-    "font_family": "Monaco"
+    "font_family": "Monaco",
+    "line_height": {
+      "custom": 1.4
+    }
   },
   "theme": {
     "mode": "system",
