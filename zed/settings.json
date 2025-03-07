@@ -1,0 +1,17 @@
+{
+  "vim_mode": true,
+  "assistant": {
+    "default_model": {
+      "provider": "zed.dev",
+      "model": "claude-3-7-sonnet-latest"
+    },
+    "version": "2"
+  },
+  "ui_font_size": 13,
+  "buffer_font_size": 12,
+  "theme": {
+    "mode": "system",
+    "light": "Adaltas Dark",
+    "dark": "Adaltas Dark"
+  }
+}
