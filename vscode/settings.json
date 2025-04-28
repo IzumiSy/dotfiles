@@ -382,11 +382,20 @@
   "[graphql]": {
     "editor.formatOnSave": true
   },
+  "[css]": {
+    "editor.formatOnSave": true
+  },
+  "[tailwindcss]": {
+    "editor.formatOnSave": true
+  },
+  "eslint.useFlatConfig": true,
   "eslint.workingDirectories": [
     {
       "mode": "auto"
     }
   ],
-  "eslint.useFlatConfig": true,
   "files.insertFinalNewline": true,
+  "files.associations": {
+    "*.css": "tailwindcss"
+  }
 }
