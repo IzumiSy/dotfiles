@@ -43,3 +43,5 @@
   navigate = true
 [interactive]
   diffFilter = delta --color-only
+[commit]
+  gpgsign = true
