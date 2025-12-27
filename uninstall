@@ -10,10 +10,7 @@ unlink "$HOME/.starship.toml"
 unlink "$HOME/.alacritty.toml"
 unlink "$HOME/.gitconfig"
 unlink "$HOME/.gitignore_global"
-unlink "$HOME/.hyper.js"
 unlink "$HOME/.pryrc"
 unlink "$HOME/.tigrc"
-
-unlink "/usr/local/bin/gctool"
 
 exec bash --login

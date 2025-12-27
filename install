@@ -3,8 +3,6 @@ set -Ceu
 
 TOOLS=(
   "git"
-  "vim"
-  "make"
   "curl"
 )
 
@@ -26,12 +24,8 @@ ln -snvf "$(pwd)/_starship.toml" "$HOME/.starship.toml"
 ln -snvf "$(pwd)/_alacritty.toml" "$HOME/.alacritty.toml"
 ln -snvf "$(pwd)/etc/_gitconfig" "$HOME/.gitconfig"
 ln -snvf "$(pwd)/etc/_gitignore_global" "$HOME/.gitignore_global"
-ln -snvf "$(pwd)/etc/_hyper.js" "$HOME/.hyper.js"
 ln -svnf "$(pwd)/etc/_pryrc" "$HOME/.pryrc"
 ln -snvf "$(pwd)/etc/_tigrc" "$HOME/.tigrc"
-
-# Install shell tools with root
-ln -snvf "$(pwd)/shell/gctool" "/usr/local/bin/gctool"
 
 # Loads .bashrc
 exec $SHELL --login
