@@ -397,5 +397,6 @@
   "files.insertFinalNewline": true,
   "files.associations": {
     "*.css": "tailwindcss"
-  }
+  },
+  "chat.viewSessions.enabled": false
 }
