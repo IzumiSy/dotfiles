@@ -398,5 +398,6 @@
   "files.associations": {
     "*.css": "tailwindcss"
   },
-  "chat.viewSessions.enabled": false
+  "chat.viewSessions.enabled": false,
+  "chat.mcp.gallery.enabled": true
 }
