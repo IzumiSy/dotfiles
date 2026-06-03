@@ -2,7 +2,7 @@
   email = beetle-noise@gmx.com
   name = IzumiSy
 [core]
-  editor = vim -c \"set fenc=utf8\"
+  editor = vim
   excludesfile = ~/.gitignore_global
   ignorecase = false
   pager = delta --color-only
@@ -41,3 +41,5 @@
   navigate = true
 [interactive]
   diffFilter = delta --color-only
+[sequence]
+  editor = vim
