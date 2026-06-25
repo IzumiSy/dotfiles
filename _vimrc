@@ -29,9 +29,6 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'vim-scripts/surround.vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'https://github.com/itchyny/lightline.vim'
-Plug 'https://github.com/Shougo/unite.vim'
-Plug 'https://github.com/Shougo/vimproc'
-Plug 'https://github.com/Shougo/neomru.vim'
 Plug 'vim-scripts/desert256.vim'
 Plug 'https://github.com/cocopon/vaffle.vim'
 Plug 'https://github.com/airblade/vim-gitgutter'
@@ -359,66 +356,6 @@ inoremap <expr>U     pumvisible() ? "<Up><Up><Up><Up><Up>" : "U"
 inoremap <expr>D     pumvisible() ? "<Down><Down><Down><Down><Down>" : "D"
 inoremap <expr>H     pumvisible() ? asyncomplete#cancel_popup() : "H"
 inoremap <expr><C-l> pumvisible() ? asyncomplete#close_popup() : asyncomplete#force_refresh()
-
-" ======================== "
-"      Unite settings      "
-" ======================== "
-let g:unite_source_history_yank_enable=1
-let g:unite_source_file_mru_limit=200
-let g:unite_source_rec_min_cache_files=500
-let g:unite_source_rec_max_cache_files=50000
-let g:unite_redraw_hold_candidates = 100000
-let g:unite_source_grep_recursive_opt=''
-let g:unite_prompt=">> "
-if executable('hw')
-  let g:unite_source_rec_async_command=['hw', '--follow-link', '--line-number', '--no-group', '--ignore-case', '--no-color']
-  let g:unite_source_grep_command='hw'
-  let g:unite_source_grep_default_opts='--follow-link --line-number --no-group --ignore-case --no-color'
-elseif executable('ag')
-  let g:unite_source_rec_async_command=['ag', '--follow', '--nogroup', '--nocolor']
-  let g:unite_source_grep_command='ag'
-  let g:unite_source_grep_default_opts='--follow --nogroup --nocolor'
-endif
-
-" nnoremap <silent><leader>fo :Unite -start-insert file<CR>
-" nnoremap <silent><leader>ro :Unite -start-insert file_rec/async:.<CR>
-" nnoremap <silent><leader>fh :Unite -start-insert history/yank<CR>
-" nnoremap <silent><leader>fb :Unite -start-insert buffer<CR>
-nnoremap <silent><leader>hh :Unite -start-insert file_mru<CR>
-nnoremap <silent><leader>fg :Unite -start-insert file_rec/git<CR>
-nnoremap <silent><leader>ff :Unite grep:. -buffer-name=search-buffer -no-quit<CR>
-nnoremap <silent><leader>fl :UniteWithCursorWord grep:. -buffer-name=search-buffer -no-quit<CR>
-let ignores = join([
-\    '\.png$', '\.ico$', '\.svg$', '\.gif$', '\.keep$',
-\    '\.eot$', '\.ttf$', '\.woff$', '\.woff2$',
-\    'tmp/', 'node_modules/', 'bower_components/',
-\    'elm-stuff/', '.cache', 'vendor/',
-\  ], '\|')
-call unite#sources#rec#define()
-call unite#custom#source('file,file_rec,file_rec/git,file_rec/async,grep', 'ignore_pattern', ignores)
-call unite#custom#source('file,file_rec,file_rec/git,file_rec/async,grep', 'sorters', 'sorter_length')
-call unite#filters#matcher_default#use(['matcher_glob'])
-call unite#filters#sorter_default#use(['sorter_rank'])
-call unite#custom#profile('default', 'context', {
-\   'no_quit': 1,
-\   'start_insert': 1,
-\   'vertical_preview': 1,
-\ })
-autocmd VimEnter * :execute "normal \<Plug>(unite_redraw)"
-autocmd FileType unite call s:unite_settings()
-function! s:unite_settings()
-  imap <buffer> <C-j> <Plug>(unite_select_next_line)
-  imap <buffer> <C-k> <Plug>(unite_select_previous_line)
-  imap <buffer> <C-d> <Plug>(unite_select_next_page)
-  imap <buffer> <C-u> <Plug>(unite_select_previous_page)
-
-  nmap <silent><buffer><expr> Enter unite#do_action('switch')
-  imap <silent><buffer><expr> Enter unite#do_action('switch')
-  nmap <silent><buffer><expr> <C-t> unite#do_action('tabswitch')
-  imap <silent><buffer><expr> <C-t> unite#do_action('tabswitch')
-  nmap <silent><buffer><expr> <C-s> unite#do_action('vsplitswitch')
-  imap <silent><buffer><expr> <C-s> unite#do_action('vsplitswitch')
-endfunction
 
 " ========================== "
 "     Lightline settings     "
