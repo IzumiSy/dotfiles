@@ -61,7 +61,6 @@ call plug#end()
 scriptencoding utf-8
 set tabstop=2 shiftwidth=2 softtabstop=2
 set fencs=utf-8,euc-jp,iso-2022-jp,cp932
-set matchpairs+=<:>
 set whichwrap+=h,l,<,>,[,],b,s,~
 set autoindent
 set autoread
@@ -95,6 +94,12 @@ set backspace=indent,eol,start
 set completeopt=menu,preview
 set updatetime=1000
 set relativenumber
+
+" Vim default is re=0, but something in the runtime/plugin stack likely overrides it
+" after startup; without this explicit reset, TS highlighting regresses here. Check with:
+"   :verbose set re?
+set re=0
+
 syntax on
 silent! colorscheme desert256
 filetype on
@@ -115,7 +120,7 @@ au BufRead,BufNewFile {COMMIT_EDITMSG} set filetype=gitcommit
 au BufRead,BufNewFile {.envrc,_bash*} set filetype=sh
 
 " Special tab/indent width
-au FileType html,javascript,typescript set tabstop=2 shiftwidth=2 softtabstop=2
+au FileType html,javascript,typescript,typescriptreact set tabstop=2 shiftwidth=2 softtabstop=2
 au FileType c,cpp,go,python,elm set tabstop=4 shiftwidth=4 softtabstop=4
 au FileType c,cpp set cindent
 au FileType tsv,cue set noexpandtab
@@ -252,8 +257,8 @@ nmap ; :
 " Disabled built-in SQL completion in Vim
 let g:omni_sql_no_default_maps = 1
 
-" Automatically redraw buffers on focused
-:au BufEnter,WinEnter * :redraw!
+" redraw on focus return and actual split creation; avoid every WinEnter on TS
+au FocusGained,WinNew * redraw!
 
 " ============== "
 "    vim-anzu    "
