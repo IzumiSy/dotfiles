@@ -24,7 +24,6 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'vim-scripts/sudo.vim'
 Plug 'bronson/vim-trailing-whitespace', { 'on': ['FixWhitespace'] }
-" Plug 'easymotion/vim-easymotion', { 'on': ['<Plug>(easymotion-s2)'] }
 Plug 'deris/vim-gothrough-jk'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'vim-scripts/surround.vim'
@@ -52,21 +51,10 @@ Plug 'micchy326/lightline-lsp-progress', { 'branch': 'main' }
 
 " Syntaxes
 Plug 'leshill/vim-json', { 'for': 'json' }
-Plug 'tpope/vim-haml', { 'for': 'haml' }
-Plug 'https://github.com/pangloss/vim-javascript', { 'for': 'javascript' }
-Plug 'maxmellon/vim-jsx-pretty', { 'for': 'javascript' }
-Plug 'joukevandermaas/vim-ember-hbs', { 'for': 'handlebars' }
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 Plug 'cespare/vim-toml', { 'for': 'toml' }
-Plug 'ap/vim-css-color', { 'for': 'css' }
-Plug 'hail2u/vim-css3-syntax', { 'for': 'css' }
-Plug 'itchyny/vim-haskell-indent', { 'for': 'haskell' }
-Plug 'digitaltoad/vim-pug', { 'for': 'pug' }
-Plug 'earthly/earthly.vim', { 'branch': 'main' }
 Plug 'jparise/vim-graphql', { 'for': 'graphql' }
-Plug 'haya14busa/vim-gofmt', { 'for': 'go' }
 Plug 'mechatroner/rainbow_csv', { 'for': ['csv', 'tsv'] }
-Plug 'jjo/vim-cue', { 'for': 'cue' }
 
 call plug#end()
 
