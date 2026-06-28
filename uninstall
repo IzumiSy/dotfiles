@@ -2,15 +2,12 @@
 set -Ceux
 
 unlink "$HOME/.vimrc"
-unlink "$HOME/.ideavimrc"
-unlink "$HOME/.screenrc"
 unlink "$HOME/.tmux.conf"
 unlink "$HOME/.bashrc"
 unlink "$HOME/.starship.toml"
 unlink "$HOME/.alacritty.toml"
 unlink "$HOME/.gitconfig"
 unlink "$HOME/.gitignore_global"
-unlink "$HOME/.pryrc"
 unlink "$HOME/.tigrc"
 
 exec bash --login
