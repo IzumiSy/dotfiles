@@ -23,20 +23,14 @@ endif
 call plug#begin('~/.vim/plugged')
 
 Plug 'vim-scripts/sudo.vim'
-Plug 'bronson/vim-trailing-whitespace', { 'on': ['FixWhitespace'] }
-Plug 'deris/vim-gothrough-jk'
-Plug 'terryma/vim-multiple-cursors'
 Plug 'vim-scripts/surround.vim'
+Plug 'vim-scripts/desert256.vim'
+Plug 'bronson/vim-trailing-whitespace', { 'on': ['FixWhitespace'] }
+Plug 'terryma/vim-multiple-cursors'
 Plug 'scrooloose/nerdcommenter'
 Plug 'https://github.com/itchyny/lightline.vim'
-Plug 'vim-scripts/desert256.vim'
 Plug 'https://github.com/cocopon/vaffle.vim'
-Plug 'https://github.com/airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
-Plug 'prettier/vim-prettier'
-Plug 'vim-test/vim-test'
-Plug 'osyo-manga/vim-anzu'
-Plug 'glidenote/memolist.vim'
 
 " LSP
 Plug 'prabirshrestha/async.vim'
