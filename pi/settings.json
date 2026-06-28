@@ -1,0 +1,13 @@
+{
+  "theme": "dark",
+  "defaultProvider": "github-copilot",
+  "defaultModel": "gpt-5.4",
+  "defaultThinkingLevel": "hard",
+  "packages": [
+    "npm:pi-sandbox",
+    "git:github.com/IzumiSy/pi-file-tree-browser",
+    "git:github.com/IzumiSy/pi-packages",
+    "git:github.com/IzumiSy/pi-ts-code-search"
+  ],
+  "lastChangelogVersion": "0.80.2"
+}

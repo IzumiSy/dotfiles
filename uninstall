@@ -1,6 +1,7 @@
 #!/bin/bash
 set -Ceux
 
+unlink "$HOME/.pi/agent/settings.json"
 unlink "$HOME/.vimrc"
 unlink "$HOME/.tmux.conf"
 unlink "$HOME/.bashrc"
