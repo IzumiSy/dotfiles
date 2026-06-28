@@ -31,6 +31,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'https://github.com/itchyny/lightline.vim'
 Plug 'https://github.com/cocopon/vaffle.vim'
 Plug 'tpope/vim-fugitive'
+Plug 'mechatroner/rainbow_csv', { 'for': ['csv', 'tsv'] }
 
 " LSP
 Plug 'prabirshrestha/async.vim'
@@ -39,13 +40,6 @@ Plug 'prabirshrestha/asyncomplete-lsp.vim'
 Plug 'prabirshrestha/vim-lsp'
 Plug 'https://github.com/mattn/vim-lsp-settings'
 Plug 'micchy326/lightline-lsp-progress', { 'branch': 'main' }
-
-" Syntaxes
-Plug 'leshill/vim-json', { 'for': 'json' }
-Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
-Plug 'cespare/vim-toml', { 'for': 'toml' }
-Plug 'jparise/vim-graphql', { 'for': 'graphql' }
-Plug 'mechatroner/rainbow_csv', { 'for': ['csv', 'tsv'] }
 
 call plug#end()
 
@@ -96,7 +90,7 @@ set re=0
 
 syntax on
 silent! colorscheme desert256
-filetype on
+filetype plugin indent on
 
 " Maps leader key
 let mapleader=","
