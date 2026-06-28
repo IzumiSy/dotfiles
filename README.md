@@ -16,4 +16,3 @@
 
 - `install` is effectively idempotent: it skips links that already point at this repo.
 - `uninstall` is also effectively idempotent: it removes only links that point at this repo.
-- `./setup` no longer starts a new login shell; restart your shell yourself if needed.

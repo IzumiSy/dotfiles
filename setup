@@ -78,6 +78,8 @@ case "${1:-install}" in
   install)
     check_tools
     install_links
+    echo
+    echo "To apply the changes, run: exec \"$SHELL\" --login"
     ;;
   uninstall)
     uninstall_links
