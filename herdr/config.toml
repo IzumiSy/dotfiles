@@ -1,0 +1,21 @@
+onboarding = false
+
+[keys]
+prefix = "ctrl+z"
+new_tab = "prefix+n"
+next_tab = "prefix+l"
+previous_tab = "prefix+h"
+workspace_picker = ["ctrl+w", "prefix+w"]
+new_workspace = "ctrl+shift+w"
+navigate_workspace_up = ["k", "up"]
+navigate_workspace_down = ["j", "down"]
+
+[theme]
+name = "catppuccin"
+auto_switch = false
+
+[ui.toast]
+delivery = "terminal"
+
+[ui]
+show_agent_labels_on_pane_borders = false
