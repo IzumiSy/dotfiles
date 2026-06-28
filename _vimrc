@@ -48,38 +48,30 @@ call plug#end()
 " ========================= "
 scriptencoding utf-8
 set tabstop=2 shiftwidth=2 softtabstop=2
-set fencs=utf-8,euc-jp,iso-2022-jp,cp932
 set whichwrap+=h,l,<,>,[,],b,s,~
 set autoindent
 set autoread
 set ambiwidth=double
 set expandtab
-set notitle
 set number
 set incsearch
 set hlsearch
 set ignorecase
 set smartcase
 set clipboard=unnamed
-set ruler
 set noswapfile
 set nowrap
 set confirm
 set title
-set ttyfast
 set cursorline
 set showmatch
-set showcmd
 set splitright
 set signcolumn=yes
 set switchbuf+=vsplit
 set laststatus=2
-set encoding=utf-8
 set fileencoding=utf-8
 set fileencodings=utf-8,iso-2022-jp,euc-jp,sjis
-set fileformats=unix,dos,mac
-set backspace=indent,eol,start
-set completeopt=menu,preview
+set fileformats=unix,dos
 set updatetime=1000
 set relativenumber
 
@@ -149,7 +141,6 @@ nnoremap J <Nop>
 nnoremap H b
 vnoremap H b
 nnoremap <C-j> <Nop>
-nnoremap K <Nop>
 nnoremap L w
 vnoremap L w
 nnoremap <C-d> <Nop>
@@ -217,7 +208,6 @@ nnoremap q: <NOP>
 
 " It applies ordinary Windows key binding for undo
 " Vim has Ctrl-Z for temporary quitting by default but that is not actually useful.
-nnoremap <silent><C-z> <NOP>
 nnoremap <silent><C-z> :undo<CR>
 
 " Stop opening split windows with Ctrl+w+n
@@ -268,16 +258,6 @@ let g:lsp_settings = {
 \   }
 \ }
 
-" Try to format prettier with fallback to LSP formatter
-au BufWritePre {*.elm,*.rs,*.mjs,*.js,*.jsx,*.ts,*.tsx,*.json} :call RunPrettierOrLSPFormat()
-function! RunPrettierOrLSPFormat()
-  let l:prettierCliPath = system('PrettierCliPath')
-  if stridx(l:prettierCliPath, "command not found") == -1
-    PrettierAsync
-  else
-    LspDocumentFormat
-  endif
-endfunction
 nnoremap <leader>df :vert LspDefinition<CR>
 nnoremap <leader>ip :vert LspImplementation<CR>
 nnoremap <leader>rr :LspReferences<CR>
@@ -297,15 +277,6 @@ endif
 highlight lspInlayHintsType ctermfg=darkgray guifg=darkgray ctermbg=black guibg=black
 highlight lspInlayHintsParameter ctermfg=darkgray guifg=darkgray ctermbg=black guibg=black
 
-" =============== "
-"    vim-gofmt    "
-" =============== "
-au BufWritePre *.go :Fmt
-let g:gofmt_formatters = [
-\   { 'cmd': 'gofmt', 'args': ['-s', '-w'] },
-\   { 'cmd': 'goimports', 'args': ['-w'] },
-\ ]
-
 " ====================== "
 "      asyncomplete      "
 " ====================== "
@@ -324,9 +295,6 @@ inoremap <expr><C-l> pumvisible() ? asyncomplete#close_popup() : asyncomplete#fo
 " ========================== "
 "     Lightline settings     "
 " ========================== "
-if !has('gui_running')
-  set t_Co=256
-endif
 let g:lightline_lsp_progress_skip_time = 0.1
 let g:lightline = {
 \   'colorscheme': 'one',
@@ -379,11 +347,6 @@ function! GitPushCurrentBranch()
   echo "Git pushing to the remote branch... (" . branch . ")"
   execute ":Git push -u origin " . branch
 endfunction
-
-" ======================= "
-"  Settings for Markdown  "
-" ======================= "
-let g:vim_markdown_folding_disabled = 1
 
 " =========================== "
 "   Settings for easymotion   "
