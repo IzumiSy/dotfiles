@@ -1,0 +1,89 @@
+#!/usr/bin/env bash
+set -Ceu
+
+# Resolve paths relative to this script, not the current directory.
+ROOT_DIR="$(cd "$(dirname "$0")" && pwd)"
+
+# Commands required for setup.
+TOOLS=(
+  "git"
+  "curl"
+)
+
+# source:destination pairs for symlinks.
+LINKS=(
+  "pi/settings.json:$HOME/.pi/agent/settings.json"
+  "_vimrc:$HOME/.vimrc"
+  "_tmux.conf:$HOME/.tmux.conf"
+  "_bashrc:$HOME/.bashrc"
+  "_starship.toml:$HOME/.starship.toml"
+  "_alacritty.toml:$HOME/.alacritty.toml"
+  "herdr/config.toml:$HOME/.config/herdr/config.toml"
+  "git/_gitconfig:$HOME/.gitconfig"
+  "git/_gitignore_global:$HOME/.gitignore_global"
+  "git/_tigrc:$HOME/.tigrc"
+)
+
+# Fail fast if required commands are missing.
+check_tools() {
+  for cmd in "${TOOLS[@]}"; do
+    if ! command -v "$cmd" >/dev/null 2>&1; then
+      echo "$cmd is required to be installed."
+      exit 1
+    fi
+  done
+}
+
+# Create parent directories needed before linking.
+prepare() {
+  mkdir -p "$HOME/.pi/agent" "$HOME/.config/herdr"
+}
+
+# Create or replace symlinks.
+install_links() {
+  prepare
+
+  for entry in "${LINKS[@]}"; do
+    src="${entry%%:*}"
+    dst="${entry#*:}"
+    target="$ROOT_DIR/$src"
+
+    if [[ -L "$dst" ]] && [[ "$(readlink "$dst")" == "$target" ]]; then
+      echo "skip $dst"
+      continue
+    fi
+
+    ln -snvf "$target" "$dst"
+  done
+}
+
+# Remove only the symlinks managed by this script.
+uninstall_links() {
+  for entry in "${LINKS[@]}"; do
+    src="${entry%%:*}"
+    dst="${entry#*:}"
+    target="$ROOT_DIR/$src"
+
+    if [[ -L "$dst" ]] && [[ "$(readlink "$dst")" == "$target" ]]; then
+      rm -f "$dst"
+      echo "removed $dst"
+    else
+      echo "skip $dst"
+    fi
+  done
+}
+
+# Default action is install.
+case "${1:-install}" in
+  install)
+    check_tools
+    install_links
+    ;;
+  uninstall)
+    uninstall_links
+    ;;
+  *)
+    echo "Usage: $0 [install|uninstall]"
+    exit 1
+    ;;
+esac
