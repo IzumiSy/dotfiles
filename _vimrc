@@ -185,11 +185,6 @@ nmap fk <C-w>k
 nmap fj <C-w>j
 nmap fh <C-w>h
 
-" Tab shortcuts
-nnoremap T :tabnew<CR>
-nnoremap FL :tabn<CR>
-nnoremap FH :tabp<CR>
-
 " Reload the file opened in the current buffer from disk
 nnoremap <C-r> :e!<CR>
 
@@ -199,13 +194,6 @@ inoremap <expr><BS> "\<C-h>"
 " Visual mode key-mappings for multiple indents
 vnoremap > >gv
 vnoremap < <gv
-
-" Buffer manipulation
-nnoremap <leader>zz :bprev<CR>
-
-" Errors
-nnoremap <leader>ne :cn<CR>
-nnoremap <leader>pe :cp<CR>
 
 " Terminals
 nnoremap <leader>ot :vert term<CR>
@@ -259,23 +247,6 @@ let g:omni_sql_no_default_maps = 1
 
 " redraw on focus return and actual split creation; avoid every WinEnter on TS
 au FocusGained,WinNew * redraw!
-
-" ============== "
-"    vim-anzu    "
-" ============== "
-nmap n <Plug>(anzu-n-with-echo)
-nmap N <Plug>(anzu-N-with-echo)
-
-" ============== "
-"    vim-test    "
-" ============== "
-let test#strategy = "vimterminal"
-let test#vim#term_position = "vert"
-let g:test#preserve_screen = 1
-let g:test#javascript#playwright#options = '--workers=1'
-nnoremap <leader>tt :TestNearest<CR>
-nnoremap <leader>td :TestNearest --debug<CR>
-nnoremap <leader>T :TestFile<CR>
 
 " ============= "
 "    Vaffle     "
@@ -460,31 +431,12 @@ let g:NERDDefaultAlign = 'left'
 nnoremap <leader>cc <plug>NERDCommenterToggle
 vnoremap <leader>cc <plug>NERDCommenterToggle
 
-" ==================== "
-"   vim-gothrough-jk   "
-" ==================== "
-let g:go_through_jk_reset_interval = 2000
-let g:go_through_jk_move_count = 5
-
 " ===================== "
 "   vim-multi-cursors   "
 " ===================== "
 let g:multi_cursor_use_default_mapping = 0
 let g:multi_cursor_start_word_key = "<S-i>"
 let g:multi_cursor_quit_key = "<C-c>"
-
-" ============= "
-"    vim-cue    "
-" ============= "
-let g:cue_fmt_on_save = 1
-
-" ============== "
-"    memolist    "
-" ============== "
-let g:memolist_path = "~/.memo"
-let g:memolist_memo_suffix = "txt"
-nnoremap <leader>mm :MemoNew<CR>
-nnoremap <leader>ml :MemoList<CR>
 
 " ================= "
 "     Highlight     "
