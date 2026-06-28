@@ -54,15 +54,10 @@ mouse = "Right"
 
 [window]
 dynamic_title = true
-opacity = 0.95
 
 [window.dimensions]
 columns = 100
 lines = 33
-
-[window.padding]
-x = 3
-y = 3
 
 [window.position]
 x = 100
