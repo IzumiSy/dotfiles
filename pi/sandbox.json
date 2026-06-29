@@ -17,7 +17,11 @@
   },
   "network": {
     "allowedDomains": [
-      "nodejs.org"
+      "nodejs.org",
+      "github.com",
+      "*.github.com",
+      "*.githubusercontent.com",
+      "registry.npmjs.org"
     ],
     "deniedDomains": [],
     "allowUnixSockets": [
