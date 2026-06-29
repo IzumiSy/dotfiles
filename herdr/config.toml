@@ -19,3 +19,6 @@ delivery = "terminal"
 
 [ui]
 show_agent_labels_on_pane_borders = false
+sidebar_width = 32
+sidebar_min_width = 32
+sidebar_max_width = 64
