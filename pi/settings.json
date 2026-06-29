@@ -2,7 +2,7 @@
   "theme": "dark",
   "defaultProvider": "github-copilot",
   "defaultModel": "gpt-5.4",
-  "defaultThinkingLevel": "hard",
+  "defaultThinkingLevel": "high",
   "packages": [
     "npm:pi-sandbox",
     "git:github.com/IzumiSy/pi-file-tree-browser",
