@@ -11,8 +11,16 @@ navigate_workspace_up = ["k", "up"]
 navigate_workspace_down = ["j", "down"]
 
 [theme]
-name = "catppuccin"
+name = "vesper"
 auto_switch = false
+
+[theme.custom]
+panel_bg = "#080d1a"
+accent = "#8b87ff"
+blue = "#60a5fa"
+green = "#34d399"
+yellow = "#fbbf24"
+red = "#fb7185"
 
 [ui.toast]
 delivery = "terminal"
@@ -22,3 +30,5 @@ show_agent_labels_on_pane_borders = false
 sidebar_width = 32
 sidebar_min_width = 32
 sidebar_max_width = 64
+pane_borders = true
+pane_gaps = false
