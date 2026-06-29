@@ -1,5 +1,6 @@
 {
   "filesystem": {
+    "allowGitConfig": true,
     "allowRead": [
       "~/devs",
       "~/.npmrc",
