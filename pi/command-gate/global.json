@@ -1,0 +1,60 @@
+{
+  "bash": [
+    {
+      "id": "block-force-push",
+      "enabled": true,
+      "action": "block",
+      "pattern": "\\bgit\\s+push\\b.*\\s(-f|--force|--force-with-lease)\\b",
+      "reason": "force push blocked",
+      "createdAt": "seed"
+    },
+    {
+      "id": "block-remote-branch-delete",
+      "enabled": true,
+      "action": "block",
+      "pattern": "\\bgit\\s+push\\b.*\\s--delete\\b",
+      "reason": "remote branch deletion blocked",
+      "createdAt": "seed"
+    },
+    {
+      "id": "block-dangerous-rm-rf-root",
+      "enabled": true,
+      "action": "block",
+      "pattern": "\\brm\\b.*\\s-(?:[^\\s]*r[^\\s]*f|[^\\s]*f[^\\s]*r)\\b.*(?:^|\\s)(/|~|\\.)(?:\\s|$)",
+      "reason": "dangerous rm -rf target blocked",
+      "createdAt": "seed"
+    },
+    {
+      "id": "confirm-push-default-branch",
+      "enabled": true,
+      "action": "confirm",
+      "pattern": "\\bgit\\s+push\\b.*\\b(origin|upstream)\\b.*\\b(main|master)\\b",
+      "reason": "push to default branch requires confirmation",
+      "createdAt": "seed"
+    },
+    {
+      "id": "confirm-reset-hard",
+      "enabled": true,
+      "action": "confirm",
+      "pattern": "\\bgit\\s+reset\\b.*\\s--hard\\b",
+      "reason": "git reset --hard requires confirmation",
+      "createdAt": "seed"
+    },
+    {
+      "id": "confirm-clean-fdx",
+      "enabled": true,
+      "action": "confirm",
+      "pattern": "\\bgit\\s+clean\\b(?=.*\\s-[^\\s]*f)(?=.*\\s-[^\\s]*d)(?=.*\\s-[^\\s]*x)",
+      "reason": "git clean -fdx requires confirmation",
+      "createdAt": "seed"
+    },
+    {
+      "id": "confirm-package-publish",
+      "enabled": true,
+      "action": "confirm",
+      "pattern": "\\b(npm|pnpm|yarn)\\s+publish\\b",
+      "reason": "package publish requires confirmation",
+      "createdAt": "seed"
+    }
+  ]
+}

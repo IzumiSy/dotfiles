@@ -13,6 +13,9 @@ TOOLS=(
 # source:destination pairs for symlinks.
 LINKS=(
   "pi/settings.json:$HOME/.pi/agent/settings.json"
+  "pi/AGENTS.md:$HOME/.pi/agent/AGENTS.md"
+  "pi/sandbox.json:$HOME/.pi/agent/sandbox.json"
+  "pi/command-gate/global.json:$HOME/.pi/agent/command-gate/global.json"
   "_vimrc:$HOME/.vimrc"
   "_tmux.conf:$HOME/.tmux.conf"
   "_bashrc:$HOME/.bashrc"
@@ -36,7 +39,7 @@ check_tools() {
 
 # Create parent directories needed before linking.
 prepare() {
-  mkdir -p "$HOME/.pi/agent" "$HOME/.config/herdr"
+  mkdir -p "$HOME/.pi/agent" "$HOME/.pi/agent/command-gate" "$HOME/.config/herdr"
 }
 
 # Create or replace symlinks.

@@ -1,0 +1,27 @@
+{
+  "filesystem": {
+    "allowRead": [
+      "~/devs",
+      "~/.npmrc",
+      "~/.nvm",
+      "~/.ssh",
+      "~/.gitignore_global",
+      "~/.gitconfig",
+      "~/.config",
+      "~/.local",
+      "~/.pi",
+      "~/Library/Keychains",
+      "~/Downloads",
+      "/private/tmp"
+    ]
+  },
+  "network": {
+    "allowedDomains": [
+      "nodejs.org"
+    ],
+    "deniedDomains": [],
+    "allowUnixSockets": [
+      "/private/tmp/tmux-502"
+    ]
+  }
+}
