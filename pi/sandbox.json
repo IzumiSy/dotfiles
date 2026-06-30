@@ -11,6 +11,8 @@
       "~/.config",
       "~/.local",
       "~/.pi",
+      "~/.npm",
+      "~/.npmrc",
       "~/Library/Keychains",
       "~/Downloads",
       "/private/tmp"
