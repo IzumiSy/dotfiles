@@ -26,6 +26,7 @@
     ]
   },
   "network": {
+    "allowLocalBinding": true,
     "allowedDomains": [
       "nodejs.org",
       "github.com",
@@ -35,9 +36,14 @@
       "registry.npmjs.org",
       "unpkg.com"
     ],
-    "deniedDomains": [],
+    "allowMachLookup": [
+      "com.apple.SystemConfiguration.configd",
+      "com.apple.dnssd.service",
+      "com.apple.trustd.agent"
+    ],
     "allowUnixSockets": [
-      "/private/tmp/tmux-502"
+      "/private/tmp/tmux-502",
+      "/var/run/mDNSResponder"
     ]
   }
 }
