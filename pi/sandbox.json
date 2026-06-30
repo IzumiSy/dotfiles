@@ -15,6 +15,13 @@
       "~/.npmrc",
       "~/Library/Keychains",
       "~/Downloads",
+      "/tmp",
+      "/private/tmp"
+    ],
+    "allowWrite": [
+      ".",
+      "~/.npm",
+      "/tmp",
       "/private/tmp"
     ]
   },
