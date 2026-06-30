@@ -21,6 +21,7 @@
     "allowWrite": [
       ".",
       "~/.npm",
+      "~/.config",
       "/tmp",
       "/private/tmp"
     ]
