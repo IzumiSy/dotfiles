@@ -22,7 +22,9 @@
       "github.com",
       "*.github.com",
       "*.githubusercontent.com",
-      "registry.npmjs.org"
+      "npmjs.com",
+      "registry.npmjs.org",
+      "unpkg.com"
     ],
     "deniedDomains": [],
     "allowUnixSockets": [
