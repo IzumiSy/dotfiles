@@ -35,7 +35,8 @@
       "*.githubusercontent.com",
       "npmjs.com",
       "registry.npmjs.org",
-      "unpkg.com"
+      "unpkg.com",
+      "api.tailor.tech"
     ],
     "allowMachLookup": [
       "com.apple.SystemConfiguration.configd",
