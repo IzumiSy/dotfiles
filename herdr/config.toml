@@ -32,3 +32,4 @@ sidebar_min_width = 32
 sidebar_max_width = 64
 pane_borders = true
 pane_gaps = false
+agent_panel_sort = "spaces"
