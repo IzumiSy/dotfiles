@@ -55,6 +55,22 @@
       "pattern": "\\b(npm|pnpm|yarn)\\s+publish\\b",
       "reason": "package publish requires confirmation",
       "createdAt": "seed"
+    },
+    {
+      "id": "block-push-default-branch-explicit",
+      "enabled": true,
+      "action": "block",
+      "pattern": "\\bgit\\s+push\\b(?=.*\\b(?:origin|upstream)\\b)(?=.*(?:^|[\\s:])(?:refs/heads/)?(?:main|master)(?:$|\\s))",
+      "reason": "explicit push to main/master blocked",
+      "createdAt": "2026-07-02T00:36:49.454Z"
+    },
+    {
+      "id": "confirm-ambiguous-git-push",
+      "enabled": true,
+      "action": "confirm",
+      "pattern": "^\\s*git\\s+push(?:\\s+(?:-\\S+|--\\S+(?:=\\S+)?|origin|upstream))*\\s*$",
+      "reason": "ambiguous git push requires confirmation",
+      "createdAt": "2026-07-02T00:36:49.456Z"
     }
   ]
 }

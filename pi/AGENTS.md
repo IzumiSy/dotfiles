@@ -5,6 +5,11 @@
 - Use browser/chrome tools only for troubleshooting, page inspection, and behavior or visual verification.
 - Prefer non-browser workflows whenever a reliable CLI or direct tool is available.
 
+## Git safety
+
+- Never push directly to `main` or any default/protected branch without explicit user confirmation in the current conversation.
+- If the push target is unclear or the current branch tracks `origin/main`, stop and ask before pushing.
+
 ## Pull request description conventions
 
 When you create a new Github PR, use this structure by default:
