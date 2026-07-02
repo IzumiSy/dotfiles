@@ -14,6 +14,7 @@
       "~/.npm",
       "~/.npmrc",
       "~/Library/Keychains",
+      "~/Library/pnpm",
       "~/Downloads",
       "/tmp",
       "/private/tmp"
