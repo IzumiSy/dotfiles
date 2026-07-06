@@ -42,8 +42,8 @@ export SCREENDIR=$HOME/.screen
 # Adds thirdparty binaries
 export PATH="$PATH:$HOME/.cargo/bin"    # Rustlang
 export PATH="$PATH:$HOME/go/bin"        # Golang
-if exists /opt/Homebrew/bin/brew ; then
-  eval $(/opt/Homebrew/bin/brew shellenv)
+if exists /opt/homebrew/bin/brew ; then
+  eval $(/opt/homebrew/bin/brew shellenv)
 fi
 
 function base_line() {
