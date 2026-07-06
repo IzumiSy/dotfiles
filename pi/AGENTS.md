@@ -5,6 +5,12 @@
 - Use browser/chrome tools only for troubleshooting, page inspection, and behavior or visual verification.
 - Prefer non-browser workflows whenever a reliable CLI or direct tool is available.
 
+## Sandbox / package installs
+
+- In this environment, `pnpm install` can fail under `pi-sandbox` because the sandbox hard-blocks writes to `.idea/` and `.vscode/`, and some published packages include those directories in their tarballs.
+- When a task requires `pnpm install`, ask the user to run it outside the sandbox instead of running it yourself by default.
+- Only run `pnpm install` yourself when the user explicitly asks you to reproduce or diagnose the sandbox failure, and then report the exact blocked path/package.
+
 ## Git safety
 
 - Never push directly to `main` or any default/protected branch without explicit user confirmation in the current conversation.
