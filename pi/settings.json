@@ -1,7 +1,7 @@
 {
   "theme": "dark",
   "defaultProvider": "github-copilot",
-  "defaultModel": "gpt-5.4",
+  "defaultModel": "claude-opus-4.6",
   "defaultThinkingLevel": "high",
   "packages": [
     "npm:pi-sandbox",
