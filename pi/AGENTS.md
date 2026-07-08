@@ -16,6 +16,12 @@
 - Never push directly to `main` or any default/protected branch without explicit user confirmation in the current conversation.
 - If the push target is unclear or the current branch tracks `origin/main`, stop and ask before pushing.
 
+## Confidentiality in public Git history
+
+- Never include specific company names, customer names, or other identifying information of clients in commit messages, PR titles, or PR descriptions.
+- Use generic terms (e.g. "a customer", "a client", "an external partner") instead of real names.
+- This applies even when the user's conversation mentions specific names — sanitize before writing to any public-facing Git artifact.
+
 ## Pull request description conventions
 
 When you create a new Github PR, use this structure by default:
