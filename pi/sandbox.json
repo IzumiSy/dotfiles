@@ -37,7 +37,8 @@
       "npmjs.com",
       "registry.npmjs.org",
       "unpkg.com",
-      "api.tailor.tech"
+      "api.tailor.tech",
+      "base-ui.com"
     ],
     "allowMachLookup": [
       "com.apple.SystemConfiguration.configd",
@@ -47,6 +48,7 @@
     "allowUnixSockets": [
       "/private/tmp/tmux-502",
       "/var/run/mDNSResponder"
-    ]
+    ],
+    "deniedDomains": []
   }
 }
