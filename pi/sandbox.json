@@ -24,6 +24,7 @@
     "allowWrite": [
       ".",
       "~/.npm",
+      "~/.copilot",
       "~/.config",
       "~/Library/Caches",
       "/tmp",
@@ -37,6 +38,8 @@
       "github.com",
       "*.github.com",
       "*.githubusercontent.com",
+      "api.business.githubcopilot.com",
+      "*.githubcopilot.com",
       "npmjs.com",
       "registry.npmjs.org",
       "unpkg.com",
