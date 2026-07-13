@@ -3,6 +3,7 @@
     "allowGitConfig": true,
     "allowRead": [
       "~/devs",
+      "~/bin",
       "~/.npmrc",
       "~/.nvm",
       "~/.ssh",
@@ -13,6 +14,7 @@
       "~/.pi",
       "~/.npm",
       "~/.npmrc",
+      "~/Library/Caches",
       "~/Library/Keychains",
       "~/Library/pnpm",
       "~/Downloads",
@@ -23,6 +25,7 @@
       ".",
       "~/.npm",
       "~/.config",
+      "~/Library/Caches",
       "/tmp",
       "/private/tmp"
     ]
