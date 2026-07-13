@@ -4,6 +4,7 @@
     "allowRead": [
       "~/devs",
       "~/bin",
+      "~/.copilot",
       "~/.npmrc",
       "~/.nvm",
       "~/.ssh",
