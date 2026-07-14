@@ -17,6 +17,62 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
+  { "williamboman/mason.nvim", opts = {} },
+  {
+    "neovim/nvim-lspconfig",
+    dependencies = { "williamboman/mason.nvim" },
+    config = function()
+      -- Servers: { lspconfig name, mason package name }
+      local servers = {
+        { "ts_ls", "typescript-language-server" },
+      }
+
+      -- ts_ls: monorepo対応 - 最寄りの tsconfig.json をrootにする
+      vim.lsp.config('ts_ls', {
+        root_dir = function(bufnr, on_dir)
+          local fname = vim.api.nvim_buf_get_name(bufnr)
+          local found = vim.fs.find('tsconfig.json', { path = vim.fs.dirname(fname), upward = true })[1]
+          if found then on_dir(vim.fs.dirname(found)) end
+        end,
+      })
+
+      local registry = require("mason-registry")
+      for _, s in ipairs(servers) do
+        local ok, pkg = pcall(registry.get_package, s[2])
+        if ok and pkg:is_installed() then
+          vim.lsp.enable(s[1])
+        else
+          vim.defer_fn(function()
+            if vim.fn.confirm(s[2] .. " is not installed. Install via Mason?", "&Yes\n&No", 2) == 1 then
+              vim.cmd("MasonInstall " .. s[2])
+            end
+          end, 100)
+        end
+      end
+
+      -- Keymaps (on LSP attach)
+      vim.api.nvim_create_autocmd("LspAttach", {
+        callback = function(args)
+          local buf = args.buf
+          local map = function(mode, lhs, rhs)
+            vim.keymap.set(mode, lhs, rhs, { buffer = buf })
+          end
+
+          map("n", "<leader>df", function() vim.cmd("vsplit") vim.lsp.buf.definition() end)
+          map("n", "<leader>ip", function() vim.cmd("vsplit") vim.lsp.buf.implementation() end)
+          map("n", "<leader>rr", vim.lsp.buf.references)
+          map("n", "<leader>ee", vim.diagnostic.setloclist)
+          map("n", "<leader>rn", vim.lsp.buf.rename)
+          map("n", "<leader>ca", vim.lsp.buf.code_action)
+          map("n", "E", vim.diagnostic.goto_next)
+          map("n", "K", vim.lsp.buf.hover)
+
+          -- Manual completion trigger (like your vimrc <C-l>)
+          map("i", "<C-l>", "<C-x><C-o>")
+        end,
+      })
+    end,
+  },
   {
     "jake-stewart/multicursor.nvim",
     branch = "1.0",
@@ -89,7 +145,6 @@ opt.updatetime = 1000
 opt.synmaxcol = 200
 opt.pumheight = 30
 
-opt.fileencoding = "utf-8"
 opt.fileencodings = { "utf-8", "iso-2022-jp", "euc-jp", "sjis" }
 opt.fileformats = { "unix", "dos" }
 
@@ -182,6 +237,14 @@ vim.api.nvim_create_autocmd("FileType", {
 --       Autocmds
 -- ========================
 local au = vim.api.nvim_create_autocmd
+
+-- Format on save via LSP (like vim-lsp format_sync)
+au("BufWritePre", {
+  pattern = { "*.ts", "*.tsx" },
+  callback = function()
+    vim.lsp.buf.format({ timeout_ms = 1000 })
+  end,
+})
 
 -- Trim trailing whitespace on save (except markdown)
 au("BufWritePre", {

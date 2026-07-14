@@ -16,7 +16,7 @@ LINKS=(
   "pi/AGENTS.md:$HOME/.pi/agent/AGENTS.md"
   "pi/sandbox.json:$HOME/.pi/agent/sandbox.json"
   "pi/command-gate/global.json:$HOME/.pi/agent/command-gate/global.json"
-  "nvim/init.lua:$HOME/.config/nvim/init.lua"
+  "nvim:$HOME/.config/nvim"
   "_vimrc:$HOME/.vimrc"
   "_tmux.conf:$HOME/.tmux.conf"
   "_bashrc:$HOME/.bashrc"
