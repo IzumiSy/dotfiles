@@ -53,6 +53,11 @@ require("lazy").setup({
       -- Keymaps (on LSP attach)
       vim.api.nvim_create_autocmd("LspAttach", {
         callback = function(args)
+          local client = vim.lsp.get_client_by_id(args.data.client_id)
+          if client then
+            client.server_capabilities.semanticTokensProvider = nil
+          end
+
           local buf = args.buf
           local map = function(mode, lhs, rhs)
             vim.keymap.set(mode, lhs, rhs, { buffer = buf })
@@ -69,8 +74,43 @@ require("lazy").setup({
 
           -- Manual completion trigger (like your vimrc <C-l>)
           map("i", "<C-l>", "<C-x><C-o>")
+
+          -- Auto completion: extend trigger characters to fire on all keyword input
+          local caps = client.server_capabilities
+          if caps.completionProvider then
+            local chars = caps.completionProvider.triggerCharacters or {}
+            for c = string.byte('a'), string.byte('z') do table.insert(chars, string.char(c)) end
+            for c = string.byte('A'), string.byte('Z') do table.insert(chars, string.char(c)) end
+            for c = string.byte('0'), string.byte('9') do table.insert(chars, string.char(c)) end
+            table.insert(chars, '_')
+            caps.completionProvider.triggerCharacters = chars
+          end
+          vim.lsp.completion.enable(true, args.data.client_id, buf, { autotrigger = true })
+
+          -- Completion popup keymaps
+          local expr = function(lhs, rhs_visible, rhs_default)
+            vim.keymap.set("i", lhs, function()
+              return vim.fn.pumvisible() == 1 and rhs_visible or rhs_default
+            end, { buffer = buf, expr = true })
+          end
+          expr("<CR>",  "<C-y>", "<CR>")
+          expr("<C-c>", "<C-e>", "<C-c>")
+          expr("<C-j>", "<Down>", "<C-j>")
+          expr("<C-k>", "<Up>", "<C-k>")
+          expr("<C-u>", "<Up><Up><Up><Up><Up>", "<C-u>")
+          expr("<C-d>", "<Down><Down><Down><Down><Down>", "<C-d>")
+          expr("<C-h>", "<C-e>", "<C-h>")
         end,
       })
+    end,
+  },
+  {
+    "echasnovski/mini.pick",
+    config = function()
+      require("mini.pick").setup()
+      vim.keymap.set("n", "<leader>ff", MiniPick.builtin.files)
+      vim.keymap.set("n", "<leader>fg", MiniPick.builtin.grep_live)
+      vim.keymap.set("n", "<leader>fb", MiniPick.builtin.buffers)
     end,
   },
   {
@@ -130,6 +170,8 @@ opt.signcolumn = "yes"
 opt.showmatch = true
 opt.wrap = false
 opt.scrolloff = 4
+
+opt.completeopt = { "menuone", "noselect", "popup" }
 
 opt.incsearch = true
 opt.hlsearch = true
