@@ -40,7 +40,29 @@ check_tools() {
 
 # Create parent directories needed before linking.
 prepare() {
-  mkdir -p "$HOME/.pi/agent" "$HOME/.pi/agent/command-gate" "$HOME/.config/herdr" "$HOME/.config/nvim"
+  local entry dst
+
+  for entry in "${LINKS[@]}"; do
+    dst="${entry#*:}"
+    mkdir -p "$(dirname "$dst")"
+  done
+}
+
+# Clean up the old broken layout where ~/.config/nvim was created as a
+# directory and the repo link ended up inside it as ~/.config/nvim/nvim.
+cleanup_legacy_nested_link() {
+  local src="$1"
+  local dst="$2"
+  local target="$3"
+  local legacy="$dst/$(basename "$src")"
+
+  if [[ -d "$dst" ]] && [[ ! -L "$dst" ]] && [[ -L "$legacy" ]] && [[ "$(readlink "$legacy")" == "$target" ]]; then
+    if [[ -z "$(find "$dst" -mindepth 1 -maxdepth 1 ! -path "$legacy" -print -quit)" ]]; then
+      rm -f "$legacy"
+      rmdir "$dst"
+      echo "fixed $legacy"
+    fi
+  fi
 }
 
 # Create or replace symlinks.
@@ -52,9 +74,16 @@ install_links() {
     dst="${entry#*:}"
     target="$ROOT_DIR/$src"
 
+    cleanup_legacy_nested_link "$src" "$dst" "$target"
+
     if [[ -L "$dst" ]] && [[ "$(readlink "$dst")" == "$target" ]]; then
       echo "skip $dst"
       continue
+    fi
+
+    if [[ -d "$dst" ]] && [[ ! -L "$dst" ]]; then
+      echo "error: $dst already exists as a directory; move it away and re-run." >&2
+      exit 1
     fi
 
     ln -snvf "$target" "$dst"
