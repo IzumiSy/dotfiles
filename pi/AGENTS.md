@@ -22,9 +22,11 @@
 - Use generic terms (e.g. "a customer", "a client", "an external partner") instead of real names.
 - This applies even when the user's conversation mentions specific names — sanitize before writing to any public-facing Git artifact.
 
-## Pull request description conventions
+## Pull request conventions
 
-When you create a new Github PR, use this structure by default:
+When you create a new GitHub PR, create it as a Draft PR by default unless the user explicitly asks for a non-draft PR.
+
+Use this description structure by default:
 
 ```
 ## Motivation
