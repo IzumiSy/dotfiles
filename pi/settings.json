@@ -13,6 +13,6 @@
     "npm:@wierdbytes/pi-peon",
     "git:github.com/elpapi42/pi-fork"
   ],
-  "lastChangelogVersion": "0.80.6",
+  "lastChangelogVersion": "0.80.7",
   "showCacheMissNotices": true
 }
