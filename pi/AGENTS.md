@@ -13,8 +13,18 @@
 
 ## Git safety
 
-- Never push directly to `main` or any default/protected branch without explicit user confirmation in the current conversation.
-- If the push target is unclear or the current branch tracks `origin/main`, stop and ask before pushing.
+- Before pushing:
+  - Never push directly to the default branch or any branch known to be protected without explicit user confirmation in the current conversation.
+  - If the push target is unclear, or the current branch tracks the default branch or another branch known to be protected, stop and ask before pushing.
+
+- When creating a working branch:
+  - Do not set its upstream/tracking branch to the default branch or any other branch known to be protected.
+  - It is fine to create a working branch from the default branch.
+
+- After publishing a working branch:
+  - Set its upstream to its corresponding remote branch instead (for example, `git push -u origin HEAD`).
+
+- If the default branch or protection status cannot be determined confidently, stop and ask.
 
 ## Confidentiality in public Git history
 
