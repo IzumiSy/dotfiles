@@ -11,7 +11,8 @@
     "git:github.com/DietrichGebert/ponytail",
     "npm:pi-smart-fetch",
     "npm:@wierdbytes/pi-peon",
-    "git:github.com/elpapi42/pi-fork"
+    "git:github.com/elpapi42/pi-fork",
+    "npm:pi-chrome-dev-tools"
   ],
   "lastChangelogVersion": "0.80.7",
   "showCacheMissNotices": true
