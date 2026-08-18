@@ -14,6 +14,6 @@
     "git:github.com/elpapi42/pi-fork",
     "npm:pi-chrome-dev-tools"
   ],
-  "lastChangelogVersion": "0.82.1",
+  "lastChangelogVersion": "0.84.2",
   "showCacheMissNotices": true
 }
