@@ -47,7 +47,14 @@
       "registry.npmjs.org",
       "unpkg.com",
       "api.tailor.tech",
-      "base-ui.com"
+      "base-ui.com",
+      "api.fireflies.ai",
+      "react.dev",
+      "*.react.dev",
+      "w3.org",
+      "*.w3.org",
+      "developer.mozilla.org",
+      "*.developer.mozilla.org"
     ],
     "allowMachLookup": [
       "com.apple.SystemConfiguration.configd",
