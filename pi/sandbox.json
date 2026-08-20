@@ -30,6 +30,7 @@
       "~/.copilot",
       "~/.config",
       "~/Library/Caches",
+      "~/Library/pnpm/store",
       "/tmp",
       "/private/tmp"
     ]
