@@ -55,7 +55,8 @@
       "w3.org",
       "*.w3.org",
       "developer.mozilla.org",
-      "*.developer.mozilla.org"
+      "*.developer.mozilla.org",
+      "docs.tailor.tech"
     ],
     "allowMachLookup": [
       "com.apple.SystemConfiguration.configd",
