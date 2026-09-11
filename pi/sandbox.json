@@ -17,9 +17,10 @@
       "~/.pi",
       "~/.npm",
       "~/.npmrc",
+      "~/Library/pnpm",
       "~/Library/Caches",
       "~/Library/Keychains",
-      "~/Library/pnpm",
+      "~/Library/Preferences/pnpm/auth.ini",
       "~/Downloads",
       "/tmp",
       "/private/tmp"
