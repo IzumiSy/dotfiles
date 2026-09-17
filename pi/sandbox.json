@@ -5,6 +5,7 @@
       "~/devs",
       "~/bin",
       "~/.copilot",
+      "~/.cache",
       "~/.npmrc",
       "~/.nvm",
       "~/.ssh",
