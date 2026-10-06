@@ -8,10 +8,10 @@
     "git:github.com/IzumiSy/pi-packages",
     "git:github.com/IzumiSy/pi-ts-code-search",
     "git:github.com/DietrichGebert/ponytail",
-    "npm:pi-smart-fetch",
     "npm:@wierdbytes/pi-peon",
     "git:github.com/elpapi42/pi-fork",
-    "npm:pi-chrome-dev-tools"
+    "git:github.com/d-b/agent-smart-fetch@868ed0d15d2fa58bc64204de4e30f72b514b4818",
+    "npm:pi-agent-browser-native"
   ],
   "lastChangelogVersion": "1.0.4",
   "showCacheMissNotices": true
