@@ -6,7 +6,6 @@
   "packages": [
     "npm:pi-sandbox",
     "git:github.com/IzumiSy/pi-packages",
-    "git:github.com/IzumiSy/pi-ts-code-search",
     "git:github.com/DietrichGebert/ponytail",
     "npm:@wierdbytes/pi-peon",
     "git:github.com/elpapi42/pi-fork",
