@@ -33,6 +33,7 @@
       "~/.config",
       "~/Library/Caches",
       "~/Library/pnpm/store",
+      "~/Library/pnpm/package-manager-store",
       "/tmp",
       "/private/tmp"
     ]
