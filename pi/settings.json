@@ -10,7 +10,8 @@
     "npm:@wierdbytes/pi-peon",
     "git:github.com/elpapi42/pi-fork",
     "git:github.com/d-b/agent-smart-fetch@868ed0d15d2fa58bc64204de4e30f72b514b4818",
-    "npm:pi-agent-browser-native"
+    "npm:pi-agent-browser-native",
+    "npm:@grammeaway/pi-clip"
   ],
   "lastChangelogVersion": "1.0.4",
   "showCacheMissNotices": true
