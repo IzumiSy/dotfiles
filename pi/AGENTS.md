@@ -62,3 +62,9 @@ repeat details that are already obvious from the file diff.
 ```
 
 Do not include Testing, Notes, or other boilerplate sections unless explicitly requested.
+
+## Copyable Text
+
+- Prefer Markdown fenced code blocks with the `text` language identifier for copyable prose, such as suggested messages, prompts, and documentation additions.
+- For source code, commands, and configuration, use the appropriate language identifier instead.
+- Include only the content to be copied inside the fence; keep explanations and notes outside.
