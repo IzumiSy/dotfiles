@@ -5,6 +5,24 @@
 - Use browser/chrome tools only for troubleshooting, page inspection, and behavior or visual verification.
 - Prefer non-browser workflows whenever a reliable CLI or direct tool is available.
 
+## Plan before execution
+
+- Always present a plan and confirm alignment with the user before starting execution.
+- Keep the plan concise and include the goal, scope, approach, expected impact, and what will not be done.
+- Wait for explicit user approval after presenting the plan, even if the initial request included an instruction to execute. Do not treat answers to questions or the absence of objections as approval.
+- Before approval, only perform read-only investigation and analysis needed to prepare the plan. Do not edit files, run commands that change state, or write to external services.
+- After approval, stay within the approved plan. If the goal, scope, or impact changes materially, stop, update the plan, and obtain approval again.
+
+## Visual alignment
+
+- Proactively use diagrams when they help explain a plan or confirm alignment. Use Mermaid as the standard diagram format.
+- Output diagrams in Markdown fenced code blocks with the `mermaid` language identifier.
+- Choose the diagram type that fits the subject, such as a flowchart, sequence diagram, ER diagram, or state diagram.
+- Clearly distinguish what will change from what will remain unchanged. Do not rely on color alone; also use labels or explanations.
+- Prefer small diagrams that are readable in a terminal. Split large diagrams into an overview and focused details.
+- Accompany diagrams with concise text that states assumptions, decisions, and what the user needs to confirm.
+- Do not force diagrams for simple explanations. If a diagram cannot be rendered, simplify it or supplement it with text.
+
 ## Git safety
 
 - Before pushing:
