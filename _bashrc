@@ -83,6 +83,19 @@ alias mv='mv -i'
 alias tenki="curl wttr.in/Chiba"
 alias tma="tmux attach -t \"$(pwd)\" || tmux new -s \"$(pwd)\""
 
+# Stop processes listening on a TCP port
+function killport() {
+  local pids
+  if [[ $# != 1 || ! $1 =~ ^[0-9]{1,5}$ ]] ||
+     (( 10#$1 < 1 || 10#$1 > 65535 )); then
+    echo 'Usage: killport <port: 1-65535>' >&2
+    return 1
+  fi
+
+  pids=$(lsof -tiTCP:"$1" -sTCP:LISTEN) || return
+  kill $pids
+}
+
 # Git command aliases
 alias gad='git add .'
 alias gadi='git add -i'
