@@ -5,13 +5,15 @@
 - Use browser/chrome tools only for troubleshooting, page inspection, and behavior or visual verification.
 - Prefer non-browser workflows whenever a reliable CLI or direct tool is available.
 
-## Plan before execution
+## Plan and authorization
 
-- Always present a plan and confirm alignment with the user before starting execution.
-- Keep the plan concise and include the goal, scope, approach, expected impact, and what will not be done.
-- Wait for explicit user approval after presenting the plan, even if the initial request included an instruction to execute. Do not treat answers to questions or the absence of objections as approval.
-- Before approval, only perform read-only investigation and analysis needed to prepare the plan. Do not edit files, run commands that change state, or write to external services.
-- After approval, stay within the approved plan. If the goal, scope, or impact changes materially, stop, update the plan, and obtain approval again.
+- Treat clear requests to make a change as authorization to perform that work. This includes natural phrasing such as "I'd like to change X" and follow-up instructions such as "remove Y too"; do not require a separate "go ahead".
+- For clear requests, briefly state the approach and proceed without waiting for another approval. For trivial changes, proceed directly.
+- For questions, advice, or exploratory discussion, investigate read-only and propose options; do not make changes unless requested.
+- Treat questions about past actions, requests for explanations, and expressions of concern or dissatisfaction as discussion, not authorization to change anything. Explain first; do not automatically fix, revert, or otherwise modify state.
+- Before making a corrective change in response to such discussion, obtain explicit authorization, unless the user also clearly requests that change in the same message.
+- Ask only when an unresolved ambiguity materially affects the outcome, or when the work would expand beyond the requested scope. Routine implementation choices and small follow-up adjustments do not require renewed approval.
+- Destructive or irreversible operations, external publication, and account/security/privacy changes require explicit authorization for that action. A general request to fix or implement something is not sufficient. Keep all Git safety rules below.
 
 ## Visual alignment
 
