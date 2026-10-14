@@ -108,9 +108,7 @@ require("lazy").setup({
     "echasnovski/mini.pick",
     config = function()
       require("mini.pick").setup()
-      vim.keymap.set("n", "<leader>ff", MiniPick.builtin.files)
-      vim.keymap.set("n", "<leader>fg", MiniPick.builtin.grep_live)
-      vim.keymap.set("n", "<leader>fb", MiniPick.builtin.buffers)
+      vim.keymap.set("n", "<leader>pp", MiniPick.builtin.files)
     end,
   },
   {
@@ -258,7 +256,7 @@ vim.g.netrw_banner = 0
 vim.g.netrw_liststyle = 0
 vim.g.netrw_hide = 0  -- show hidden files
 
-map("n", "<leader>pp", function()
+map("n", "<leader>tr", function()
   local dir = vim.fn.expand("%:h")
   if dir == "" then dir = "." end
   vim.cmd("Explore " .. dir)
