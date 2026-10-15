@@ -85,7 +85,7 @@ alias tma="tmux attach -t \"$(pwd)\" || tmux new -s \"$(pwd)\""
 
 # Stop processes listening on a TCP port
 function killport() {
-  local pids
+  local pids pid count=0 status=0
   if [[ $# != 1 || ! $1 =~ ^[0-9]{1,5}$ ]] ||
      (( 10#$1 < 1 || 10#$1 > 65535 )); then
     echo 'Usage: killport <port: 1-65535>' >&2
@@ -93,7 +93,15 @@ function killport() {
   fi
 
   pids=$(lsof -tiTCP:"$1" -sTCP:LISTEN) || return
-  kill $pids
+  for pid in $pids; do
+    if kill "$pid"; then
+      ((count += 1))
+    else
+      status=$?
+    fi
+  done
+  printf 'Sent SIGTERM to %d process(es) on port %s.\n' "$count" "$1"
+  return "$status"
 }
 
 # Git command aliases
