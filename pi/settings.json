@@ -13,6 +13,6 @@
     "npm:pi-agent-browser-native",
     "npm:@grammeaway/pi-clip"
   ],
-  "lastChangelogVersion": "1.2.0",
+  "lastChangelogVersion": "1.3.0",
   "showCacheMissNotices": true
 }
