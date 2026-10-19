@@ -105,7 +105,7 @@ function killport() {
 }
 
 # Git command aliases
-alias gad='git add .'
+alias gad='git add . && gs'
 alias gadi='git add -i'
 function gd() {
   local unstaged reply
