@@ -107,7 +107,6 @@ function killport() {
 # Git command aliases
 alias gad='git add .'
 alias gadi='git add -i'
-unalias gd 2>/dev/null || true
 function gd() {
   local unstaged reply
   unstaged=$(git ls-files --modified --others --exclude-standard -- .) || return
