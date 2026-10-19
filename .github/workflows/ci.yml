@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  bash:
+    name: Bash (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - name: Check Bash syntax
+        run: |
+          for file in _bashrc tests/*.sh; do
+            /bin/bash -n "$file"
+          done
+      - name: Test gd
+        run: /bin/bash tests/gd.sh

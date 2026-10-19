@@ -107,7 +107,18 @@ function killport() {
 # Git command aliases
 alias gad='git add .'
 alias gadi='git add -i'
-alias gd='git diff --cached'
+unalias gd 2>/dev/null || true
+function gd() {
+  local unstaged reply
+  unstaged=$(git ls-files --modified --others --exclude-standard -- .) || return
+  if [[ -n $unstaged ]]; then
+    if read -r -p 'Unstaged files found. Run git add -N .? [y/N] ' reply &&
+       [[ $reply =~ ^[yY]([eE][sS])?$ ]]; then
+      git add -N . || return
+    fi
+  fi
+  git diff HEAD "$@"
+}
 alias gcm='git commit -m'
 alias gch='git checkout'
 alias glo='git log --oneline --decorate --graph -15'
