@@ -1,10 +1,5 @@
 # Personal agent instructions
 
-- For GitHub interactions (PR comments, review comments, issue replies, and review submission), use `gh` CLI by default.
-- Do not use browser/chrome tools for GitHub write actions unless explicitly requested or `gh` is unavailable.
-- Use browser/chrome tools only for troubleshooting, page inspection, and behavior or visual verification.
-- Prefer non-browser workflows whenever a reliable CLI or direct tool is available.
-
 ## Plan and authorization
 
 - Treat clear requests to make a change as authorization to perform that work. This includes natural phrasing such as "I'd like to change X" and follow-up instructions such as "remove Y too"; do not require a separate "go ahead".
@@ -25,7 +20,16 @@
 - Accompany diagrams with concise text that states assumptions, decisions, and what the user needs to confirm.
 - Do not force diagrams for simple explanations. If a diagram cannot be rendered, simplify it or supplement it with text.
 
-## Git safety
+## Git and pull requests
+
+### Tools
+
+- For GitHub interactions (PR comments, review comments, issue replies, and review submission), use `gh` CLI by default.
+- Do not use browser/chrome tools for GitHub write actions unless explicitly requested or `gh` is unavailable.
+- Use browser/chrome tools only for troubleshooting, page inspection, and behavior or visual verification.
+- Prefer non-browser workflows whenever a reliable CLI or direct tool is available.
+
+### Safety
 
 - Before pushing:
   - Never push directly to the default branch or any branch known to be protected without explicit user confirmation in the current conversation.
@@ -40,48 +44,13 @@
 
 - If the default branch or protection status cannot be determined confidently, stop and ask.
 
-## Confidentiality in public Git history
+### Confidentiality
 
-- Never include specific company names, customer names, or other identifying information of clients in commit messages, PR titles, or PR descriptions.
-- Use generic terms (e.g. "a customer", "a client", "an external partner") instead of real names.
-- This applies even when the user's conversation mentions specific names — sanitize before writing to any public-facing Git artifact.
+- Never include specific company names, customer names, or other client-identifying information in public-facing Git artifacts, including commit messages, PR titles, and descriptions; use generic terms even when the user provides real names.
 
-## Pull request conventions
+### Pull requests
 
-When you create a new GitHub PR, create it as a Draft PR by default unless the user explicitly asks for a non-draft PR.
-
-Use this description structure by default:
-
-```
-## Motivation
-<!--
-Provide enough context for a reviewer with no prior knowledge to understand
-why the change is needed. Include relevant background from the user
-conversation or bug report. This section may be relatively detailed.
--->
-
-## Design Decision
-<!--
-If the change involved a meaningful API or design choice, explain why this
-solution was chosen and why other plausible options were not. Keep this
-focused on decision-making rather than implementation detail.
-
-Organize this section with appropriate `###` subheadings (for example,
-chosen approach, alternatives considered, trade-offs) instead of writing it
-as one uninterrupted block of prose.
-
-Omit this section if there is no meaningful decision to document.
--->
-
-## Summary
-<!--
-Describe the change in a few bullets at a meaningful chunk level. Do not
-repeat details that are already obvious from the file diff.
--->
-
-```
-
-Do not include Testing, Notes, or other boilerplate sections unless explicitly requested.
+- Use the `create-pr` skill when creating a PR or preparing its title and description; it defines the PR workflow, Draft default, and description format.
 
 ## Copyable Text
 
