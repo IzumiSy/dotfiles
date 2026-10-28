@@ -42,7 +42,7 @@
 - After publishing a working branch:
   - Set its upstream to its corresponding remote branch instead (for example, `git push -u origin HEAD`).
 
-- If the default branch or protection status cannot be determined confidently, stop and ask.
+- If the default branch cannot be determined confidently, stop and ask.
 
 ### Confidentiality
 
