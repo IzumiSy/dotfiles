@@ -13,6 +13,10 @@
     "npm:pi-agent-browser-native",
     "npm:@grammeaway/pi-clip"
   ],
-  "lastChangelogVersion": "1.4.0",
-  "showCacheMissNotices": true
+  "lastChangelogVersion": "1.5.0",
+  "showCacheMissNotices": true,
+  "extensionChangelogVersions": {
+    "{\"source\":\"npm:@wierdbytes/pi-peon\",\"scope\":\"user\"}": "0.1.2",
+    "{\"source\":\"npm:pi-agent-browser-native\",\"scope\":\"user\"}": "0.9.18"
+  }
 }
