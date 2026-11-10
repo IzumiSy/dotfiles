@@ -14,7 +14,7 @@
     "npm:@grammeaway/pi-clip",
     "npm:@ff-labs/pi-fff"
   ],
-  "lastChangelogVersion": "1.5.0",
+  "lastChangelogVersion": "1.5.1",
   "showCacheMissNotices": true,
   "extensionChangelogVersions": {
     "{\"source\":\"npm:@wierdbytes/pi-peon\",\"scope\":\"user\"}": "0.1.2",
