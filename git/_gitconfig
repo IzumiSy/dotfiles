@@ -5,7 +5,11 @@
   editor = vim
   excludesfile = ~/.gitignore_global
   ignorecase = false
-  pager = delta --color-only
+  pager = delta
+[delta]
+  side-by-side = true
+  line-numbers = true
+  navigate = true
 [merge]
   tool = vimdiff2
   conflictstyle = zdiff3
@@ -36,9 +40,6 @@
   rebase = true
 [mergetool]
   keepBackup = false
-[delta]
-  line-numbers = true
-  navigate = true
 [interactive]
   diffFilter = delta --color-only
 [sequence]
