@@ -15,10 +15,6 @@
   conflictstyle = zdiff3
 [push]
   default = tracking
-[github]
-  user = IzumiSy
-[ghi]
-  token = !security find-internet-password -a IzumiSy -s github.com -l 'ghi token' -w
 [diff]
   tool = vimdiff2
   algorithm = histogram
