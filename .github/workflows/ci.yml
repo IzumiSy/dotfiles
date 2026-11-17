@@ -25,3 +25,5 @@ jobs:
           done
       - name: Test gd
         run: /bin/bash tests/gd.sh
+      - name: Test killport
+        run: /bin/bash tests/killport.sh

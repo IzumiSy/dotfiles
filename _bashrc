@@ -83,12 +83,13 @@ alias mv='mv -i'
 alias tenki="curl wttr.in/Chiba"
 alias tma="tmux attach -t \"$(pwd)\" || tmux new -s \"$(pwd)\""
 
-# Stop processes listening on a TCP port
+# Stop processes listening on a TCP port or inclusive port range
 function killport() {
   local pids pid count=0 status=0
-  if [[ $# != 1 || ! $1 =~ ^[0-9]{1,5}$ ]] ||
-     (( 10#$1 < 1 || 10#$1 > 65535 )); then
-    echo 'Usage: killport <port: 1-65535>' >&2
+  if [[ $# != 1 || ! $1 =~ ^[0-9]{1,5}(-[0-9]{1,5})?$ ]] ||
+     (( 10#${1%%-*} < 1 || 10#${1##*-} > 65535 ||
+        10#${1%%-*} > 10#${1##*-} )); then
+    echo 'Usage: killport <port|start-end: 1-65535>' >&2
     return 1
   fi
 
