@@ -23,5 +23,8 @@ jobs:
           for file in _bashrc tests/*.sh; do
             /bin/bash -n "$file"
           done
-      - name: Test gd
-        run: /bin/bash tests/gd.sh
+      - name: Run Bash tests
+        run: |
+          for file in tests/*.sh; do
+            /bin/bash "$file"
+          done
