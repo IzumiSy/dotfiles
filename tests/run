@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+root="$(cd "$(dirname "$0")/.." && pwd)"
+cd "$root"
+
+for file in test tests/run setup _bashrc bash/*.sh pi-sbx/*.sh tests/*.sh; do
+  /bin/bash -n "$file"
+done
+
+tmp=$(mktemp -d "${TMPDIR:-/tmp}/dotfiles-tests.XXXXXX")
+trap 'rm -rf "$tmp"' EXIT
+
+for file in tests/*.sh; do
+  work="$tmp/${file##*/}"
+  mkdir -p "$work/home" "$work/tmp"
+  printf 'Running %s\n' "$file"
+  env -i HOME="$work/home" TMPDIR="$work/tmp" \
+    PATH=/usr/bin:/bin:/usr/sbin:/sbin SHELL=/bin/bash LC_ALL=C \
+    GIT_CONFIG_GLOBAL=/dev/null GIT_CONFIG_NOSYSTEM=1 \
+    /bin/bash --noprofile --norc "$file"
+done
