@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+root="$(cd "$(dirname "$0")" && pwd)"
+name="dotfiles-tests-$$-$RANDOM"
+
+if ! command -v sbx >/dev/null 2>&1; then
+  echo 'sbx is required. See https://docs.docker.com/ai/sandboxes/install/' >&2
+  exit 1
+fi
+
+work=$(mktemp -d "${TMPDIR:-/tmp}/dotfiles-test-workspace.XXXXXX")
+cleanup() {
+  sbx --no-input rm --force "$name" >/dev/null ||
+    printf 'Could not remove test sandbox: %s\n' "$name" >&2
+  rm -rf "$work"
+}
+trap cleanup EXIT
+
+# sbx requires a writable primary workspace; expose only an empty temporary one.
+sbx --no-input create --name "$name" --skills off --static-mcp none \
+  --deny-network '**' shell "$work" "$root:/workspace:ro"
+sbx --no-input exec --user agent --workdir /workspace "$name" \
+  env -i HOME=/tmp PATH=/usr/bin:/bin:/usr/sbin:/sbin \
+  /bin/bash --noprofile --norc tests/run
