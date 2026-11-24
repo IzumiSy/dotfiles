@@ -1,4 +1,4 @@
-# Shared interactive Bash settings for the host and Pi sandbox.
+# Base interactive Bash settings for the host and Pi sandbox.
 
 # Disable console freezing with Ctrl+S only when stty is available
 # (ref: http://www.itmedia.co.jp/help/tips/linux/l0612.html)
@@ -32,6 +32,7 @@ alias c='clear'
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
+alias ls='ls --color=auto'
 alias ll='ls -lh'
 alias lla='ls -lha'
 

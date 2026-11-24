@@ -10,7 +10,7 @@ export GIT_CONFIG_GLOBAL="$tmp/gitconfig" GIT_CONFIG_NOSYSTEM=1
 export PI_ARGS="$tmp/pi-args"
 mkdir -p "$HOME" "$tmp/bin" "$tmp/remote/pi" "$tmp/remote/bash" "$tmp/remote/nvim" "$tmp/remote/git"
 cp "$root/setup" "$tmp/remote/setup"
-cp "$root/bash/common.sh" "$tmp/remote/bash/common.sh"
+cp "$root/bash/base.sh" "$tmp/remote/bash/base.sh"
 cp "$root/nvim/init.lua" "$root/nvim/lazy-lock.json" "$tmp/remote/nvim/"
 cp "$root/git/_gitconfig" "$root/git/_gitignore_global" "$root/git/_tigrc" "$tmp/remote/git/"
 # Model the image COPY and stub its Linux-only persistent environment on the host.
@@ -66,6 +66,7 @@ bash --noprofile --rcfile "$HOME/.bashrc" -ic '
   [[ $BASH_ENV == /etc/sandbox-persistent.sh ]]
   [[ :$SHELLOPTS: == *:ignoreeof:* ]]
   [[ $HISTCONTROL == ignoreboth:erasedups ]]
+  [[ $(alias ls) == *"ls --color=auto"* ]]
   [[ $(alias gs) == *"git status --short"* ]]
   declare -F gd >/dev/null
   [[ $PS1 == *"\h"* && $PS1 == *"\w"* ]]
@@ -73,7 +74,7 @@ bash --noprofile --rcfile "$HOME/.bashrc" -ic '
 
 # Reusing the sandbox updates shared settings without rewriting the image's Bash config.
 printf 'second\n' > "$tmp/remote/pi/AGENTS.md"
-printf '\nalias shared_updated="echo second"\n' >> "$tmp/remote/bash/common.sh"
+printf '\nalias shared_updated="echo second"\n' >> "$tmp/remote/bash/base.sh"
 printf '\n-- Updated Neovim config\n' >> "$tmp/remote/nvim/init.lua"
 git -C "$tmp/remote" commit -qam second
 status=0

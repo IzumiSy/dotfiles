@@ -2,13 +2,13 @@
 set -euo pipefail
 
 root="$(cd "$(dirname "$0")/.." && pwd)"
-tmp=$(mktemp -d "${TMPDIR:-/tmp}/bash-common.XXXXXX")
+tmp=$(mktemp -d "${TMPDIR:-/tmp}/bash-base.XXXXXX")
 trap 'rm -rf "$tmp"' EXIT
 shopt -s expand_aliases
 original_path=$PATH
-source "$root/bash/common.sh" > "$tmp/startup-output" </dev/null
+source "$root/bash/base.sh" > "$tmp/startup-output" </dev/null
 
-# Shared settings are quiet, keep the image PATH, and need no host-only tools.
+# Base settings are quiet, keep the image PATH, and need no host-only tools.
 [[ ! -s $tmp/startup-output ]]
 [[ $PATH == "$original_path" ]]
 shopt -q cdspell
@@ -20,6 +20,7 @@ shopt -q cdspell
 [[ $(alias rm) == "alias rm='rm -i'" ]]
 [[ $(alias cp) == "alias cp='cp -i'" ]]
 [[ $(alias mv) == "alias mv='mv -i'" ]]
+[[ $(alias ls) == "alias ls='ls --color=auto'" ]]
 for shortcut in x c ll lla gad gadi gcm gch glo gs gpl gcmb gpo gpof; do
   alias "$shortcut" >/dev/null
 done
@@ -57,4 +58,4 @@ gpo
 gpof
 [[ $(< "$tmp/pushes") == $'push -u origin feature/test\npush -u origin feature/test --force-with-lease --force-if-includes' ]]
 
-printf 'shared Bash checks passed\n'
+printf 'base Bash checks passed\n'

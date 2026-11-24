@@ -2,5 +2,4 @@
 source /etc/sandbox-persistent.sh
 export BASH_ENV=/etc/sandbox-persistent.sh
 
-alias ls='ls --color=auto'
-source "$HOME/dotfiles/bash/common.sh"
+source "$HOME/dotfiles/bash/base.sh"

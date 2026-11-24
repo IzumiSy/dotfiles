@@ -3,12 +3,6 @@ if exists eza ; then
   alias ls="eza"
   alias ll="eza -lh --time-style=long-iso --group-directories-first"
   alias lla="eza -lha --bytes --time-style=long-iso --group-directories-first"
-else
-  # NOTE: OSX needs "coreutils" package which can be installed through homebrew
-  alias ls="ls --color=auto"
-  alias ll='\clear && ls -Flh1v --group-directories-first'
-  alias lla='\clear && ls -Flh1va --group-directories-first'
-  exists gls && alias ls="gls --color=auto"
 fi
 
 # cat override with "bat"

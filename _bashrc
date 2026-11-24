@@ -14,7 +14,7 @@ function exists() {
 }
 
 _dotfiles_bash_dir="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/bash"
-source "$_dotfiles_bash_dir/common.sh"
+source "$_dotfiles_bash_dir/base.sh"
 
 # Homebrew must be initialized before tool-dependent aliases.
 if exists /opt/homebrew/bin/brew ; then

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-eval "$(awk '/^function gd\(\) \{/,/^}/' "$(dirname "$0")/../bash/common.sh")"
+eval "$(awk '/^function gd\(\) \{/,/^}/' "$(dirname "$0")/../bash/base.sh")"
 
 tmp=$(mktemp -d "${TMPDIR:-/tmp}/gd.XXXXXX")
 trap 'rm -rf "$tmp"' EXIT
