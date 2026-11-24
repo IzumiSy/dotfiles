@@ -1,13 +1,17 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-script="$(cd "$(dirname "$0")/.." && pwd)/pi-sbx/setup-dotfiles.sh"
+root="$(cd "$(dirname "$0")/.." && pwd)"
+script="$root/pi-sbx/setup-dotfiles.sh"
 tmp=$(mktemp -d "${TMPDIR:-/tmp}/pi-sbx.XXXXXX")
 trap 'rm -rf "$tmp"' EXIT
 export HOME="$tmp/home with spaces"
 export GIT_CONFIG_GLOBAL="$tmp/gitconfig" GIT_CONFIG_NOSYSTEM=1
 export PI_ARGS="$tmp/pi-args"
-mkdir -p "$HOME" "$tmp/bin" "$tmp/remote/pi"
+mkdir -p "$HOME" "$tmp/bin" "$tmp/remote/pi" "$tmp/remote/bash"
+cp "$root/bash/common.sh" "$tmp/remote/bash/common.sh"
+printf 'export SANDBOX_BASHRC_KEPT=1\n' > "$HOME/.bashrc"
+bashrc_source='source "$HOME/dotfiles/bash/common.sh"'
 
 # Use a local remote and a fake Pi; no network or sandbox is needed.
 git config --global url."file://$tmp/remote".insteadOf https://github.com/IzumiSy/dotfiles.git
@@ -35,15 +39,26 @@ bash "$script" --continue 'argument with spaces'
 [[ $(readlink "$HOME/.pi/agent/AGENTS.md") == "$HOME/dotfiles/pi/AGENTS.md" ]]
 [[ $(readlink "$HOME/.pi/agent/settings.json") == "$HOME/dotfiles/pi/settings.json" ]]
 [[ $(< "$PI_ARGS") == $'--continue\nargument with spaces' ]]
+[[ $(grep -cxF "$bashrc_source" "$HOME/.bashrc") == 1 ]]
+bash --noprofile --rcfile "$HOME/.bashrc" -ic '
+  set -eu
+  [[ $SANDBOX_BASHRC_KEPT == 1 ]]
+  [[ $(alias gs) == *"git status --short"* ]]
+  declare -F gd >/dev/null
+  [[ $PS1 == *"\h"* && $PS1 == *"\w"* ]]
+' 2>/dev/null
 
-# Reusing the sandbox picks up a newer master and preserves Pi's exit status.
+# Reusing the sandbox updates shared settings without duplicating the Bash source line.
 printf 'second\n' > "$tmp/remote/pi/AGENTS.md"
+printf '\nalias shared_updated="echo second"\n' >> "$tmp/remote/bash/common.sh"
 git -C "$tmp/remote" commit -qam second
 status=0
 PI_EXIT=23 bash "$script" || status=$?
 [[ $status == 23 ]]
 [[ $(git -C "$HOME/dotfiles" rev-parse HEAD) == "$(git -C "$tmp/remote" rev-parse master)" ]]
 [[ $(< "$HOME/.pi/agent/AGENTS.md") == second ]]
+[[ $(grep -cxF "$bashrc_source" "$HOME/.bashrc") == 1 ]]
+bash --noprofile --rcfile "$HOME/.bashrc" -ic 'alias shared_updated >/dev/null' 2>/dev/null
 
 # An unexpected config file must not be overwritten when linking.
 rm "$HOME/.pi/agent/settings.json" "$PI_ARGS"

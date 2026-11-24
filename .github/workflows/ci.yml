@@ -20,7 +20,7 @@ jobs:
           persist-credentials: false
       - name: Check Bash syntax
         run: |
-          for file in _bashrc pi-sbx/*.sh tests/*.sh; do
+          for file in _bashrc bash/*.sh pi-sbx/*.sh tests/*.sh; do
             /bin/bash -n "$file"
           done
       - name: Run tests

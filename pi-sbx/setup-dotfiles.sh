@@ -20,4 +20,9 @@ for file in AGENTS.md settings.json; do
     ln -s "$dotfiles/pi/$file" "$HOME/.pi/agent/$file"
 done
 
+test -f "$dotfiles/bash/common.sh"
+bashrc_source='source "$HOME/dotfiles/bash/common.sh"'
+grep -qxF "$bashrc_source" "$HOME/.bashrc" 2>/dev/null ||
+  printf '\n%s\n' "$bashrc_source" >> "$HOME/.bashrc"
+
 exec pi "$@"
