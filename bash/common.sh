@@ -1,5 +1,28 @@
 # Shared interactive Bash settings for the host and Pi sandbox.
 
+# Disable console freezing with Ctrl+S only when stty is available
+# (ref: http://www.itmedia.co.jp/help/tips/linux/l0612.html)
+[ -t 0 ] && stty stop undef
+
+# Workaround to prevent problem with Byobu that occurs in connecting with Teraterm
+export VTE_CJK_WIDTH=1
+
+# Bash shell settings
+shopt -s cdspell
+shopt -s autocd 2>/dev/null || true
+
+# Disabled CTRL-D termination
+set -o ignoreeof
+
+# Settings for history
+export HISTCONTROL=ignoreboth:erasedups
+export HISTIGNORE="ls:ll:cd .."
+export HISTSIZE=5000
+
+# Settings for ls
+export CLICOLOR=1
+export LSCOLORS=gxfxcxdxbxegexabagacad
+
 # Hostname, time, and working directory without an external prompt tool.
 export PS1='\[\e[1;34m\]\h\[\e[0m\] \[\e[1;32m\][\t]\[\e[0m\] \[\e[1m\]\w\[\e[0m\] \$ '
 

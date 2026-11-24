@@ -6,11 +6,16 @@ tmp=$(mktemp -d "${TMPDIR:-/tmp}/bash-common.XXXXXX")
 trap 'rm -rf "$tmp"' EXIT
 shopt -s expand_aliases
 original_path=$PATH
-source "$root/bash/common.sh" > "$tmp/startup-output"
+source "$root/bash/common.sh" > "$tmp/startup-output" </dev/null
 
 # Shared settings are quiet, keep the image PATH, and need no host-only tools.
 [[ ! -s $tmp/startup-output ]]
 [[ $PATH == "$original_path" ]]
+shopt -q cdspell
+[[ :$SHELLOPTS: == *:ignoreeof:* ]]
+[[ $HISTCONTROL == ignoreboth:erasedups && $HISTSIZE == 5000 ]]
+[[ $HISTIGNORE == 'ls:ll:cd ..' ]]
+[[ $VTE_CJK_WIDTH == 1 && $CLICOLOR == 1 ]]
 [[ $PS1 == *'\h'* && $PS1 == *'\t'* && $PS1 == *'\w'* ]]
 [[ $(alias rm) == "alias rm='rm -i'" ]]
 [[ $(alias cp) == "alias cp='cp -i'" ]]

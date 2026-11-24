@@ -9,10 +9,10 @@ trap 'rm -rf "$tmp"' EXIT
 mkdir -p "$tmp/repo with spaces/bash" "$tmp/home"
 cp "$root/_bashrc" "$tmp/repo with spaces/_bashrc"
 ln -s "$tmp/repo with spaces/_bashrc" "$tmp/home/.bashrc"
-for file in settings common commands sandbox tools; do
+for file in common commands sandbox tools; do
   printf 'printf "%%s\\n" "%s" >> "$LOAD_ORDER"\n' "$file" > "$tmp/repo with spaces/bash/$file.sh"
 done
-printf 'function exists() { return 1; }\n' >> "$tmp/repo with spaces/bash/settings.sh"
+printf 'function exists() { return 1; }\n' >> "$tmp/repo with spaces/bash/common.sh"
 
 for entry in "$tmp/repo with spaces/_bashrc" "$tmp/home/.bashrc"; do
   : > "$tmp/load-order"
@@ -20,24 +20,8 @@ for entry in "$tmp/repo with spaces/_bashrc" "$tmp/home/.bashrc"; do
     source "$1"
     [[ ! ${_dotfiles_bash_dir+x} ]]
   ' bash "$entry"
-  [[ $(< "$tmp/load-order") == $'settings\ncommon\ncommands\nsandbox\ntools' ]]
+  [[ $(< "$tmp/load-order") == $'common\ncommands\nsandbox\ntools' ]]
 done
-
-(
-  export HOME="$tmp/home"
-  original_path=$PATH
-  # Match interactive startup: Bash 3.2 may reject autocd without aborting startup.
-  set +e
-  source "$root/bash/settings.sh"
-  set -e
-  shopt -q cdspell
-  [[ :$SHELLOPTS: == *:ignoreeof:* ]]
-  [[ $HISTCONTROL == ignoreboth:erasedups && $HISTSIZE == 5000 ]]
-  [[ $HISTIGNORE == 'ls:ll:cd ..' ]]
-  [[ $VTE_CJK_WIDTH == 1 && $CLICOLOR == 1 ]]
-  [[ $SCREENDIR == "$HOME/.screen" ]]
-  [[ $PATH == "$original_path:$HOME/.cargo/bin:$HOME/go/bin" ]]
-) </dev/null
 
 # Preserve both tool-backed aliases and the original standard-command defaults.
 for tools_available in yes no; do

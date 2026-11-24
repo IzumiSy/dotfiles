@@ -59,10 +59,12 @@ bash --noprofile --rcfile "$HOME/.bashrc" -ic '
   set -eu
   [[ $SANDBOX_PERSISTENT_LOADED == 1 ]]
   [[ $BASH_ENV == /etc/sandbox-persistent.sh ]]
+  [[ :$SHELLOPTS: == *:ignoreeof:* ]]
+  [[ $HISTCONTROL == ignoreboth:erasedups ]]
   [[ $(alias gs) == *"git status --short"* ]]
   declare -F gd >/dev/null
   [[ $PS1 == *"\h"* && $PS1 == *"\w"* ]]
-' 2>/dev/null
+' </dev/null 2>/dev/null
 
 # Reusing the sandbox updates shared settings without rewriting the image's Bash config.
 printf 'second\n' > "$tmp/remote/pi/AGENTS.md"
@@ -77,7 +79,7 @@ PI_EXIT=23 bash "$script" || status=$?
 [[ $(readlink "$HOME/.config/nvim") == "$HOME/dotfiles/nvim" ]]
 [[ $(< "$HOME/.config/nvim/init.lua") == *'-- Updated Neovim config' ]]
 cmp "$root/pi-sbx/bashrc.sh" "$HOME/.bashrc"
-bash --noprofile --rcfile "$HOME/.bashrc" -ic 'alias shared_updated >/dev/null' 2>/dev/null
+bash --noprofile --rcfile "$HOME/.bashrc" -ic 'alias shared_updated >/dev/null' </dev/null 2>/dev/null
 
 # The shared setup preserves existing regular files.
 rm "$HOME/.pi/agent/settings.json" "$PI_ARGS"
