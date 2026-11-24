@@ -7,7 +7,7 @@
     "git:github.com/IzumiSy/pi-packages",
     "git:github.com/DietrichGebert/ponytail",
     "git:github.com/elpapi42/pi-fork",
-    "git:github.com/d-b/agent-smart-fetch@868ed0d15d2fa58bc64204de4e30f72b514b4818",
+    "npm:pi-smart-fetch",
     "npm:pi-agent-browser-native",
     "npm:@grammeaway/pi-clip",
     "npm:@ff-labs/pi-fff"
