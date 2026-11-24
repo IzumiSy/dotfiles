@@ -1,0 +1,37 @@
+# syntax=docker/sandbox-kit:3
+schemaVersion: "3"
+kind: workload
+displayName: Pi with GitHub Copilot
+description: Pi using sandbox-local Copilot authentication
+
+args:
+  dotfiles_commit:
+    default: "e1e36e42fcb73f7d21b8e6360384c0ed21638007"
+    pattern: "^[0-9a-f]{40}$"
+    buildArg: DOTFILES_COMMIT
+
+build: |
+  FROM docker.io/sbx/pi-image:latest
+  COPY --from=ghcr.io/1broseidon/cymbal:v0.18.0 /usr/local/bin/cymbal /usr/local/bin/cymbal
+  ENV PI_CLIPBOARD_OSC52=1
+  USER agent
+  RUN cymbal --version
+  COPY --chown=1000:1000 setup-dotfiles.sh /tmp/setup-dotfiles.sh
+  ARG DOTFILES_COMMIT
+  RUN bash /tmp/setup-dotfiles.sh
+  ENTRYPOINT ["pi"]
+  CMD []
+
+capabilities:
+  - type: com.docker.sandbox/sbx@1
+  - type: com.docker.sandbox/network-policy@1
+    config:
+      runtime:
+        allow:
+          - github.com
+          - api.github.com
+          - api.githubcopilot.com
+          - api.individual.githubcopilot.com
+          - api.business.githubcopilot.com
+          - api.enterprise.githubcopilot.com
+          - registry.npmjs.org
