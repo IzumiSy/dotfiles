@@ -1,20 +1,23 @@
 #!/usr/bin/env bash
 set -eu
 
-: "${DOTFILES_COMMIT:?DOTFILES_COMMIT is required}"
+dotfiles="$HOME/dotfiles"
 
-git clone --no-checkout \
-  https://github.com/IzumiSy/dotfiles.git \
-  /home/agent/dotfiles
+if [ -d "$dotfiles/.git" ]; then
+  git -C "$dotfiles" fetch --depth 1 origin master
+  git -C "$dotfiles" checkout --detach FETCH_HEAD
+else
+  git clone --depth 1 --branch master \
+    https://github.com/IzumiSy/dotfiles.git \
+    "$dotfiles"
+fi
 
-git -C /home/agent/dotfiles checkout --detach "$DOTFILES_COMMIT"
+mkdir -p "$HOME/.pi/agent"
 
-test -f /home/agent/dotfiles/pi/AGENTS.md
-test -f /home/agent/dotfiles/pi/settings.json
+for file in AGENTS.md settings.json; do
+  test -f "$dotfiles/pi/$file"
+  [ "$(readlink "$HOME/.pi/agent/$file")" = "$dotfiles/pi/$file" ] ||
+    ln -s "$dotfiles/pi/$file" "$HOME/.pi/agent/$file"
+done
 
-mkdir -p /home/agent/.pi/agent
-
-ln -s \
-  /home/agent/dotfiles/pi/AGENTS.md \
-  /home/agent/dotfiles/pi/settings.json \
-  /home/agent/.pi/agent/
+exec pi "$@"

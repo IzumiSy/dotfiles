@@ -4,12 +4,6 @@ kind: workload
 displayName: Pi with GitHub Copilot
 description: Pi using sandbox-local Copilot authentication
 
-args:
-  dotfiles_commit:
-    default: "e1e36e42fcb73f7d21b8e6360384c0ed21638007"
-    pattern: "^[0-9a-f]{40}$"
-    buildArg: DOTFILES_COMMIT
-
 build: |
   FROM docker.io/sbx/pi-image:latest
   COPY --from=ghcr.io/1broseidon/cymbal:v0.18.0 /usr/local/bin/cymbal /usr/local/bin/cymbal
@@ -17,9 +11,7 @@ build: |
   USER agent
   RUN cymbal --version
   COPY --chown=1000:1000 setup-dotfiles.sh /tmp/setup-dotfiles.sh
-  ARG DOTFILES_COMMIT
-  RUN bash /tmp/setup-dotfiles.sh
-  ENTRYPOINT ["pi"]
+  ENTRYPOINT ["/bin/bash", "/tmp/setup-dotfiles.sh"]
   CMD []
 
 capabilities:
