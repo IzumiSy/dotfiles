@@ -9,6 +9,7 @@ export HOME="$tmp/home with spaces"
 export GIT_CONFIG_GLOBAL="$tmp/gitconfig" GIT_CONFIG_NOSYSTEM=1
 export PI_ARGS="$tmp/pi-args"
 mkdir -p "$HOME" "$tmp/bin" "$tmp/remote/pi" "$tmp/remote/bash" "$tmp/remote/nvim"
+cp "$root/setup" "$tmp/remote/setup"
 cp "$root/bash/common.sh" "$tmp/remote/bash/common.sh"
 cp "$root/nvim/init.lua" "$root/nvim/lazy-lock.json" "$tmp/remote/nvim/"
 printf 'export SANDBOX_BASHRC_KEPT=1\n' > "$HOME/.bashrc"
@@ -42,6 +43,8 @@ bash "$script" --continue 'argument with spaces'
 [[ $(readlink "$HOME/.config/nvim") == "$HOME/dotfiles/nvim" ]]
 cmp "$root/nvim/init.lua" "$HOME/.config/nvim/init.lua"
 cmp "$root/nvim/lazy-lock.json" "$HOME/.config/nvim/lazy-lock.json"
+[[ ! -e $HOME/.pi/agent/sandbox.json && ! -L $HOME/.pi/agent/sandbox.json ]]
+[[ ! -e $HOME/.gitconfig && ! -L $HOME/.gitconfig ]]
 [[ $(< "$PI_ARGS") == $'--continue\nargument with spaces' ]]
 [[ $(grep -cxF "$bashrc_source" "$HOME/.bashrc") == 1 ]]
 bash --noprofile --rcfile "$HOME/.bashrc" -ic '
@@ -67,7 +70,7 @@ PI_EXIT=23 bash "$script" || status=$?
 [[ $(grep -cxF "$bashrc_source" "$HOME/.bashrc") == 1 ]]
 bash --noprofile --rcfile "$HOME/.bashrc" -ic 'alias shared_updated >/dev/null' 2>/dev/null
 
-# An unexpected config file must not be overwritten when linking.
+# The shared setup preserves existing regular files.
 rm "$HOME/.pi/agent/settings.json" "$PI_ARGS"
 printf 'local config\n' > "$HOME/.pi/agent/settings.json"
 if bash "$script"; then

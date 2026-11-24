@@ -8,9 +8,13 @@
 ```bash
 ./setup install
 ./setup uninstall
+
+# Select links by their source paths in setup's LINKS list.
+./setup install nvim pi/AGENTS.md pi/settings.json
+./setup uninstall nvim
 ```
 
-`./setup` without arguments defaults to `install`.
+`./setup` without arguments defaults to `install`. Without link arguments, all links are selected. Unknown link names fail before any changes are made.
 
 ## Notes
 

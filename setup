@@ -87,6 +87,26 @@ uninstall_links() {
   done
 }
 
+# Optional targets use the source names from LINKS.
+if [[ $# -gt 1 ]]; then
+  selected=()
+  for name in "${@:2}"; do
+    match=""
+    for entry in "${LINKS[@]}"; do
+      if [[ "${entry%%:*}" == "$name" ]]; then
+        match="$entry"
+        break
+      fi
+    done
+    if [[ -z "$match" ]]; then
+      echo "error: unknown link: $name" >&2
+      exit 1
+    fi
+    selected+=("$match")
+  done
+  LINKS=("${selected[@]}")
+fi
+
 # Default action is install.
 case "${1:-install}" in
   install)
@@ -99,7 +119,7 @@ case "${1:-install}" in
     uninstall_links
     ;;
   *)
-    echo "Usage: $0 [install|uninstall]"
+    echo "Usage: $0 [install|uninstall] [link ...]"
     exit 1
     ;;
 esac
