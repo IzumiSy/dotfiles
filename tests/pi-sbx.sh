@@ -12,8 +12,16 @@ mkdir -p "$HOME" "$tmp/bin" "$tmp/remote/pi" "$tmp/remote/bash" "$tmp/remote/nvi
 cp "$root/setup" "$tmp/remote/setup"
 cp "$root/bash/common.sh" "$tmp/remote/bash/common.sh"
 cp "$root/nvim/init.lua" "$root/nvim/lazy-lock.json" "$tmp/remote/nvim/"
-printf 'export SANDBOX_BASHRC_KEPT=1\n' > "$HOME/.bashrc"
-bashrc_source='source "$HOME/dotfiles/bash/common.sh"'
+# Model the image COPY and stub its Linux-only persistent environment on the host.
+cp "$root/pi-sbx/bashrc.sh" "$HOME/.bashrc"
+source() {
+  if [[ $1 == /etc/sandbox-persistent.sh ]]; then
+    export SANDBOX_PERSISTENT_LOADED=1
+  else
+    builtin source "$@"
+  fi
+}
+export -f source
 
 # Use a local remote and a fake Pi; no network or sandbox is needed.
 git config --global url."file://$tmp/remote".insteadOf https://github.com/IzumiSy/dotfiles.git
@@ -46,16 +54,17 @@ cmp "$root/nvim/lazy-lock.json" "$HOME/.config/nvim/lazy-lock.json"
 [[ ! -e $HOME/.pi/agent/sandbox.json && ! -L $HOME/.pi/agent/sandbox.json ]]
 [[ ! -e $HOME/.gitconfig && ! -L $HOME/.gitconfig ]]
 [[ $(< "$PI_ARGS") == $'--continue\nargument with spaces' ]]
-[[ $(grep -cxF "$bashrc_source" "$HOME/.bashrc") == 1 ]]
+cmp "$root/pi-sbx/bashrc.sh" "$HOME/.bashrc"
 bash --noprofile --rcfile "$HOME/.bashrc" -ic '
   set -eu
-  [[ $SANDBOX_BASHRC_KEPT == 1 ]]
+  [[ $SANDBOX_PERSISTENT_LOADED == 1 ]]
+  [[ $BASH_ENV == /etc/sandbox-persistent.sh ]]
   [[ $(alias gs) == *"git status --short"* ]]
   declare -F gd >/dev/null
   [[ $PS1 == *"\h"* && $PS1 == *"\w"* ]]
 ' 2>/dev/null
 
-# Reusing the sandbox updates shared settings without duplicating the Bash source line.
+# Reusing the sandbox updates shared settings without rewriting the image's Bash config.
 printf 'second\n' > "$tmp/remote/pi/AGENTS.md"
 printf '\nalias shared_updated="echo second"\n' >> "$tmp/remote/bash/common.sh"
 printf '\n-- Updated Neovim config\n' >> "$tmp/remote/nvim/init.lua"
@@ -67,7 +76,7 @@ PI_EXIT=23 bash "$script" || status=$?
 [[ $(< "$HOME/.pi/agent/AGENTS.md") == second ]]
 [[ $(readlink "$HOME/.config/nvim") == "$HOME/dotfiles/nvim" ]]
 [[ $(< "$HOME/.config/nvim/init.lua") == *'-- Updated Neovim config' ]]
-[[ $(grep -cxF "$bashrc_source" "$HOME/.bashrc") == 1 ]]
+cmp "$root/pi-sbx/bashrc.sh" "$HOME/.bashrc"
 bash --noprofile --rcfile "$HOME/.bashrc" -ic 'alias shared_updated >/dev/null' 2>/dev/null
 
 # The shared setup preserves existing regular files.

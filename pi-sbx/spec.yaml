@@ -21,6 +21,7 @@ build: |
       && rm /tmp/install-pnpm.sh
   RUN cymbal --version && pnpm --version && nvim --version
   COPY --chown=1000:1000 setup-dotfiles.sh /tmp/setup-dotfiles.sh
+  COPY --chown=1000:1000 bashrc.sh /home/agent/.bashrc
   ENTRYPOINT ["/bin/bash", "/tmp/setup-dotfiles.sh"]
   CMD []
 
