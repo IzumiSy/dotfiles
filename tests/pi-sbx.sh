@@ -6,13 +6,14 @@ script="$root/pi-sbx/setup-dotfiles.sh"
 tmp=$(mktemp -d "${TMPDIR:-/tmp}/pi-sbx.XXXXXX")
 trap 'rm -rf "$tmp"' EXIT
 export HOME="$tmp/home with spaces"
+unset XDG_CONFIG_HOME
 export GIT_CONFIG_GLOBAL="$tmp/gitconfig" GIT_CONFIG_NOSYSTEM=1
 export PI_ARGS="$tmp/pi-args"
 mkdir -p "$HOME" "$tmp/bin" "$tmp/remote/pi" "$tmp/remote/bash" "$tmp/remote/nvim" "$tmp/remote/git"
 cp "$root/setup" "$tmp/remote/setup"
 cp "$root/bash/base.sh" "$tmp/remote/bash/base.sh"
 cp "$root/nvim/init.lua" "$root/nvim/lazy-lock.json" "$tmp/remote/nvim/"
-cp "$root/git/_gitconfig" "$root/git/_gitignore_global" "$root/git/_tigrc" "$tmp/remote/git/"
+cp "$root/git/config" "$root/git/ignore" "$root/git/_tigrc" "$tmp/remote/git/"
 # Model the image COPY and stub its Linux-only persistent environment on the host.
 cp "$root/pi-sbx/bashrc.sh" "$HOME/.bashrc"
 source() {
@@ -26,6 +27,16 @@ export -f source
 
 # Use a local remote and a fake Pi; no network or sandbox is needed.
 git config --global url."file://$tmp/remote".insteadOf https://github.com/IzumiSy/dotfiles.git
+
+# Model a generated Git config with an explicit legacy ignore default.
+git config --file "$HOME/.gitconfig" safe.directory "$tmp/workspace"
+git config --file "$HOME/.gitconfig" core.checkstat minimal
+git config --file "$HOME/.gitconfig" core.excludesfile "$HOME/.gitignore_global"
+git config --file "$tmp/extra.gitconfig" test.marker retained
+git config --file "$HOME/.gitconfig" include.path "$tmp/extra.gitconfig"
+cp "$HOME/.gitconfig" "$tmp/expected.gitconfig"
+git config --file "$tmp/expected.gitconfig" core.excludesfile "$HOME/.config/git/ignore"
+
 git init -q "$tmp/remote"
 git -C "$tmp/remote" symbolic-ref HEAD refs/heads/master
 git -C "$tmp/remote" config user.name Test
@@ -53,11 +64,26 @@ bash "$script" --continue 'argument with spaces'
 cmp "$root/nvim/init.lua" "$HOME/.config/nvim/init.lua"
 cmp "$root/nvim/lazy-lock.json" "$HOME/.config/nvim/lazy-lock.json"
 [[ ! -e $HOME/.pi/agent/sandbox.json && ! -L $HOME/.pi/agent/sandbox.json ]]
-[[ $(readlink "$HOME/.gitconfig") == "$HOME/dotfiles/git/_gitconfig" ]]
-[[ $(readlink "$HOME/.gitignore_global") == "$HOME/dotfiles/git/_gitignore_global" ]]
+[[ -f $HOME/.gitconfig && ! -L $HOME/.gitconfig ]]
+[[ $(readlink "$HOME/.config/git/config") == "$HOME/dotfiles/git/config" ]]
+cmp "$tmp/expected.gitconfig" "$HOME/.gitconfig"
+[[ $(readlink "$HOME/.config/git/ignore") == "$HOME/dotfiles/git/ignore" ]]
+[[ ! -e $HOME/.gitignore_global && ! -L $HOME/.gitignore_global ]]
 [[ $(readlink "$HOME/.tigrc") == "$HOME/dotfiles/git/_tigrc" ]]
-[[ $(git config --file "$HOME/.gitconfig" --get core.pager) == delta ]]
-[[ $(git config --file "$HOME/.gitconfig" --get core.excludesfile) == '~/.gitignore_global' ]]
+[[ $(git config --file "$HOME/.gitconfig" --get safe.directory) == "$tmp/workspace" ]]
+[[ $(git config --file "$HOME/.gitconfig" --get core.checkstat) == minimal ]]
+[[ $(git config --file "$HOME/.gitconfig" --get-all include.path) == "$tmp/extra.gitconfig" ]]
+[[ $(env -u GIT_CONFIG_GLOBAL git -C "$HOME" config --get test.marker) == retained ]]
+[[ $(env -u GIT_CONFIG_GLOBAL git -C "$HOME" config --get core.pager) == delta ]]
+[[ $(env -u GIT_CONFIG_GLOBAL git -C "$HOME" config --get core.excludesfile) == "$HOME/.config/git/ignore" ]]
+env -u GIT_CONFIG_GLOBAL git -C "$HOME/dotfiles" check-ignore -q .pnpm-store/test
+
+# Repository-specific ignore settings still override the global default.
+printf 'repo-only.tmp\n' > "$tmp/repo-ignore"
+git -C "$HOME/dotfiles" config core.excludesfile "$tmp/repo-ignore"
+env -u GIT_CONFIG_GLOBAL git -C "$HOME/dotfiles" check-ignore -q repo-only.tmp
+git -C "$HOME/dotfiles" config --unset core.excludesfile
+cmp "$root/git/config" "$HOME/dotfiles/git/config"
 [[ $(< "$PI_ARGS") == $'--continue\nargument with spaces' ]]
 cmp "$root/pi-sbx/bashrc.sh" "$HOME/.bashrc"
 bash --noprofile --rcfile "$HOME/.bashrc" -ic '
@@ -84,8 +110,25 @@ PI_EXIT=23 bash "$script" || status=$?
 [[ $(< "$HOME/.pi/agent/AGENTS.md") == second ]]
 [[ $(readlink "$HOME/.config/nvim") == "$HOME/dotfiles/nvim" ]]
 [[ $(< "$HOME/.config/nvim/init.lua") == *'-- Updated Neovim config' ]]
+cmp "$tmp/expected.gitconfig" "$HOME/.gitconfig"
+cmp "$root/git/config" "$HOME/dotfiles/git/config"
 cmp "$root/pi-sbx/bashrc.sh" "$HOME/.bashrc"
 bash --noprofile --rcfile "$HOME/.bashrc" -ic 'alias shared_updated >/dev/null' </dev/null 2>/dev/null
+
+# A legacy managed link is left untouched, without editing its source.
+mv "$HOME/.gitconfig" "$tmp/generated.gitconfig"
+ln -s dotfiles/git/config "$HOME/.gitconfig"
+bash "$script"
+[[ $(readlink "$HOME/.gitconfig") == dotfiles/git/config ]]
+cmp "$root/git/config" "$HOME/dotfiles/git/config"
+rm "$HOME/.gitconfig"
+
+# XDG settings also work without creating a legacy global config.
+bash "$script"
+[[ ! -e $HOME/.gitconfig && ! -L $HOME/.gitconfig ]]
+[[ $(env -u GIT_CONFIG_GLOBAL git -C "$HOME" config --get core.pager) == delta ]]
+env -u GIT_CONFIG_GLOBAL git -C "$HOME/dotfiles" check-ignore -q .pnpm-store/test
+mv "$tmp/generated.gitconfig" "$HOME/.gitconfig"
 
 # The shared setup preserves existing regular files.
 rm "$HOME/.pi/agent/settings.json" "$PI_ARGS"

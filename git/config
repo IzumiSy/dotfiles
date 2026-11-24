@@ -3,7 +3,6 @@
   name = IzumiSy
 [core]
   editor = vim
-  excludesfile = ~/.gitignore_global
   ignorecase = false
   pager = delta
 [merge]

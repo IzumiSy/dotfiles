@@ -16,8 +16,14 @@ bash "$dotfiles/setup" install \
   nvim \
   pi/AGENTS.md \
   pi/settings.json \
-  git/_gitconfig \
-  git/_gitignore_global \
+  git/config \
+  git/ignore \
   git/_tigrc
+
+# sbx explicitly sets this global default; keep its other settings intact.
+if [ -f "$HOME/.gitconfig" ] && [ ! -L "$HOME/.gitconfig" ]; then
+  git config --file "$HOME/.gitconfig" core.excludesfile \
+    "${XDG_CONFIG_HOME:-$HOME/.config}/git/ignore"
+fi
 
 exec pi "$@"

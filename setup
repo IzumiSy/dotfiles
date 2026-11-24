@@ -23,8 +23,8 @@ LINKS=(
   "_starship.toml:$HOME/.starship.toml"
   "_alacritty.toml:$HOME/.alacritty.toml"
   "herdr/config.toml:$HOME/.config/herdr/config.toml"
-  "git/_gitconfig:$HOME/.gitconfig"
-  "git/_gitignore_global:$HOME/.gitignore_global"
+  "git/config:${XDG_CONFIG_HOME:-$HOME/.config}/git/config"
+  "git/ignore:${XDG_CONFIG_HOME:-$HOME/.config}/git/ignore"
   "git/_tigrc:$HOME/.tigrc"
 )
 
