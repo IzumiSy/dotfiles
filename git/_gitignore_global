@@ -5,3 +5,4 @@ GTAGS
 .DS_Store
 .jvmopts
 .env
+.pnpm-store
