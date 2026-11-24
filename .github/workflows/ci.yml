@@ -23,7 +23,9 @@ jobs:
           for file in _bashrc pi-sbx/*.sh tests/*.sh; do
             /bin/bash -n "$file"
           done
-      - name: Test gd
-        run: /bin/bash tests/gd.sh
-      - name: Test Pi sandbox setup
-        run: /bin/bash tests/pi-sbx.sh
+      - name: Run tests
+        run: |
+          for file in tests/*.sh; do
+            echo "Running $file"
+            /bin/bash "$file"
+          done

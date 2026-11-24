@@ -83,6 +83,33 @@ alias mv='mv -i'
 alias tenki="curl wttr.in/Chiba"
 alias tma="tmux attach -t \"$(pwd)\" || tmux new -s \"$(pwd)\""
 
+# Pi sandbox shortcuts
+# shortcut: directory basenames must be unique within an ID; use path-based names if they collide.
+unalias sbpi sbbash 2>/dev/null || true
+function sbpi() {
+  local id="${1:-${HERDR_WORKSPACE_ID:-}}"
+  if [[ -z $id ]]; then
+    echo 'Usage: sbpi [id] [sbx arguments...] (id is required when HERDR_WORKSPACE_ID is unset)' >&2
+    return 1
+  fi
+  if (( $# > 0 )); then
+    shift
+  fi
+  sbx run --clone --name "pi-sbx-${PWD##*/}-$id" "$HOME/Devs/dotfiles/pi-sbx" . "$@"
+}
+
+function sbbash() {
+  local id="${1:-${HERDR_WORKSPACE_ID:-}}"
+  if [[ -z $id ]]; then
+    echo 'Usage: sbbash [id] [bash arguments...] (id is required when HERDR_WORKSPACE_ID is unset)' >&2
+    return 1
+  fi
+  if (( $# > 0 )); then
+    shift
+  fi
+  sbx exec -it -w "$PWD" "pi-sbx-${PWD##*/}-$id" bash "$@"
+}
+
 # Stop processes listening on a TCP port
 function killport() {
   local pids pid count=0 status=0
