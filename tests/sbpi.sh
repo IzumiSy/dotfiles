@@ -6,7 +6,7 @@ shopt -s expand_aliases
 alias sbpi='echo old sbpi alias'
 alias sbbash='echo old sbbash alias'
 alias sbstop='echo old sbstop alias'
-eval "$(awk '/^# Pi sandbox shortcuts$/,/^# Stop processes/' "$(dirname "$0")/../_bashrc")"
+source "$(dirname "$0")/../bash/sandbox.sh"
 
 sbx() {
   printf '%s\n' "$@"
