@@ -1,7 +1,3 @@
-# Default golang setting
-export GOPRIVATE="github.com/unipos/*"
-export GO111MODULE=on
-
 # Enables nvm if installed
 export NVM_DIR="$HOME/.nvm"
 if [ -s "$NVM_DIR/nvm.sh" ]; then

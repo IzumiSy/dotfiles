@@ -16,8 +16,8 @@ if exists bat ; then
   alias cat="bat -p --theme=Dracula"
 fi
 
-alias tenki="curl wttr.in/Chiba"
 alias tma="tmux attach -t \"$(pwd)\" || tmux new -s \"$(pwd)\""
+alias pco='git branch | peco | xargs git checkout'
 
 # Stop processes listening on a TCP port
 function killport() {
@@ -39,8 +39,6 @@ function killport() {
   printf 'Sent SIGTERM to %d process(es) on port %s.\n' "$count" "$1"
   return "$status"
 }
-
-alias pco='git branch | peco | xargs git checkout'
 
 # Run the last command set it as the last one in the command history
 function hist() {

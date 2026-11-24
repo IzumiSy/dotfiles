@@ -20,10 +20,3 @@ export HISTSIZE=5000
 # Settings for ls
 export CLICOLOR=1
 export LSCOLORS=gxfxcxdxbxegexabagacad
-
-# Setting for screen
-export SCREENDIR=$HOME/.screen
-
-# Adds thirdparty binaries
-export PATH="$PATH:$HOME/.cargo/bin"    # Rustlang
-export PATH="$PATH:$HOME/go/bin"        # Golang
