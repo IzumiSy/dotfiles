@@ -31,12 +31,23 @@ capabilities:
     config:
       runtime:
         allow:
+          - nodejs.org
           - github.com
-          - api.github.com
-          - release-assets.githubusercontent.com
+          - '*.github.com'
+          - '*.githubusercontent.com'
           - api.mason-registry.dev
-          - api.githubcopilot.com
-          - api.individual.githubcopilot.com
-          - api.business.githubcopilot.com
-          - api.enterprise.githubcopilot.com
-          - registry.npmjs.org
+          - '*.githubcopilot.com'
+          - 'api.*.githubcopilot.com'
+          - npmjs.com
+          - '*.npmjs.org'
+          - unpkg.com
+          - api.tailor.tech
+          - base-ui.com
+          - api.fireflies.ai
+          - react.dev
+          - '*.react.dev'
+          - w3.org
+          - '*.w3.org'
+          - developer.mozilla.org
+          - '*.developer.mozilla.org'
+          - docs.tailor.tech
