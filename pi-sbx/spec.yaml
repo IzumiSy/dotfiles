@@ -8,7 +8,7 @@ build: |
   FROM docker.io/sbx/pi-image:latest
   USER root
   RUN apt-get update \
-      && apt-get install -y --no-install-recommends neovim \
+      && apt-get install -y --no-install-recommends git-delta neovim tig \
       && dpkg --compare-versions "$(dpkg-query -W -f='${Version}' neovim)" ge 0.11.3 \
       && rm -rf /var/lib/apt/lists/*
   COPY --from=ghcr.io/1broseidon/cymbal:v0.18.0 /usr/local/bin/cymbal /usr/local/bin/cymbal
@@ -19,7 +19,8 @@ build: |
   RUN curl -fsSL https://get.pnpm.io/install.sh -o /tmp/install-pnpm.sh \
       && PNPM_NO_MODIFY_PATH=1 SHELL=/bin/bash sh /tmp/install-pnpm.sh \
       && rm /tmp/install-pnpm.sh
-  RUN cymbal --version && pnpm --version && nvim --version
+  RUN cymbal --version && pnpm --version && nvim --version \
+      && delta --version && tig --version
   COPY --chown=1000:1000 setup-dotfiles.sh /tmp/setup-dotfiles.sh
   COPY --chown=1000:1000 bashrc.sh /home/agent/.bashrc
   ENTRYPOINT ["/bin/bash", "/tmp/setup-dotfiles.sh"]

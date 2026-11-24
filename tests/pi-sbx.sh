@@ -8,10 +8,11 @@ trap 'rm -rf "$tmp"' EXIT
 export HOME="$tmp/home with spaces"
 export GIT_CONFIG_GLOBAL="$tmp/gitconfig" GIT_CONFIG_NOSYSTEM=1
 export PI_ARGS="$tmp/pi-args"
-mkdir -p "$HOME" "$tmp/bin" "$tmp/remote/pi" "$tmp/remote/bash" "$tmp/remote/nvim"
+mkdir -p "$HOME" "$tmp/bin" "$tmp/remote/pi" "$tmp/remote/bash" "$tmp/remote/nvim" "$tmp/remote/git"
 cp "$root/setup" "$tmp/remote/setup"
 cp "$root/bash/common.sh" "$tmp/remote/bash/common.sh"
 cp "$root/nvim/init.lua" "$root/nvim/lazy-lock.json" "$tmp/remote/nvim/"
+cp "$root/git/_gitconfig" "$root/git/_gitignore_global" "$root/git/_tigrc" "$tmp/remote/git/"
 # Model the image COPY and stub its Linux-only persistent environment on the host.
 cp "$root/pi-sbx/bashrc.sh" "$HOME/.bashrc"
 source() {
@@ -52,7 +53,11 @@ bash "$script" --continue 'argument with spaces'
 cmp "$root/nvim/init.lua" "$HOME/.config/nvim/init.lua"
 cmp "$root/nvim/lazy-lock.json" "$HOME/.config/nvim/lazy-lock.json"
 [[ ! -e $HOME/.pi/agent/sandbox.json && ! -L $HOME/.pi/agent/sandbox.json ]]
-[[ ! -e $HOME/.gitconfig && ! -L $HOME/.gitconfig ]]
+[[ $(readlink "$HOME/.gitconfig") == "$HOME/dotfiles/git/_gitconfig" ]]
+[[ $(readlink "$HOME/.gitignore_global") == "$HOME/dotfiles/git/_gitignore_global" ]]
+[[ $(readlink "$HOME/.tigrc") == "$HOME/dotfiles/git/_tigrc" ]]
+[[ $(git config --file "$HOME/.gitconfig" --get core.pager) == delta ]]
+[[ $(git config --file "$HOME/.gitconfig" --get core.excludesfile) == '~/.gitignore_global' ]]
 [[ $(< "$PI_ARGS") == $'--continue\nargument with spaces' ]]
 cmp "$root/pi-sbx/bashrc.sh" "$HOME/.bashrc"
 bash --noprofile --rcfile "$HOME/.bashrc" -ic '

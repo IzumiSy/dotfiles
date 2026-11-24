@@ -12,6 +12,12 @@ else
     "$dotfiles"
 fi
 
-bash "$dotfiles/setup" install pi/AGENTS.md pi/settings.json nvim
+bash "$dotfiles/setup" install \
+  nvim \
+  pi/AGENTS.md \
+  pi/settings.json \
+  git/_gitconfig \
+  git/_gitignore_global \
+  git/_tigrc
 
 exec pi "$@"
