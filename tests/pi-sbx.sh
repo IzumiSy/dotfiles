@@ -8,8 +8,9 @@ trap 'rm -rf "$tmp"' EXIT
 export HOME="$tmp/home with spaces"
 export GIT_CONFIG_GLOBAL="$tmp/gitconfig" GIT_CONFIG_NOSYSTEM=1
 export PI_ARGS="$tmp/pi-args"
-mkdir -p "$HOME" "$tmp/bin" "$tmp/remote/pi" "$tmp/remote/bash"
+mkdir -p "$HOME" "$tmp/bin" "$tmp/remote/pi" "$tmp/remote/bash" "$tmp/remote/nvim"
 cp "$root/bash/common.sh" "$tmp/remote/bash/common.sh"
+cp "$root/nvim/init.lua" "$root/nvim/lazy-lock.json" "$tmp/remote/nvim/"
 printf 'export SANDBOX_BASHRC_KEPT=1\n' > "$HOME/.bashrc"
 bashrc_source='source "$HOME/dotfiles/bash/common.sh"'
 
@@ -38,6 +39,9 @@ bash "$script" --continue 'argument with spaces'
 [[ $(git -C "$HOME/dotfiles" rev-parse HEAD) == "$(git -C "$tmp/remote" rev-parse master)" ]]
 [[ $(readlink "$HOME/.pi/agent/AGENTS.md") == "$HOME/dotfiles/pi/AGENTS.md" ]]
 [[ $(readlink "$HOME/.pi/agent/settings.json") == "$HOME/dotfiles/pi/settings.json" ]]
+[[ $(readlink "$HOME/.config/nvim") == "$HOME/dotfiles/nvim" ]]
+cmp "$root/nvim/init.lua" "$HOME/.config/nvim/init.lua"
+cmp "$root/nvim/lazy-lock.json" "$HOME/.config/nvim/lazy-lock.json"
 [[ $(< "$PI_ARGS") == $'--continue\nargument with spaces' ]]
 [[ $(grep -cxF "$bashrc_source" "$HOME/.bashrc") == 1 ]]
 bash --noprofile --rcfile "$HOME/.bashrc" -ic '
@@ -51,12 +55,15 @@ bash --noprofile --rcfile "$HOME/.bashrc" -ic '
 # Reusing the sandbox updates shared settings without duplicating the Bash source line.
 printf 'second\n' > "$tmp/remote/pi/AGENTS.md"
 printf '\nalias shared_updated="echo second"\n' >> "$tmp/remote/bash/common.sh"
+printf '\n-- Updated Neovim config\n' >> "$tmp/remote/nvim/init.lua"
 git -C "$tmp/remote" commit -qam second
 status=0
 PI_EXIT=23 bash "$script" || status=$?
 [[ $status == 23 ]]
 [[ $(git -C "$HOME/dotfiles" rev-parse HEAD) == "$(git -C "$tmp/remote" rev-parse master)" ]]
 [[ $(< "$HOME/.pi/agent/AGENTS.md") == second ]]
+[[ $(readlink "$HOME/.config/nvim") == "$HOME/dotfiles/nvim" ]]
+[[ $(< "$HOME/.config/nvim/init.lua") == *'-- Updated Neovim config' ]]
 [[ $(grep -cxF "$bashrc_source" "$HOME/.bashrc") == 1 ]]
 bash --noprofile --rcfile "$HOME/.bashrc" -ic 'alias shared_updated >/dev/null' 2>/dev/null
 
@@ -71,6 +78,30 @@ fi
 [[ ! -e $PI_ARGS ]]
 rm "$HOME/.pi/agent/settings.json"
 bash "$script"
+
+# An existing Neovim directory must not be overwritten or receive a nested symlink.
+rm "$HOME/.config/nvim" "$PI_ARGS"
+mkdir "$HOME/.config/nvim"
+printf 'local Neovim config\n' > "$HOME/.config/nvim/init.lua"
+if bash "$script"; then
+  echo 'setup unexpectedly accepted an existing Neovim config directory' >&2
+  exit 1
+fi
+[[ $(< "$HOME/.config/nvim/init.lua") == 'local Neovim config' ]]
+[[ ! -e $HOME/.config/nvim/nvim && ! -L $HOME/.config/nvim/nvim ]]
+[[ ! -e $PI_ARGS ]]
+rm "$HOME/.config/nvim/init.lua"
+rmdir "$HOME/.config/nvim"
+
+# An existing config symlink is replaced without modifying its old target.
+mkdir "$tmp/other-nvim"
+printf 'old config\n' > "$tmp/other-nvim/init.lua"
+ln -s "$tmp/other-nvim" "$HOME/.config/nvim"
+bash "$script"
+[[ $(readlink "$HOME/.config/nvim") == "$HOME/dotfiles/nvim" ]]
+[[ $(< "$tmp/other-nvim/init.lua") == 'old config' ]]
+[[ ! -e $tmp/other-nvim/nvim ]]
+[[ -e $PI_ARGS ]]
 
 # Conflicting local edits are not discarded, and Pi must not launch.
 printf 'local edit\n' > "$HOME/dotfiles/pi/AGENTS.md"
