@@ -49,6 +49,7 @@ build: |
       && nvm use default'
 
   # Shell startup and host-proxied Copilot configuration.
+  COPY loopback-proxy.mjs /opt/loopback-proxy.mjs
   COPY --chown=1000:1000 configure-copilot.mjs /tmp/configure-copilot.mjs
   COPY --chown=1000:1000 entrypoint.sh /tmp/entrypoint.sh
   COPY --chown=1000:1000 bashrc.sh /home/agent/.bashrc
@@ -58,6 +59,14 @@ build: |
 
 capabilities:
   - type: com.docker.sandbox/sbx@1
+
+  # Bridge localhost listeners; host publication remains explicit through sbpmap.
+  - type: com.docker.sandbox/lifecycle@1
+    config:
+      startup:
+        - command: [sh, -c, 'exec node /opt/loopback-proxy.mjs >> /home/agent/loopback-proxy.log 2>&1']
+          user: "1000"
+          background: true
 
   # Restrict host SSH-agent authentication to GitHub.
   - type: com.docker.sandbox/ssh-agent@1

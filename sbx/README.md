@@ -67,6 +67,47 @@ sbstatus manual --format json
 Arguments after `--` are passed to the final Bash shell, not Pi. Since `sbup`
 always opens a shell, use `sbx` directly for `--detach` or `--rm`.
 
+## Localhost services
+
+A `com.docker.sandbox/lifecycle@1` startup hook runs `/opt/loopback-proxy.mjs`
+independently of shell sessions. Every second it discovers loopback-only TCP
+listeners and relays them on the default-route IPv4 address at the **same
+port**. The application keeps its original bind address. IPv4 loopback and
+IPv6 `::1` upstreams are supported; the relay's external side is IPv4.
+
+Host publication stays explicit. Wait about a second after starting the app:
+
+```bash
+sbpmap 3000        # Allocate a free host port; read the printed mapping.
+sbpmap 8080:3000   # Or use http://127.0.0.1:8080.
+```
+
+Read proxy logs from the host with:
+
+```bash
+sbx exec <sandbox-name> tail -n 50 /home/agent/loopback-proxy.log
+```
+
+Ports with other non-loopback listeners or ambiguous loopback addresses are
+skipped. IPv4 wins when both IPv4 and IPv6 localhost listen on the same port.
+The proxy releases listeners when their upstream disappears and prevents
+duplicate daemon instances. Removing a listener preserves existing connections;
+stopping the daemon closes them.
+
+All eligible TCP services are bridged, including databases and debug/admin
+interfaces. They are **not automatically published to the host**. Keep host
+bindings on `127.0.0.1` and publish only services you need.
+
+Limits: Linux with Node.js 20.8+ (abstract Unix socket support), one default-route
+IPv4 ingress address, TCP only. The proxy does not change application Host/Origin
+checks or advertised HMR URLs, supervise its own crashes, or keep the sandbox
+alive after its last session disconnects. When switching an app from loopback to
+wildcard binding, stop it and wait for the relay to disappear before restarting.
+
+`node --test tests/loopback-proxy.mjs` checks parsing, selection and TCP transport
+on macOS and Linux; Linux also exercises the daemon's discovery, IPv6 upstreams,
+restart, locking and shutdown. These tests are included in `bash tests/run`.
+
 ## Host authentication
 
 Authenticate on the host before launching:
