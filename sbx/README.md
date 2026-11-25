@@ -1,19 +1,32 @@
 # Sandbox shell with Pi
 
 `sbup` launches the Sandbox Kit in this directory, configures the existing
-GitHub/Copilot credential proxies, and opens a Bash login shell. Start Pi
+GitHub/Copilot credential proxies, restores the shared dotfiles, and opens Bash. Start Pi
 manually with `pi` when you need it.
 
-`sbx/spec.yaml` uses `docker.io/sbx/shell-image:latest` as its base and installs
-only `@earendil-works/pi-coding-agent` at image build time. It does not use the
-Pi base image, clone dotfiles, or install additional tools. The standard shell
-image's tools and Bash configuration remain unchanged. The kit retains the
-previous restricted GitHub SSH-agent access, runtime network allowlist, and
-Pi OSC52 clipboard setting.
+`sbx/spec.yaml` uses `docker.io/sbx/shell-docker-image:latest` rather than the
+Pi base image. The base supplies the agent user, proxy environment, Docker,
+Node.js, Python, Go, and Java. This kit adds Pi, pnpm, nvm v0.41.0, Neovim,
+git-delta, tig, peco, fd, Starship v1.27.0, and Cymbal v0.18.0, preserving the
+previous development tools without rebuilding the base environment itself.
 
-Pi installation requires npm registry access while building the image;
-reattachment does not install or update Pi. Build or authentication configuration
-failures prevent entry into Bash.
+On each launch, `entrypoint.sh` clones or updates `~/dotfiles` from `master`
+and installs the previous sandbox links: Starship, Neovim, Pi settings and
+AGENTS.md, Git config/ignore, and tig config. It retains sbx's other Git settings
+while pointing its global ignore setting at the linked XDG ignore file.
+Existing regular config files and conflicting local edits are not overwritten;
+initialization failures prevent entry into Bash.
+
+`bashrc.sh` loads the persistent sandbox environment and shared nvm loader.
+Interactive shells also load `bash/base.sh` and `bash/tools.sh`, restoring
+aliases, history helpers, and the Starship prompt. Non-interactive Bash loads
+the same environment quietly through `BASH_ENV`. Startup uses a non-login shell
+to retain the initialized PATH. Tini is not used as a session wrapper because
+sbx already supplies init.
+
+Host authentication proxies, restricted GitHub SSH-agent access, the runtime
+network allowlist, and Pi OSC52 clipboard behavior remain unchanged.
+Reattachment updates dotfiles, but does not install or update image tools.
 
 ## Commands
 
@@ -104,8 +117,8 @@ source "$HOME/Devs/dotfiles/bash/sandbox.sh"
 sandboxes and their custom entrypoint. Existing sandboxes are not stopped or
 removed automatically. The shortcuts, including `sbpmap`, now target only the
 new names; use `sbx` directly to manage old sandboxes. If you already created an
-`sbx-...` sandbox with the earlier direct-shell shortcut, use a new ID or
-explicitly recreate that sandbox to pick up this kit's image and entrypoint.
+`sbx-...` sandbox before this dotfiles restoration, use a new ID or explicitly
+recreate that sandbox to pick up this kit's image, Bash config, and entrypoint.
 Stopping and reattaching does not update an existing image.
 
 - One Pi instance per sandbox; concurrent configuration writers are unsupported.

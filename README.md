@@ -20,8 +20,9 @@
 ## Sandbox
 
 `sbup [id]` opens a Docker Sandbox Bash shell with Pi installed; run `pi`
-inside it when needed. The kit is defined in `sbx/spec.yaml` using the standard
-shell base image. See [sandbox commands and authentication](sbx/README.md).
+inside it when needed. The kit in `sbx/spec.yaml` extends the standard Docker
+shell base with the shared dotfiles and development tools.
+See [sandbox commands and authentication](sbx/README.md).
 
 ## Tests
 
@@ -55,4 +56,5 @@ deny rule. Keeping the native macOS job also checks behavior a Linux sandbox can
 - `install` is effectively idempotent: it skips links that already point at this repo.
 - `uninstall` is also effectively idempotent: it removes only links that point at this repo.
 - Git configuration and global ignore patterns are linked to `${XDG_CONFIG_HOME:-$HOME/.config}/git/config` and `git/ignore`. `setup` leaves an existing `~/.gitconfig` untouched; its settings take precedence.
+- Sandbox startup points sbx's global `core.excludesfile` at the XDG ignore file while preserving other settings and repository-specific overrides.
 - When migrating, remove `~/.gitconfig` or `~/.gitignore_global` only if they are old symlinks to this repo's matching files; keep regular files.
