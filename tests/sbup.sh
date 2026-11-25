@@ -153,15 +153,30 @@ for flag in -d --detach --detach=true --rm --rm=true; do
 done
 unset SBX_SECRET_LOG
 
-# Initialization failures must not open a shell; shell failures reach the caller.
+# Failed initialization still opens a debug shell; its status reaches the caller.
 export SBX_EXEC_LOG="$tmp/shell-calls"
-: > "$SBX_EXEC_LOG"
-status=0
-SBX_STATUS=23 sbup >/dev/null || status=$?
-[[ $status == 23 && ! -s $SBX_EXEC_LOG ]]
-status=0
-SBX_EXEC_STATUS=47 sbup >/dev/null || status=$?
-[[ $status == 47 && $(< "$SBX_EXEC_LOG") == "$(printf '%s\n' exec -it -w "$PWD" "sbx-${PWD##*/}-w12" bash)" ]]
+for run_status in 0 3 23 125; do
+  for shell_status in 0 47 125; do
+    : > "$SBX_EXEC_LOG"
+    status=0
+    output=$(SBX_STATUS=$run_status SBX_EXEC_STATUS=$shell_status sbup 2>&1) || status=$?
+    [[ $status == "$shell_status" ]]
+    [[ $(< "$SBX_EXEC_LOG") == "$(printf '%s\n' exec -it -w "$PWD" "sbx-${PWD##*/}-w12" bash)" ]]
+    if [[ $run_status == 0 ]]; then
+      [[ $output != *'initialization failed'* ]]
+    else
+      [[ $output == *"Sandbox initialization failed (exit $run_status); opening Bash for debugging."* ]]
+    fi
+  done
+done
+
+# Interrupts cancel sbup rather than opening another session.
+for run_status in 130 143; do
+  : > "$SBX_EXEC_LOG"
+  status=0
+  SBX_STATUS=$run_status sbup >/dev/null || status=$?
+  [[ $status == "$run_status" && ! -s $SBX_EXEC_LOG ]]
+done
 unset SBX_EXEC_LOG
 
 # Failed or empty token resolution and secret storage must prevent sbx run.
@@ -271,9 +286,12 @@ for id in '' manual; do
   for run_status in 0 23 130; do
     expected_rename=$(printf '%s\n' workspace rename "$HERDR_WORKSPACE_ID" "$name" 'sbx run')
     expected_output=$(expected_run)
-    if [[ $run_status == 0 ]]; then
+    if [[ $run_status != 130 ]]; then
       expected_rename+=$'\nsbx exec'
-      expected_output=$(expected_up)
+      if [[ $run_status != 0 ]]; then
+        expected_output+=$'\n'"Sandbox initialization failed (exit $run_status); opening Bash for debugging."
+      fi
+      expected_output+=$'\n'"$(printf '%s\n' exec -it -w "$PWD" "$name" bash)"
     fi
     for rename_status in 0 37; do
       : > "$HERDR_TEST_LOG"

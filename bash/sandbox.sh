@@ -56,7 +56,11 @@ function sbup() {
   fi
   HERDR_AGENT=pi sbx run --clone --name "$name" --env "GH_TOKEN=$gh_placeholder" \
     --env "COPILOT_GITHUB_TOKEN=$copilot_placeholder" --env "PI_COPILOT_BASE_URL=https://$copilot_host" \
-    "$HOME/Devs/dotfiles/sbx" . "${@:1:sbx_argc}" -- -c : || return
+    "$HOME/Devs/dotfiles/sbx" . "${@:1:sbx_argc}" -- -c : || {
+    local status=$?
+    case "$status" in 130|143) return "$status" ;; esac
+    printf 'Sandbox initialization failed (exit %s); opening Bash for debugging.\n' "$status" >&2
+  }
   shift "$sbx_argc"
   if [[ ${1:-} == -- ]]; then shift; fi
   HERDR_AGENT=pi sbbash "$id" "$@"
