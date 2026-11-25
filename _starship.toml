@@ -1,4 +1,6 @@
 format = """
+$username\
+$hostname\
 $directory\
 $git_branch\
 $git_commit\
@@ -15,6 +17,9 @@ $character
 
 # system
 
+[username]
+show_always = true
+
 [directory]
 truncation_length = 3
 
@@ -28,7 +33,8 @@ disabled = true
 disabled = true
 
 [hostname]
-disabled = true
+disabled = false
+ssh_only = false
 
 [cmd_duration]
 min_time = 5000
