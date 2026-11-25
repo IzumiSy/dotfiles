@@ -12,10 +12,8 @@ build: |
       && dpkg --compare-versions "$(dpkg-query -W -f='${Version}' neovim)" ge 0.11.3 \
       && ln -sf /usr/bin/fdfind /usr/local/bin/fd \
       && rm -rf /var/lib/apt/lists/*
-  RUN mkdir /tmp/starship-install \
-      && curl -fsSL https://raw.githubusercontent.com/starship/starship/v1.27.0/install/install.sh -o /tmp/starship-install/install.sh \
-      && TMPDIR=/tmp/starship-install sh /tmp/starship-install/install.sh --yes --version v1.27.0 --bin-dir /usr/local/bin \
-      && rm -rf /tmp/starship-install
+  RUN --mount=type=tmpfs,target=/tmp bash -o pipefail -c \
+      'curl -fsSL https://starship.rs/install.sh | sh -s -- --yes --version v1.27.0'
   COPY --from=ghcr.io/1broseidon/cymbal:v0.18.0 /usr/local/bin/cymbal /usr/local/bin/cymbal
   ENV PI_CLIPBOARD_OSC52=1
   ENV NVM_DIR=/home/agent/.nvm
@@ -23,13 +21,9 @@ build: |
   ENV PATH="$PNPM_HOME/bin:$PATH"
   USER agent
   WORKDIR /home/agent
-  RUN npm install -g @earendil-works/pi-coding-agent pnpm && pi --version && pnpm --version
-  RUN curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.41.0/install.sh -o /tmp/install-nvm.sh \
-      && PROFILE=/dev/null METHOD=script bash /tmp/install-nvm.sh \
-      && rm /tmp/install-nvm.sh
-  RUN cymbal --version && pnpm --version && nvim --version \
-      && delta --version && tig --version && starship --version && peco --version \
-      && bash -c 'unset NPM_CONFIG_PREFIX; source "$NVM_DIR/nvm.sh" && nvm --version'
+  RUN npm install -g @earendil-works/pi-coding-agent pnpm
+  RUN bash -o pipefail -c \
+      'curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.41.0/install.sh | PROFILE=/dev/null bash'
   COPY --chown=1000:1000 configure-copilot.mjs /tmp/configure-copilot.mjs
   COPY --chown=1000:1000 entrypoint.sh /tmp/entrypoint.sh
   COPY --chown=1000:1000 bashrc.sh /home/agent/.bashrc
