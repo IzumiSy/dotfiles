@@ -10,7 +10,12 @@ function sbpi() {
   if (( $# > 0 )); then
     shift
   fi
-  HERDR_AGENT=pi sbx run --clone --name "pi-sbx-${PWD##*/}-$id" "$HOME/Devs/dotfiles/pi-sbx" . "$@"
+  local name="pi-sbx-${PWD##*/}-$id"
+  # Only replace this placeholder, leaving Pi's Copilot auth headers untouched.
+  local gh_placeholder=sbx-gh-token-proxy-managed
+  sbx secret set-custom --sandbox "$name" --host api.github.com --host github.com \
+    --env GH_TOKEN --placeholder "$gh_placeholder" --command 'gh auth token' >/dev/null || return
+  HERDR_AGENT=pi sbx run --clone --name "$name" --env "GH_TOKEN=$gh_placeholder" "$HOME/Devs/dotfiles/pi-sbx" . "$@"
 }
 
 function sbbash() {
