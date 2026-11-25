@@ -11,7 +11,7 @@ navigate_workspace_up = ["k", "up"]
 navigate_workspace_down = ["j", "down"]
 
 [theme]
-name = "vesper"
+name = "nord"
 auto_switch = false
 
 [theme.custom]
