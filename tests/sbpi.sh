@@ -9,10 +9,15 @@ alias sbstop='echo old sbstop alias'
 source "$(dirname "$0")/../bash/sandbox.sh"
 
 sbx() {
+  if [[ $1 == run ]]; then
+    [[ ${HERDR_AGENT:-} == pi ]] || return 99
+  else
+    [[ ${HERDR_AGENT:-} != pi ]] || return 99
+  fi
   printf '%s\n' "$@"
   return "${SBX_STATUS:-0}"
 }
-unset SBX_STATUS
+unset SBX_STATUS HERDR_AGENT
 
 # All shortcuts use the current workspace and preserve argument boundaries.
 export HERDR_WORKSPACE_ID=w12
@@ -55,5 +60,14 @@ for cmd in sbpi sbbash sbstop; do
   "$cmd" >/dev/null || status=$?
   [[ $status == 23 ]]
 done
+
+# The agent hint is scoped to sbx run, not the caller or sandbox-shell shortcuts.
+[[ -z ${HERDR_AGENT+x} ]]
+unset SBX_STATUS
+export HERDR_AGENT=caller
+sbpi >/dev/null
+[[ $HERDR_AGENT == caller ]]
+sbbash >/dev/null
+sbstop >/dev/null
 
 printf 'sbpi/sbbash/sbstop checks passed\n'

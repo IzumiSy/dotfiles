@@ -10,7 +10,7 @@ function sbpi() {
   if (( $# > 0 )); then
     shift
   fi
-  sbx run --clone --name "pi-sbx-${PWD##*/}-$id" "$HOME/Devs/dotfiles/pi-sbx" . "$@"
+  HERDR_AGENT=pi sbx run --clone --name "pi-sbx-${PWD##*/}-$id" "$HOME/Devs/dotfiles/pi-sbx" . "$@"
 }
 
 function sbbash() {
