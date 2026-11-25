@@ -24,9 +24,18 @@ for entry in "$tmp/repo with spaces/_bashrc" "$tmp/home/.bashrc"; do
 done
 
 # Tool-specific aliases override base defaults only when the tools exist.
+mkdir -p "$tmp/bin" "$tmp/empty-bin"
+for tool in eza bat; do
+  printf '#!/bin/sh\nexit 0\n' > "$tmp/bin/$tool"
+  chmod +x "$tmp/bin/$tool"
+done
 for tools_available in yes no; do
   (
-    exists() { [[ $tools_available == yes && ( $1 == eza || $1 == bat ) ]]; }
+    if [[ $tools_available == yes ]]; then
+      PATH="$tmp/bin"
+    else
+      PATH="$tmp/empty-bin"
+    fi
     # Stub Linux-only completion files without initializing host tools.
     source() {
       case "$1" in

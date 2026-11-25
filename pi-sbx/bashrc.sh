@@ -4,3 +4,4 @@ export BASH_ENV=/etc/sandbox-persistent.sh
 
 source "$HOME/dotfiles/bash/base.sh"
 source "$HOME/dotfiles/bash/nvm.sh"
+source "$HOME/dotfiles/bash/tools.sh"

@@ -13,6 +13,7 @@ else
 fi
 
 bash "$dotfiles/setup" install \
+  _starship.toml \
   nvim \
   pi/AGENTS.md \
   pi/settings.json \

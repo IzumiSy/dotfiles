@@ -1,12 +1,12 @@
 # ls override with "eza"
-if exists eza ; then
+if command -v eza >/dev/null 2>&1; then
   alias ls="eza"
   alias ll="eza -lh --time-style=long-iso --group-directories-first"
   alias lla="eza -lha --bytes --time-style=long-iso --group-directories-first"
 fi
 
 # cat override with "bat"
-if exists bat ; then
+if command -v bat >/dev/null 2>&1; then
   alias cat="bat -p --theme=Dracula"
 fi
 
@@ -43,16 +43,20 @@ function hist() {
 }
 
 # Enables starship if installed
-if exists starship ; then
+if command -v starship >/dev/null 2>&1; then
   export STARSHIP_CONFIG=~/.starship.toml
   eval "$(starship init bash)"
 fi
 
 # Git completion
-if exists brew ; then
+if command -v brew >/dev/null 2>&1; then
   source "$(brew --prefix)/etc/bash_completion.d/git-prompt.sh"
   source "$(brew --prefix)/etc/bash_completion.d/git-completion.bash"
 else
-  source "/etc/bash_completion.d/git-prompt"
-  source "/etc/profile.d/bash_completion.sh"
+  if [ -f /etc/bash_completion.d/git-prompt ]; then
+    source /etc/bash_completion.d/git-prompt
+  fi
+  if [ -f /etc/profile.d/bash_completion.sh ]; then
+    source /etc/profile.d/bash_completion.sh
+  fi
 fi

@@ -20,6 +20,14 @@ sbpi manual -- --continue
 sbstatus manual --json
 ```
 
+## Interactive Bash tools
+
+The image includes starship v1.27.0 and peco. `sbbash` loads the shared
+`bash/tools.sh` and `_starship.toml`, enabling the Starship prompt, `pco` for
+branch selection, and `hist` for selecting and rerunning a history entry.
+
+Recreate existing sandboxes to receive the new tools and updated `.bashrc`.
+
 ## Node.js version management
 
 The image installs nvm v0.41.0 in `~/.nvm`. Interactive Bash loads the shared

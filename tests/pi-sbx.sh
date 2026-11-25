@@ -10,8 +10,8 @@ unset XDG_CONFIG_HOME
 export GIT_CONFIG_GLOBAL="$tmp/gitconfig" GIT_CONFIG_NOSYSTEM=1
 export PI_ARGS="$tmp/pi-args"
 mkdir -p "$HOME" "$tmp/bin" "$tmp/remote/pi" "$tmp/remote/bash" "$tmp/remote/nvim" "$tmp/remote/git"
-cp "$root/setup" "$tmp/remote/setup"
-cp "$root/bash/base.sh" "$root/bash/nvm.sh" "$tmp/remote/bash/"
+cp "$root/setup" "$root/_starship.toml" "$tmp/remote/"
+cp "$root/bash/base.sh" "$root/bash/nvm.sh" "$root/bash/tools.sh" "$tmp/remote/bash/"
 cp "$root/nvim/init.lua" "$root/nvim/lazy-lock.json" "$tmp/remote/nvim/"
 cp "$root/git/config" "$root/git/ignore" "$root/git/_tigrc" "$tmp/remote/git/"
 # Model the image COPY and stub its Linux-only persistent environment on the host.
@@ -52,7 +52,20 @@ cat > "$tmp/bin/pi" <<'SH'
 printf '%s\n' "$@" > "$PI_ARGS"
 exit "${PI_EXIT:-0}"
 SH
-chmod +x "$tmp/bin/pi"
+cat > "$tmp/bin/starship" <<'SH'
+#!/bin/sh
+[ "$*" = 'init bash' ] || exit 1
+printf 'export STARSHIP_INITIALIZED=1\nexport PS1="starship-prompt"\n'
+SH
+cat > "$tmp/bin/peco" <<'SH'
+#!/bin/sh
+if [ "$*" = --version ]; then
+  echo mock-peco
+else
+  cat
+fi
+SH
+chmod +x "$tmp/bin/pi" "$tmp/bin/starship" "$tmp/bin/peco"
 export PATH="$tmp/bin:$PATH"
 
 # First launch clones master, links the config, and preserves Pi arguments.
@@ -60,6 +73,8 @@ bash "$script" --continue 'argument with spaces'
 [[ $(git -C "$HOME/dotfiles" rev-parse HEAD) == "$(git -C "$tmp/remote" rev-parse master)" ]]
 [[ $(readlink "$HOME/.pi/agent/AGENTS.md") == "$HOME/dotfiles/pi/AGENTS.md" ]]
 [[ $(readlink "$HOME/.pi/agent/settings.json") == "$HOME/dotfiles/pi/settings.json" ]]
+[[ $(readlink "$HOME/.starship.toml") == "$HOME/dotfiles/_starship.toml" ]]
+cmp "$root/_starship.toml" "$HOME/.starship.toml"
 [[ $(readlink "$HOME/.config/nvim") == "$HOME/dotfiles/nvim" ]]
 cmp "$root/nvim/init.lua" "$HOME/.config/nvim/init.lua"
 cmp "$root/nvim/lazy-lock.json" "$HOME/.config/nvim/lazy-lock.json"
@@ -98,14 +113,26 @@ bash --noprofile --rcfile "$HOME/.bashrc" -ic '
   [[ $HISTCONTROL == ignoreboth:erasedups ]]
   [[ $(alias ls) == *"ls --color=auto"* ]]
   [[ $(alias gs) == *"git status --short"* ]]
-  declare -F gd >/dev/null
-  [[ $PS1 == *"\h"* && $PS1 == *"\w"* ]]
+  declare -F gd hist killport >/dev/null
+  [[ $STARSHIP_INITIALIZED == 1 && $PS1 == starship-prompt ]]
+  [[ $STARSHIP_CONFIG == "$HOME/.starship.toml" ]]
+  [[ $(alias pco) == *"git branch | peco | xargs git checkout"* ]]
+  [[ $(peco --version) == mock-peco ]]
+  history() {
+    if [[ ${1:-} == -s ]]; then
+      [[ $2 == echo && $3 == selected ]]
+    else
+      printf "     1 echo selected\n"
+    fi
+  }
+  [[ $(hist) == $'\''echo selected\nselected'\'' ]]
 ' </dev/null 2>/dev/null
 
 # Reusing the sandbox updates shared settings without rewriting the image's Bash config.
 printf 'second\n' > "$tmp/remote/pi/AGENTS.md"
 printf '\nalias shared_updated="echo second"\n' >> "$tmp/remote/bash/base.sh"
 printf '\n-- Updated Neovim config\n' >> "$tmp/remote/nvim/init.lua"
+printf '\n# Updated Starship config\n' >> "$tmp/remote/_starship.toml"
 git -C "$tmp/remote" commit -qam second
 status=0
 PI_EXIT=23 bash "$script" || status=$?
@@ -114,6 +141,8 @@ PI_EXIT=23 bash "$script" || status=$?
 [[ $(< "$HOME/.pi/agent/AGENTS.md") == second ]]
 [[ $(readlink "$HOME/.config/nvim") == "$HOME/dotfiles/nvim" ]]
 [[ $(< "$HOME/.config/nvim/init.lua") == *'-- Updated Neovim config' ]]
+[[ $(readlink "$HOME/.starship.toml") == "$HOME/dotfiles/_starship.toml" ]]
+[[ $(< "$HOME/.starship.toml") == *'# Updated Starship config' ]]
 cmp "$tmp/expected.gitconfig" "$HOME/.gitconfig"
 cmp "$root/git/config" "$HOME/dotfiles/git/config"
 cmp "$root/pi-sbx/bashrc.sh" "$HOME/.bashrc"
