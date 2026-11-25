@@ -2,13 +2,25 @@ onboarding = false
 
 [keys]
 prefix = "ctrl+z"
-new_tab = "prefix+n"
+new_tab = ""
 next_tab = "prefix+l"
 previous_tab = "prefix+h"
 workspace_picker = ["ctrl+w", "prefix+w"]
 new_workspace = "ctrl+shift+w"
 navigate_workspace_up = ["k", "up"]
 navigate_workspace_down = ["j", "down"]
+
+[[keys.command]]
+key = "prefix+p"
+type = "plugin_action"
+command = "dotfiles.workspace-tools.new-workspace"
+description = "new local or GitHub workspace"
+
+[[keys.command]]
+key = "prefix+n"
+type = "plugin_action"
+command = "dotfiles.workspace-tools.new-tab"
+description = "new shell or sandbox tab"
 
 [theme]
 name = "vesper"
