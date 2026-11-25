@@ -3,10 +3,9 @@ set -euo pipefail
 
 source "$(dirname "$0")/../bash/sandbox.sh"
 expected_run() {
-  printf '%s\n' run --clone --name "$name" --env GH_TOKEN=sbx-gh-token-proxy-managed \
-    --env COPILOT_GITHUB_TOKEN=sbx-copilot-token-proxy-managed \
-    --env "PI_COPILOT_BASE_URL=https://${EXPECTED_COPILOT_HOST:-api.business.githubcopilot.com}" \
-    "$HOME/Devs/dotfiles/sbx" . "$@" -- -c :
+  printf '%s\n' run --clone --name "$name" "$HOME/Devs/dotfiles/sbx" . "$@" \
+    --kit-arg "copilot_host=${EXPECTED_COPILOT_HOST:-api.business.githubcopilot.com}" \
+    --env "PI_COPILOT_BASE_URL=https://${EXPECTED_COPILOT_HOST:-api.business.githubcopilot.com}" -- -c :
 }
 expected_up() {
   expected_run "$@"
@@ -65,24 +64,24 @@ sbx() {
       printf 'secret\n' >> "$SBX_SECRET_LOG"
     fi
     local token
-    if [[ ${8:-} == COPILOT_GITHUB_TOKEN ]]; then
+    if [[ ${3:-} == pi-copilot ]]; then
       local expected_command
       printf -v expected_command 'env HOME=%q PATH=%q PI_CODING_AGENT_DIR=%q %q auth print-bearer-token --provider github-copilot --min-expiry 5m' \
         "$HOME" "$PATH" "${PI_CODING_AGENT_DIR:-$HOME/.pi/agent}" "$PI_STUB"
-      [[ $(printf '%s\n' "$@") == "$(printf '%s\n' secret set-custom --sandbox "$4" --host "${EXPECTED_COPILOT_HOST:-api.business.githubcopilot.com}" --env COPILOT_GITHUB_TOKEN --placeholder sbx-copilot-token-proxy-managed --command "$expected_command" --refresh 1m)" ]] || return 98
+      [[ $(printf '%s\n' "$@") == "$(printf '%s\n' secret set pi-copilot --sandbox "$5" --force --command "$expected_command" --refresh 1m)" ]] || return 98
       [[ $expected_command != *test-secret* && $expected_command != *test-github-token* ]] || return 98
       [[ ${SBX_COPILOT_STATUS:-0} == 0 ]] || return "$SBX_COPILOT_STATUS"
       token=$(eval "$expected_command") || return
       [[ -n $token ]] || return 1
-      COPILOT_SECRET_SANDBOX=$4
-      printf '%s\n' 'sbx-copilot-token-proxy-managed'
+      COPILOT_SECRET_SANDBOX=$5
+      printf '%s\n' 'Saved command secret pi-copilot'
     else
-      [[ $(printf '%s\n' "$@") == "$(printf '%s\n' secret set-custom --sandbox "$4" --host api.github.com --host github.com --env GH_TOKEN --placeholder sbx-gh-token-proxy-managed --command 'gh auth token')" ]] || return 98
+      [[ $(printf '%s\n' "$@") == "$(printf '%s\n' secret set github --sandbox "$5" --force --command 'gh auth token' --refresh on-demand)" ]] || return 98
       [[ ${SBX_SECRET_STATUS:-0} == 0 ]] || return "$SBX_SECRET_STATUS"
       token=$(gh auth token) || return
       [[ $token == test-github-token ]] || return 1
-      GITHUB_SECRET_SANDBOX=$4
-      printf '%s\n' 'sbx-gh-token-proxy-managed'
+      GITHUB_SECRET_SANDBOX=$5
+      printf '%s\n' 'Saved command secret github'
     fi
     return 0
   fi
@@ -109,6 +108,8 @@ name="sbx-${PWD##*/}-manual"
 [[ $(sbup manual --publish 3000:3000 --env 'EXAMPLE=argument with spaces') == "$(expected_up --publish 3000:3000 --env 'EXAMPLE=argument with spaces')" ]]
 [[ $(sbup manual -- -c 'echo hello') == "$(expected_up; printf '%s\n' -c 'echo hello')" ]]
 [[ $(sbup manual --publish 3000:3000 -- -c 'argument with spaces') == "$(expected_up --publish 3000:3000; printf '%s\n' -c 'argument with spaces')" ]]
+# Managed endpoint flags come last so forwarded overrides cannot desynchronize them.
+[[ $(sbup manual --kit-arg copilot_host=api.individual.githubcopilot.com --env PI_COPILOT_BASE_URL=https://wrong.invalid) == "$(expected_up --kit-arg copilot_host=api.individual.githubcopilot.com --env PI_COPILOT_BASE_URL=https://wrong.invalid)" ]]
 [[ $(sbbash manual -lc 'echo hello') == "$(printf '%s\n' exec -it -w "$PWD" "$name" bash -lc 'echo hello')" ]]
 [[ $(sbdown manual --json) == "$(printf '%s\n' stop "$name" --json)" ]]
 [[ $(sbstatus manual --format json) == "$(printf '%s\n' inspect "$name" --format json)" ]]

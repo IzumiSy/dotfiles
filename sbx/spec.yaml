@@ -4,6 +4,12 @@ kind: workload
 displayName: Bash with Pi
 description: A development shell with dotfiles, Pi, and host-managed Copilot authentication
 
+args:
+  copilot_host:
+    required: true
+    pattern: '^api\.([a-z0-9-]+\.)?githubcopilot\.com$'
+    description: Copilot API host resolved by the host Pi token
+
 build: |
   FROM docker.io/sbx/shell-docker-image:latest
 
@@ -60,6 +66,33 @@ build: |
 capabilities:
   - type: com.docker.sandbox/sbx@1
 
+  - type: com.docker.sandbox/credential@1
+    config:
+      service: github
+      phase: runtime
+      apiKey:
+        name: GH_TOKEN
+        proxyManaged: true
+        inject:
+          - domain: api.github.com
+            header: Authorization
+            format: "Bearer %s"
+          - domain: github.com
+            header: Authorization
+            format: "Bearer %s"
+
+  - type: com.docker.sandbox/credential@1
+    config:
+      service: pi-copilot
+      phase: runtime
+      apiKey:
+        name: COPILOT_GITHUB_TOKEN
+        proxyManaged: true
+        inject:
+          - domain: '${{ kit.args.copilot_host }}'
+            header: Authorization
+            format: "Bearer %s"
+
   # Bridge localhost listeners; host publication remains explicit through sbpmap.
   - type: com.docker.sandbox/lifecycle@1
     config:
@@ -83,11 +116,13 @@ capabilities:
         allow:
           - nodejs.org
           - github.com
+          - api.github.com
           - '*.github.com'
           - '*.githubusercontent.com'
           - api.mason-registry.dev
           - '*.githubcopilot.com'
           - 'api.*.githubcopilot.com'
+          - '${{ kit.args.copilot_host }}'
           - npmjs.com
           - '*.npmjs.org'
           - unpkg.com

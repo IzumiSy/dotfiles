@@ -122,18 +122,26 @@ Token resolution or secret registration failures prevent launch. Host Pi is
 still required to resolve and refresh Copilot tokens; the sandbox installs its
 own Pi separately.
 
-On every `sbup` launch, two sandbox-scoped custom secrets are registered:
+On every `sbup` launch, two sandbox-scoped service sources are registered with
+`sbx secret set --force --command`. Their presentation is declared by
+`com.docker.sandbox/credential@1` in `spec.yaml`:
 
-| Sandbox variable | Host resolver | Target hosts |
-| --- | --- | --- |
-| `GH_TOKEN` | `gh auth token` | `api.github.com`, `github.com` |
-| `COPILOT_GITHUB_TOKEN` | `pi auth print-bearer-token --provider github-copilot --min-expiry 5m` | Copilot API host derived from the token |
+| Service | Sandbox variable | Host resolver | Target hosts |
+| --- | --- | --- | --- |
+| `github` | `GH_TOKEN` | `gh auth token` | `api.github.com`, `github.com` |
+| `pi-copilot` | `COPILOT_GITHUB_TOKEN` | `pi auth print-bearer-token --provider github-copilot --min-expiry 5m` | Copilot API host derived from the token |
 
-Only placeholders enter the sandbox. The proxy replaces them in request headers
-for the corresponding hosts; host OAuth credentials are never copied into the
-sandbox. The Copilot proxy caches the token for one minute. Its resolver pins
-the host Pi executable, home, PATH, and config folder; keep these paths outside
-writable sandbox mounts.
+`sbup` passes the detected host as `--kit-arg copilot_host=...`; the Kit uses
+that exact host for both credential injection and network access. Its managed
+host and endpoint flags come after forwarded arguments so they stay aligned.
+GitHub resolves on demand; the Copilot source caches the token for one minute.
+The Copilot resolver pins the host Pi executable, home, PATH, and config folder;
+keep these paths outside writable sandbox mounts.
+
+sbx supplies the `proxy-managed` sentinel to both variables; `sbup` does not
+set credential variables itself. The proxy writes the real bearer into the
+Authorization header only for the declared target hosts. Host OAuth credentials
+are never copied into the sandbox.
 
 Before Bash opens, `sbx/entrypoint.sh` runs the image's copy of
 `sbx/configure-copilot.mjs`. It updates sandbox `auth.json` with the Copilot
@@ -141,7 +149,27 @@ API-key placeholder and `models.json` with the host-derived API endpoint,
 preserving other providers and settings. Each file is validated and replaced
 atomically using a private temporary file. If the models update fails, the auth
 update remains, but Bash does not launch. Errors never print credential content.
-Direct kit launches without `PI_COPILOT_BASE_URL` skip proxy configuration.
+Direct kit launches also require `--kit-arg copilot_host=...`; without
+`PI_COPILOT_BASE_URL`, they skip Pi's proxy configuration.
+
+### Credential approval and migration
+
+On the first interactive launch, approve this local Kit's use of both services:
+`github` for `api.github.com` and `github.com`, and `pi-copilot` for the selected
+Copilot API host. sbx records approvals in `~/.config/sbx/credentials.yaml`;
+this file contains permissions, not tokens. Approve interactively before running
+unattended. Registering a source with `secret set` does not grant this approval.
+sbx may start with a required credential withheld and a warning when no binding
+exists; missing Copilot wiring fails configuration, and `sbup` opens its usual
+debug shell rather than silently configuring an unauthenticated provider.
+
+This migration requires a **new sandbox**, for example `sbup service-auth`.
+Stopping and reattaching an old sandbox does not replace its credential
+declarations or image-local configurator. Existing sandboxes and their custom
+secrets are not automatically changed or removed. After moving any work you need,
+explicitly remove an obsolete sandbox to delete its sandbox-scoped old secrets.
+
+The service flow and `proxy-managed` sentinel were verified with sbx v0.54.1.
 
 ## Herdr
 
@@ -165,4 +193,5 @@ its exit status.
   account's catalog; choose a model enabled for that account.
 - Only `githubcopilot.com` endpoints are accepted; custom Enterprise domains are
   unsupported.
-- `sbx secret set-custom` is experimental.
+- Kit v3 remains experimental; service credentials avoid the `set-custom`
+  command's experimental warning, not all possible Kit or approval warnings.

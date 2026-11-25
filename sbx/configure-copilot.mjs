@@ -36,7 +36,7 @@ function updateFileSync(path, update) {
 try {
   const placeholder = process.env.COPILOT_GITHUB_TOKEN;
   const baseUrl = process.env.PI_COPILOT_BASE_URL;
-  if (placeholder !== "sbx-copilot-token-proxy-managed" ||
+  if (placeholder !== "proxy-managed" ||
       !/^https:\/\/api\.([a-z0-9-]+\.)?githubcopilot\.com$/.test(baseUrl || "")) {
     throw new Error("Invalid proxy configuration");
   }

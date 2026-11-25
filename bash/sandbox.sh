@@ -44,19 +44,15 @@ function sbup() {
     return 1
   fi
   printf -v copilot_command 'env HOME=%q PATH=%q PI_CODING_AGENT_DIR=%q %q auth print-bearer-token --provider github-copilot --min-expiry 5m' "$HOME" "$PATH" "$pi_dir" "$pi_path"
-  local gh_placeholder=sbx-gh-token-proxy-managed
-  local copilot_placeholder=sbx-copilot-token-proxy-managed
-  sbx secret set-custom --sandbox "$name" --host api.github.com --host github.com \
-    --env GH_TOKEN --placeholder "$gh_placeholder" --command 'gh auth token' >/dev/null || return
-  sbx secret set-custom --sandbox "$name" --host "$copilot_host" \
-    --env COPILOT_GITHUB_TOKEN --placeholder "$copilot_placeholder" \
+  sbx secret set github --sandbox "$name" --force \
+    --command 'gh auth token' --refresh on-demand >/dev/null || return
+  sbx secret set pi-copilot --sandbox "$name" --force \
     --command "$copilot_command" --refresh 1m >/dev/null || return
   if [[ ${HERDR_ENV:-} == 1 && -n ${HERDR_WORKSPACE_ID:-} ]]; then
     herdr workspace rename "$HERDR_WORKSPACE_ID" "$name" >/dev/null 2>&1 || true
   fi
-  HERDR_AGENT=pi sbx run --clone --name "$name" --env "GH_TOKEN=$gh_placeholder" \
-    --env "COPILOT_GITHUB_TOKEN=$copilot_placeholder" --env "PI_COPILOT_BASE_URL=https://$copilot_host" \
-    "$HOME/Devs/dotfiles/sbx" . "${@:1:sbx_argc}" -- -c : || {
+  HERDR_AGENT=pi sbx run --clone --name "$name" "$HOME/Devs/dotfiles/sbx" . "${@:1:sbx_argc}" \
+    --kit-arg "copilot_host=$copilot_host" --env "PI_COPILOT_BASE_URL=https://$copilot_host" -- -c : || {
     local status=$?
     case "$status" in 130|143) return "$status" ;; esac
     printf 'Sandbox initialization failed (exit %s); opening Bash for debugging.\n' "$status" >&2

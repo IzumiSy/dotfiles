@@ -14,7 +14,7 @@ function run(home, extra = {}) {
     encoding: "utf8",
     env: {
       HOME: home,
-      COPILOT_GITHUB_TOKEN: "sbx-copilot-token-proxy-managed",
+      COPILOT_GITHUB_TOKEN: "proxy-managed",
       PI_COPILOT_BASE_URL: "https://api.business.githubcopilot.com",
       ...extra,
     },
@@ -47,7 +47,7 @@ test("replaces only Copilot credentials and endpoint, preserving other settings"
   assert.equal(result.status, 0, result.stderr);
   assert.equal(result.stdout, "");
   assert.deepEqual(json(join(dir, "auth.json")), {
-    "github-copilot": { type: "api_key", key: "sbx-copilot-token-proxy-managed" },
+    "github-copilot": { type: "api_key", key: "proxy-managed" },
     openai: { type: "api_key", key: "other-provider-secret" },
   });
   assert.deepEqual(json(join(dir, "models.json")), {
@@ -81,6 +81,9 @@ test("creates private placeholder config in the overridden agent directory", () 
 test("rejects real tokens and untrusted endpoints before writing configuration", () => {
   for (const extra of [
     { COPILOT_GITHUB_TOKEN: "real-token-must-not-be-written" },
+    { COPILOT_GITHUB_TOKEN: undefined },
+    { COPILOT_GITHUB_TOKEN: "" },
+    { COPILOT_GITHUB_TOKEN: "sbx-copilot-token-proxy-managed" },
     { PI_COPILOT_BASE_URL: "https://api.business.githubcopilot.com.attacker.invalid" },
     { PI_COPILOT_BASE_URL: "http://api.business.githubcopilot.com" },
   ]) {
@@ -129,7 +132,7 @@ test("invalid models are preserved after auth is updated", () => {
     assert.equal(readFileSync(join(dir, "models.json"), "utf8"), content);
     assert.deepEqual(json(join(dir, "auth.json")), {
       marker: "retained",
-      "github-copilot": { type: "api_key", key: "sbx-copilot-token-proxy-managed" },
+      "github-copilot": { type: "api_key", key: "proxy-managed" },
     });
     assert.deepEqual(readdirSync(dir).sort(), ["auth.json", "models.json"]);
     assert.equal(result.stdout, "");
@@ -149,7 +152,7 @@ test("replaces files atomically and removes private temporary files", () => {
     const result = run(home);
     assert.equal(result.status, 0, result.stderr);
     assert.equal(readFileSync(fd, "utf8"), original);
-    assert.equal(json(path)["github-copilot"].key, "sbx-copilot-token-proxy-managed");
+    assert.equal(json(path)["github-copilot"].key, "proxy-managed");
     assert.equal(statSync(path).mode & 0o777, 0o600);
     assert.deepEqual(readdirSync(dir).sort(), ["auth.json", "models.json"]);
   } finally {
@@ -173,7 +176,7 @@ test("preserves configuration symlinks and updates their targets", () => {
   assert.equal(result.status, 0, result.stderr);
   assert.equal(lstatSync(join(dir, "auth.json")).isSymbolicLink(), true);
   assert.equal(lstatSync(join(dir, "models.json")).isSymbolicLink(), true);
-  assert.equal(json(auth)["github-copilot"].key, "sbx-copilot-token-proxy-managed");
+  assert.equal(json(auth)["github-copilot"].key, "proxy-managed");
   assert.equal(json(auth).openai.key, "retained-secret");
   assert.equal(json(models).marker, "retained");
   assert.deepEqual(readdirSync(targets).sort(), ["auth.json", "models.json"]);

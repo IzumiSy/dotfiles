@@ -90,6 +90,27 @@ assert 'COPY --chown=1000:1000 configure-copilot.mjs /tmp/configure-copilot.mjs'
 assert 'COPY --chown=1000:1000 entrypoint.sh /tmp/entrypoint.sh' in spec
 assert 'COPY --chown=1000:1000 bashrc.sh /home/agent/.bashrc' in spec
 assert 'pi-image' not in spec and 'ENTRYPOINT ["tini"' not in spec
+
+# Credentials stay runtime-only and use the token-derived exact API host.
+assert "args:\n  copilot_host:\n    required: true\n    pattern: '^api\\.([a-z0-9-]+\\.)?githubcopilot\\.com$'" in spec
+credentials = spec.split('\n  - type: com.docker.sandbox/credential@1\n')[1:]
+assert len(credentials) == 2
+for block, service, variable, domains in zip(credentials, ('github', 'pi-copilot'),
+        ('GH_TOKEN', 'COPILOT_GITHUB_TOKEN'),
+        (('api.github.com', 'github.com'), ("'${{ kit.args.copilot_host }}'",))):
+    block = block.split('\n  - type:', 1)[0]
+    assert f'      service: {service}\n' in block
+    assert '      phase: runtime\n' in block
+    assert f'        name: {variable}\n' in block
+    assert '        proxyManaged: true\n' in block
+    assert block.count('          - domain: ') == len(domains)
+    assert block.count('            header: Authorization\n') == len(domains)
+    assert block.count('            format: "Bearer %s"\n') == len(domains)
+    for domain in domains:
+        assert f'          - domain: {domain}\n' in block
+network = spec.split('\n  - type: com.docker.sandbox/network-policy@1\n')[1]
+for domain in ('api.github.com', 'github.com', "'${{ kit.args.copilot_host }}'"):
+    assert f'          - {domain}\n' in network
 PY
 
 printf 'sbx kit startup checks passed\n'
