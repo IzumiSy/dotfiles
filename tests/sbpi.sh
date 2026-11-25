@@ -6,6 +6,7 @@ shopt -s expand_aliases
 alias sbpi='echo old sbpi alias'
 alias sbbash='echo old sbbash alias'
 alias sbstop='echo old sbstop alias'
+alias sbstatus='echo old sbstatus alias'
 source "$(dirname "$0")/../bash/sandbox.sh"
 
 gh() {
@@ -45,12 +46,14 @@ name="pi-sbx-${PWD##*/}-w12"
 [[ $(sbpi) == "$(printf '%s\n' run --clone --name "$name" --env GH_TOKEN=sbx-gh-token-proxy-managed "$HOME/Devs/dotfiles/pi-sbx" .)" ]]
 [[ $(sbbash) == "$(printf '%s\n' exec -it -w "$PWD" "$name" bash)" ]]
 [[ $(sbstop) == "$(printf '%s\n' stop "$name")" ]]
+[[ $(sbstatus) == "$(printf '%s\n' inspect "$name")" ]]
 
 # An explicit ID overrides the workspace; remaining arguments are forwarded.
 name="pi-sbx-${PWD##*/}-manual"
 [[ $(sbpi manual -- --continue 'argument with spaces') == "$(printf '%s\n' run --clone --name "$name" --env GH_TOKEN=sbx-gh-token-proxy-managed "$HOME/Devs/dotfiles/pi-sbx" . -- --continue 'argument with spaces')" ]]
 [[ $(sbbash manual -lc 'echo hello') == "$(printf '%s\n' exec -it -w "$PWD" "$name" bash -lc 'echo hello')" ]]
 [[ $(sbstop manual --json) == "$(printf '%s\n' stop "$name" --json)" ]]
+[[ $(sbstatus manual --format json) == "$(printf '%s\n' inspect "$name" --format json)" ]]
 
 # Outside herdr, an unset or empty workspace requires an explicit ID.
 for state in unset empty; do
@@ -59,7 +62,7 @@ for state in unset empty; do
   else
     HERDR_WORKSPACE_ID=''
   fi
-  for cmd in sbpi sbbash sbstop; do
+  for cmd in sbpi sbbash sbstop sbstatus; do
     if output=$("$cmd" 2>&1); then
       echo "$cmd unexpectedly succeeded without an ID" >&2
       exit 1
@@ -70,11 +73,12 @@ for state in unset empty; do
   [[ $(sbpi manual) == "$(printf '%s\n' run --clone --name "$name" --env GH_TOKEN=sbx-gh-token-proxy-managed "$HOME/Devs/dotfiles/pi-sbx" .)" ]]
   [[ $(sbbash manual) == "$(printf '%s\n' exec -it -w "$PWD" "$name" bash)" ]]
   [[ $(sbstop manual) == "$(printf '%s\n' stop "$name")" ]]
+  [[ $(sbstatus manual) == "$(printf '%s\n' inspect "$name")" ]]
 done
 
 # Sandbox failures must reach the caller.
 export HERDR_WORKSPACE_ID=w12 SBX_STATUS=23
-for cmd in sbpi sbbash sbstop; do
+for cmd in sbpi sbbash sbstop sbstatus; do
   status=0
   "$cmd" >/dev/null || status=$?
   [[ $status == 23 ]]
@@ -105,5 +109,6 @@ sbpi >/dev/null
 [[ $GH_TOKEN == caller-token ]]
 sbbash >/dev/null
 sbstop >/dev/null
+sbstatus >/dev/null
 
-printf 'sbpi/sbbash/sbstop checks passed\n'
+printf 'sbpi/sbbash/sbstop/sbstatus checks passed\n'

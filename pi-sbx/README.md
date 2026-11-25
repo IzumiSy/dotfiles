@@ -1,8 +1,10 @@
 # Pi sandbox
 
 Run `sbpi [id] [sbx arguments...]`. The ID defaults to `HERDR_WORKSPACE_ID`;
-outside Herdr, provide it explicitly. `sbbash` opens a shell in the same sandbox
-and `sbstop` stops it.
+outside Herdr, provide it explicitly. `sbbash` opens a shell in the same sandbox,
+`sbstop` stops it, and `sbstatus [id] [sbx arguments...]` shows its state and
+details via `sbx inspect`. All shortcuts use the current directory and the same
+workspace ID; for example, `sbstatus manual --json` inspects an explicit ID.
 
 On every launch, `sbpi` registers `gh auth token` as the host-side dynamic source
 for a sandbox-scoped custom secret. Authenticate with `gh auth login` on the host
