@@ -2,7 +2,7 @@
 schemaVersion: "3"
 kind: workload
 displayName: Pi with GitHub Copilot
-description: Pi using sandbox-local Copilot authentication
+description: Pi using host-managed Copilot authentication
 
 build: |
   FROM docker.io/sbx/pi-image:latest
@@ -21,6 +21,7 @@ build: |
       && rm /tmp/install-pnpm.sh
   RUN cymbal --version && pnpm --version && nvim --version \
       && delta --version && tig --version
+  COPY --chown=1000:1000 configure-copilot.mjs /tmp/configure-copilot.mjs
   COPY --chown=1000:1000 setup-dotfiles.sh /tmp/setup-dotfiles.sh
   COPY --chown=1000:1000 bashrc.sh /home/agent/.bashrc
   ENTRYPOINT ["/bin/bash", "/tmp/setup-dotfiles.sh"]

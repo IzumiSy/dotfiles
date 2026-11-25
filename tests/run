@@ -20,3 +20,13 @@ for file in tests/*.sh; do
     GIT_CONFIG_GLOBAL=/dev/null GIT_CONFIG_NOSYSTEM=1 \
     /bin/bash --noprofile --norc "$file"
 done
+
+shopt -s nullglob
+for file in tests/*.mjs; do
+  work="$tmp/${file##*/}"
+  mkdir -p "$work/home" "$work/tmp"
+  printf 'Running %s\n' "$file"
+  node=$(command -v node)
+  env -i HOME="$work/home" TMPDIR="$work/tmp" PATH=/usr/bin:/bin:/usr/sbin:/sbin \
+    "$node" --test "$file"
+done

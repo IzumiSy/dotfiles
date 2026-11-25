@@ -166,11 +166,27 @@ bash "$script"
 [[ ! -e $tmp/other-nvim/nvim ]]
 [[ -e $PI_ARGS ]]
 
+# Proxy configuration runs before Pi and must stop launch if it fails.
+export COPILOT_CONFIG_ARGS="$tmp/copilot-config-args"
+node() {
+  printf '%s\n' "$@" > "$COPILOT_CONFIG_ARGS"
+  return "${NODE_EXIT:-0}"
+}
+export -f node
+rm "$PI_ARGS"
+PI_COPILOT_BASE_URL=https://api.business.githubcopilot.com bash "$script" --continue
+[[ $(< "$COPILOT_CONFIG_ARGS") == "$root/pi-sbx/configure-copilot.mjs" ]]
+[[ $(< "$PI_ARGS") == --continue ]]
+rm "$PI_ARGS"
+status=0
+PI_COPILOT_BASE_URL=https://api.business.githubcopilot.com NODE_EXIT=23 bash "$script" || status=$?
+[[ $status == 23 && ! -e $PI_ARGS ]]
+
 # Conflicting local edits are not discarded, and Pi must not launch.
 printf 'local edit\n' > "$HOME/dotfiles/pi/AGENTS.md"
 printf 'third\n' > "$tmp/remote/pi/AGENTS.md"
 git -C "$tmp/remote" commit -qam third
-rm "$PI_ARGS"
+rm -f "$PI_ARGS"
 if bash "$script"; then
   echo 'setup unexpectedly overwrote local edits' >&2
   exit 1
