@@ -152,7 +152,7 @@ update remains, but Bash does not launch. Errors never print credential content.
 Direct kit launches also require `--kit-arg copilot_host=...`; without
 `PI_COPILOT_BASE_URL`, they skip Pi's proxy configuration.
 
-### Credential approval and migration
+### Credential approval
 
 On the first interactive launch, approve this local Kit's use of both services:
 `github` for `api.github.com` and `github.com`, and `pi-copilot` for the selected
@@ -162,12 +162,6 @@ unattended. Registering a source with `secret set` does not grant this approval.
 sbx may start with a required credential withheld and a warning when no binding
 exists; missing Copilot wiring fails configuration, and `sbup` opens its usual
 debug shell rather than silently configuring an unauthenticated provider.
-
-This migration requires a **new sandbox**, for example `sbup service-auth`.
-Stopping and reattaching an old sandbox does not replace its credential
-declarations or image-local configurator. Existing sandboxes and their custom
-secrets are not automatically changed or removed. After moving any work you need,
-explicitly remove an obsolete sandbox to delete its sandbox-scoped old secrets.
 
 The service flow and `proxy-managed` sentinel were verified with sbx v0.54.1.
 
@@ -193,5 +187,4 @@ its exit status.
   account's catalog; choose a model enabled for that account.
 - Only `githubcopilot.com` endpoints are accepted; custom Enterprise domains are
   unsupported.
-- Kit v3 remains experimental; service credentials avoid the `set-custom`
-  command's experimental warning, not all possible Kit or approval warnings.
+- Kit v3 remains experimental; missing credential approvals may produce warnings.

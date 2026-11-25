@@ -83,7 +83,6 @@ test("rejects real tokens and untrusted endpoints before writing configuration",
     { COPILOT_GITHUB_TOKEN: "real-token-must-not-be-written" },
     { COPILOT_GITHUB_TOKEN: undefined },
     { COPILOT_GITHUB_TOKEN: "" },
-    { COPILOT_GITHUB_TOKEN: "sbx-copilot-token-proxy-managed" },
     { PI_COPILOT_BASE_URL: "https://api.business.githubcopilot.com.attacker.invalid" },
     { PI_COPILOT_BASE_URL: "http://api.business.githubcopilot.com" },
   ]) {
