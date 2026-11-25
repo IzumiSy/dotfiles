@@ -20,6 +20,21 @@ sbpi manual -- --continue
 sbstatus manual --json
 ```
 
+## Node.js version management
+
+The image installs nvm v0.41.0 in `~/.nvm`. Interactive Bash loads the shared
+`bash/nvm.sh`, so `sbbash` can run `nvm install` and `nvm use` immediately.
+The base image's Node.js remains unchanged until you select another version.
+
+Non-interactive Bash does not load `.bashrc`; source the shared loader explicitly:
+
+```bash
+source "$HOME/dotfiles/bash/nvm.sh"
+nvm install --lts
+```
+
+Recreate existing sandboxes to receive nvm and the updated `.bashrc`.
+
 ## Host authentication setup
 
 Authenticate on the host before launching:

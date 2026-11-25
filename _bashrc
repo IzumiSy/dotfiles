@@ -20,7 +20,9 @@ source "$_dotfiles_bash_dir/base.sh"
 if exists /opt/homebrew/bin/brew ; then
   eval $(/opt/homebrew/bin/brew shellenv)
 fi
-source "$_dotfiles_bash_dir/commands.sh"
 source "$_dotfiles_bash_dir/sandbox.sh"
+source "$_dotfiles_bash_dir/nvm.sh"
+source "$_dotfiles_bash_dir/rbenv.sh"
+source "$_dotfiles_bash_dir/cargo.sh"
 source "$_dotfiles_bash_dir/tools.sh"
 unset _dotfiles_bash_dir

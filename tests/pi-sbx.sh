@@ -11,7 +11,7 @@ export GIT_CONFIG_GLOBAL="$tmp/gitconfig" GIT_CONFIG_NOSYSTEM=1
 export PI_ARGS="$tmp/pi-args"
 mkdir -p "$HOME" "$tmp/bin" "$tmp/remote/pi" "$tmp/remote/bash" "$tmp/remote/nvim" "$tmp/remote/git"
 cp "$root/setup" "$tmp/remote/setup"
-cp "$root/bash/base.sh" "$tmp/remote/bash/base.sh"
+cp "$root/bash/base.sh" "$root/bash/nvm.sh" "$tmp/remote/bash/"
 cp "$root/nvim/init.lua" "$root/nvim/lazy-lock.json" "$tmp/remote/nvim/"
 cp "$root/git/config" "$root/git/ignore" "$root/git/_tigrc" "$tmp/remote/git/"
 # Model the image COPY and stub its Linux-only persistent environment on the host.
@@ -86,10 +86,14 @@ git -C "$HOME/dotfiles" config --unset core.excludesfile
 cmp "$root/git/config" "$HOME/dotfiles/git/config"
 [[ $(< "$PI_ARGS") == $'--continue\nargument with spaces' ]]
 cmp "$root/pi-sbx/bashrc.sh" "$HOME/.bashrc"
+# Model the image's nvm installation; Bash must use the shared loader.
+mkdir -p "$HOME/.nvm"
+printf 'nvm() { printf "mock-nvm\\n"; }\n' > "$HOME/.nvm/nvm.sh"
 bash --noprofile --rcfile "$HOME/.bashrc" -ic '
   set -eu
   [[ $SANDBOX_PERSISTENT_LOADED == 1 ]]
   [[ $BASH_ENV == /etc/sandbox-persistent.sh ]]
+  [[ $NVM_DIR == "$HOME/.nvm" && $(nvm --version) == mock-nvm ]]
   [[ :$SHELLOPTS: == *:ignoreeof:* ]]
   [[ $HISTCONTROL == ignoreboth:erasedups ]]
   [[ $(alias ls) == *"ls --color=auto"* ]]

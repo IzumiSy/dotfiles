@@ -13,14 +13,19 @@ build: |
       && rm -rf /var/lib/apt/lists/*
   COPY --from=ghcr.io/1broseidon/cymbal:v0.18.0 /usr/local/bin/cymbal /usr/local/bin/cymbal
   ENV PI_CLIPBOARD_OSC52=1
+  ENV NVM_DIR=/home/agent/.nvm
   ENV PNPM_HOME=/home/agent/.local/share/pnpm
   ENV PATH="$PNPM_HOME/bin:$PATH"
   USER agent
   RUN curl -fsSL https://get.pnpm.io/install.sh -o /tmp/install-pnpm.sh \
       && PNPM_NO_MODIFY_PATH=1 SHELL=/bin/bash sh /tmp/install-pnpm.sh \
       && rm /tmp/install-pnpm.sh
+  RUN curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.41.0/install.sh -o /tmp/install-nvm.sh \
+      && PROFILE=/dev/null METHOD=script bash /tmp/install-nvm.sh \
+      && rm /tmp/install-nvm.sh
   RUN cymbal --version && pnpm --version && nvim --version \
-      && delta --version && tig --version
+      && delta --version && tig --version \
+      && bash -c 'source "$NVM_DIR/nvm.sh" && nvm --version'
   COPY --chown=1000:1000 configure-copilot.mjs /tmp/configure-copilot.mjs
   COPY --chown=1000:1000 setup-dotfiles.sh /tmp/setup-dotfiles.sh
   COPY --chown=1000:1000 bashrc.sh /home/agent/.bashrc
