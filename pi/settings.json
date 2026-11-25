@@ -12,10 +12,15 @@
     "npm:@grammeaway/pi-clip",
     "npm:@ff-labs/pi-fff"
   ],
-  "lastChangelogVersion": "1.6.0",
-  "showCacheMissNotices": true,
+  "lastChangelogVersion": "1.6.1",
   "extensionChangelogVersions": {
     "{\"source\":\"npm:@wierdbytes/pi-peon\",\"scope\":\"user\"}": "0.2.0",
     "{\"source\":\"npm:pi-agent-browser-native\",\"scope\":\"user\"}": "0.9.42"
+  },
+  "notices": {
+    "cacheMisses": true,
+    "cacheWarming": true,
+    "compactionCosts": true,
+    "reasoningDrops": true
   }
 }
