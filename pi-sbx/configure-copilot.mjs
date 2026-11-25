@@ -43,7 +43,7 @@ try {
   const agentDir = process.env.PI_CODING_AGENT_DIR || join(homedir(), ".pi", "agent");
 
   // shortcut: one Pi instance per sandbox; add locking if concurrent writers are supported.
-  updateFileSync(authPath = join(agentDir, "auth.json"), (content) => {
+  updateFileSync(join(agentDir, "auth.json"), (content) => {
     content["github-copilot"] = { type: "api_key", key: placeholder };
     return content;
   });
