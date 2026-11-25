@@ -1,9 +1,12 @@
-# Preserve the sandbox environment for interactive and child shells.
 source /etc/sandbox-persistent.sh
-export BASH_ENV=/etc/sandbox-persistent.sh
+export BASH_ENV="$HOME/.bashrc"
 
-source "$HOME/dotfiles/bash/base.sh"
 # The Docker Sandbox image's fixed npm prefix conflicts with nvm.
 unset NPM_CONFIG_PREFIX
-source "$HOME/dotfiles/bash/nvm.sh"
-source "$HOME/dotfiles/bash/tools.sh"
+# Startup output must not contaminate non-interactive command results.
+source "$HOME/dotfiles/bash/nvm.sh" >/dev/null
+
+if [[ $- == *i* ]]; then
+  source "$HOME/dotfiles/bash/base.sh"
+  source "$HOME/dotfiles/bash/tools.sh"
+fi

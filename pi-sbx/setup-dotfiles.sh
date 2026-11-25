@@ -27,6 +27,8 @@ if [ -f "$HOME/.gitconfig" ] && [ ! -L "$HOME/.gitconfig" ]; then
     "${XDG_CONFIG_HOME:-$HOME/.config}/git/ignore"
 fi
 
+source "$HOME/.bashrc"
+
 if [[ -n ${PI_COPILOT_BASE_URL:-} ]]; then
   node "$(dirname "$0")/configure-copilot.mjs"
 fi

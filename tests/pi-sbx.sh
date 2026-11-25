@@ -19,6 +19,8 @@ cp "$root/pi-sbx/bashrc.sh" "$HOME/.bashrc"
 source() {
   if [[ $1 == /etc/sandbox-persistent.sh ]]; then
     export SANDBOX_PERSISTENT_LOADED=1
+    export PATH="$SANDBOX_BASE_PATH" NPM_CONFIG_PREFIX=/usr/local/share/npm-global
+    export BASH_ENV=/etc/sandbox-persistent.sh
   else
     builtin source "$@"
   fi
@@ -49,6 +51,11 @@ git -C "$tmp/remote" commit -qm first
 
 cat > "$tmp/bin/pi" <<'SH'
 #!/bin/sh
+[ "$SANDBOX_PERSISTENT_LOADED" = 1 ] || exit 98
+[ "${NPM_CONFIG_PREFIX+x}" != x ] || exit 98
+[ "$BASH_ENV" = "$HOME/.bashrc" ] || exit 98
+[ "$(node --version)" = v22.0.0 ] || exit 98
+[ "$(bash -c 'nvm --version; node --version')" = "$(printf 'mock-nvm\nv22.0.0')" ] || exit 98
 printf '%s\n' "$@" > "$PI_ARGS"
 exit "${PI_EXIT:-0}"
 SH
@@ -66,7 +73,17 @@ else
 fi
 SH
 chmod +x "$tmp/bin/pi" "$tmp/bin/starship" "$tmp/bin/peco"
-export PATH="$tmp/bin:$PATH"
+export PATH="$tmp/bin:$PATH" SANDBOX_BASE_PATH="$tmp/bin:$PATH"
+
+# Model nvm selecting an installed Node before the first dotfiles clone.
+mkdir -p "$HOME/.nvm/versions/node/v22.0.0/bin"
+cat > "$HOME/.nvm/nvm.sh" <<'SH'
+[[ $SANDBOX_PERSISTENT_LOADED == 1 && ! ${NPM_CONFIG_PREFIX+x} ]] || return 1
+export PATH="$NVM_DIR/versions/node/v22.0.0/bin:$PATH"
+nvm() { printf 'mock-nvm\n'; }
+SH
+printf '#!/bin/sh\nprintf "v22.0.0\\n"\n' > "$HOME/.nvm/versions/node/v22.0.0/bin/node"
+chmod +x "$HOME/.nvm/versions/node/v22.0.0/bin/node"
 
 # First launch clones master, links the config, and preserves Pi arguments.
 bash "$script" --continue 'argument with spaces'
@@ -101,15 +118,14 @@ git -C "$HOME/dotfiles" config --unset core.excludesfile
 cmp "$root/git/config" "$HOME/dotfiles/git/config"
 [[ $(< "$PI_ARGS") == $'--continue\nargument with spaces' ]]
 cmp "$root/pi-sbx/bashrc.sh" "$HOME/.bashrc"
-# Model the image's nvm installation; Bash must use the shared loader.
-mkdir -p "$HOME/.nvm"
-printf '[[ ! ${NPM_CONFIG_PREFIX+x} ]] || return 1\nnvm() { printf "mock-nvm\\n"; }\n' > "$HOME/.nvm/nvm.sh"
+# Interactive Bash uses the same environment as Pi and its child shells.
 NPM_CONFIG_PREFIX=/usr/local/share/npm-global bash --noprofile --rcfile "$HOME/.bashrc" -ic '
   set -eu
   [[ ! ${NPM_CONFIG_PREFIX+x} ]]
   [[ $SANDBOX_PERSISTENT_LOADED == 1 ]]
-  [[ $BASH_ENV == /etc/sandbox-persistent.sh ]]
+  [[ $BASH_ENV == "$HOME/.bashrc" ]]
   [[ $NVM_DIR == "$HOME/.nvm" && $(nvm --version) == mock-nvm ]]
+  [[ $(node --version) == v22.0.0 ]]
   [[ :$SHELLOPTS: == *:ignoreeof:* ]]
   [[ $HISTCONTROL == ignoreboth:erasedups ]]
   [[ $(alias ls) == *"ls --color=auto"* ]]
@@ -128,6 +144,21 @@ NPM_CONFIG_PREFIX=/usr/local/share/npm-global bash --noprofile --rcfile "$HOME/.
   }
   [[ $(hist) == $'\''echo selected\nselected'\'' ]]
 ' </dev/null 2>/dev/null
+
+# Non-interactive initialization is quiet, repeatable, and excludes prompt/alias settings.
+for attempt in 1 2; do
+  output=$(BASH_ENV="$HOME/.bashrc" bash -c '
+    set -eu
+    [[ ! ${NPM_CONFIG_PREFIX+x} ]]
+    [[ $PATH == "$NVM_DIR/versions/node/v22.0.0/bin:$SANDBOX_BASE_PATH" ]]
+    [[ $BASH_ENV == "$HOME/.bashrc" ]]
+    [[ $(type -t nvm) == function && $(node --version) == v22.0.0 ]]
+    [[ ! ${STARSHIP_INITIALIZED+x} && ! ${HISTCONTROL+x} ]]
+    if alias gs >/dev/null 2>&1; then exit 1; fi
+    bash -c '\''[[ $(type -t nvm) == function && $(node --version) == v22.0.0 ]]'\''
+  ')
+  [[ -z $output ]]
+done
 
 # Reusing the sandbox updates shared settings without rewriting the image's Bash config.
 printf 'second\n' > "$tmp/remote/pi/AGENTS.md"
