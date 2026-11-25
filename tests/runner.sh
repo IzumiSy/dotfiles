@@ -5,10 +5,10 @@ root="$(cd "$(dirname "$0")/.." && pwd)"
 tmp=$(mktemp -d "${TMPDIR:-/tmp}/runner.XXXXXX")
 trap 'rm -rf "$tmp"' EXIT
 repo="$tmp/repo with spaces"
-mkdir -p "$repo/tests" "$repo/bash" "$repo/pi-sbx" "$tmp/bin" "$tmp/sbx"
+mkdir -p "$repo/tests" "$repo/bash" "$repo/sbx" "$tmp/bin" "$tmp/sbx"
 cp "$root/test" "$repo/test"
 cp "$root/tests/run" "$repo/tests/run"
-for file in setup _bashrc bash/stub.sh pi-sbx/stub.sh; do
+for file in setup _bashrc bash/stub.sh sbx/stub.sh; do
   printf ':\n' > "$repo/$file"
 done
 

@@ -1,0 +1,48 @@
+# syntax=docker/sandbox-kit:3
+schemaVersion: "3"
+kind: workload
+displayName: Bash with Pi
+description: A shell sandbox with Pi and host-managed Copilot authentication
+
+build: |
+  FROM docker.io/sbx/shell-image:latest
+  USER agent
+  RUN npm install -g @earendil-works/pi-coding-agent && pi --version
+  ENV PI_CLIPBOARD_OSC52=1
+  COPY --chown=1000:1000 configure-copilot.mjs /tmp/configure-copilot.mjs
+  COPY --chown=1000:1000 entrypoint.sh /tmp/entrypoint.sh
+  ENTRYPOINT ["tini", "--", "/bin/bash", "/tmp/entrypoint.sh"]
+  CMD []
+
+capabilities:
+  - type: com.docker.sandbox/sbx@1
+  - type: com.docker.sandbox/ssh-agent@1
+    config:
+      phase: runtime
+      unrestricted: false
+      authenticate:
+        - git@github.com
+  - type: com.docker.sandbox/network-policy@1
+    config:
+      runtime:
+        allow:
+          - nodejs.org
+          - github.com
+          - '*.github.com'
+          - '*.githubusercontent.com'
+          - api.mason-registry.dev
+          - '*.githubcopilot.com'
+          - 'api.*.githubcopilot.com'
+          - npmjs.com
+          - '*.npmjs.org'
+          - unpkg.com
+          - api.tailor.tech
+          - base-ui.com
+          - api.fireflies.ai
+          - react.dev
+          - '*.react.dev'
+          - w3.org
+          - '*.w3.org'
+          - developer.mozilla.org
+          - '*.developer.mozilla.org'
+          - docs.tailor.tech

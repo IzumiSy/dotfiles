@@ -14,7 +14,7 @@ trap 'rm -rf "$tmp"' EXIT
 mkdir -p "$tmp/bin" "$tmp/project/subdir" "$tmp/project-other"
 export PATH="$tmp/bin:$PATH" HERDR_WORKSPACE_ID=w12
 export SBPMAP_FIXTURES="$tmp" SBPMAP_ROOT="$root"
-export SBPMAP_NAME=pi-sbx-project-w12
+export SBPMAP_NAME=sbx-project-w12
 name=$SBPMAP_NAME
 
 # These are the only sbx/peco executables the test can reach, including PTY children.
@@ -102,21 +102,21 @@ published "$name" 8080:3000/tcp4
 
 # Manual IDs override the environment; numbers otherwise remain ports, never IDs.
 reset
-jq '.[0].name = "pi-sbx-project-manual"' "$tmp/sandboxes" > "$tmp/changed"
+jq '.[0].name = "sbx-project-manual"' "$tmp/sandboxes" > "$tmp/changed"
 mv "$tmp/changed" "$tmp/sandboxes"
 run --id manual 3000
 [[ $status == 0 ]]
-published pi-sbx-project-manual 3000/tcp4
+published sbx-project-manual 3000/tcp4
 reset
 run 12
 [[ $status == 1 && $output == *'Port 12 has no reachable'* ]]
 no_publish
 
-# Match the exact ID suffix and Pi prefix; never fall back to another workspace.
+# Match the exact ID suffix and sandbox prefix; never fall back to another workspace.
 reset
-printf '%s\n' '[{"name":"pi-sbx-project-w120","status":"running"},{"name":"other-project-w12","status":"running"}]' > "$tmp/sandboxes"
+printf '%s\n' '[{"name":"sbx-project-w120","status":"running"},{"name":"pi-sbx-project-w12","status":"running"},{"name":"other-project-w12","status":"running"}]' > "$tmp/sandboxes"
 run 3000
-[[ $status == 1 && $output == *'No Pi sandbox found for workspace w12'* ]]
+[[ $status == 1 && $output == *'No sandbox found for workspace w12'* ]]
 no_exec; no_publish
 for id_state in unset empty; do
   reset
@@ -150,14 +150,14 @@ done
 # Path matching is component-aware, not just a string prefix.
 reset
 jq --arg sibling "$tmp/project-other" \
-  '. + [{name:"pi-sbx-sibling-w12",status:"running",workspaces:[$sibling]}]' \
+  '. + [{name:"sbx-sibling-w12",status:"running",workspaces:[$sibling]}]' \
   "$tmp/sandboxes" > "$tmp/changed"
 mv "$tmp/changed" "$tmp/sandboxes"
 run 3000
 [[ $status == 0 ]]
 published "$name" 3000/tcp4
 reset
-jq '. + [{name:"pi-sbx-second-w12",status:"running",workspaces:["/elsewhere"]}]' \
+jq '. + [{name:"sbx-second-w12",status:"running",workspaces:["/elsewhere"]}]' \
   "$tmp/sandboxes" > "$tmp/changed"
 mv "$tmp/changed" "$tmp/sandboxes"
 cd "$tmp"
@@ -305,11 +305,11 @@ assert status == 0 and "Mapped: 127.0.0.1:8080" in output, output
 assert "Host port [Enter: auto]" not in output and "\tport\tpublish\t" not in calls
 
 sandboxes = json.loads(base_sandboxes)
-sandboxes.append({"name": "pi-sbx-second-w12", "status": "running", "workspaces": [str(fixtures / "project")]})
+sandboxes.append({"name": "sbx-second-w12", "status": "running", "workspaces": [str(fixtures / "project")]})
 (fixtures / "sandboxes").write_text(json.dumps(sandboxes))
 status, output, calls = terminal(args=("3000",), environment={"SBPMAP_PECO_ROW": "2"})
-assert status == 0 and "Sandbox: pi-sbx-second-w12" in output, output
-assert "sbx\t--no-input\tport\tpublish\tpi-sbx-second-w12\t3000/tcp4\t" in calls
+assert status == 0 and "Sandbox: sbx-second-w12" in output, output
+assert "sbx\t--no-input\tport\tpublish\tsbx-second-w12\t3000/tcp4\t" in calls
 status, output, calls = terminal(args=("3000",), environment={"SBPMAP_PECO_STATUS": "130"})
 assert status == 130 and "\texec\t" not in calls and "\tport\tpublish\t" not in calls, output
 (fixtures / "sandboxes").write_text(base_sandboxes)

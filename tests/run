@@ -4,7 +4,7 @@ set -euo pipefail
 root="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$root"
 
-for file in test tests/run setup _bashrc bash/*.sh pi-sbx/*.sh tests/*.sh; do
+for file in test tests/run setup _bashrc bash/*.sh sbx/*.sh tests/*.sh; do
   /bin/bash -n "$file"
 done
 

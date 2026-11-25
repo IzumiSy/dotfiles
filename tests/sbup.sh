@@ -3,14 +3,23 @@ set -euo pipefail
 
 # Reloading the config must replace the old aliases, too.
 shopt -s expand_aliases
+sbpi() { echo old sbpi function; }
 alias sbpi='echo old sbpi alias'
+alias sbup='echo old sbup alias'
 alias sbbash='echo old sbbash alias'
 alias sbstop='echo old sbstop alias'
 alias sbstatus='echo old sbstatus alias'
 source "$(dirname "$0")/../bash/sandbox.sh"
+! type sbpi >/dev/null 2>&1
+expected_run() {
+  printf '%s\n' run --clone --name "$name" --env GH_TOKEN=sbx-gh-token-proxy-managed \
+    --env COPILOT_GITHUB_TOKEN=sbx-copilot-token-proxy-managed \
+    --env "PI_COPILOT_BASE_URL=https://${EXPECTED_COPILOT_HOST:-api.business.githubcopilot.com}" \
+    "$HOME/Devs/dotfiles/sbx" . "$@"
+}
 
 # Use an external Pi so type -P resolves an absolute path with spaces.
-tmp=$(mktemp -d "${TMPDIR:-/tmp}/sbpi.XXXXXX")
+tmp=$(mktemp -d "${TMPDIR:-/tmp}/sbup.XXXXXX")
 trap 'rm -rf "$tmp"' EXIT
 mkdir -p "$tmp/bin with spaces"
 export PI_STUB="$tmp/bin with spaces/pi"
@@ -88,15 +97,16 @@ unset HERDR_ENV HERDR_PANE_ID HERDR_TEST_STATUS HERDR_TEST_LOG
 # All shortcuts use the current workspace and preserve argument boundaries.
 export HERDR_WORKSPACE_ID=w12
 export HOME='/test/home with spaces'
-name="pi-sbx-${PWD##*/}-w12"
-[[ $(sbpi) == "$(printf '%s\n' run --clone --name "$name" --env GH_TOKEN=sbx-gh-token-proxy-managed --env COPILOT_GITHUB_TOKEN=sbx-copilot-token-proxy-managed --env PI_COPILOT_BASE_URL=https://api.business.githubcopilot.com "$HOME/Devs/dotfiles/pi-sbx" .)" ]]
+name="sbx-${PWD##*/}-w12"
+[[ $(sbup) == "$(expected_run)" ]]
 [[ $(sbbash) == "$(printf '%s\n' exec -it -w "$PWD" "$name" bash)" ]]
 [[ $(sbstop) == "$(printf '%s\n' stop "$name")" ]]
 [[ $(sbstatus) == "$(printf '%s\n' inspect "$name")" ]]
 
 # An explicit ID overrides the workspace; remaining arguments are forwarded.
-name="pi-sbx-${PWD##*/}-manual"
-[[ $(sbpi manual -- --continue 'argument with spaces') == "$(printf '%s\n' run --clone --name "$name" --env GH_TOKEN=sbx-gh-token-proxy-managed --env COPILOT_GITHUB_TOKEN=sbx-copilot-token-proxy-managed --env PI_COPILOT_BASE_URL=https://api.business.githubcopilot.com "$HOME/Devs/dotfiles/pi-sbx" . -- --continue 'argument with spaces')" ]]
+name="sbx-${PWD##*/}-manual"
+[[ $(sbup manual --publish 3000:3000 --env 'EXAMPLE=argument with spaces') == "$(expected_run --publish 3000:3000 --env 'EXAMPLE=argument with spaces')" ]]
+[[ $(sbup manual -- -c 'echo hello') == "$(expected_run -- -c 'echo hello')" ]]
 [[ $(sbbash manual -lc 'echo hello') == "$(printf '%s\n' exec -it -w "$PWD" "$name" bash -lc 'echo hello')" ]]
 [[ $(sbstop manual --json) == "$(printf '%s\n' stop "$name" --json)" ]]
 [[ $(sbstatus manual --format json) == "$(printf '%s\n' inspect "$name" --format json)" ]]
@@ -108,7 +118,7 @@ for state in unset empty; do
   else
     HERDR_WORKSPACE_ID=''
   fi
-  for cmd in sbpi sbbash sbstop sbstatus; do
+  for cmd in sbup sbbash sbstop sbstatus; do
     if output=$("$cmd" 2>&1); then
       echo "$cmd unexpectedly succeeded without an ID" >&2
       exit 1
@@ -116,7 +126,7 @@ for state in unset empty; do
     [[ $output == *"Usage: $cmd"* ]]
     [[ $output == *HERDR_WORKSPACE_ID* ]]
   done
-  [[ $(sbpi manual) == "$(printf '%s\n' run --clone --name "$name" --env GH_TOKEN=sbx-gh-token-proxy-managed --env COPILOT_GITHUB_TOKEN=sbx-copilot-token-proxy-managed --env PI_COPILOT_BASE_URL=https://api.business.githubcopilot.com "$HOME/Devs/dotfiles/pi-sbx" .)" ]]
+  [[ $(sbup manual) == "$(expected_run)" ]]
   [[ $(sbbash manual) == "$(printf '%s\n' exec -it -w "$PWD" "$name" bash)" ]]
   [[ $(sbstop manual) == "$(printf '%s\n' stop "$name")" ]]
   [[ $(sbstatus manual) == "$(printf '%s\n' inspect "$name")" ]]
@@ -124,7 +134,7 @@ done
 
 # Sandbox failures must reach the caller.
 export HERDR_WORKSPACE_ID=w12 SBX_STATUS=23
-for cmd in sbpi sbbash sbstop sbstatus; do
+for cmd in sbup sbbash sbstop sbstatus; do
   status=0
   "$cmd" >/dev/null || status=$?
   [[ $status == 23 ]]
@@ -140,7 +150,7 @@ for failure in command empty storage; do
     storage) export SBX_SECRET_STATUS=19; expected=19 ;;
   esac
   status=0
-  output=$(sbpi 2>&1) || status=$?
+  output=$(sbup 2>&1) || status=$?
   [[ $status == "$expected" ]]
   [[ -z $output ]]
 done
@@ -155,13 +165,14 @@ for endpoint in individual base; do
     export PI_TOKEN='proxy-ep=proxy.githubcopilot.com'
     export EXPECTED_COPILOT_HOST=api.githubcopilot.com
   fi
-  [[ $(sbpi) == "$(printf '%s\n' run --clone --name "pi-sbx-${PWD##*/}-w12" --env GH_TOKEN=sbx-gh-token-proxy-managed --env COPILOT_GITHUB_TOKEN=sbx-copilot-token-proxy-managed --env "PI_COPILOT_BASE_URL=https://$EXPECTED_COPILOT_HOST" "$HOME/Devs/dotfiles/pi-sbx" .)" ]]
+  name="sbx-${PWD##*/}-w12"
+  [[ $(sbup) == "$(expected_run)" ]]
 done
 unset PI_TOKEN EXPECTED_COPILOT_HOST
 
 # The host auth directory is pinned in both initial and replayed commands.
 export PI_CODING_AGENT_DIR='/host/pi config with spaces' EXPECTED_PI_DIR='/host/pi config with spaces'
-sbpi >/dev/null
+sbup >/dev/null
 [[ $PI_CODING_AGENT_DIR == '/host/pi config with spaces' ]]
 unset PI_CODING_AGENT_DIR EXPECTED_PI_DIR
 
@@ -173,7 +184,7 @@ for failure in token storage; do
     storage) export SBX_COPILOT_STATUS=31; expected=31 ;;
   esac
   status=0
-  output=$(sbpi 2>&1) || status=$?
+  output=$(sbup 2>&1) || status=$?
   [[ $status == "$expected" ]]
   if [[ $failure == token ]]; then
     [[ $output == *'check the host Pi login'* ]]
@@ -192,7 +203,7 @@ for token in '' 'test-secret' \
   export PI_TOKEN="$token"
   : > "$SBX_SECRET_LOG"
   status=0
-  output=$(sbpi 2>&1) || status=$?
+  output=$(sbup 2>&1) || status=$?
   [[ $status != 0 ]]
   [[ ! -s $SBX_SECRET_LOG ]]
   [[ $output != *test-secret* && $output != *$'run\n'* ]]
@@ -202,17 +213,17 @@ unset PI_TOKEN SBX_SECRET_LOG
 # Even shell tracing must not reveal the exported host token.
 export PI_TOKEN='proxy-ep=proxy.business.githubcopilot.com;trace-hidden-secret'
 status=0
-output=$( { set -x; SBX_SECRET_STATUS=19 sbpi; } 2>&1) || status=$?
+output=$( { set -x; SBX_SECRET_STATUS=19 sbup; } 2>&1) || status=$?
 [[ $status == 19 && $output != *trace-hidden-secret* ]]
 unset PI_TOKEN
 
 # A missing external Pi or relative auth directory cannot become a replay command.
 status=0
-output=$(PATH="$tmp/no-pi" sbpi 2>&1) || status=$?
+output=$(PATH="$tmp/no-pi" sbup 2>&1) || status=$?
 [[ $status != 0 ]]
 [[ $output != *$'run\n'* ]]
 status=0
-output=$(PI_CODING_AGENT_DIR=relative/pi sbpi 2>&1) || status=$?
+output=$(PI_CODING_AGENT_DIR=relative/pi sbup 2>&1) || status=$?
 [[ $status != 0 ]]
 [[ $output != *$'run\n'* ]]
 
@@ -220,7 +231,7 @@ output=$(PI_CODING_AGENT_DIR=relative/pi sbpi 2>&1) || status=$?
 [[ -z ${HERDR_AGENT+x} ]]
 unset SBX_STATUS
 export HERDR_AGENT=caller GH_TOKEN=caller-token COPILOT_GITHUB_TOKEN=caller-copilot-token PI_COPILOT_BASE_URL=caller-base-url
-sbpi >/dev/null
+sbup >/dev/null
 [[ $HERDR_AGENT == caller ]]
 [[ $GH_TOKEN == caller-token ]]
 [[ $COPILOT_GITHUB_TOKEN == caller-copilot-token ]]
@@ -233,15 +244,15 @@ sbstatus >/dev/null
 export HERDR_ENV=1 HERDR_WORKSPACE_ID=w12 HERDR_TEST_LOG="$tmp/herdr-calls"
 unset HERDR_PANE_ID
 for id in '' manual; do
-  name="pi-sbx-${PWD##*/}-${id:-w12}"
+  name="sbx-${PWD##*/}-${id:-w12}"
   expected_rename=$(printf '%s\n' workspace rename "$HERDR_WORKSPACE_ID" "$name" 'sbx run')
   for run_status in 0 23 130; do
     for rename_status in 0 37; do
       : > "$HERDR_TEST_LOG"
       status=0
-      output=$(HERDR_TEST_STATUS=$rename_status SBX_STATUS=$run_status sbpi ${id:+"$id"} 2>&1) || status=$?
+      output=$(HERDR_TEST_STATUS=$rename_status SBX_STATUS=$run_status sbup ${id:+"$id"} 2>&1) || status=$?
       [[ $status == "$run_status" ]]
-      [[ $output == run$'\n'* && $output != *rename* ]]
+      [[ $output == "$(expected_run)" ]]
       [[ $(< "$HERDR_TEST_LOG") == "$expected_rename" ]]
     done
   done
@@ -257,7 +268,7 @@ for context in unset outside missing-workspace empty-workspace; do
     empty-workspace) HERDR_WORKSPACE_ID='' ;;
   esac
   : > "$HERDR_TEST_LOG"
-  sbpi manual >/dev/null
+  sbup manual >/dev/null
   [[ $(< "$HERDR_TEST_LOG") == 'sbx run' ]]
 done
 
@@ -265,11 +276,11 @@ done
 export HERDR_ENV=1 HERDR_WORKSPACE_ID=w12 HERDR_PANE_ID=w12:p3
 : > "$HERDR_TEST_LOG"
 status=0
-PI_STATUS=29 sbpi >/dev/null 2>&1 || status=$?
+PI_STATUS=29 sbup >/dev/null 2>&1 || status=$?
 [[ $status == 29 && ! -s $HERDR_TEST_LOG ]]
 sbbash >/dev/null
 sbstop >/dev/null
 sbstatus >/dev/null
 [[ ! -s $HERDR_TEST_LOG ]]
 
-printf 'sbpi/sbbash/sbstop/sbstatus checks passed\n'
+printf 'sbup/sbbash/sbstop/sbstatus checks passed\n'

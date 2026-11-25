@@ -1,21 +1,22 @@
 # Pi sandbox shortcuts
 # shortcut: directory basenames must be unique within an ID; use path-based names if they collide.
-unalias sbpi sbbash sbstop sbstatus sbpmap 2>/dev/null || true
+unalias sbpi sbup sbbash sbstop sbstatus sbpmap 2>/dev/null || true
+unset -f sbpi
 _sbpmap_ports_script="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)/sbpmap-ports.py"
-function sbpi() {
+function sbup() {
   local id="${1:-${HERDR_WORKSPACE_ID:-}}"
   if [[ -z $id ]]; then
-    echo 'Usage: sbpi [id] [sbx arguments...] (id is required when HERDR_WORKSPACE_ID is unset)' >&2
+    echo 'Usage: sbup [id] [sbx arguments...] (id is required when HERDR_WORKSPACE_ID is unset)' >&2
     return 1
   fi
   if (( $# > 0 )); then
     shift
   fi
-  local name="pi-sbx-${PWD##*/}-$id"
+  local name="sbx-${PWD##*/}-$id"
   local pi_path pi_dir="${PI_CODING_AGENT_DIR:-$HOME/.pi/agent}"
-  pi_path=$(type -P pi) || { echo 'sbpi requires Pi installed on the host.' >&2; return 1; }
+  pi_path=$(type -P pi) || { echo 'sbup requires Pi installed on the host.' >&2; return 1; }
   if [[ $pi_path != /* || $pi_dir != /* ]]; then
-    echo 'sbpi requires absolute host Pi executable and authentication paths.' >&2
+    echo 'sbup requires absolute host Pi executable and authentication paths.' >&2
     return 1
   fi
   local copilot_host copilot_command
@@ -48,7 +49,7 @@ function sbpi() {
   local status=0
   HERDR_AGENT=pi sbx run --clone --name "$name" --env "GH_TOKEN=$gh_placeholder" \
     --env "COPILOT_GITHUB_TOKEN=$copilot_placeholder" --env "PI_COPILOT_BASE_URL=https://$copilot_host" \
-    "$HOME/Devs/dotfiles/pi-sbx" . "$@" || status=$?
+    "$HOME/Devs/dotfiles/sbx" . "$@" || status=$?
   return "$status"
 }
 
@@ -61,7 +62,7 @@ function sbbash() {
   if (( $# > 0 )); then
     shift
   fi
-  sbx exec -it -w "$PWD" "pi-sbx-${PWD##*/}-$id" bash "$@"
+  sbx exec -it -w "$PWD" "sbx-${PWD##*/}-$id" bash "$@"
 }
 
 function sbstop() {
@@ -73,7 +74,7 @@ function sbstop() {
   if (( $# > 0 )); then
     shift
   fi
-  sbx stop "pi-sbx-${PWD##*/}-$id" "$@"
+  sbx stop "sbx-${PWD##*/}-$id" "$@"
 }
 
 function sbstatus() {
@@ -85,7 +86,7 @@ function sbstatus() {
   if (( $# > 0 )); then
     shift
   fi
-  sbx inspect "pi-sbx-${PWD##*/}-$id" "$@"
+  sbx inspect "sbx-${PWD##*/}-$id" "$@"
 }
 
 function sbpmap() {
@@ -139,9 +140,9 @@ function sbpmap() {
 
   local sandboxes matches nearby name selection
   sandboxes=$(sbx ls --format json) || return
-  matches=$(jq -c --arg id "$id" '[.[] | select(.name | startswith("pi-sbx-") and endswith("-" + $id))]' <<< "$sandboxes") || return
+  matches=$(jq -c --arg id "$id" '[.[] | select(.name | startswith("sbx-") and endswith("-" + $id))]' <<< "$sandboxes") || return
   if [[ $matches == '[]' ]]; then
-    echo "No Pi sandbox found for workspace $id." >&2; return 1
+    echo "No sandbox found for workspace $id." >&2; return 1
   fi
   if (( $(jq length <<< "$matches") > 1 )); then
     nearby=$(jq -c --arg cwd "$(pwd -P)" '[.[] | select(any(.workspaces[]?; . as $path | $cwd == $path or ($cwd | startswith($path + "/"))))]' <<< "$matches") || return

@@ -8,7 +8,7 @@ import { after, test } from "node:test";
 
 const tmp = mkdtempSync(join(tmpdir(), "copilot-config-"));
 after(() => rmSync(tmp, { recursive: true, force: true }));
-const script = fileURLToPath(new URL("../pi-sbx/configure-copilot.mjs", import.meta.url));
+const script = fileURLToPath(new URL("../sbx/configure-copilot.mjs", import.meta.url));
 function run(home, extra = {}) {
   return spawnSync(process.execPath, [script], {
     encoding: "utf8",
