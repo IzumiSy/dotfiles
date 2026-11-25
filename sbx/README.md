@@ -1,8 +1,9 @@
 # Sandbox shell with Pi
 
-`sbup` launches the Sandbox Kit in this directory, configures the
-GitHub/Copilot credential proxies, loads the shared dotfiles, and opens Bash.
-Start Pi manually with `pi` when you need it.
+`sbup` initializes the Sandbox Kit in this directory, including the
+GitHub/Copilot credential proxies and shared dotfiles, then calls `sbbash`.
+The interactive shell uses `sbx exec -it -w "$PWD"`, just like a direct
+`sbbash` call. Start Pi manually with `pi` when you need it.
 
 `sbx/spec.yaml` uses `docker.io/sbx/shell-docker-image:latest`. The base supplies
 the agent user, proxy environment, Docker, Node.js, Python, Go, and Java.
@@ -14,7 +15,8 @@ and installs links for Starship, Neovim, Pi settings and
 AGENTS.md, Git config/ignore, and tig config. It retains sbx's other Git settings
 while pointing its global ignore setting at the linked XDG ignore file.
 Existing regular config files and conflicting local edits are not overwritten;
-initialization failures prevent entry into Bash.
+initialization failures prevent entry into Bash. `sbup` runs the entrypoint
+with `bash -c :` to complete setup without opening an agent-session shell.
 
 `bashrc.sh` loads the persistent sandbox environment and shared nvm loader.
 Interactive shells also load `bash/base.sh` and `bash/tools.sh` for aliases,
@@ -31,7 +33,7 @@ Reattachment updates dotfiles, but does not install or update image tools.
 
 | Command | Purpose |
 | --- | --- |
-| `sbup [id] [sbx arguments...]` | Create or reattach to the sandbox, then enter Bash. |
+| `sbup [id] [sbx arguments...] [-- bash arguments...]` | Initialize the sandbox, then enter it via `sbbash`. |
 | `sbbash [id] [bash arguments...]` | Open another shell in the same sandbox. |
 | `sbstatus [id] [sbx arguments...]` | Show sandbox state via `sbx inspect`. |
 | `sbdown [id] [sbx arguments...]` | Stop the sandbox without removing it. |
@@ -54,8 +56,9 @@ sbbash manual -lc 'node --version'
 sbstatus manual --format json
 ```
 
-`sbup` forwards sbx flags and extra workspaces after the ID. Arguments after
-`--` are passed to Bash, not Pi.
+`sbup` forwards sbx flags and extra workspaces after the ID to initialization.
+Arguments after `--` are passed to the final Bash shell, not Pi. Since `sbup`
+always opens a shell, use `sbx` directly for `--detach` or `--rm`.
 
 ## Host authentication
 
@@ -94,8 +97,8 @@ Direct kit launches without `PI_COPILOT_BASE_URL` skip proxy configuration.
 
 ## Herdr
 
-`sbup` sets `HERDR_AGENT=pi` on the host's `sbx run` process so Herdr can
-identify Pi while startup opens Bash. It does not change the caller's
+`sbup` sets `HERDR_AGENT=pi` on both initialization and the final shell's host
+`sbx` processes so Herdr can identify Pi. It does not change the caller's
 environment. Pi screen detection still depends on Herdr's built-in rules and,
 on macOS, Herdr 0.9.0 or newer, including the running server.
 

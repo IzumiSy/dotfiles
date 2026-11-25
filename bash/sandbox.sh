@@ -4,12 +4,22 @@ _sbpmap_ports_script="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)/sbpmap
 function sbup() {
   local id="${1:-${HERDR_WORKSPACE_ID:-}}"
   if [[ -z $id ]]; then
-    echo 'Usage: sbup [id] [sbx arguments...] (id is required when HERDR_WORKSPACE_ID is unset)' >&2
+    echo 'Usage: sbup [id] [sbx arguments...] [-- bash arguments...] (id is required when HERDR_WORKSPACE_ID is unset)' >&2
     return 1
   fi
   if (( $# > 0 )); then
     shift
   fi
+  local sbx_argc=0 arg
+  for arg in "$@"; do
+    case "$arg" in
+      --) break ;;
+      -d|--detach|--detach=*|--rm|--rm=*)
+        echo 'sbup opens a shell; use sbx directly for --detach or --rm.' >&2
+        return 1 ;;
+    esac
+    ((sbx_argc += 1))
+  done
   local name="sbx-${PWD##*/}-$id"
   local pi_path pi_dir="${PI_CODING_AGENT_DIR:-$HOME/.pi/agent}"
   pi_path=$(type -P pi) || { echo 'sbup requires Pi installed on the host.' >&2; return 1; }
@@ -44,11 +54,12 @@ function sbup() {
   if [[ ${HERDR_ENV:-} == 1 && -n ${HERDR_WORKSPACE_ID:-} ]]; then
     herdr workspace rename "$HERDR_WORKSPACE_ID" "$name" >/dev/null 2>&1 || true
   fi
-  local status=0
   HERDR_AGENT=pi sbx run --clone --name "$name" --env "GH_TOKEN=$gh_placeholder" \
     --env "COPILOT_GITHUB_TOKEN=$copilot_placeholder" --env "PI_COPILOT_BASE_URL=https://$copilot_host" \
-    "$HOME/Devs/dotfiles/sbx" . "$@" || status=$?
-  return "$status"
+    "$HOME/Devs/dotfiles/sbx" . "${@:1:sbx_argc}" -- -c : || return
+  shift "$sbx_argc"
+  if [[ ${1:-} == -- ]]; then shift; fi
+  HERDR_AGENT=pi sbbash "$id" "$@"
 }
 
 function sbbash() {

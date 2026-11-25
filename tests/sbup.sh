@@ -6,7 +6,11 @@ expected_run() {
   printf '%s\n' run --clone --name "$name" --env GH_TOKEN=sbx-gh-token-proxy-managed \
     --env COPILOT_GITHUB_TOKEN=sbx-copilot-token-proxy-managed \
     --env "PI_COPILOT_BASE_URL=https://${EXPECTED_COPILOT_HOST:-api.business.githubcopilot.com}" \
-    "$HOME/Devs/dotfiles/sbx" . "$@"
+    "$HOME/Devs/dotfiles/sbx" . "$@" -- -c :
+}
+expected_up() {
+  expected_run "$@"
+  printf '%s\n' exec -it -w "$PWD" "$name" bash
 }
 
 # Use an external Pi so type -P resolves an absolute path with spaces.
@@ -49,6 +53,10 @@ sbx() {
     [[ ${HERDR_AGENT:-} == pi ]] || return 99
     [[ ${GITHUB_SECRET_SANDBOX:-} == "$4" ]] || return 98
     [[ ${COPILOT_SECRET_SANDBOX:-} == "$4" ]] || return 98
+  elif [[ $1 == exec && ${HERDR_AGENT:-} == pi ]]; then
+    [[ ${GITHUB_SECRET_SANDBOX:-} == "$5" && ${COPILOT_SECRET_SANDBOX:-} == "$5" ]] || return 98
+    if [[ -n ${HERDR_TEST_LOG:-} ]]; then printf 'sbx exec\n' >> "$HERDR_TEST_LOG"; fi
+    if [[ -n ${SBX_EXEC_LOG:-} ]]; then printf '%s\n' "$@" >> "$SBX_EXEC_LOG"; fi
   else
     [[ ${HERDR_AGENT:-} != pi ]] || return 99
   fi
@@ -79,8 +87,10 @@ sbx() {
     return 0
   fi
   printf '%s\n' "$@"
+  if [[ $1 == exec ]]; then return "${SBX_EXEC_STATUS:-${SBX_STATUS:-0}}"; fi
   return "${SBX_STATUS:-0}"
 }
+unset SBX_EXEC_STATUS SBX_EXEC_LOG
 unset SBX_STATUS SBX_SECRET_STATUS SBX_COPILOT_STATUS HERDR_AGENT GITHUB_SECRET_SANDBOX COPILOT_SECRET_SANDBOX GH_STATUS GH_EMPTY
 unset PI_STATUS PI_TOKEN PI_CODING_AGENT_DIR EXPECTED_PI_DIR EXPECTED_COPILOT_HOST SBX_SECRET_LOG
 unset HERDR_ENV HERDR_PANE_ID HERDR_TEST_STATUS HERDR_TEST_LOG
@@ -89,15 +99,16 @@ unset HERDR_ENV HERDR_PANE_ID HERDR_TEST_STATUS HERDR_TEST_LOG
 export HERDR_WORKSPACE_ID=w12
 export HOME='/test/home with spaces'
 name="sbx-${PWD##*/}-w12"
-[[ $(sbup) == "$(expected_run)" ]]
+[[ $(sbup) == "$(expected_up)" ]]
 [[ $(sbbash) == "$(printf '%s\n' exec -it -w "$PWD" "$name" bash)" ]]
 [[ $(sbdown) == "$(printf '%s\n' stop "$name")" ]]
 [[ $(sbstatus) == "$(printf '%s\n' inspect "$name")" ]]
 
 # An explicit ID overrides the workspace; remaining arguments are forwarded.
 name="sbx-${PWD##*/}-manual"
-[[ $(sbup manual --publish 3000:3000 --env 'EXAMPLE=argument with spaces') == "$(expected_run --publish 3000:3000 --env 'EXAMPLE=argument with spaces')" ]]
-[[ $(sbup manual -- -c 'echo hello') == "$(expected_run -- -c 'echo hello')" ]]
+[[ $(sbup manual --publish 3000:3000 --env 'EXAMPLE=argument with spaces') == "$(expected_up --publish 3000:3000 --env 'EXAMPLE=argument with spaces')" ]]
+[[ $(sbup manual -- -c 'echo hello') == "$(expected_up; printf '%s\n' -c 'echo hello')" ]]
+[[ $(sbup manual --publish 3000:3000 -- -c 'argument with spaces') == "$(expected_up --publish 3000:3000; printf '%s\n' -c 'argument with spaces')" ]]
 [[ $(sbbash manual -lc 'echo hello') == "$(printf '%s\n' exec -it -w "$PWD" "$name" bash -lc 'echo hello')" ]]
 [[ $(sbdown manual --json) == "$(printf '%s\n' stop "$name" --json)" ]]
 [[ $(sbstatus manual --format json) == "$(printf '%s\n' inspect "$name" --format json)" ]]
@@ -117,7 +128,7 @@ for state in unset empty; do
     [[ $output == *"Usage: $cmd"* ]]
     [[ $output == *HERDR_WORKSPACE_ID* ]]
   done
-  [[ $(sbup manual) == "$(expected_run)" ]]
+  [[ $(sbup manual) == "$(expected_up)" ]]
   [[ $(sbbash manual) == "$(printf '%s\n' exec -it -w "$PWD" "$name" bash)" ]]
   [[ $(sbdown manual) == "$(printf '%s\n' stop "$name")" ]]
   [[ $(sbstatus manual) == "$(printf '%s\n' inspect "$name")" ]]
@@ -131,8 +142,29 @@ for cmd in sbup sbbash sbdown sbstatus; do
   [[ $status == 23 ]]
 done
 
-# Failed or empty token resolution and secret storage must prevent sbx run.
+# Lifecycle flags cannot skip initialization or remove the sandbox before shell entry.
 unset SBX_STATUS
+export SBX_SECRET_LOG="$tmp/secret-calls"
+for flag in -d --detach --detach=true --rm --rm=true; do
+  : > "$SBX_SECRET_LOG"
+  status=0
+  output=$(sbup manual "$flag" 2>&1) || status=$?
+  [[ $status == 1 && $output == *'use sbx directly'* && ! -s $SBX_SECRET_LOG ]]
+done
+unset SBX_SECRET_LOG
+
+# Initialization failures must not open a shell; shell failures reach the caller.
+export SBX_EXEC_LOG="$tmp/shell-calls"
+: > "$SBX_EXEC_LOG"
+status=0
+SBX_STATUS=23 sbup >/dev/null || status=$?
+[[ $status == 23 && ! -s $SBX_EXEC_LOG ]]
+status=0
+SBX_EXEC_STATUS=47 sbup >/dev/null || status=$?
+[[ $status == 47 && $(< "$SBX_EXEC_LOG") == "$(printf '%s\n' exec -it -w "$PWD" "sbx-${PWD##*/}-w12" bash)" ]]
+unset SBX_EXEC_LOG
+
+# Failed or empty token resolution and secret storage must prevent sbx run.
 for failure in command empty storage; do
   unset GH_STATUS GH_EMPTY SBX_SECRET_STATUS GITHUB_SECRET_SANDBOX COPILOT_SECRET_SANDBOX
   case $failure in
@@ -157,7 +189,7 @@ for endpoint in individual base; do
     export EXPECTED_COPILOT_HOST=api.githubcopilot.com
   fi
   name="sbx-${PWD##*/}-w12"
-  [[ $(sbup) == "$(expected_run)" ]]
+  [[ $(sbup) == "$(expected_up)" ]]
 done
 unset PI_TOKEN EXPECTED_COPILOT_HOST
 
@@ -218,7 +250,7 @@ output=$(PI_CODING_AGENT_DIR=relative/pi sbup 2>&1) || status=$?
 [[ $status != 0 ]]
 [[ $output != *$'run\n'* ]]
 
-# The agent hint is scoped to sbx run, not the caller or sandbox-shell shortcuts.
+# The hint covers sbup's initialization and shell, not the caller or direct shortcuts.
 [[ -z ${HERDR_AGENT+x} ]]
 unset SBX_STATUS
 export HERDR_AGENT=caller GH_TOKEN=caller-token COPILOT_GITHUB_TOKEN=caller-copilot-token PI_COPILOT_BASE_URL=caller-base-url
@@ -236,14 +268,19 @@ export HERDR_ENV=1 HERDR_WORKSPACE_ID=w12 HERDR_TEST_LOG="$tmp/herdr-calls"
 unset HERDR_PANE_ID
 for id in '' manual; do
   name="sbx-${PWD##*/}-${id:-w12}"
-  expected_rename=$(printf '%s\n' workspace rename "$HERDR_WORKSPACE_ID" "$name" 'sbx run')
   for run_status in 0 23 130; do
+    expected_rename=$(printf '%s\n' workspace rename "$HERDR_WORKSPACE_ID" "$name" 'sbx run')
+    expected_output=$(expected_run)
+    if [[ $run_status == 0 ]]; then
+      expected_rename+=$'\nsbx exec'
+      expected_output=$(expected_up)
+    fi
     for rename_status in 0 37; do
       : > "$HERDR_TEST_LOG"
       status=0
       output=$(HERDR_TEST_STATUS=$rename_status SBX_STATUS=$run_status sbup ${id:+"$id"} 2>&1) || status=$?
       [[ $status == "$run_status" ]]
-      [[ $output == "$(expected_run)" ]]
+      [[ $output == "$expected_output" ]]
       [[ $(< "$HERDR_TEST_LOG") == "$expected_rename" ]]
     done
   done
@@ -260,7 +297,7 @@ for context in unset outside missing-workspace empty-workspace; do
   esac
   : > "$HERDR_TEST_LOG"
   sbup manual >/dev/null
-  [[ $(< "$HERDR_TEST_LOG") == 'sbx run' ]]
+  [[ $(< "$HERDR_TEST_LOG") == $'sbx run\nsbx exec' ]]
 done
 
 # Failed authentication and non-agent shortcuts do not rename the workspace.
