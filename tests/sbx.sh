@@ -69,10 +69,15 @@ import sys
 spec = pathlib.Path(sys.argv[1]).read_text()
 assert 'FROM docker.io/sbx/shell-docker-image:latest' in spec
 assert 'RUN npm install -g @earendil-works/pi-coding-agent pnpm agent-browser' in spec
-assert 'unset NPM_CONFIG_PREFIX' in spec
-assert 'source "$NVM_DIR/nvm.sh"' in spec
+runs = spec.split('\n  RUN ')[1:]
+nvm_run = next(run for run in runs if 'nvm/v0.41.0/install.sh' in run)
+assert nvm_run.startswith('bash -o pipefail -c')
+assert nvm_run.count('unset NPM_CONFIG_PREFIX') == 1
+assert nvm_run.count('source "$NVM_DIR/nvm.sh"') == 1
 for alias in ('jod', 'krypton', 'lithium'):
-    assert f'nvm install lts/{alias}' in spec
+    assert f'nvm install lts/{alias}' in nvm_run
+assert nvm_run.index('nvm install lts/lithium') < nvm_run.index('nvm alias default lts/krypton')
+assert nvm_run.index('nvm alias default lts/krypton') < nvm_run.index('nvm use default')
 assert 'ENTRYPOINT ["/bin/bash", "/tmp/entrypoint.sh"]' in spec
 assert 'COPY --chown=1000:1000 configure-copilot.mjs /tmp/configure-copilot.mjs' in spec
 assert 'COPY --chown=1000:1000 entrypoint.sh /tmp/entrypoint.sh' in spec

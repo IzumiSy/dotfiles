@@ -6,6 +6,8 @@ description: A development shell with dotfiles, Pi, and host-managed Copilot aut
 
 build: |
   FROM docker.io/sbx/shell-docker-image:latest
+
+  # System CLI tools.
   USER root
   RUN apt-get update \
       && apt-get install -y --no-install-recommends git-delta neovim tig peco fd-find \
@@ -15,20 +17,30 @@ build: |
   RUN --mount=type=tmpfs,target=/tmp bash -o pipefail -c \
       'curl -fsSL https://starship.rs/install.sh | sh -s -- --yes --version v1.27.0'
   COPY --from=ghcr.io/1broseidon/cymbal:v0.18.0 /usr/local/bin/cymbal /usr/local/bin/cymbal
+
+  # Runtime environment.
   ENV PI_CLIPBOARD_OSC52=1
   ENV NVM_DIR=/home/agent/.nvm
   ENV PNPM_HOME=/home/agent/.local/share/pnpm
   ENV PATH="$PNPM_HOME/bin:$PATH"
+
+  # Global CLI tools use the base image's Node.js.
   USER agent
   WORKDIR /home/agent
   RUN npm install -g @earendil-works/pi-coding-agent pnpm agent-browser
+
+  # nvm bootstrap, Node.js LTS versions, then Krypton as the default.
   RUN bash -o pipefail -c \
       'unset NPM_CONFIG_PREFIX \
       && curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.41.0/install.sh | PROFILE=/dev/null bash \
       && source "$NVM_DIR/nvm.sh" \
       && nvm install lts/jod \
       && nvm install lts/krypton \
-      && nvm install lts/lithium'
+      && nvm install lts/lithium \
+      && nvm alias default lts/krypton \
+      && nvm use default'
+
+  # Shell startup and host-proxied Copilot configuration.
   COPY --chown=1000:1000 configure-copilot.mjs /tmp/configure-copilot.mjs
   COPY --chown=1000:1000 entrypoint.sh /tmp/entrypoint.sh
   COPY --chown=1000:1000 bashrc.sh /home/agent/.bashrc
@@ -38,12 +50,16 @@ build: |
 
 capabilities:
   - type: com.docker.sandbox/sbx@1
+
+  # Restrict host SSH-agent authentication to GitHub.
   - type: com.docker.sandbox/ssh-agent@1
     config:
       phase: runtime
       unrestricted: false
       authenticate:
         - git@github.com
+
+  # Runtime outbound network allowlist.
   - type: com.docker.sandbox/network-policy@1
     config:
       runtime:
