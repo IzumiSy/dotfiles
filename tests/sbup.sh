@@ -1,19 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Reloading the config must replace the old aliases, too.
-shopt -s expand_aliases
-sbpi() { echo old sbpi function; }
-sbstop() { echo old sbstop function; }
-alias sbpi='echo old sbpi alias'
-alias sbup='echo old sbup alias'
-alias sbbash='echo old sbbash alias'
-alias sbstop='echo old sbstop alias'
-alias sbdown='echo old sbdown alias'
-alias sbstatus='echo old sbstatus alias'
 source "$(dirname "$0")/../bash/sandbox.sh"
-! type sbpi >/dev/null 2>&1
-! type sbstop >/dev/null 2>&1
 expected_run() {
   printf '%s\n' run --clone --name "$name" --env GH_TOKEN=sbx-gh-token-proxy-managed \
     --env COPILOT_GITHUB_TOKEN=sbx-copilot-token-proxy-managed \

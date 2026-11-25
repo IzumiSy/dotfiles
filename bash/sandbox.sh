@@ -1,7 +1,5 @@
 # Pi sandbox shortcuts
 # shortcut: directory basenames must be unique within an ID; use path-based names if they collide.
-unalias sbpi sbup sbbash sbstop sbdown sbstatus sbpmap 2>/dev/null || true
-unset -f sbpi sbstop
 _sbpmap_ports_script="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)/sbpmap-ports.py"
 function sbup() {
   local id="${1:-${HERDR_WORKSPACE_ID:-}}"

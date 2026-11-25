@@ -57,4 +57,3 @@ deny rule. Keeping the native macOS job also checks behavior a Linux sandbox can
 - `uninstall` is also effectively idempotent: it removes only links that point at this repo.
 - Git configuration and global ignore patterns are linked to `${XDG_CONFIG_HOME:-$HOME/.config}/git/config` and `git/ignore`. `setup` leaves an existing `~/.gitconfig` untouched; its settings take precedence.
 - Sandbox startup points sbx's global `core.excludesfile` at the XDG ignore file while preserving other settings and repository-specific overrides.
-- When migrating, remove `~/.gitconfig` or `~/.gitignore_global` only if they are old symlinks to this repo's matching files; keep regular files.

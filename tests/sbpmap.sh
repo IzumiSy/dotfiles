@@ -2,10 +2,7 @@
 set -euo pipefail
 
 root="$(cd "$(dirname "$0")/.." && pwd)"
-shopt -s expand_aliases
-alias sbpmap='echo stale sbpmap alias'
 source "$root/bash/sandbox.sh"
-! alias sbpmap >/dev/null 2>&1
 
 python3 "$root/tests/sbpmap-ports.py"
 tmp=$(mktemp -d "${TMPDIR:-/tmp}/sbpmap.XXXXXX")
@@ -114,7 +111,7 @@ no_publish
 
 # Match the exact ID suffix and sandbox prefix; never fall back to another workspace.
 reset
-printf '%s\n' '[{"name":"sbx-project-w120","status":"running"},{"name":"pi-sbx-project-w12","status":"running"},{"name":"other-project-w12","status":"running"}]' > "$tmp/sandboxes"
+printf '%s\n' '[{"name":"sbx-project-w120","status":"running"},{"name":"other-project-w12","status":"running"}]' > "$tmp/sandboxes"
 run 3000
 [[ $status == 1 && $output == *'No sandbox found for workspace w12'* ]]
 no_exec; no_publish

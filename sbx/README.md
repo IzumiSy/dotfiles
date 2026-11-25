@@ -1,31 +1,30 @@
 # Sandbox shell with Pi
 
-`sbup` launches the Sandbox Kit in this directory, configures the existing
-GitHub/Copilot credential proxies, restores the shared dotfiles, and opens Bash. Start Pi
-manually with `pi` when you need it.
+`sbup` launches the Sandbox Kit in this directory, configures the
+GitHub/Copilot credential proxies, loads the shared dotfiles, and opens Bash.
+Start Pi manually with `pi` when you need it.
 
-`sbx/spec.yaml` uses `docker.io/sbx/shell-docker-image:latest` rather than the
-Pi base image. The base supplies the agent user, proxy environment, Docker,
-Node.js, Python, Go, and Java. This kit adds Pi, pnpm, nvm v0.41.0, Neovim,
-git-delta, tig, peco, fd, Starship v1.27.0, and Cymbal v0.18.0, preserving the
-previous development tools without rebuilding the base environment itself.
+`sbx/spec.yaml` uses `docker.io/sbx/shell-docker-image:latest`. The base supplies
+the agent user, proxy environment, Docker, Node.js, Python, Go, and Java.
+This kit adds Pi, pnpm, nvm v0.41.0, Neovim, git-delta, tig, peco, fd,
+Starship v1.27.0, and Cymbal v0.18.0.
 
 On each launch, `entrypoint.sh` clones or updates `~/dotfiles` from `master`
-and installs the previous sandbox links: Starship, Neovim, Pi settings and
+and installs links for Starship, Neovim, Pi settings and
 AGENTS.md, Git config/ignore, and tig config. It retains sbx's other Git settings
 while pointing its global ignore setting at the linked XDG ignore file.
 Existing regular config files and conflicting local edits are not overwritten;
 initialization failures prevent entry into Bash.
 
 `bashrc.sh` loads the persistent sandbox environment and shared nvm loader.
-Interactive shells also load `bash/base.sh` and `bash/tools.sh`, restoring
-aliases, history helpers, and the Starship prompt. Non-interactive Bash loads
+Interactive shells also load `bash/base.sh` and `bash/tools.sh` for aliases,
+history helpers, and the Starship prompt. Non-interactive Bash loads
 the same environment quietly through `BASH_ENV`. Startup uses a non-login shell
 to retain the initialized PATH. Tini is not used as a session wrapper because
 sbx already supplies init.
 
-Host authentication proxies, restricted GitHub SSH-agent access, the runtime
-network allowlist, and Pi OSC52 clipboard behavior remain unchanged.
+The kit uses host authentication proxies, restricted GitHub SSH-agent access,
+a runtime network allowlist, and Pi OSC52 clipboard support.
 Reattachment updates dotfiles, but does not install or update image tools.
 
 ## Commands
@@ -95,8 +94,8 @@ Direct kit launches without `PI_COPILOT_BASE_URL` skip proxy configuration.
 
 ## Herdr
 
-`sbup` preserves `HERDR_AGENT=pi` on the host's `sbx run` process so Herdr can
-identify Pi even though startup now opens Bash. It does not change the caller's
+`sbup` sets `HERDR_AGENT=pi` on the host's `sbx run` process so Herdr can
+identify Pi while startup opens Bash. It does not change the caller's
 environment. Pi screen detection still depends on Herdr's built-in rules and,
 on macOS, Herdr 0.9.0 or newer, including the running server.
 
@@ -105,21 +104,10 @@ launch. An explicit sandbox ID still renames the calling workspace, not the
 workspace identified by that ID. Rename failures do not prevent launch or alter
 its exit status.
 
-## Migration and limitations
+## Limitations
 
-Reload the host shortcuts:
-
-```bash
-source "$HOME/Devs/dotfiles/bash/sandbox.sh"
-```
-
-`sbpi` is removed, and `sbstop` has been renamed to `sbdown`. New `sbx-...` names avoid reusing the old `pi-sbx-...`
-sandboxes and their custom entrypoint. Existing sandboxes are not stopped or
-removed automatically. The shortcuts, including `sbpmap`, now target only the
-new names; use `sbx` directly to manage old sandboxes. If you already created an
-`sbx-...` sandbox before this dotfiles restoration, use a new ID or explicitly
-recreate that sandbox to pick up this kit's image, Bash config, and entrypoint.
-Stopping and reattaching does not update an existing image.
+- Image, Bash config, and entrypoint changes require a new sandbox. Stopping and
+  reattaching does not update an existing image.
 
 - One Pi instance per sandbox; concurrent configuration writers are unsupported.
 - Placeholder authentication does not filter models against the host OAuth
