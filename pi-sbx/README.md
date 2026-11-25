@@ -111,3 +111,10 @@ directories remain unchanged.
 it and use its built-in screen detection. On macOS this requires Herdr 0.9.0 or
 newer, including the running server. Detection accuracy depends on Herdr's Pi
 rules, especially for approval prompts. No custom relay or Pi extension is used.
+
+Inside Herdr, `sbpi` reports the sandbox name
+(`pi-sbx-<directory>-<id>`) as the agent's display name before `sbx run`, then
+clears it when the command returns. Metadata failures do not prevent launch or
+change the sandbox command's exit status. Workspace/tab names and agent state
+are unchanged. This host-only change does not require recreating sandboxes;
+reload `bash/sandbox.sh` in the host shell before the next `sbpi` launch.

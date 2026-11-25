@@ -33,8 +33,18 @@ gh() {
   fi
 }
 
+herdr() {
+  printf '%s\n' "$@" >> "$tmp/herdr-calls"
+  printf 'metadata output\n'
+  printf 'metadata error\n' >&2
+  return "${HERDR_TEST_STATUS:-0}"
+}
+
 sbx() {
   if [[ $1 == run ]]; then
+    if [[ -n ${HERDR_TEST_LOG:-} ]]; then
+      printf 'sbx run\n' >> "$HERDR_TEST_LOG"
+    fi
     [[ ${HERDR_AGENT:-} == pi ]] || return 99
     [[ ${GITHUB_SECRET_SANDBOX:-} == "$4" ]] || return 98
     [[ ${COPILOT_SECRET_SANDBOX:-} == "$4" ]] || return 98
@@ -72,6 +82,7 @@ sbx() {
 }
 unset SBX_STATUS SBX_SECRET_STATUS SBX_COPILOT_STATUS HERDR_AGENT GITHUB_SECRET_SANDBOX COPILOT_SECRET_SANDBOX GH_STATUS GH_EMPTY
 unset PI_STATUS PI_TOKEN PI_CODING_AGENT_DIR EXPECTED_PI_DIR EXPECTED_COPILOT_HOST SBX_SECRET_LOG
+unset HERDR_ENV HERDR_PANE_ID HERDR_TEST_STATUS HERDR_TEST_LOG
 
 # All shortcuts use the current workspace and preserve argument boundaries.
 export HERDR_WORKSPACE_ID=w12
@@ -216,5 +227,49 @@ sbpi >/dev/null
 sbbash >/dev/null
 sbstop >/dev/null
 sbstatus >/dev/null
+
+# Sandbox display metadata surrounds run, without an agent guard or state takeover.
+export HERDR_ENV=1 HERDR_PANE_ID=w12:p3 HERDR_TEST_LOG="$tmp/herdr-calls"
+for id in '' manual; do
+  name="pi-sbx-${PWD##*/}-${id:-w12}"
+  expected_metadata=$(printf '%s\n' pane report-metadata "$HERDR_PANE_ID" \
+    --source user:sbx --display-agent "$name" 'sbx run' \
+    pane report-metadata "$HERDR_PANE_ID" --source user:sbx --clear-display-agent)
+  for run_status in 0 23 130; do
+    for metadata_status in 0 37; do
+      : > "$HERDR_TEST_LOG"
+      status=0
+      output=$(HERDR_TEST_STATUS=$metadata_status SBX_STATUS=$run_status sbpi ${id:+"$id"} 2>&1) || status=$?
+      [[ $status == "$run_status" ]]
+      [[ $output == run$'\n'* && $output != *metadata* ]]
+      [[ $(< "$HERDR_TEST_LOG") == "$expected_metadata" ]]
+    done
+  done
+done
+
+# Missing Herdr context skips metadata, even if a stale pane ID is inherited.
+for context in unset outside missing-pane empty-pane; do
+  export HERDR_ENV=1 HERDR_PANE_ID=w12:p3
+  case $context in
+    unset) unset HERDR_ENV ;;
+    outside) HERDR_ENV=0 ;;
+    missing-pane) unset HERDR_PANE_ID ;;
+    empty-pane) HERDR_PANE_ID='' ;;
+  esac
+  : > "$HERDR_TEST_LOG"
+  sbpi >/dev/null
+  [[ $(< "$HERDR_TEST_LOG") == 'sbx run' ]]
+done
+
+# Failed authentication and non-agent shortcuts do not touch display metadata.
+export HERDR_ENV=1 HERDR_PANE_ID=w12:p3
+: > "$HERDR_TEST_LOG"
+status=0
+PI_STATUS=29 sbpi >/dev/null 2>&1 || status=$?
+[[ $status == 29 && ! -s $HERDR_TEST_LOG ]]
+sbbash >/dev/null
+sbstop >/dev/null
+sbstatus >/dev/null
+[[ ! -s $HERDR_TEST_LOG ]]
 
 printf 'sbpi/sbbash/sbstop/sbstatus checks passed\n'

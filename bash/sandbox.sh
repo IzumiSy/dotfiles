@@ -41,9 +41,19 @@ function sbpi() {
   sbx secret set-custom --sandbox "$name" --host "$copilot_host" \
     --env COPILOT_GITHUB_TOKEN --placeholder "$copilot_placeholder" \
     --command "$copilot_command" --refresh 1m >/dev/null || return
+  if [[ ${HERDR_ENV:-} == 1 && -n ${HERDR_PANE_ID:-} ]]; then
+    herdr pane report-metadata "$HERDR_PANE_ID" \
+      --source user:sbx --display-agent "$name" >/dev/null 2>&1 || true
+  fi
+  local status=0
   HERDR_AGENT=pi sbx run --clone --name "$name" --env "GH_TOKEN=$gh_placeholder" \
     --env "COPILOT_GITHUB_TOKEN=$copilot_placeholder" --env "PI_COPILOT_BASE_URL=https://$copilot_host" \
-    "$HOME/Devs/dotfiles/pi-sbx" . "$@"
+    "$HOME/Devs/dotfiles/pi-sbx" . "$@" || status=$?
+  if [[ ${HERDR_ENV:-} == 1 && -n ${HERDR_PANE_ID:-} ]]; then
+    herdr pane report-metadata "$HERDR_PANE_ID" \
+      --source user:sbx --clear-display-agent >/dev/null 2>&1 || true
+  fi
+  return "$status"
 }
 
 function sbbash() {
