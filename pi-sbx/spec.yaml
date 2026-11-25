@@ -38,6 +38,12 @@ build: |
 
 capabilities:
   - type: com.docker.sandbox/sbx@1
+  - type: com.docker.sandbox/ssh-agent@1
+    config:
+      phase: runtime
+      unrestricted: false
+      authenticate:
+        - git@github.com
   - type: com.docker.sandbox/network-policy@1
     config:
       runtime:
