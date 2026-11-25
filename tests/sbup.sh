@@ -4,13 +4,16 @@ set -euo pipefail
 # Reloading the config must replace the old aliases, too.
 shopt -s expand_aliases
 sbpi() { echo old sbpi function; }
+sbstop() { echo old sbstop function; }
 alias sbpi='echo old sbpi alias'
 alias sbup='echo old sbup alias'
 alias sbbash='echo old sbbash alias'
 alias sbstop='echo old sbstop alias'
+alias sbdown='echo old sbdown alias'
 alias sbstatus='echo old sbstatus alias'
 source "$(dirname "$0")/../bash/sandbox.sh"
 ! type sbpi >/dev/null 2>&1
+! type sbstop >/dev/null 2>&1
 expected_run() {
   printf '%s\n' run --clone --name "$name" --env GH_TOKEN=sbx-gh-token-proxy-managed \
     --env COPILOT_GITHUB_TOKEN=sbx-copilot-token-proxy-managed \
@@ -100,7 +103,7 @@ export HOME='/test/home with spaces'
 name="sbx-${PWD##*/}-w12"
 [[ $(sbup) == "$(expected_run)" ]]
 [[ $(sbbash) == "$(printf '%s\n' exec -it -w "$PWD" "$name" bash)" ]]
-[[ $(sbstop) == "$(printf '%s\n' stop "$name")" ]]
+[[ $(sbdown) == "$(printf '%s\n' stop "$name")" ]]
 [[ $(sbstatus) == "$(printf '%s\n' inspect "$name")" ]]
 
 # An explicit ID overrides the workspace; remaining arguments are forwarded.
@@ -108,7 +111,7 @@ name="sbx-${PWD##*/}-manual"
 [[ $(sbup manual --publish 3000:3000 --env 'EXAMPLE=argument with spaces') == "$(expected_run --publish 3000:3000 --env 'EXAMPLE=argument with spaces')" ]]
 [[ $(sbup manual -- -c 'echo hello') == "$(expected_run -- -c 'echo hello')" ]]
 [[ $(sbbash manual -lc 'echo hello') == "$(printf '%s\n' exec -it -w "$PWD" "$name" bash -lc 'echo hello')" ]]
-[[ $(sbstop manual --json) == "$(printf '%s\n' stop "$name" --json)" ]]
+[[ $(sbdown manual --json) == "$(printf '%s\n' stop "$name" --json)" ]]
 [[ $(sbstatus manual --format json) == "$(printf '%s\n' inspect "$name" --format json)" ]]
 
 # Outside herdr, an unset or empty workspace requires an explicit ID.
@@ -118,7 +121,7 @@ for state in unset empty; do
   else
     HERDR_WORKSPACE_ID=''
   fi
-  for cmd in sbup sbbash sbstop sbstatus; do
+  for cmd in sbup sbbash sbdown sbstatus; do
     if output=$("$cmd" 2>&1); then
       echo "$cmd unexpectedly succeeded without an ID" >&2
       exit 1
@@ -128,13 +131,13 @@ for state in unset empty; do
   done
   [[ $(sbup manual) == "$(expected_run)" ]]
   [[ $(sbbash manual) == "$(printf '%s\n' exec -it -w "$PWD" "$name" bash)" ]]
-  [[ $(sbstop manual) == "$(printf '%s\n' stop "$name")" ]]
+  [[ $(sbdown manual) == "$(printf '%s\n' stop "$name")" ]]
   [[ $(sbstatus manual) == "$(printf '%s\n' inspect "$name")" ]]
 done
 
 # Sandbox failures must reach the caller.
 export HERDR_WORKSPACE_ID=w12 SBX_STATUS=23
-for cmd in sbup sbbash sbstop sbstatus; do
+for cmd in sbup sbbash sbdown sbstatus; do
   status=0
   "$cmd" >/dev/null || status=$?
   [[ $status == 23 ]]
@@ -237,7 +240,7 @@ sbup >/dev/null
 [[ $COPILOT_GITHUB_TOKEN == caller-copilot-token ]]
 [[ $PI_COPILOT_BASE_URL == caller-base-url ]]
 sbbash >/dev/null
-sbstop >/dev/null
+sbdown >/dev/null
 sbstatus >/dev/null
 
 # Rename the calling workspace before run; preserve the name and command status.
@@ -279,8 +282,8 @@ status=0
 PI_STATUS=29 sbup >/dev/null 2>&1 || status=$?
 [[ $status == 29 && ! -s $HERDR_TEST_LOG ]]
 sbbash >/dev/null
-sbstop >/dev/null
+sbdown >/dev/null
 sbstatus >/dev/null
 [[ ! -s $HERDR_TEST_LOG ]]
 
-printf 'sbup/sbbash/sbstop/sbstatus checks passed\n'
+printf 'sbup/sbbash/sbdown/sbstatus checks passed\n'

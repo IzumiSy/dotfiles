@@ -35,7 +35,7 @@ Reattachment updates dotfiles, but does not install or update image tools.
 | `sbup [id] [sbx arguments...]` | Create or reattach to the sandbox, then enter Bash. |
 | `sbbash [id] [bash arguments...]` | Open another shell in the same sandbox. |
 | `sbstatus [id] [sbx arguments...]` | Show sandbox state via `sbx inspect`. |
-| `sbstop [id] [sbx arguments...]` | Stop the sandbox without removing it. |
+| `sbdown [id] [sbx arguments...]` | Stop the sandbox without removing it. |
 | `sbpmap [--id ID] [HOST_PORT:SANDBOX_PORT \| SANDBOX_PORT]` | Publish a listener on host loopback; without a port, select one. |
 
 Sandbox names are `sbx-<directory>-<id>`. The ID falls back to
@@ -113,7 +113,7 @@ Reload the host shortcuts:
 source "$HOME/Devs/dotfiles/bash/sandbox.sh"
 ```
 
-`sbpi` is removed. New `sbx-...` names avoid reusing the old `pi-sbx-...`
+`sbpi` is removed, and `sbstop` has been renamed to `sbdown`. New `sbx-...` names avoid reusing the old `pi-sbx-...`
 sandboxes and their custom entrypoint. Existing sandboxes are not stopped or
 removed automatically. The shortcuts, including `sbpmap`, now target only the
 new names; use `sbx` directly to manage old sandboxes. If you already created an
