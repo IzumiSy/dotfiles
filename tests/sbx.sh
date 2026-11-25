@@ -68,7 +68,7 @@ import pathlib
 import sys
 spec = pathlib.Path(sys.argv[1]).read_text()
 assert 'FROM docker.io/sbx/shell-docker-image:latest' in spec
-assert 'RUN npm install -g @earendil-works/pi-coding-agent pnpm' in spec
+assert 'RUN npm install -g @earendil-works/pi-coding-agent pnpm agent-browser' in spec
 assert 'unset NPM_CONFIG_PREFIX' in spec
 assert 'source "$NVM_DIR/nvm.sh"' in spec
 for alias in ('jod', 'krypton', 'lithium'):

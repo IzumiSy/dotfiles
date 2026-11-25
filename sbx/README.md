@@ -7,8 +7,11 @@ The interactive shell uses `sbx exec -it -w "$PWD"`, just like a direct
 
 `sbx/spec.yaml` uses `docker.io/sbx/shell-docker-image:latest`. The base supplies
 the agent user, proxy environment, Docker, Node.js, Python, Go, and Java.
-This kit adds Pi, pnpm, nvm v0.41.0, Neovim, git-delta, tig, peco, fd,
-Starship v1.27.0, and Cymbal v0.18.0.
+This kit adds Pi, pnpm, the agent-browser CLI, nvm v0.41.0, Neovim, git-delta,
+tig, peco, fd, Starship v1.27.0, and Cymbal v0.18.0.
+Browser binaries and system dependencies are not preinstalled; Linux ARM64
+requires a separately installed Chromium because Chrome for Testing has no
+Linux ARM64 build.
 
 On each launch, `entrypoint.sh` clones or updates `~/dotfiles` from `master`
 and installs links for Starship, Neovim, Pi settings and

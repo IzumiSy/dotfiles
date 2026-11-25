@@ -21,7 +21,7 @@ build: |
   ENV PATH="$PNPM_HOME/bin:$PATH"
   USER agent
   WORKDIR /home/agent
-  RUN npm install -g @earendil-works/pi-coding-agent pnpm
+  RUN npm install -g @earendil-works/pi-coding-agent pnpm agent-browser
   RUN bash -o pipefail -c \
       'unset NPM_CONFIG_PREFIX \
       && curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.41.0/install.sh | PROFILE=/dev/null bash \
