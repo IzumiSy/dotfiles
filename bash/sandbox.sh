@@ -1,6 +1,6 @@
 # Pi sandbox shortcuts
 # shortcut: directory basenames must be unique within an ID; use path-based names if they collide.
-_sbpmap_ports_script="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)/sbpmap-ports.py"
+_sbpmap_ports_script="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/../sbx" && pwd)/sbpmap-ports.mjs"
 function sbup() {
   local id="${1:-${HERDR_WORKSPACE_ID:-}}"
   if [[ -z $id ]]; then
@@ -183,7 +183,7 @@ function sbpmap() {
   local mappings ports rows blocked existing
   mappings=$(sbx port ls "$name" --format json) || return
   # shortcut: sbx may start a sandbox stopped after this state check; avoid concurrent lifecycle commands.
-  ports=$(sbx exec -i "$name" python3 -I - < "$_sbpmap_ports_script") || return
+  ports=$(sbx exec -i "$name" node --input-type=module - < "$_sbpmap_ports_script") || return
   if [[ -z $port ]]; then
     rows=$(jq -r --argjson mappings "$mappings" '
       group_by(.port)[] | select(any(.[]; .loopback == false)) | .[0].port as $port |

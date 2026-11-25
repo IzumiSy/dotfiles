@@ -4,7 +4,6 @@ set -euo pipefail
 root="$(cd "$(dirname "$0")/.." && pwd)"
 source "$root/bash/sandbox.sh"
 
-python3 "$root/tests/sbpmap-ports.py"
 tmp=$(mktemp -d "${TMPDIR:-/tmp}/sbpmap.XXXXXX")
 tmp="$(cd "$tmp" && pwd -P)"
 trap 'rm -rf "$tmp"' EXIT
@@ -33,8 +32,8 @@ case "$1" in
     [[ ${SBPMAP_LS_STATUS:-0} == 0 ]] || exit "$SBPMAP_LS_STATUS"
     cat "$SBPMAP_FIXTURES/sandboxes" ;;
   exec)
-    [[ $# == 6 && $2 == -i && $4 == python3 && $5 == -I && $6 == - ]] || exit 98
-    grep -q 'def scan' || exit 98
+    [[ $# == 6 && $2 == -i && $4 == node && $5 == --input-type=module && $6 == - ]] || exit 98
+    grep -q 'export function scan' || exit 98
     [[ ${SBPMAP_EXEC_STATUS:-0} == 0 ]] || exit "$SBPMAP_EXEC_STATUS"
     cat "$SBPMAP_FIXTURES/ports" ;;
   port)
