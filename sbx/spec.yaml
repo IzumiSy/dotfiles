@@ -23,7 +23,12 @@ build: |
   WORKDIR /home/agent
   RUN npm install -g @earendil-works/pi-coding-agent pnpm
   RUN bash -o pipefail -c \
-      'curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.41.0/install.sh | PROFILE=/dev/null bash'
+      'unset NPM_CONFIG_PREFIX \
+      && curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.41.0/install.sh | PROFILE=/dev/null bash \
+      && source "$NVM_DIR/nvm.sh" \
+      && nvm install lts/jod \
+      && nvm install lts/krypton \
+      && nvm install lts/lithium'
   COPY --chown=1000:1000 configure-copilot.mjs /tmp/configure-copilot.mjs
   COPY --chown=1000:1000 entrypoint.sh /tmp/entrypoint.sh
   COPY --chown=1000:1000 bashrc.sh /home/agent/.bashrc

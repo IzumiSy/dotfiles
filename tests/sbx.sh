@@ -69,6 +69,10 @@ import sys
 spec = pathlib.Path(sys.argv[1]).read_text()
 assert 'FROM docker.io/sbx/shell-docker-image:latest' in spec
 assert 'RUN npm install -g @earendil-works/pi-coding-agent pnpm' in spec
+assert 'unset NPM_CONFIG_PREFIX' in spec
+assert 'source "$NVM_DIR/nvm.sh"' in spec
+for alias in ('jod', 'krypton', 'lithium'):
+    assert f'nvm install lts/{alias}' in spec
 assert 'ENTRYPOINT ["/bin/bash", "/tmp/entrypoint.sh"]' in spec
 assert 'COPY --chown=1000:1000 configure-copilot.mjs /tmp/configure-copilot.mjs' in spec
 assert 'COPY --chown=1000:1000 entrypoint.sh /tmp/entrypoint.sh' in spec
