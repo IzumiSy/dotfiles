@@ -54,8 +54,8 @@ cat > "$tmp/bin/pi" <<'SH'
 [ "$SANDBOX_PERSISTENT_LOADED" = 1 ] || exit 98
 [ "${NPM_CONFIG_PREFIX+x}" != x ] || exit 98
 [ "$BASH_ENV" = "$HOME/.bashrc" ] || exit 98
-[ "$(node --version)" = v22.0.0 ] || exit 98
-[ "$(bash -c 'nvm --version; node --version')" = "$(printf 'mock-nvm\nv22.0.0')" ] || exit 98
+[ "$(command node --version)" = v22.0.0 ] || exit 98
+[ "$(bash -c 'nvm --version; command node --version')" = "$(printf 'mock-nvm\nv22.0.0')" ] || exit 98
 printf '%s\n' "$@" > "$PI_ARGS"
 exit "${PI_EXIT:-0}"
 SH
