@@ -103,9 +103,10 @@ cmp "$root/git/config" "$HOME/dotfiles/git/config"
 cmp "$root/pi-sbx/bashrc.sh" "$HOME/.bashrc"
 # Model the image's nvm installation; Bash must use the shared loader.
 mkdir -p "$HOME/.nvm"
-printf 'nvm() { printf "mock-nvm\\n"; }\n' > "$HOME/.nvm/nvm.sh"
-bash --noprofile --rcfile "$HOME/.bashrc" -ic '
+printf '[[ ! ${NPM_CONFIG_PREFIX+x} ]] || return 1\nnvm() { printf "mock-nvm\\n"; }\n' > "$HOME/.nvm/nvm.sh"
+NPM_CONFIG_PREFIX=/usr/local/share/npm-global bash --noprofile --rcfile "$HOME/.bashrc" -ic '
   set -eu
+  [[ ! ${NPM_CONFIG_PREFIX+x} ]]
   [[ $SANDBOX_PERSISTENT_LOADED == 1 ]]
   [[ $BASH_ENV == /etc/sandbox-persistent.sh ]]
   [[ $NVM_DIR == "$HOME/.nvm" && $(nvm --version) == mock-nvm ]]
