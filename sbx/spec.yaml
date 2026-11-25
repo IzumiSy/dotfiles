@@ -18,7 +18,15 @@ build: |
       'curl -fsSL https://starship.rs/install.sh | sh -s -- --yes --version v1.27.0'
   COPY --from=ghcr.io/1broseidon/cymbal:v0.18.0 /usr/local/bin/cymbal /usr/local/bin/cymbal
 
+  # Reuse Playwright's browser image on both Linux ARM64 and AMD64.
+  COPY --from=mcr.microsoft.com/playwright:v1.64.1-noble /ms-playwright/chromium-* /opt/chromium/
+  RUN --mount=type=tmpfs,target=/root/.npm NPM_CONFIG_PREFIX=/usr/local npx --yes playwright@1.64.1 install-deps chromium \
+      && ln -s /opt/chromium/chrome-linux*/chrome /usr/local/bin/chromium \
+      && chromium --version \
+      && rm -rf /var/lib/apt/lists/*
+
   # Runtime environment.
+  ENV AGENT_BROWSER_EXECUTABLE_PATH=/usr/local/bin/chromium
   ENV PI_CLIPBOARD_OSC52=1
   ENV NVM_DIR=/home/agent/.nvm
   ENV PNPM_HOME=/home/agent/.local/share/pnpm

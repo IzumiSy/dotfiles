@@ -69,6 +69,13 @@ import sys
 spec = pathlib.Path(sys.argv[1]).read_text()
 assert 'FROM docker.io/sbx/shell-docker-image:latest' in spec
 assert 'RUN npm install -g @earendil-works/pi-coding-agent pnpm agent-browser' in spec
+assert 'COPY --from=mcr.microsoft.com/playwright:v1.64.1-noble /ms-playwright/chromium-* /opt/chromium/' in spec
+assert 'NPM_CONFIG_PREFIX=/usr/local npx --yes playwright@1.64.1 install-deps chromium' in spec
+assert spec.index('install-deps chromium') < spec.index('USER agent')
+assert 'ln -s /opt/chromium/chrome-linux*/chrome /usr/local/bin/chromium' in spec
+assert '&& chromium --version' in spec
+assert 'ENV AGENT_BROWSER_EXECUTABLE_PATH=/usr/local/bin/chromium' in spec
+assert 'agent-browser install' not in spec
 runs = spec.split('\n  RUN ')[1:]
 nvm_run = next(run for run in runs if 'nvm/v0.41.0/install.sh' in run)
 assert nvm_run.startswith('bash -o pipefail -c')

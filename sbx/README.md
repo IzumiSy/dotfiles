@@ -11,9 +11,11 @@ This kit adds Pi, pnpm, the agent-browser CLI, nvm v0.41.0, Neovim, git-delta,
 tig, peco, fd, Starship v1.27.0, and Cymbal v0.18.0.
 Node.js LTS Jod, Krypton, and Lithium are installed through nvm; Krypton is the
 default and is activated when the shared nvm loader initializes a new shell.
-Browser binaries and system dependencies are not preinstalled; Linux ARM64
-requires a separately installed Chromium because Chrome for Testing has no
-Linux ARM64 build.
+Chromium is copied from `mcr.microsoft.com/playwright:v1.64.1-noble`, which
+supports Linux ARM64 and AMD64. Only Chromium is copied; its system dependencies
+are installed with the matching Playwright version. agent-browser uses it via
+`AGENT_BROWSER_EXECUTABLE_PATH=/usr/local/bin/chromium`, so no
+`agent-browser install` or runtime browser download is needed.
 
 On each launch, `entrypoint.sh` clones or updates `~/dotfiles` from `master`
 and installs links for Starship, Neovim, Pi settings and
