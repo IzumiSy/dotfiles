@@ -140,3 +140,4 @@ capabilities:
           - '**.googleapis.com'
           - '**.erp.dev'
           - pi.dev
+          - buf.build
