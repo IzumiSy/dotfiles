@@ -140,6 +140,10 @@ function _sb_select_sandbox() {
     echo "No sandboxes found${id:+ for workspace $id}." >&2
     return 1
   fi
+  if [[ -n $id ]] && jq -e 'length == 1' <<< "$matches" >/dev/null; then
+    jq -c '.[0]' <<< "$matches"
+    return
+  fi
   rows=$(jq -r '.[] | [.name, .status, ((.workspaces // []) | join(", "))] | @tsv' <<< "$matches") || return
   selection=$(peco --prompt 'Sandbox> ' --on-cancel error <<< "$rows") || return 130
   [[ -n $selection ]] || return 130

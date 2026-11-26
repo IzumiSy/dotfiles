@@ -63,9 +63,11 @@ uses a private sandbox clone.
   applies the same filter.
 - Outside a Herdr workspace, all sandboxes from `sbx ls --format json` are candidates.
 
-Both always use peco to select a sandbox, even with one candidate. The current
-directory does not narrow the list. Cancelling either selection stops the command
-without publishing a port or opening a browser.
+When an explicit or Herdr-derived ID matches exactly one sandbox, sandbox
+selection is skipped. With multiple matches, or without an ID, peco selects the
+sandbox. Port selection still uses peco. The current directory does not narrow
+the list. Cancelling either selection stops the command without publishing a port
+or opening a browser.
 
 ```bash
 sb up manual

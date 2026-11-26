@@ -147,7 +147,7 @@ def publications(calls):
 
 def published(calls, target=name, spec="3000/tcp4"):
     assert publications(calls) == [f"sbx\t--no-input\tport\tpublish\t{target}\t{spec}\t"], calls
-    assert sandbox_stage in calls and port_stage in calls, calls
+    assert port_stage in calls, calls
     assert f"sbx\texec\t-i\t{target}\t" in calls, calls
 
 def untouched(calls):
@@ -155,10 +155,10 @@ def untouched(calls):
 
 # Explicit and inherited IDs must not publish into another workspace.
 status, output, calls = terminal(args=("manual",), sandboxes=[*base, manual])
-assert status == 0, output
+assert status == 0 and sandbox_stage not in calls, output
 published(calls, manual["name"])
 status, output, calls = terminal(sandboxes=[manual, *base])
-assert status == 0, output
+assert status == 0 and sandbox_stage not in calls, output
 published(calls)
 status, output, calls = terminal(sandboxes=[dict(base[0], name="sbx-project-w120"),
                                           dict(base[0], name="other-project-w12")])
@@ -171,22 +171,22 @@ for context in ({"HERDR_ENV": None, "HERDR_WORKSPACE_ID": None},
                 {"HERDR_ENV": "0"}, {"HERDR_WORKSPACE_ID": ""}):
     status, output, calls = terminal(sandboxes=[*base, custom],
                                     environment=dict(context, SBPMAP_SANDBOX_ROW="2"))
-    assert status == 0, output
+    assert status == 0 and sandbox_stage in calls, output
     published(calls, custom["name"])
 second = dict(base[0], name="sbx-second-w12", workspaces=["/elsewhere"])
 status, output, calls = terminal(sandboxes=[*base, second], environment={"SBPMAP_SANDBOX_ROW": "2"})
-assert status == 0, output
+assert status == 0 and sandbox_stage in calls, output
 published(calls, second["name"])
 
 # Sandbox cancellation, forged out-of-scope choices, and stopped sandboxes do not execute.
 for mode in ("cancel", "empty", "forged"):
-    status, output, calls = terminal(sandboxes=[*base, manual], environment={"SBPMAP_SANDBOX_PECO": mode})
+    status, output, calls = terminal(sandboxes=[*base, second, manual], environment={"SBPMAP_SANDBOX_PECO": mode})
     assert status != 0 and sandbox_stage in calls and port_stage not in calls, (status, output, calls)
     if mode != "forged":
         assert status == 130, (status, output)
     untouched(calls)
 status, output, calls = terminal(sandboxes=[dict(base[0], status="stopped")])
-assert status == 1 and sandbox_stage in calls, output
+assert status == 1 and sandbox_stage not in calls, output
 untouched(calls)
 
 # Unsupported flags and extra positional arguments have no side effects.
@@ -197,7 +197,7 @@ for args in (("--id",), ("--id", "manual"), ("--unknown",), ("manual", "extra"))
 # Port cancellation and invalid/EOF host input must reach their own stage without publishing.
 for mode in ("cancel", "empty"):
     status, output, calls = terminal(environment={"SBPMAP_PECO": mode})
-    assert status == 130 and sandbox_stage in calls and port_stage in calls, output
+    assert status == 130 and port_stage in calls, output
     assert not publications(calls), calls
 for text in (b"0\n", b"65536\n", b"-1\n", b"not-a-port\n", b"\x04"):
     status, output, calls = terminal(text=text)
