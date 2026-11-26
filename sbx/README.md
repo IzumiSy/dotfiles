@@ -45,6 +45,7 @@ Reattachment updates dotfiles, but does not install or update image tools.
 | `sb down [id] [sbx arguments...]` | Stop the sandbox without removing it. |
 | `sb status [id] [sbx arguments...]` | Show sandbox state via `sbx inspect`. |
 | `sb map [id]` | Interactively select a sandbox, a listener, and a host port to publish on loopback. |
+| `sb unmap [id]` | Select one published port mapping with peco and unpublish it. |
 | `sb open [id]` | Select a sandbox and a published TCP port with peco, then open it in the default browser. |
 | `sb help` | Show usage; also displayed by `sb` without arguments. |
 
@@ -56,7 +57,7 @@ Sandbox names are `sbx-<directory>-<id>`. `sb up`, `sb shell`, `sb down`, and
 outside Herdr, provide it explicitly. `sb up` keeps `--clone`, so the project
 uses a private sandbox clone.
 
-`sb map` and `sb open` share the same sandbox selection rules:
+`sb map`, `sb unmap`, and `sb open` share the same sandbox selection rules:
 
 - An explicit positional ID filters candidates to sandbox names matching `sbx-*-ID`.
 - Otherwise, inside Herdr (`HERDR_ENV=1`), a nonempty `HERDR_WORKSPACE_ID`
@@ -66,8 +67,8 @@ uses a private sandbox clone.
 When an explicit or Herdr-derived ID matches exactly one sandbox, sandbox
 selection is skipped. With multiple matches, or without an ID, peco selects the
 sandbox. Port selection still uses peco. The current directory does not narrow
-the list. Cancelling either selection stops the command without publishing a port
-or opening a browser.
+the list. Cancelling either selection stops the command without publishing or
+unpublishing a port, or opening a browser.
 
 ```bash
 sb up manual
@@ -101,14 +102,21 @@ sb map             # Select a sandbox and listener, then enter a host port.
 sb open            # Select a sandbox, then an existing mapping to open.
 sb map manual
 sb open manual
+sb unmap manual    # Select a published mapping to remove.
 ```
 
-Both commands require `sbx`, `jq`, and `peco`. `sb map` is interactive-only and
+All three commands require `sbx`, `jq`, and `peco`. `sb map` is interactive-only and
 requires a terminal. After sandbox selection, it rejects stopped sandboxes before
 inspecting or publishing ports. Select a listener, then enter a host port or press
 Enter for automatic allocation. Existing compatible loopback mappings are reused
 without asking for another host port. The optional command argument is the sandbox
 ID; ports are always chosen interactively.
+
+`sb unmap` is also interactive-only. It reads the selected sandbox's current
+mappings with `sbx port ls`, then unpublishes exactly the selected host IP, host
+port, sandbox port, and protocol. IPv4, IPv6, TCP, and UDP mappings are supported.
+It does not stop the application or remove the sandbox. It accepts one mapping
+at a time; selecting multiple rows is rejected.
 
 `sb open` lists the selected sandbox's published TCP ports and host URLs from
 `sbx ls --format json`.

@@ -8,6 +8,7 @@ function sb() {
     down) _sb_down "$@" ;;
     status) _sb_status "$@" ;;
     map) _sb_map "$@" ;;
+    unmap) _sb_unmap "$@" ;;
     open) _sb_open "$@" ;;
     help|-h|--help)
       printf '%s\n' \
@@ -17,10 +18,11 @@ function sb() {
         '  down [id] [sbx arguments...]                      Stop without removing' \
         '  status [id] [sbx arguments...]                    Inspect the sandbox' \
         '  map [id]                                         Interactively publish a port' \
+        '  unmap [id]                                       Interactively unpublish a port' \
         '  open [id]                                        Select a published port and open a browser' \
         '  help                                             Show this help' '' \
         'up/shell/down/status IDs default to HERDR_WORKSPACE_ID.' \
-        'map/open select a sandbox: positional ID, otherwise the Herdr workspace ID, otherwise all.' ;;
+        'map/unmap/open select a sandbox: positional ID, otherwise the Herdr workspace ID, otherwise all.' ;;
     *)
       printf 'Unknown sb command: %s\n' "$subcommand" >&2
       sb help >&2
@@ -181,6 +183,42 @@ function _sb_open() {
   selection=$(peco --prompt 'Open> ' --on-cancel error <<< "$rows") || return 130
   [[ -n $selection ]] || return 130
   "$opener" "${selection##*$'\t'}"
+}
+
+function _sb_unmap() {
+  local usage='Usage: sb unmap [id]' id="${1:-}"
+  if (( $# > 1 )); then echo "$usage" >&2; return 1; fi
+  case "$id" in
+    -h|--help) echo "$usage"; return 0 ;;
+    -*) echo "$usage" >&2; return 1 ;;
+  esac
+  if [[ ! -t 0 || ! -t 2 ]]; then
+    echo 'sb unmap requires a terminal.' >&2; return 1
+  fi
+
+  local sandbox name mappings rows selection spec
+  sandbox=$(_sb_select_sandbox "$id") || return
+  name=$(jq -r '.name' <<< "$sandbox") || return
+  mappings=$(sbx port ls "$name" --format json) || return
+  rows=$(jq -r --arg name "$name" '
+    .[] | select(all(.host_port, .sandbox_port;
+      type == "number" and . >= 1 and . <= 65535 and floor == .)) |
+    select(.protocol | test("^(tcp|udp)(4|6)?$")) |
+    select(.host_ip | test("^[0-9.]+$|^[0-9a-fA-F:.]*:[0-9a-fA-F:.]+$")) |
+    (if (.host_ip | contains(":")) then "[" + .host_ip + "]" else .host_ip end) as $host |
+    [$name, "\($host):\(.host_port):\(.sandbox_port)/\(.protocol)"] | @tsv
+  ' <<< "$mappings") || return
+  if [[ -z $rows ]]; then
+    echo 'No published ports found.' >&2; return 1
+  fi
+  selection=$(peco --prompt 'Unmap> ' --on-cancel error <<< "$rows") || return 130
+  [[ -n $selection ]] || return 130
+  if [[ $selection == *$'\n'* ]] || ! grep -Fxq -- "$selection" <<< "$rows"; then
+    echo 'Select exactly one published port.' >&2; return 1
+  fi
+  spec=${selection##*$'\t'}
+  sbx --no-input port unpublish "$name" "$spec" >/dev/null || return
+  printf 'Unmapped: %s\n' "$spec"
 }
 
 function _sb_map() {

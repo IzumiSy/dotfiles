@@ -8,7 +8,7 @@ trap 'rm -rf "$tmp"' EXIT
 mkdir -p "$tmp/bin" "$tmp/project/subdir"
 export PATH="$tmp/bin:$PATH" SBPMAP_FIXTURES="$tmp" SBPMAP_ROOT="$root"
 
-# Never publish real ports or execute commands in a real sandbox.
+# Never change real port mappings or execute commands in a real sandbox.
 cat > "$tmp/bin/sbx" <<'SH'
 #!/bin/bash
 set -euo pipefail
@@ -33,7 +33,12 @@ case "$1" in
       cat "$SBPMAP_FIXTURES/before"
     fi ;;
   --no-input)
-    [[ $# == 5 && $2 == port && $3 == publish && $5 == */tcp4 ]] || exit 98
+    [[ $# == 5 && $2 == port ]] || exit 98
+    if [[ $3 == unpublish ]]; then
+      printf 'native-unpublish-output\n'
+      exit "${SBPMAP_UNPUBLISH_STATUS:-0}"
+    fi
+    [[ $3 == publish && $5 == */tcp4 ]] || exit 98
     [[ ${SBPMAP_PUBLISH_STATUS:-0} == 0 ]] || exit "$SBPMAP_PUBLISH_STATUS"
     spec=${5%/tcp4}; port=${spec##*:}; host=49152
     if [[ $spec == *:* ]]; then host=${spec%%:*}; fi
@@ -52,24 +57,26 @@ printf 'peco\t%s\n' "$2" >> "$SBPMAP_FIXTURES/calls"
 case "$2" in
   'Sandbox> ') mode=${SBPMAP_SANDBOX_PECO:-select}; row=${SBPMAP_SANDBOX_ROW:-1} ;;
   'Port> ') mode=${SBPMAP_PECO:-select}; row=1 ;;
+  'Unmap> ') mode=${SBPMAP_UNMAP_PECO:-select}; row=${SBPMAP_UNMAP_ROW:-1} ;;
   *) exit 99 ;;
 esac
 case "$mode" in
   cancel) exit 130 ;;
   empty) exit 0 ;;
   forged)
-    if [[ $2 == 'Sandbox> ' ]]; then
-      printf 'sbx-project-manual\trunning\t/elsewhere\n'
-    else
-      printf '8000\tpython\t127.0.0.2\tunmapped\n'
-    fi ;;
+    case "$2" in
+      'Sandbox> ') printf 'sbx-project-manual\trunning\t/elsewhere\n' ;;
+      'Port> ') printf '8000\tpython\t127.0.0.2\tunmapped\n' ;;
+      'Unmap> ') printf 'sbx-project-w12\t127.0.0.1:65530:3000/tcp4\n' ;;
+    esac ;;
+  multiple) awk 'NR <= 2 { print }' ;;
   select) awk -v row="$row" 'NR == row { print }' ;;
   *) exit 99 ;;
 esac
 SH
 chmod +x "$tmp/bin/sbx" "$tmp/bin/peco"
 
-# Every publication check uses genuine terminal descriptors and isolated fixtures.
+# Every mapping change uses genuine terminal descriptors and isolated fixtures.
 python3 - <<'PY'
 import errno
 import json
@@ -89,13 +96,14 @@ listeners = [
     {"port": 8000, "address": "127.0.0.2", "process": "python", "loopback": True},
 ]
 command = ["/bin/bash", "--noprofile", "--norc", "-c",
-           'source "$1/bash/sandbox.sh"; cd "$2/project/subdir"; sb map "${@:3}"',
+           'source "$1/bash/sandbox.sh"; cd "$2/project/subdir"; sb "$3" "${@:4}"',
            "bash", os.environ["SBPMAP_ROOT"], str(fixtures)]
 prompt = "Host port [Enter: auto]: "
 sandbox_stage = "peco\tSandbox> \n"
 port_stage = "peco\tPort> \n"
+unmap_stage = "peco\tUnmap> \n"
 
-def terminal(args=(), text=b"\n", environment=None, sandboxes=None, ports=None, before=()):
+def terminal(args=(), text=b"\n", environment=None, sandboxes=None, ports=None, before=(), subcommand="map"):
     for file, value in (("sandboxes", base if sandboxes is None else sandboxes),
                         ("ports", listeners if ports is None else ports), ("before", before)):
         (fixtures / file).write_text(json.dumps(value))
@@ -113,7 +121,7 @@ def terminal(args=(), text=b"\n", environment=None, sandboxes=None, ports=None, 
     output = b""
     sent = False
     try:
-        process = subprocess.Popen([*command, *args], stdin=slave, stdout=slave, stderr=slave, env=env)
+        process = subprocess.Popen([*command, subcommand, *args], stdin=slave, stdout=slave, stderr=slave, env=env)
         os.close(slave)
         slave = None
         deadline = time.monotonic() + 10
@@ -132,7 +140,7 @@ def terminal(args=(), text=b"\n", environment=None, sandboxes=None, ports=None, 
                 os.write(master, text)
                 sent = True
         else:
-            raise AssertionError("Interactive sb map timed out: " + output.decode())
+            raise AssertionError(f"Interactive sb {subcommand} timed out: " + output.decode())
         return process.wait(timeout=2), output.decode(), (fixtures / "calls").read_text()
     finally:
         if slave is not None:
@@ -145,13 +153,16 @@ def terminal(args=(), text=b"\n", environment=None, sandboxes=None, ports=None, 
 def publications(calls):
     return [line for line in calls.splitlines() if line.startswith("sbx\t--no-input\tport\tpublish\t")]
 
+def removals(calls):
+    return [line for line in calls.splitlines() if line.startswith("sbx\t--no-input\tport\tunpublish\t")]
+
 def published(calls, target=name, spec="3000/tcp4"):
     assert publications(calls) == [f"sbx\t--no-input\tport\tpublish\t{target}\t{spec}\t"], calls
     assert port_stage in calls, calls
     assert f"sbx\texec\t-i\t{target}\t" in calls, calls
 
 def untouched(calls):
-    assert "sbx\texec\t" not in calls and not publications(calls), calls
+    assert "sbx\texec\t" not in calls and not publications(calls) and not removals(calls), calls
 
 # Explicit and inherited IDs must not publish into another workspace.
 status, output, calls = terminal(args=("manual",), sandboxes=[*base, manual])
@@ -237,10 +248,68 @@ status, output, calls = terminal(environment={"SBPMAP_AFTER_STATUS": "29"})
 assert status == 1, output
 published(calls)
 
-# Nonterminal invocation must never inspect or publish a sandbox.
-(fixtures / "calls").write_text("")
-result = subprocess.run(command, stdin=subprocess.DEVNULL, capture_output=True, timeout=10)
-assert result.returncode == 1 and not (fixtures / "calls").read_text(), result.stderr.decode()
+# Unmap must remove only the selected complete binding, never every host port or protocol.
+bindings = [
+    {"host_ip": ip, "host_port": port, "sandbox_port": 3000, "protocol": protocol}
+    for ip, port, protocol in (("127.0.0.1", 49156, "tcp4"), ("127.0.0.1", 49157, "tcp4"),
+                               ("0.0.0.0", 49156, "udp4"), ("::1", 49156, "tcp6"),
+                               ("::", 49156, "udp6"), ("127.0.0.1", 49156, "tcp"),
+                               ("::1", 49156, "udp"))
+]
+specs = ("127.0.0.1:49156:3000/tcp4", "127.0.0.1:49157:3000/tcp4", "0.0.0.0:49156:3000/udp4",
+         "[::1]:49156:3000/tcp6", "[::]:49156:3000/udp6", "127.0.0.1:49156:3000/tcp", "[::1]:49156:3000/udp")
+for row, spec in enumerate(specs, 1):
+    status, output, calls = terminal(subcommand="unmap", args=("manual",), sandboxes=[*base, manual],
+                                    before=bindings, environment={"SBPMAP_UNMAP_ROW": str(row)})
+    assert status == 0 and unmap_stage in calls and sandbox_stage not in calls, (status, output, calls)
+    assert removals(calls) == [f"sbx\t--no-input\tport\tunpublish\t{manual['name']}\t{spec}\t"], calls
+    assert f"sbx\tport\tls\t{manual['name']}\t--format\tjson\t" in calls, calls
+    assert "sbx\texec\t" not in calls and not publications(calls), calls
+    assert "Unmapped:" in output and "native-unpublish-output" not in output, output
+
+# Cancellation or a forged/multiline choice must not reach unpublish.
+status, output, calls = terminal(subcommand="unmap", before=bindings, sandboxes=[*base, second],
+                                environment={"SBPMAP_SANDBOX_PECO": "cancel"})
+assert status == 130 and sandbox_stage in calls and unmap_stage not in calls, (status, output, calls)
+untouched(calls)
+for mode in ("cancel", "empty", "forged", "multiple"):
+    status, output, calls = terminal(subcommand="unmap", before=bindings,
+                                    environment={"SBPMAP_UNMAP_PECO": mode})
+    assert status != 0 and unmap_stage in calls, (status, output, calls)
+    if mode in ("cancel", "empty"):
+        assert status == 130, (status, output)
+    untouched(calls)
+
+# Missing or malformed binding fields must never become a broader unpublish specification.
+for before in ([], None, [dict(bindings[0], host_port=0)], [dict(bindings[0], host_port=1.5)],
+               [dict(bindings[0], host_port="49156/evil")], [dict(bindings[0], sandbox_port=65536)],
+               [dict(bindings[0], sandbox_port="3000/tcp4")], [dict(bindings[0], host_ip=None)],
+               [dict(bindings[0], host_ip="attacker.invalid/path")], [dict(bindings[0], protocol="icmp")]):
+    status, output, calls = terminal(subcommand="unmap", before=before)
+    assert status != 0 and unmap_stage not in calls, (status, output, calls)
+    untouched(calls)
+
+# Native inspection failures do not remove ports; removal failures keep their status and no success text.
+for failure in ("LS", "PORT_LS"):
+    status, output, calls = terminal(subcommand="unmap", before=bindings,
+                                    environment={f"SBPMAP_{failure}_STATUS": "23"})
+    assert status == 23 and unmap_stage not in calls and "Unmapped:" not in output, output
+    untouched(calls)
+status, output, calls = terminal(subcommand="unmap", before=bindings,
+                                environment={"SBPMAP_UNPUBLISH_STATUS": "31"})
+assert status == 31 and unmap_stage in calls and "Unmapped:" not in output, output
+assert removals(calls) == [f"sbx\t--no-input\tport\tunpublish\t{name}\t{specs[0]}\t"], calls
+assert "sbx\texec\t" not in calls and not publications(calls), calls
+assert "native-unpublish-output" not in output, output
+for args in (("--id",), ("--id", "manual"), ("--unknown",), ("manual", "extra")):
+    status, output, calls = terminal(subcommand="unmap", args=args, before=bindings)
+    assert status == 1 and not calls, output
+
+# Nonterminal invocation must never inspect or change a sandbox's mappings.
+for subcommand in ("map", "unmap"):
+    (fixtures / "calls").write_text("")
+    result = subprocess.run([*command, subcommand], stdin=subprocess.DEVNULL, capture_output=True, timeout=10)
+    assert result.returncode == 1 and not (fixtures / "calls").read_text(), result.stderr.decode()
 PY
 
-printf 'sb map interactive publication safety checks passed\n'
+printf 'sandbox port publication and removal safety checks passed\n'
