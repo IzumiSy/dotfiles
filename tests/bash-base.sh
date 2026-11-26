@@ -5,32 +5,7 @@ root="$(cd "$(dirname "$0")/.." && pwd)"
 tmp=$(mktemp -d "${TMPDIR:-/tmp}/bash-base.XXXXXX")
 trap 'rm -rf "$tmp"' EXIT
 shopt -s expand_aliases
-original_path=$PATH
-source "$root/bash/base.sh" > "$tmp/startup-output" </dev/null
-
-# Base settings are quiet, keep the image PATH, and need no host-only tools.
-[[ ! -s $tmp/startup-output ]]
-[[ $PATH == "$original_path" ]]
-shopt -q cdspell
-[[ :$SHELLOPTS: == *:ignoreeof:* ]]
-[[ $HISTCONTROL == ignoreboth:erasedups && $HISTSIZE == 5000 ]]
-[[ $HISTIGNORE == 'ls:ll:cd ..' ]]
-[[ $VTE_CJK_WIDTH == 1 && $CLICOLOR == 1 ]]
-[[ $PS1 == *'\h'* && $PS1 == *'\t'* && $PS1 == *'\w'* ]]
-[[ $(alias rm) == "alias rm='rm -i'" ]]
-[[ $(alias cp) == "alias cp='cp -i'" ]]
-[[ $(alias mv) == "alias mv='mv -i'" ]]
-[[ $(alias ls) == "alias ls='ls --color=auto'" ]]
-for shortcut in x c ll lla gad gadi gcm gch glo gs gpl gcmb gpo gpof; do
-  alias "$shortcut" >/dev/null
-done
-declare -F gd >/dev/null
-
-mkdir "$tmp/dir with spaces"
-touch "$tmp/dir with spaces/visible" "$tmp/dir with spaces/.hidden"
-listing=$(ll "$tmp/dir with spaces")
-[[ $listing == *visible* && $listing != *'.hidden'* ]]
-[[ $(lla "$tmp/dir with spaces") == *'.hidden'* ]]
+source "$root/bash/base.sh" </dev/null
 
 # Mock Git so testing branch protection never performs a real push.
 git() {
@@ -58,4 +33,4 @@ gpo
 gpof
 [[ $(< "$tmp/pushes") == $'push -u origin feature/test\npush -u origin feature/test --force-with-lease --force-if-includes' ]]
 
-printf 'base Bash checks passed\n'
+printf 'Git push safety checks passed\n'

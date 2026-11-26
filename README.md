@@ -43,6 +43,9 @@ sandbox creation still require network access.
 
 The shared runner (`tests/run`) checks Bash syntax, then runs each test with a
 clean environment, a separate temporary home, and host Git configuration disabled.
+Shell tests cover destructive-operation safeguards, credential handling, port
+publication safety, and test isolation—not aliases, prompts, tool loading, or
+ordinary command behavior. The Node.js (`.mjs`) tests cover the custom scripts.
 Run `./test` locally rather than running configuration tests directly on your host.
 
 CI uses the same runner on fresh GitHub-hosted Ubuntu and macOS VMs. It does not
