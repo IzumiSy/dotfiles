@@ -16,10 +16,11 @@ function sb() {
         '  shell [id] [bash arguments...]                    Open another Bash shell' \
         '  down [id] [sbx arguments...]                      Stop without removing' \
         '  status [id] [sbx arguments...]                    Inspect the sandbox' \
-        '  map [--id ID] [HOST_PORT:SANDBOX_PORT | SANDBOX_PORT]  Publish a port' \
-        '  open                                             Select a port and open a browser' \
+        '  map [id]                                         Interactively publish a port' \
+        '  open [id]                                        Select a published port and open a browser' \
         '  help                                             Show this help' '' \
-        'IDs default to HERDR_WORKSPACE_ID. open lists ports across all sandboxes.' ;;
+        'up/shell/down/status IDs default to HERDR_WORKSPACE_ID.' \
+        'map/open select a sandbox: positional ID, otherwise the Herdr workspace ID, otherwise all.' ;;
     *)
       printf 'Unknown sb command: %s\n' "$subcommand" >&2
       sb help >&2
@@ -126,21 +127,39 @@ function _sb_status() {
   sbx inspect "sbx-${PWD##*/}-$id" "$@"
 }
 
-function _sb_open() {
-  if (( $# > 0 )); then
-    echo 'Usage: sb open' >&2
+function _sb_select_sandbox() {
+  local id="${1:-}" tool sandboxes matches rows selection
+  if [[ -z $id && ${HERDR_ENV:-} == 1 ]]; then id="${HERDR_WORKSPACE_ID:-}"; fi
+  for tool in sbx jq peco; do
+    command -v "$tool" >/dev/null 2>&1 || { echo "Sandbox selection requires $tool on the host." >&2; return 1; }
+  done
+  sandboxes=$(sbx ls --format json) || return
+  matches=$(jq -c --arg id "$id" '[.[] | select($id == "" or
+    (.name | startswith("sbx-") and endswith("-" + $id)))]' <<< "$sandboxes") || return
+  if [[ $matches == '[]' ]]; then
+    echo "No sandboxes found${id:+ for workspace $id}." >&2
     return 1
   fi
-  local opener=open tool sandboxes rows selection
-  if [[ $OSTYPE != darwin* ]]; then opener=xdg-open; fi
-  for tool in sbx jq peco "$opener"; do
-    command -v "$tool" >/dev/null 2>&1 || { echo "sb open requires $tool on the host." >&2; return 1; }
-  done
+  rows=$(jq -r '.[] | [.name, .status, ((.workspaces // []) | join(", "))] | @tsv' <<< "$matches") || return
+  selection=$(peco --prompt 'Sandbox> ' --on-cancel error <<< "$rows") || return 130
+  [[ -n $selection ]] || return 130
+  jq -ce --arg name "${selection%%$'\t'*}" 'first(.[] | select(.name == $name))' <<< "$matches"
+}
 
-  sandboxes=$(sbx ls --format json) || return
+function _sb_open() {
+  local usage='Usage: sb open [id]' id="${1:-}" opener=open sandbox rows selection
+  if (( $# > 1 )); then echo "$usage" >&2; return 1; fi
+  case "$id" in
+    -h|--help) echo "$usage"; return 0 ;;
+    -*) echo "$usage" >&2; return 1 ;;
+  esac
+  if [[ $OSTYPE != darwin* ]]; then opener=xdg-open; fi
+  command -v "$opener" >/dev/null 2>&1 || { echo "sb open requires $opener on the host." >&2; return 1; }
+
+  sandbox=$(_sb_select_sandbox "$id") || return
   # shortcut: HTTP only; add scheme selection when HTTPS services are needed.
   rows=$(jq -r '
-    .[] | .name as $name | .ports[]? |
+    .name as $name | .ports[]? |
     select(.protocol == "tcp" or .protocol == "tcp4" or .protocol == "tcp6") |
     select((.host_port | type) == "number" and .host_port >= 1 and .host_port <= 65535 and
       (.host_port | floor) == .host_port) |
@@ -150,7 +169,7 @@ function _sb_open() {
      elif (.host_ip | contains(":")) then "[" + .host_ip + "]"
      else .host_ip end) as $host |
     [$name, "\(.sandbox_port)/\(.protocol)", "http://\($host):\(.host_port)"] | @tsv
-  ' <<< "$sandboxes") || return
+  ' <<< "$sandbox") || return
   if [[ -z $rows ]]; then
     echo 'No published TCP ports found.' >&2
     return 1
@@ -161,127 +180,62 @@ function _sb_open() {
 }
 
 function _sb_map() {
-  local usage='Usage: sb map [--id ID] [HOST_PORT:SANDBOX_PORT | SANDBOX_PORT]'
-  local id="${HERDR_WORKSPACE_ID:-}" spec='' port='' host_port='' tool
-  while (( $# > 0 )); do
-    case "$1" in
-      --id)
-        if (( $# < 2 )) || [[ -z $2 ]]; then
-          echo "$usage" >&2; return 1
-        fi
-        id=$2; shift 2 ;;
-      -h|--help)
-        printf '%s\n' "$usage" 'Without a port, select a listener. Omit HOST_PORT for automatic allocation.'
-        return 0 ;;
-      *)
-        if [[ -n $spec || ! $1 =~ ^([0-9]{1,5}:)?[0-9]{1,5}$ ]]; then
-          echo "$usage" >&2; return 1
-        fi
-        spec=$1; shift ;;
-    esac
-  done
-  if [[ -z $id ]]; then
-    printf '%s\n' "$usage" 'An ID is required when HERDR_WORKSPACE_ID is unset.' >&2
-    return 1
-  fi
-  if [[ -n $spec ]]; then
-    port=${spec##*:}
-    if (( 10#$port < 1 || 10#$port > 65535 )); then
-      echo 'Sandbox port must be between 1 and 65535.' >&2; return 1
-    fi
-    port=$((10#$port))
-    if [[ $spec == *:* ]]; then
-      host_port=${spec%%:*}
-      if (( 10#$host_port < 1 || 10#$host_port > 65535 )); then
-        echo 'Host port must be between 1 and 65535.' >&2; return 1
-      fi
-      host_port=$((10#$host_port))
-    fi
-  fi
-  for tool in sbx jq; do
-    command -v "$tool" >/dev/null 2>&1 || { echo "sb map requires $tool on the host." >&2; return 1; }
-  done
-
-  if [[ -z $port ]]; then
-    if [[ ! -t 0 || ! -t 2 ]]; then
-      echo 'Port selection requires a terminal; specify a sandbox port instead.' >&2; return 1
-    fi
-    command -v peco >/dev/null 2>&1 || { echo 'sb map requires peco for selection.' >&2; return 1; }
+  local usage='Usage: sb map [id]' id="${1:-}"
+  if (( $# > 1 )); then echo "$usage" >&2; return 1; fi
+  case "$id" in
+    -h|--help) echo "$usage"; return 0 ;;
+    -*) echo "$usage" >&2; return 1 ;;
+  esac
+  if [[ ! -t 0 || ! -t 2 ]]; then
+    echo 'sb map requires a terminal.' >&2; return 1
   fi
 
-  local sandboxes matches nearby name selection
-  sandboxes=$(sbx ls --format json) || return
-  matches=$(jq -c --arg id "$id" '[.[] | select(.name | startswith("sbx-") and endswith("-" + $id))]' <<< "$sandboxes") || return
-  if [[ $matches == '[]' ]]; then
-    echo "No sandbox found for workspace $id." >&2; return 1
-  fi
-  if (( $(jq length <<< "$matches") > 1 )); then
-    nearby=$(jq -c --arg cwd "$(pwd -P)" '[.[] | select(any(.workspaces[]?; . as $path | $cwd == $path or ($cwd | startswith($path + "/"))))]' <<< "$matches") || return
-    if [[ $nearby != '[]' ]]; then
-      matches=$nearby
-    fi
-  fi
-  if (( $(jq length <<< "$matches") == 1 )); then
-    name=$(jq -r '.[0].name' <<< "$matches") || return
-  else
-    if [[ ! -t 0 || ! -t 2 ]]; then
-      echo 'Multiple sandboxes match this workspace; run in a terminal to select one.' >&2; return 1
-    fi
-    command -v peco >/dev/null 2>&1 || { echo 'sb map requires peco for selection.' >&2; return 1; }
-    selection=$(jq -r '.[] | [.name, .status, ((.workspaces // []) | join(", "))] | @tsv' <<< "$matches" |
-      peco --prompt 'Sandbox> ' --on-cancel error) || return 130
-    [[ -n $selection ]] || return 130
-    name=${selection%%$'\t'*}
-  fi
-  if ! jq -e --arg name "$name" 'any(.[]; .name == $name and .status == "running")' <<< "$matches" >/dev/null; then
+  local sandbox name selection
+  sandbox=$(_sb_select_sandbox "$id") || return
+  name=$(jq -r '.name' <<< "$sandbox") || return
+  if ! jq -e '.status == "running"' <<< "$sandbox" >/dev/null; then
     echo "Sandbox $name is not running; start it before mapping ports." >&2; return 1
   fi
   printf 'Sandbox: %s\n' "$name" >&2
 
-  local mappings ports rows blocked existing
+  local mappings ports rows blocked existing port host_port=''
   mappings=$(sbx port ls "$name" --format json) || return
   # shortcut: sbx may start a sandbox stopped after this state check; avoid concurrent lifecycle commands.
   ports=$(sbx exec -i "$name" node --input-type=module - < "$_sb_map_ports_script") || return
-  if [[ -z $port ]]; then
-    rows=$(jq -r --argjson mappings "$mappings" '
-      group_by(.port)[] | select(any(.[]; .loopback == false)) | .[0].port as $port |
-      [$port, (map(.process) | unique | join(",")), (map(.address) | unique | join(",")),
-       ([$mappings[] | select(.sandbox_port == $port and .host_ip == "127.0.0.1" and
-         (.protocol == "tcp4" or .protocol == "tcp")) | "\(.host_ip):\(.host_port)"] |
-        unique | if length == 0 then "unmapped" else join(",") end)] | @tsv' <<< "$ports") || return
-    blocked=$(jq -r 'group_by(.port)[] | select(all(.[]; .loopback)) |
-      "  \(.[0].port): \(map(.address) | unique | join(","))"' <<< "$ports") || return
-    if [[ -n $blocked ]]; then
-      printf 'Loopback-only listeners (not selectable; bind the service to 0.0.0.0):\n%s\n' "$blocked" >&2
-    fi
-    if [[ -z $rows ]]; then
-      echo 'No reachable IPv4 TCP listeners found.' >&2; return 1
-    fi
-    selection=$(peco --prompt 'Port> ' --on-cancel error <<< "$rows") || return 130
-    [[ -n $selection ]] || return 130
-    port=${selection%%$'\t'*}
-    # Existing mappings need no new host-port prompt.
-    if ! jq -e --argjson port "$port" 'any(.[]; .sandbox_port == $port and .host_ip == "127.0.0.1" and
-      (.protocol == "tcp4" or .protocol == "tcp"))' <<< "$mappings" >/dev/null; then
-      read -r -p 'Host port [Enter: auto]: ' host_port || return 130
-      if [[ -n $host_port ]]; then
-        if [[ ! $host_port =~ ^[0-9]{1,5}$ ]] || (( 10#$host_port < 1 || 10#$host_port > 65535 )); then
-          echo 'Host port must be between 1 and 65535.' >&2; return 1
-        fi
-        host_port=$((10#$host_port))
-      fi
-    fi
+  rows=$(jq -r --argjson mappings "$mappings" '
+    group_by(.port)[] | select(any(.[]; .loopback == false)) | .[0].port as $port |
+    [$port, (map(.process) | unique | join(",")), (map(.address) | unique | join(",")),
+     ([$mappings[] | select(.sandbox_port == $port and .host_ip == "127.0.0.1" and
+       (.protocol == "tcp4" or .protocol == "tcp")) | "\(.host_ip):\(.host_port)"] |
+      unique | if length == 0 then "unmapped" else join(",") end)] | @tsv' <<< "$ports") || return
+  blocked=$(jq -r 'group_by(.port)[] | select(all(.[]; .loopback)) |
+    "  \(.[0].port): \(map(.address) | unique | join(","))"' <<< "$ports") || return
+  if [[ -n $blocked ]]; then
+    printf 'Loopback-only listeners (not selectable; bind the service to 0.0.0.0):\n%s\n' "$blocked" >&2
   fi
+  if [[ -z $rows ]]; then
+    echo 'No reachable IPv4 TCP listeners found.' >&2; return 1
+  fi
+  selection=$(peco --prompt 'Port> ' --on-cancel error <<< "$rows") || return 130
+  [[ -n $selection ]] || return 130
+  port=${selection%%$'\t'*}
   if ! jq -e --argjson port "$port" 'any(.[]; .port == $port and .loopback == false)' <<< "$ports" >/dev/null; then
     echo "Port $port has no reachable IPv4 TCP listener; bind the service to 0.0.0.0." >&2; return 1
   fi
-  existing=$(jq -r --argjson port "$port" --arg host "$host_port" '
+  existing=$(jq -r --argjson port "$port" '
     .[] | select(.sandbox_port == $port and .host_ip == "127.0.0.1" and
-      (.protocol == "tcp4" or .protocol == "tcp") and ($host == "" or .host_port == ($host | tonumber))) |
+      (.protocol == "tcp4" or .protocol == "tcp")) |
     "Mapped: \(.host_ip):\(.host_port) -> sandbox:\(.sandbox_port)/\(.protocol)"' <<< "$mappings") || return
   if [[ -n $existing ]]; then
     printf '%s\n' "$existing"
     return 0
+  fi
+  read -r -p 'Host port [Enter: auto]: ' host_port || return 130
+  if [[ -n $host_port ]]; then
+    if [[ ! $host_port =~ ^[0-9]{1,5}$ ]] || (( 10#$host_port < 1 || 10#$host_port > 65535 )); then
+      echo 'Host port must be between 1 and 65535.' >&2; return 1
+    fi
+    host_port=$((10#$host_port))
   fi
   sbx --no-input port publish "$name" "${host_port:+$host_port:}$port/tcp4" >/dev/null || return
   mappings=$(sbx port ls "$name" --format json) || {

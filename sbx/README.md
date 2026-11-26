@@ -44,16 +44,28 @@ Reattachment updates dotfiles, but does not install or update image tools.
 | `sb shell [id] [bash arguments...]` | Open another shell in the same sandbox. |
 | `sb down [id] [sbx arguments...]` | Stop the sandbox without removing it. |
 | `sb status [id] [sbx arguments...]` | Show sandbox state via `sbx inspect`. |
-| `sb map [--id ID] [HOST_PORT:SANDBOX_PORT \| SANDBOX_PORT]` | Publish a listener on host loopback; without a port, select one. |
-| `sb open` | Select a published TCP port across all sandboxes with peco and open it in the default browser. |
+| `sb map [id]` | Interactively select a sandbox, a listener, and a host port to publish on loopback. |
+| `sb open [id]` | Select a sandbox and a published TCP port with peco, then open it in the default browser. |
 | `sb help` | Show usage; also displayed by `sb` without arguments. |
 
 Use `sbx` directly for listing, removing sandboxes, logs, and other native
 operations.
 
-Sandbox names are `sbx-<directory>-<id>`. Commands that accept an ID fall back to
-`HERDR_WORKSPACE_ID`; outside Herdr, provide it explicitly. `sb up` keeps
-`--clone`, so the project uses a private sandbox clone.
+Sandbox names are `sbx-<directory>-<id>`. `sb up`, `sb shell`, `sb down`, and
+`sb status` accept a positional ID that defaults to `HERDR_WORKSPACE_ID`;
+outside Herdr, provide it explicitly. `sb up` keeps `--clone`, so the project
+uses a private sandbox clone.
+
+`sb map` and `sb open` share the same sandbox selection rules:
+
+- An explicit positional ID filters candidates to sandbox names matching `sbx-*-ID`.
+- Otherwise, inside Herdr (`HERDR_ENV=1`), a nonempty `HERDR_WORKSPACE_ID`
+  applies the same filter.
+- Outside a Herdr workspace, all sandboxes from `sbx ls --format json` are candidates.
+
+Both always use peco to select a sandbox, even with one candidate. The current
+directory does not narrow the list. Cancelling either selection stops the command
+without publishing a port or opening a browser.
 
 ```bash
 sb up manual
@@ -83,13 +95,22 @@ IPv6 `::1` upstreams are supported; the relay's external side is IPv4.
 Host publication stays explicit. Wait about a second after starting the app:
 
 ```bash
-sb map 3000        # Allocate a free host port; read the printed mapping.
-sb map 8080:3000   # Or use http://127.0.0.1:8080.
-sb open           # Select an existing mapping and open it in the host browser.
+sb map             # Select a sandbox and listener, then enter a host port.
+sb open            # Select a sandbox, then an existing mapping to open.
+sb map manual
+sb open manual
 ```
 
-`sb open` reads `sbx ls --format json` and lists sandbox names, sandbox ports,
-and host URLs. It requires `jq`, `peco`, and `open` (macOS) or `xdg-open` (Linux).
+Both commands require `sbx`, `jq`, and `peco`. `sb map` is interactive-only and
+requires a terminal. After sandbox selection, it rejects stopped sandboxes before
+inspecting or publishing ports. Select a listener, then enter a host port or press
+Enter for automatic allocation. Existing compatible loopback mappings are reused
+without asking for another host port. The optional command argument is the sandbox
+ID; ports are always chosen interactively.
+
+`sb open` lists the selected sandbox's published TCP ports and host URLs from
+`sbx ls --format json`.
+It also requires `open` (macOS) or `xdg-open` (Linux).
 It uses HTTP, maps wildcard host bindings to loopback, and supports IPv4 and IPv6
 TCP mappings. It does not publish ports or start sandboxes. HTTPS and non-HTTP
 services cannot be inferred from the port mapping; adjust the URL in the browser
