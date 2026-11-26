@@ -114,6 +114,10 @@ capabilities:
     config:
       runtime:
         allow:
+          # Kit v3 requires exact allow entries for inject domains, even when wildcards cover them.
+          - api.github.com
+          # Copilot API host resolved from the host Pi token, passed via --kit-arg, and used for credential injection.
+          - '${{ kit.args.copilot_host }}'
           - nodejs.org
           - github.com
           - '**.github.com'

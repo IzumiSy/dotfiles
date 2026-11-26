@@ -10,6 +10,7 @@ import sys
 
 spec = pathlib.Path(sys.argv[1]).read_text()
 assert "args:\n  copilot_host:\n    required: true\n    pattern: '^api\\.([a-z0-9-]+\\.)?githubcopilot\\.com$'" in spec
+network = spec.split('\n  - type: com.docker.sandbox/network-policy@1\n')[1]
 credentials = spec.split('\n  - type: com.docker.sandbox/credential@1\n')[1:]
 assert len(credentials) == 2
 for block, service, variable, domains in zip(credentials, ('github', 'pi-copilot'),
@@ -25,7 +26,7 @@ for block, service, variable, domains in zip(credentials, ('github', 'pi-copilot
     assert block.count('            format: "Bearer %s"\n') == len(domains)
     for domain in domains:
         assert f'          - domain: {domain}\n' in block
-network = spec.split('\n  - type: com.docker.sandbox/network-policy@1\n')[1]
+        assert f'          - {domain}\n' in network, f'inject domain {domain} needs an explicit allow entry'
 for domain in ('github.com', "'**.github.com'", "'**.githubcopilot.com'",
         "'**.tailor.tech'", "'**.google.com'", "'**.googleapis.com'", "'**.erp.dev'",
         'pi.dev'):
