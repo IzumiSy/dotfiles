@@ -45,8 +45,9 @@ Reattachment updates dotfiles, but does not install or update image tools.
 | `sbstatus [id] [sbx arguments...]` | Show sandbox state via `sbx inspect`. |
 | `sbdown [id] [sbx arguments...]` | Stop the sandbox without removing it. |
 | `sbpmap [--id ID] [HOST_PORT:SANDBOX_PORT \| SANDBOX_PORT]` | Publish a listener on host loopback; without a port, select one. |
+| `sbpopen` | Select a published TCP port across all sandboxes with peco and open it in the default browser. |
 
-Sandbox names are `sbx-<directory>-<id>`. The ID falls back to
+Sandbox names are `sbx-<directory>-<id>`. Commands that accept an ID fall back to
 `HERDR_WORKSPACE_ID`; outside Herdr, provide it explicitly. `sbup` keeps
 `--clone`, so the project uses a private sandbox clone.
 
@@ -80,7 +81,15 @@ Host publication stays explicit. Wait about a second after starting the app:
 ```bash
 sbpmap 3000        # Allocate a free host port; read the printed mapping.
 sbpmap 8080:3000   # Or use http://127.0.0.1:8080.
+sbpopen           # Select an existing mapping and open it in the host browser.
 ```
+
+`sbpopen` reads `sbx ls --format json` and lists sandbox names, sandbox ports,
+and host URLs. It requires `jq`, `peco`, and `open` (macOS) or `xdg-open` (Linux).
+It uses HTTP, maps wildcard host bindings to loopback, and supports IPv4 and IPv6
+TCP mappings. It does not publish ports or start sandboxes. HTTPS and non-HTTP
+services cannot be inferred from the port mapping; adjust the URL in the browser
+when necessary.
 
 Read proxy logs from the host with:
 

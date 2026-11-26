@@ -98,6 +98,40 @@ function sbstatus() {
   sbx inspect "sbx-${PWD##*/}-$id" "$@"
 }
 
+function sbpopen() {
+  if (( $# > 0 )); then
+    echo 'Usage: sbpopen' >&2
+    return 1
+  fi
+  local opener=open tool sandboxes rows selection
+  if [[ $OSTYPE != darwin* ]]; then opener=xdg-open; fi
+  for tool in sbx jq peco "$opener"; do
+    command -v "$tool" >/dev/null 2>&1 || { echo "sbpopen requires $tool on the host." >&2; return 1; }
+  done
+
+  sandboxes=$(sbx ls --format json) || return
+  # shortcut: HTTP only; add scheme selection when HTTPS services are needed.
+  rows=$(jq -r '
+    .[] | .name as $name | .ports[]? |
+    select(.protocol == "tcp" or .protocol == "tcp4" or .protocol == "tcp6") |
+    select((.host_port | type) == "number" and .host_port >= 1 and .host_port <= 65535 and
+      (.host_port | floor) == .host_port) |
+    select(.host_ip | test("^[0-9.]+$|^[0-9a-fA-F:.]*:[0-9a-fA-F:.]+$")) |
+    (if .host_ip == "0.0.0.0" then "127.0.0.1"
+     elif .host_ip == "::" then "[::1]"
+     elif (.host_ip | contains(":")) then "[" + .host_ip + "]"
+     else .host_ip end) as $host |
+    [$name, "\(.sandbox_port)/\(.protocol)", "http://\($host):\(.host_port)"] | @tsv
+  ' <<< "$sandboxes") || return
+  if [[ -z $rows ]]; then
+    echo 'No published TCP ports found.' >&2
+    return 1
+  fi
+  selection=$(peco --prompt 'Open> ' --on-cancel error <<< "$rows") || return 130
+  [[ -n $selection ]] || return 130
+  "$opener" "${selection##*$'\t'}"
+}
+
 function sbpmap() {
   local usage='Usage: sbpmap [--id ID] [HOST_PORT:SANDBOX_PORT | SANDBOX_PORT]'
   local id="${HERDR_WORKSPACE_ID:-}" spec='' port='' host_port='' tool
