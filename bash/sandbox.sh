@@ -257,7 +257,6 @@ function _sb_map() {
     if [[ -z $rows ]]; then
       echo 'No reachable IPv4 TCP listeners found.' >&2; return 1
     fi
-    echo 'PORT / PROCESS / LISTEN / HOST' >&2
     selection=$(peco --prompt 'Port> ' --on-cancel error <<< "$rows") || return 130
     [[ -n $selection ]] || return 130
     port=${selection%%$'\t'*}
