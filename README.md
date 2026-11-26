@@ -19,7 +19,7 @@
 
 ## Sandbox
 
-`sbup [id]` opens a Docker Sandbox Bash shell with Pi installed; run `pi`
+`sb up [id]` opens a Docker Sandbox Bash shell with Pi installed; run `pi`
 inside it when needed. The kit in `sbx/spec.yaml` extends the standard Docker
 shell base with the shared dotfiles and development tools.
 See [sandbox commands and authentication](sbx/README.md).

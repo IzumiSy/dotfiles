@@ -78,7 +78,7 @@ reset() {
 run() {
   : > "$tmp/calls"
   status=0
-  sbpmap "$@" >/dev/null 2>&1 || status=$?
+  sb map "$@" >/dev/null 2>&1 || status=$?
 }
 no_publish() { ! grep -q $'^sbx\t--no-input\tport\tpublish\t' "$tmp/calls"; }
 no_exec() { ! grep -q $'^sbx\texec\t' "$tmp/calls"; }
@@ -213,7 +213,7 @@ def rejected_input(text=None, mode="select", expected=130):
     master, slave = pty.openpty()
     process = subprocess.Popen(
         ["/bin/bash", "--noprofile", "--norc", "-c",
-         'source "$1/bash/sandbox.sh"; cd "$2/project/subdir"; sbpmap',
+         'source "$1/bash/sandbox.sh"; cd "$2/project/subdir"; sb map',
          "bash", os.environ["SBPMAP_ROOT"], str(fixtures)],
         stdin=slave, stdout=slave, stderr=slave,
         env=dict(os.environ, SBPMAP_PECO=mode),
@@ -238,7 +238,7 @@ def rejected_input(text=None, mode="select", expected=130):
                 os.write(master, text)
                 sent = True
         else:
-            raise AssertionError("Interactive sbpmap timed out: " + output.decode())
+            raise AssertionError("Interactive sb map timed out: " + output.decode())
         assert process.wait(timeout=2) == expected, output.decode()
         assert text is None or sent, output.decode()
         calls = (fixtures / "calls").read_text()
@@ -256,4 +256,4 @@ for mode in ("cancel", "empty"):
     rejected_input(mode=mode)
 PY
 
-printf 'sbpmap publication safety checks passed\n'
+printf 'sb map publication safety checks passed\n'

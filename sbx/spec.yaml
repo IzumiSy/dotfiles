@@ -93,7 +93,7 @@ capabilities:
             header: Authorization
             format: "Bearer %s"
 
-  # Bridge localhost listeners; host publication remains explicit through sbpmap.
+  # Bridge localhost listeners; host publication remains explicit through sb map.
   - type: com.docker.sandbox/lifecycle@1
     config:
       startup:

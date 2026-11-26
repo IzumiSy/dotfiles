@@ -1,10 +1,38 @@
 # Pi sandbox shortcuts
+function sb() {
+  local subcommand="${1:-help}"
+  if (( $# > 0 )); then shift; fi
+  case "$subcommand" in
+    up) _sb_up "$@" ;;
+    shell) _sb_shell "$@" ;;
+    down) _sb_down "$@" ;;
+    status) _sb_status "$@" ;;
+    map) _sb_map "$@" ;;
+    open) _sb_open "$@" ;;
+    help|-h|--help)
+      printf '%s\n' \
+        'Usage: sb <command> [arguments...]' '' \
+        '  up [id] [sbx arguments...] [-- bash arguments...]  Initialize and enter Bash' \
+        '  shell [id] [bash arguments...]                    Open another Bash shell' \
+        '  down [id] [sbx arguments...]                      Stop without removing' \
+        '  status [id] [sbx arguments...]                    Inspect the sandbox' \
+        '  map [--id ID] [HOST_PORT:SANDBOX_PORT | SANDBOX_PORT]  Publish a port' \
+        '  open                                             Select a port and open a browser' \
+        '  help                                             Show this help' '' \
+        'IDs default to HERDR_WORKSPACE_ID. open lists ports across all sandboxes.' ;;
+    *)
+      printf 'Unknown sb command: %s\n' "$subcommand" >&2
+      sb help >&2
+      return 1 ;;
+  esac
+}
+
 # shortcut: directory basenames must be unique within an ID; use path-based names if they collide.
-_sbpmap_ports_script="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/../sbx" && pwd)/sbpmap-ports.mjs"
-function sbup() {
+_sb_map_ports_script="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/../sbx" && pwd)/sbpmap-ports.mjs"
+function _sb_up() {
   local id="${1:-${HERDR_WORKSPACE_ID:-}}"
   if [[ -z $id ]]; then
-    echo 'Usage: sbup [id] [sbx arguments...] [-- bash arguments...] (id is required when HERDR_WORKSPACE_ID is unset)' >&2
+    echo 'Usage: sb up [id] [sbx arguments...] [-- bash arguments...] (id is required when HERDR_WORKSPACE_ID is unset)' >&2
     return 1
   fi
   if (( $# > 0 )); then
@@ -15,16 +43,16 @@ function sbup() {
     case "$arg" in
       --) break ;;
       -d|--detach|--detach=*|--rm|--rm=*)
-        echo 'sbup opens a shell; use sbx directly for --detach or --rm.' >&2
+        echo 'sb up opens a shell; use sbx directly for --detach or --rm.' >&2
         return 1 ;;
     esac
     ((sbx_argc += 1))
   done
   local name="sbx-${PWD##*/}-$id"
   local pi_path pi_dir="${PI_CODING_AGENT_DIR:-$HOME/.pi/agent}"
-  pi_path=$(type -P pi) || { echo 'sbup requires Pi installed on the host.' >&2; return 1; }
+  pi_path=$(type -P pi) || { echo 'sb up requires Pi installed on the host.' >&2; return 1; }
   if [[ $pi_path != /* || $pi_dir != /* ]]; then
-    echo 'sbup requires absolute host Pi executable and authentication paths.' >&2
+    echo 'sb up requires absolute host Pi executable and authentication paths.' >&2
     return 1
   fi
   local copilot_host copilot_command
@@ -59,13 +87,13 @@ function sbup() {
   }
   shift "$sbx_argc"
   if [[ ${1:-} == -- ]]; then shift; fi
-  HERDR_AGENT=pi sbbash "$id" "$@"
+  HERDR_AGENT=pi _sb_shell "$id" "$@"
 }
 
-function sbbash() {
+function _sb_shell() {
   local id="${1:-${HERDR_WORKSPACE_ID:-}}"
   if [[ -z $id ]]; then
-    echo 'Usage: sbbash [id] [bash arguments...] (id is required when HERDR_WORKSPACE_ID is unset)' >&2
+    echo 'Usage: sb shell [id] [bash arguments...] (id is required when HERDR_WORKSPACE_ID is unset)' >&2
     return 1
   fi
   if (( $# > 0 )); then
@@ -74,10 +102,10 @@ function sbbash() {
   sbx exec -it -w "$PWD" "sbx-${PWD##*/}-$id" bash "$@"
 }
 
-function sbdown() {
+function _sb_down() {
   local id="${1:-${HERDR_WORKSPACE_ID:-}}"
   if [[ -z $id ]]; then
-    echo 'Usage: sbdown [id] [sbx arguments...] (id is required when HERDR_WORKSPACE_ID is unset)' >&2
+    echo 'Usage: sb down [id] [sbx arguments...] (id is required when HERDR_WORKSPACE_ID is unset)' >&2
     return 1
   fi
   if (( $# > 0 )); then
@@ -86,10 +114,10 @@ function sbdown() {
   sbx stop "sbx-${PWD##*/}-$id" "$@"
 }
 
-function sbstatus() {
+function _sb_status() {
   local id="${1:-${HERDR_WORKSPACE_ID:-}}"
   if [[ -z $id ]]; then
-    echo 'Usage: sbstatus [id] [sbx arguments...] (id is required when HERDR_WORKSPACE_ID is unset)' >&2
+    echo 'Usage: sb status [id] [sbx arguments...] (id is required when HERDR_WORKSPACE_ID is unset)' >&2
     return 1
   fi
   if (( $# > 0 )); then
@@ -98,15 +126,15 @@ function sbstatus() {
   sbx inspect "sbx-${PWD##*/}-$id" "$@"
 }
 
-function sbpopen() {
+function _sb_open() {
   if (( $# > 0 )); then
-    echo 'Usage: sbpopen' >&2
+    echo 'Usage: sb open' >&2
     return 1
   fi
   local opener=open tool sandboxes rows selection
   if [[ $OSTYPE != darwin* ]]; then opener=xdg-open; fi
   for tool in sbx jq peco "$opener"; do
-    command -v "$tool" >/dev/null 2>&1 || { echo "sbpopen requires $tool on the host." >&2; return 1; }
+    command -v "$tool" >/dev/null 2>&1 || { echo "sb open requires $tool on the host." >&2; return 1; }
   done
 
   sandboxes=$(sbx ls --format json) || return
@@ -132,8 +160,8 @@ function sbpopen() {
   "$opener" "${selection##*$'\t'}"
 }
 
-function sbpmap() {
-  local usage='Usage: sbpmap [--id ID] [HOST_PORT:SANDBOX_PORT | SANDBOX_PORT]'
+function _sb_map() {
+  local usage='Usage: sb map [--id ID] [HOST_PORT:SANDBOX_PORT | SANDBOX_PORT]'
   local id="${HERDR_WORKSPACE_ID:-}" spec='' port='' host_port='' tool
   while (( $# > 0 )); do
     case "$1" in
@@ -171,14 +199,14 @@ function sbpmap() {
     fi
   fi
   for tool in sbx jq; do
-    command -v "$tool" >/dev/null 2>&1 || { echo "sbpmap requires $tool on the host." >&2; return 1; }
+    command -v "$tool" >/dev/null 2>&1 || { echo "sb map requires $tool on the host." >&2; return 1; }
   done
 
   if [[ -z $port ]]; then
     if [[ ! -t 0 || ! -t 2 ]]; then
       echo 'Port selection requires a terminal; specify a sandbox port instead.' >&2; return 1
     fi
-    command -v peco >/dev/null 2>&1 || { echo 'sbpmap requires peco for selection.' >&2; return 1; }
+    command -v peco >/dev/null 2>&1 || { echo 'sb map requires peco for selection.' >&2; return 1; }
   fi
 
   local sandboxes matches nearby name selection
@@ -199,7 +227,7 @@ function sbpmap() {
     if [[ ! -t 0 || ! -t 2 ]]; then
       echo 'Multiple sandboxes match this workspace; run in a terminal to select one.' >&2; return 1
     fi
-    command -v peco >/dev/null 2>&1 || { echo 'sbpmap requires peco for selection.' >&2; return 1; }
+    command -v peco >/dev/null 2>&1 || { echo 'sb map requires peco for selection.' >&2; return 1; }
     selection=$(jq -r '.[] | [.name, .status, ((.workspaces // []) | join(", "))] | @tsv' <<< "$matches" |
       peco --prompt 'Sandbox> ' --on-cancel error) || return 130
     [[ -n $selection ]] || return 130
@@ -213,7 +241,7 @@ function sbpmap() {
   local mappings ports rows blocked existing
   mappings=$(sbx port ls "$name" --format json) || return
   # shortcut: sbx may start a sandbox stopped after this state check; avoid concurrent lifecycle commands.
-  ports=$(sbx exec -i "$name" node --input-type=module - < "$_sbpmap_ports_script") || return
+  ports=$(sbx exec -i "$name" node --input-type=module - < "$_sb_map_ports_script") || return
   if [[ -z $port ]]; then
     rows=$(jq -r --argjson mappings "$mappings" '
       group_by(.port)[] | select(any(.[]; .loopback == false)) | .[0].port as $port |

@@ -61,14 +61,14 @@ no_launch() { ! grep -Eq '^(run|exec)$' "$tmp/calls"; }
 
 # Managed endpoint flags come last so forwarded overrides cannot desynchronize them.
 : > "$tmp/calls"
-sbup manual --kit-arg copilot_host=api.individual.githubcopilot.com --env PI_COPILOT_BASE_URL=https://wrong.invalid
+sb up manual --kit-arg copilot_host=api.individual.githubcopilot.com --env PI_COPILOT_BASE_URL=https://wrong.invalid
 [[ $(< "$tmp/calls") == $'secret\nsecret\nrun\nexec' ]]
 
 # Automatic removal must not delete a sandbox before shell entry.
 for flag in --rm --rm=true; do
   : > "$tmp/calls"
   status=0
-  sbup manual "$flag" >/dev/null 2>&1 || status=$?
+  sb up manual "$flag" >/dev/null 2>&1 || status=$?
   [[ $status != 0 && ! -s $tmp/calls ]]
 done
 
@@ -82,7 +82,7 @@ for failure in command empty storage; do
   esac
   : > "$tmp/calls"
   status=0
-  output=$(sbup 2>&1) || status=$?
+  output=$(sb up 2>&1) || status=$?
   [[ $status == "$expected" && -z $output ]]
   no_launch
 done
@@ -97,13 +97,13 @@ for endpoint in individual base; do
     export PI_TOKEN='proxy-ep=proxy.githubcopilot.com'
     export EXPECTED_COPILOT_HOST=api.githubcopilot.com
   fi
-  sbup
+  sb up
 done
 unset PI_TOKEN EXPECTED_COPILOT_HOST
 
 # The host auth directory is pinned in both initial and replayed commands.
 export PI_CODING_AGENT_DIR='/host/pi config with spaces' EXPECTED_PI_DIR='/host/pi config with spaces'
-sbup
+sb up
 [[ $PI_CODING_AGENT_DIR == '/host/pi config with spaces' ]]
 unset PI_CODING_AGENT_DIR EXPECTED_PI_DIR
 
@@ -116,7 +116,7 @@ for failure in token storage; do
   esac
   : > "$tmp/calls"
   status=0
-  output=$(sbup 2>&1) || status=$?
+  output=$(sb up 2>&1) || status=$?
   [[ $status == "$expected" && $output != *test-secret* ]]
   no_launch
   if [[ $failure == token ]]; then [[ ! -s $tmp/calls ]]; fi
@@ -131,7 +131,7 @@ for token in '' 'test-secret' \
   export PI_TOKEN="$token"
   : > "$tmp/calls"
   status=0
-  output=$(sbup 2>&1) || status=$?
+  output=$(sb up 2>&1) || status=$?
   [[ $status != 0 && ! -s $tmp/calls && $output != *test-secret* ]]
 done
 unset PI_TOKEN
@@ -140,7 +140,7 @@ unset PI_TOKEN
 export PI_TOKEN='proxy-ep=proxy.business.githubcopilot.com;trace-hidden-secret'
 : > "$tmp/calls"
 status=0
-output=$( { set -x; SBX_SECRET_STATUS=19 sbup; } 2>&1) || status=$?
+output=$( { set -x; SBX_SECRET_STATUS=19 sb up; } 2>&1) || status=$?
 [[ $status == 19 && $output != *trace-hidden-secret* ]]
 no_launch
 unset PI_TOKEN
@@ -150,17 +150,17 @@ for failure in missing-pi relative-auth; do
   : > "$tmp/calls"
   status=0
   if [[ $failure == missing-pi ]]; then
-    output=$(PATH="$tmp/no-pi" sbup 2>&1) || status=$?
+    output=$(PATH="$tmp/no-pi" sb up 2>&1) || status=$?
   else
-    output=$(PI_CODING_AGENT_DIR=relative/pi sbup 2>&1) || status=$?
+    output=$(PI_CODING_AGENT_DIR=relative/pi sb up 2>&1) || status=$?
   fi
   [[ $status != 0 && ! -s $tmp/calls ]]
 done
 
 # Launching a sandbox must not overwrite the caller's credentials or endpoint.
 export GH_TOKEN=caller-token COPILOT_GITHUB_TOKEN=caller-copilot-token PI_COPILOT_BASE_URL=caller-base-url
-sbup
+sb up
 [[ $GH_TOKEN == caller-token && $COPILOT_GITHUB_TOKEN == caller-copilot-token ]]
 [[ $PI_COPILOT_BASE_URL == caller-base-url ]]
 
-printf 'sbup authentication safety checks passed\n'
+printf 'sb up authentication safety checks passed\n'
