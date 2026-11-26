@@ -116,17 +116,14 @@ capabilities:
         allow:
           - nodejs.org
           - github.com
-          - api.github.com
-          - '*.github.com'
+          - '**.github.com'
           - '*.githubusercontent.com'
           - api.mason-registry.dev
-          - '*.githubcopilot.com'
-          - 'api.*.githubcopilot.com'
-          - '${{ kit.args.copilot_host }}'
+          - '**.githubcopilot.com'
           - npmjs.com
           - '*.npmjs.org'
           - unpkg.com
-          - api.tailor.tech
+          - '**.tailor.tech'
           - base-ui.com
           - api.fireflies.ai
           - react.dev
@@ -135,4 +132,7 @@ capabilities:
           - '*.w3.org'
           - developer.mozilla.org
           - '*.developer.mozilla.org'
-          - docs.tailor.tech
+          - '**.google.com'
+          - '**.googleapis.com'
+          - '**.erp.dev'
+          - pi.dev

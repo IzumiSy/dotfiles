@@ -26,7 +26,9 @@ for block, service, variable, domains in zip(credentials, ('github', 'pi-copilot
     for domain in domains:
         assert f'          - domain: {domain}\n' in block
 network = spec.split('\n  - type: com.docker.sandbox/network-policy@1\n')[1]
-for domain in ('api.github.com', 'github.com', "'${{ kit.args.copilot_host }}'"):
+for domain in ('github.com', "'**.github.com'", "'**.githubcopilot.com'",
+        "'**.tailor.tech'", "'**.google.com'", "'**.googleapis.com'", "'**.erp.dev'",
+        'pi.dev'):
     assert f'          - {domain}\n' in network
 PY
 
