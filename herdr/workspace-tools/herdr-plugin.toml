@@ -1,0 +1,25 @@
+id = "dotfiles.workspace-tools"
+name = "Workspace Tools"
+version = "0.1.0"
+min_herdr_version = "0.9.5"
+description = "Open local or GitHub workspaces and attach sandbox tabs"
+platforms = ["macos", "linux"]
+
+[[actions]]
+id = "new-workspace"
+title = "New local or GitHub workspace"
+command = ["node", "workflow.mjs", "new-workspace"]
+
+[[actions]]
+id = "new-tab"
+title = "New shell or sandbox tab"
+contexts = ["workspace"]
+command = ["node", "workflow.mjs", "new-tab"]
+
+[[panes]]
+id = "picker"
+title = "New workspace"
+placement = "popup"
+width = "80%"
+height = 14
+command = ["bash", "-c", "node \"$HERDR_PLUGIN_ROOT/workflow.mjs\" picker"]
